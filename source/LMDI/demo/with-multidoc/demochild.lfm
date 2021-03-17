@@ -1,0 +1,56 @@
+object frChild: TfrChild
+  Left = 259
+  Height = 350
+  Top = 157
+  Width = 600
+  HorzScrollBar.Page = 599
+  VertScrollBar.Page = 349
+  ActiveControl = btAdd
+  Caption = 'frChild'
+  ClientHeight = 350
+  ClientWidth = 600
+  Color = clSilver
+  object MainPanel: TPanel
+    Left = 25
+    Height = 300
+    Top = 25
+    Width = 550
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    BevelOuter = bvNone
+    ClientHeight = 300
+    ClientWidth = 550
+    ParentColor = False
+    TabOrder = 0
+    object pnTop: TPanel
+      Height = 50
+      Width = 550
+      Align = alTop
+      ClientHeight = 50
+      ClientWidth = 550
+      ParentFont = True
+      TabOrder = 0
+      object btAdd: TButton
+        Left = 25
+        Height = 30
+        Top = 10
+        Width = 500
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        BorderSpacing.InnerBorder = 2
+        Caption = 'Add Text in Memo'
+        OnClick = btAddClick
+        TabOrder = 0
+      end
+    end
+    object meText: TMemo
+      Height = 250
+      Top = 50
+      Width = 550
+      Align = alClient
+      Lines.Strings = (
+        '(Developed in Lazarus)'
+      )
+      ScrollBars = ssVertical
+      TabOrder = 1
+    end
+  end
+end

@@ -1,0 +1,19 @@
+del link.res
+del ppas.bat
+del *.cfg
+del *.ddp
+del *.o
+del *.dcu
+del *.bkp
+del *.bak
+del *.lrs
+del *.~ddp
+del *.~inc
+del *.~dfm
+del *.~pas
+del *.~dpr
+del *.or
+del *.dof
+del *.ppu
+del *.compiled
+pause

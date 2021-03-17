@@ -1,0 +1,131 @@
+object SubTables: TSubTables
+  Left = 404
+  Height = 294
+  Top = 288
+  Width = 411
+  ActiveControl = rgTPri.RadioButton0
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'Substract Two Tables'
+  ClientHeight = 294
+  ClientWidth = 411
+  OnShow = FormShow
+  Position = poDesktopCenter
+  LCLVersion = '0.9.28.2'
+  object Label1: TLabel
+    Left = 16
+    Height = 16
+    Top = 208
+    Width = 46
+    Caption = 'Progress'
+    ParentColor = False
+  end
+  object GroupBox1: TGroupBox
+    Left = 0
+    Height = 64
+    Top = 0
+    Width = 411
+    Align = alTop
+    Caption = ' Select First Table... '
+    ClientHeight = 46
+    ClientWidth = 407
+    TabOrder = 0
+    object cbFT: TComboBox
+      Left = 14
+      Height = 23
+      Top = 8
+      Width = 376
+      ItemHeight = 15
+      Style = csDropDownList
+      TabOrder = 0
+    end
+  end
+  object GroupBox2: TGroupBox
+    Left = 0
+    Height = 64
+    Top = 64
+    Width = 411
+    Align = alTop
+    Caption = ' Select Second Table... '
+    ClientHeight = 46
+    ClientWidth = 407
+    TabOrder = 1
+    object cbST: TComboBox
+      Left = 14
+      Height = 23
+      Top = 8
+      Width = 376
+      ItemHeight = 15
+      Style = csDropDownList
+      TabOrder = 0
+    end
+  end
+  object rgTPri: TRadioGroup
+    Left = 0
+    Height = 72
+    Top = 128
+    Width = 411
+    Align = alTop
+    AutoFill = True
+    Caption = ' Tables Priority '
+    ChildSizing.LeftRightSpacing = 6
+    ChildSizing.TopBottomSpacing = 6
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeVertical = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsScaleChilds
+    ChildSizing.ShrinkVertical = crsScaleChilds
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 1
+    ClientHeight = 54
+    ClientWidth = 407
+    ItemIndex = 0
+    Items.Strings = (
+      'Sub First Table To Second Table'
+      'Sub Second Table To First Table'
+    )
+    TabOrder = 2
+  end
+  object pBar: TProgressBar
+    Left = 16
+    Height = 20
+    Top = 226
+    Width = 379
+    TabOrder = 3
+  end
+  object BitBtn2: TBitBtn
+    Left = 256
+    Height = 30
+    Top = 256
+    Width = 75
+    Caption = '&OK'
+    Default = True
+    Kind = bkOK
+    NumGlyphs = 0
+    OnClick = BitBtn2Click
+    TabOrder = 4
+  end
+  object BitBtn1: TBitBtn
+    Left = 333
+    Height = 30
+    Top = 256
+    Width = 75
+    Caption = '&Close'
+    Kind = bkClose
+    NumGlyphs = 0
+    TabOrder = 5
+  end
+  object T1: TDbf
+    IndexDefs = <>
+    TableLevel = 4
+    FilterOptions = []
+    left = 148
+    top = 51
+  end
+  object T2: TDbf
+    IndexDefs = <>
+    TableLevel = 4
+    FilterOptions = []
+    left = 232
+    top = 51
+  end
+end

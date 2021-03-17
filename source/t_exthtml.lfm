@@ -1,0 +1,406 @@
+object ExpHTML: TExpHTML
+  Left = 387
+  Height = 487
+  Top = 239
+  Width = 441
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'Export Table To HTML File...'
+  ClientHeight = 487
+  ClientWidth = 441
+  OnClose = FormClose
+  OnShow = FormShow
+  Position = poDesktopCenter
+  LCLVersion = '0.9.28.2'
+  object Label1: TLabel
+    Left = 0
+    Height = 16
+    Top = 0
+    Width = 441
+    Align = alTop
+    Caption = 'Export Field'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 195
+    Height = 16
+    Top = 16
+    Width = 87
+    Caption = 'Page Back Color'
+    ParentColor = False
+  end
+  object Label3: TLabel
+    Left = 320
+    Height = 16
+    Top = 16
+    Width = 86
+    Caption = 'Page Font Color'
+    ParentColor = False
+  end
+  object Label4: TLabel
+    Left = 195
+    Height = 16
+    Top = 68
+    Width = 99
+    Caption = 'Header Back Color'
+    ParentColor = False
+  end
+  object Label5: TLabel
+    Left = 320
+    Height = 16
+    Top = 68
+    Width = 98
+    Caption = 'Header Font Color'
+    ParentColor = False
+  end
+  object Label6: TLabel
+    Left = 195
+    Height = 16
+    Top = 125
+    Width = 77
+    Caption = 'Page Font Size'
+    ParentColor = False
+  end
+  object Label7: TLabel
+    Left = 320
+    Height = 16
+    Top = 125
+    Width = 89
+    Caption = 'Header Font Size'
+    ParentColor = False
+  end
+  object Label8: TLabel
+    Left = 195
+    Height = 16
+    Top = 178
+    Width = 82
+    Caption = 'Page Font Style'
+    ParentColor = False
+  end
+  object Label9: TLabel
+    Left = 320
+    Height = 16
+    Top = 178
+    Width = 94
+    Caption = 'Header Font Style'
+    ParentColor = False
+  end
+  object Label10: TLabel
+    Left = 320
+    Height = 16
+    Top = 229
+    Width = 100
+    Caption = 'Table Border Color'
+    ParentColor = False
+  end
+  object Label11: TLabel
+    Left = 195
+    Height = 16
+    Top = 396
+    Width = 46
+    Caption = 'Progress'
+    ParentColor = False
+  end
+  object ClbField: TCheckListBox
+    Left = 0
+    Height = 471
+    Top = 16
+    Width = 187
+    Align = alLeft
+    Items.Strings = (
+      ''
+    )
+    ItemHeight = 17
+    TabOrder = 0
+    Data = {
+      0100000000
+    }
+  end
+  object BitBtn2: TBitBtn
+    Left = 280
+    Height = 30
+    Top = 452
+    Width = 75
+    Caption = '&OK'
+    Default = True
+    Kind = bkOK
+    NumGlyphs = 0
+    OnClick = BitBtn2Click
+    TabOrder = 1
+  end
+  object BitBtn1: TBitBtn
+    Left = 360
+    Height = 30
+    Top = 452
+    Width = 75
+    Caption = '&Close'
+    Kind = bkClose
+    NumGlyphs = 0
+    TabOrder = 2
+  end
+  object PageBC: TColorBox
+    Left = 195
+    Height = 22
+    Top = 32
+    Width = 116
+    Selected = clWhite
+    Style = [cbStandardColors, cbExtendedColors, cbSystemColors, cbPrettyNames]
+    ItemHeight = 16
+    TabOrder = 3
+  end
+  object PageFC: TColorBox
+    Left = 320
+    Height = 22
+    Top = 32
+    Width = 117
+    Style = [cbStandardColors, cbExtendedColors, cbSystemColors, cbPrettyNames]
+    ItemHeight = 16
+    TabOrder = 4
+  end
+  object HeaderBC: TColorBox
+    Left = 195
+    Height = 22
+    Top = 88
+    Width = 116
+    Selected = clSilver
+    Style = [cbStandardColors, cbExtendedColors, cbSystemColors, cbPrettyNames]
+    ItemHeight = 16
+    TabOrder = 5
+  end
+  object HeaderFC: TColorBox
+    Left = 320
+    Height = 22
+    Top = 88
+    Width = 117
+    Style = [cbStandardColors, cbExtendedColors, cbSystemColors, cbPrettyNames]
+    ItemHeight = 16
+    TabOrder = 6
+  end
+  object PageFS: TComboBox
+    Left = 195
+    Height = 23
+    Top = 144
+    Width = 116
+    ItemHeight = 15
+    ItemIndex = 0
+    Items.Strings = (
+      'Normal'
+      '8 pt'
+      '10 pt'
+      '12 pt'
+      '14 pt'
+      '18 pt'
+      '24 pt'
+      '36 pt'
+    )
+    Style = csDropDownList
+    TabOrder = 7
+    Text = 'Normal'
+  end
+  object HeaderFS: TComboBox
+    Left = 320
+    Height = 23
+    Top = 144
+    Width = 117
+    ItemHeight = 15
+    ItemIndex = 0
+    Items.Strings = (
+      'Normal'
+      '8 pt'
+      '10 pt'
+      '12 pt'
+      '14 pt'
+      '18 pt'
+      '24 pt'
+      '36 pt'
+    )
+    Style = csDropDownList
+    TabOrder = 8
+    Text = 'Normal'
+  end
+  object PageFT: TComboBox
+    Left = 195
+    Height = 23
+    Top = 196
+    Width = 116
+    ItemHeight = 15
+    ItemIndex = 0
+    Items.Strings = (
+      ''
+      'Bold'
+      'Italic'
+      'Underline'
+      'StrikeOut'
+      'Blink'
+      'Sup'
+      'Sub'
+      'Define'
+      'Strong'
+      'Em'
+      'Cite'
+      'Variable'
+      'Keyboard'
+      'Code'
+    )
+    Style = csDropDownList
+    TabOrder = 9
+  end
+  object HeaderST: TComboBox
+    Left = 320
+    Height = 23
+    Top = 196
+    Width = 117
+    ItemHeight = 15
+    ItemIndex = 0
+    Items.Strings = (
+      ''
+      'Bold'
+      'Italic'
+      'Underline'
+      'StrikeOut'
+      'Blink'
+      'Sup'
+      'Sub'
+      'Define'
+      'Strong'
+      'Em'
+      'Cite'
+      'Variable'
+      'Keyboard'
+      'Code'
+    )
+    Style = csDropDownList
+    TabOrder = 10
+  end
+  object PageTLT: TLabeledEdit
+    Left = 195
+    Height = 23
+    Top = 364
+    Width = 242
+    EditLabel.AnchorSideLeft.Control = PageTLT
+    EditLabel.AnchorSideBottom.Control = PageTLT
+    EditLabel.Left = 195
+    EditLabel.Height = 16
+    EditLabel.Top = 345
+    EditLabel.Width = 53
+    EditLabel.Caption = 'Page Title'
+    EditLabel.ParentColor = False
+    TabOrder = 11
+  end
+  object TableW: TLabeledEdit
+    Left = 195
+    Height = 23
+    Top = 249
+    Width = 100
+    EditLabel.AnchorSideLeft.Control = TableW
+    EditLabel.AnchorSideBottom.Control = TableW
+    EditLabel.Left = 195
+    EditLabel.Height = 16
+    EditLabel.Top = 230
+    EditLabel.Width = 65
+    EditLabel.Caption = 'Table Width'
+    EditLabel.ParentColor = False
+    ReadOnly = True
+    TabOrder = 12
+  end
+  object UpDown1: TUpDown
+    Left = 295
+    Height = 23
+    Top = 249
+    Width = 17
+    Associate = TableW
+    Min = 0
+    Max = 9999
+    Position = 0
+    TabOrder = 13
+    Wrap = False
+  end
+  object TableBC: TColorBox
+    Left = 320
+    Height = 22
+    Top = 249
+    Width = 117
+    Selected = clWhite
+    Style = [cbStandardColors, cbExtendedColors, cbSystemColors, cbPrettyNames]
+    ItemHeight = 16
+    TabOrder = 14
+  end
+  object CellP: TLabeledEdit
+    Left = 195
+    Height = 23
+    Top = 303
+    Width = 100
+    EditLabel.AnchorSideLeft.Control = CellP
+    EditLabel.AnchorSideBottom.Control = CellP
+    EditLabel.Left = 195
+    EditLabel.Height = 16
+    EditLabel.Top = 284
+    EditLabel.Width = 68
+    EditLabel.Caption = 'Cell Padding'
+    EditLabel.ParentColor = False
+    ReadOnly = True
+    TabOrder = 15
+  end
+  object UpDown2: TUpDown
+    Left = 295
+    Height = 23
+    Top = 303
+    Width = 17
+    Associate = CellP
+    Min = 0
+    Max = 9999
+    Position = 0
+    TabOrder = 16
+    Wrap = False
+  end
+  object CellS: TLabeledEdit
+    Left = 320
+    Height = 23
+    Top = 304
+    Width = 100
+    EditLabel.AnchorSideLeft.Control = CellS
+    EditLabel.AnchorSideBottom.Control = CellS
+    EditLabel.Left = 320
+    EditLabel.Height = 16
+    EditLabel.Top = 285
+    EditLabel.Width = 66
+    EditLabel.Caption = 'Cell Spacing'
+    EditLabel.ParentColor = False
+    ReadOnly = True
+    TabOrder = 17
+  end
+  object UpDown3: TUpDown
+    Left = 420
+    Height = 23
+    Top = 304
+    Width = 17
+    Associate = CellS
+    Min = 0
+    Max = 9999
+    Position = 0
+    TabOrder = 18
+    Wrap = False
+  end
+  object pBar: TProgressBar
+    Left = 195
+    Height = 20
+    Top = 413
+    Width = 237
+    TabOrder = 19
+  end
+  object Tmp: TDbf
+    IndexDefs = <>
+    TableLevel = 4
+    FilterOptions = []
+    left = 48
+    top = 200
+  end
+  object SaveExp: TSaveDialog
+    Title = 'Save as...'
+    DefaultExt = '.html'
+    Filter = 'File .HTML|*.Html|File .Htm|*.Htm|All Files|*.*'
+    Options = [ofOverwritePrompt, ofPathMustExist, ofEnableSizing, ofViewDetail]
+    left = 96
+    top = 200
+  end
+end

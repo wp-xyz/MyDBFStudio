@@ -1,0 +1,179 @@
+object ExpXls: TExpXls
+  Left = 374
+  Height = 353
+  Top = 286
+  Width = 412
+  ActiveControl = StrFN
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'Export Table To XLS File...'
+  ClientHeight = 353
+  ClientWidth = 412
+  OnShow = FormShow
+  Position = poDesktopCenter
+  LCLVersion = '0.9.28.2'
+  object Label1: TLabel
+    Left = 0
+    Height = 16
+    Top = 0
+    Width = 412
+    Align = alTop
+    Caption = 'Export Field'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 200
+    Height = 16
+    Top = 208
+    Width = 66
+    Caption = 'Date Format'
+    ParentColor = False
+  end
+  object Label11: TLabel
+    Left = 200
+    Height = 16
+    Top = 259
+    Width = 46
+    Caption = 'Progress'
+    ParentColor = False
+  end
+  object ClbField: TCheckListBox
+    Left = 0
+    Height = 337
+    Top = 16
+    Width = 187
+    Align = alLeft
+    Items.Strings = (
+      ''
+    )
+    ItemHeight = 17
+    TabOrder = 0
+    Data = {
+      0100000000
+    }
+  end
+  object BitBtn2: TBitBtn
+    Left = 252
+    Height = 30
+    Top = 320
+    Width = 75
+    Caption = '&OK'
+    Default = True
+    Kind = bkOK
+    NumGlyphs = 0
+    OnClick = BitBtn2Click
+    TabOrder = 1
+  end
+  object BitBtn1: TBitBtn
+    Left = 330
+    Height = 30
+    Top = 320
+    Width = 75
+    Caption = '&Close'
+    Kind = bkClose
+    NumGlyphs = 0
+    TabOrder = 2
+  end
+  object StrFN: TLabeledEdit
+    Left = 200
+    Height = 23
+    Top = 32
+    Width = 205
+    EditLabel.AnchorSideLeft.Control = StrFN
+    EditLabel.AnchorSideBottom.Control = StrFN
+    EditLabel.Left = 200
+    EditLabel.Height = 16
+    EditLabel.Top = 13
+    EditLabel.Width = 86
+    EditLabel.Caption = 'Format Number'
+    EditLabel.ParentColor = False
+    TabOrder = 3
+    Text = '0'
+  end
+  object StrFND: TLabeledEdit
+    Left = 200
+    Height = 23
+    Top = 80
+    Width = 205
+    EditLabel.AnchorSideLeft.Control = StrFND
+    EditLabel.AnchorSideBottom.Control = StrFND
+    EditLabel.Left = 200
+    EditLabel.Height = 16
+    EditLabel.Top = 61
+    EditLabel.Width = 165
+    EditLabel.Caption = 'Format Numer Width Decimals'
+    EditLabel.ParentColor = False
+    TabOrder = 4
+    Text = '0.00'
+  end
+  object StrMFN: TLabeledEdit
+    Left = 200
+    Height = 23
+    Top = 128
+    Width = 205
+    EditLabel.AnchorSideLeft.Control = StrMFN
+    EditLabel.AnchorSideBottom.Control = StrMFN
+    EditLabel.Left = 200
+    EditLabel.Height = 16
+    EditLabel.Top = 109
+    EditLabel.Width = 76
+    EditLabel.Caption = 'Mask Number'
+    EditLabel.ParentColor = False
+    TabOrder = 5
+    Text = '# ### ##0'
+  end
+  object StrMFND: TLabeledEdit
+    Left = 200
+    Height = 23
+    Top = 176
+    Width = 205
+    EditLabel.AnchorSideLeft.Control = StrMFND
+    EditLabel.AnchorSideBottom.Control = StrMFND
+    EditLabel.Left = 200
+    EditLabel.Height = 16
+    EditLabel.Top = 157
+    EditLabel.Width = 162
+    EditLabel.Caption = 'Mask Number Width Decimals'
+    EditLabel.ParentColor = False
+    TabOrder = 6
+    Text = '# ### ##0.00'
+  end
+  object cbDateF: TComboBox
+    Left = 200
+    Height = 23
+    Top = 226
+    Width = 205
+    ItemHeight = 15
+    ItemIndex = 0
+    Items.Strings = (
+      'dd/mm/yyyy'
+      'mm/dd/yyyy'
+      'yyyy/mm/dd'
+      'yyyy/dd/mm'
+    )
+    TabOrder = 7
+    Text = 'dd/mm/yyyy'
+  end
+  object pBar: TProgressBar
+    Left = 200
+    Height = 20
+    Top = 279
+    Width = 205
+    TabOrder = 8
+  end
+  object SaveExp: TSaveDialog
+    Title = 'Save as...'
+    DefaultExt = '.xls'
+    Filter = 'Microsoft XLS File|*.xls|All Files|*.*'
+    Options = [ofOverwritePrompt, ofPathMustExist, ofEnableSizing, ofViewDetail]
+    left = 120
+    top = 176
+  end
+  object Tmp: TDbf
+    IndexDefs = <>
+    TableLevel = 4
+    FilterOptions = []
+    left = 72
+    top = 176
+  end
+end

@@ -1,0 +1,161 @@
+object NewTable: TNewTable
+  Left = 325
+  Height = 409
+  Top = 301
+  Width = 626
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'New Table...'
+  ClientHeight = 409
+  ClientWidth = 626
+  OnCreate = FormCreate
+  Position = poDesktopCenter
+  LCLVersion = '2.1.0.0'
+  object Label1: TLabel
+    Left = 437
+    Height = 15
+    Top = 0
+    Width = 50
+    Caption = 'Index List'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 437
+    Height = 15
+    Top = 255
+    Width = 54
+    Caption = 'Table Type'
+    ParentColor = False
+  end
+  object FieldList: TStringGrid
+    Left = 0
+    Height = 406
+    Top = 0
+    Width = 432
+    AlternateColor = clMoneyGreen
+    ColCount = 4
+    Columns = <    
+      item
+        Alignment = taRightJustify
+        ReadOnly = True
+        Title.Alignment = taRightJustify
+        Title.Caption = '#'
+        Width = 35
+      end    
+      item
+        Title.Caption = 'Field Name'
+        Width = 200
+      end    
+      item
+        Title.Caption = 'Type'
+        Width = 100
+      end    
+      item
+        Alignment = taRightJustify
+        Title.Alignment = taRightJustify
+        Title.Caption = 'Length'
+      end>
+    FixedCols = 0
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goSmoothScroll]
+    RowCount = 2
+    TabOrder = 0
+    OnKeyDown = FieldListKeyDown
+    OnSelectCell = FieldListSelectCell
+  end
+  object IndexList: TListBox
+    Left = 437
+    Height = 190
+    Hint = 'Double Click to edit index...'
+    Top = 16
+    Width = 184
+    ItemHeight = 0
+    OnDblClick = IndexListDblClick
+    ParentShowHint = False
+    ShowHint = True
+    Sorted = True
+    TabOrder = 1
+  end
+  object Button1: TButton
+    Left = 437
+    Height = 26
+    Top = 208
+    Width = 91
+    Caption = 'Define Index'
+    OnClick = Button1Click
+    TabOrder = 2
+  end
+  object Button2: TButton
+    Left = 530
+    Height = 26
+    Top = 208
+    Width = 91
+    Caption = 'Delete Index'
+    OnClick = Button2Click
+    TabOrder = 3
+  end
+  object cbFieldType: TComboBox
+    Left = 448
+    Height = 23
+    Top = 328
+    Width = 136
+    ItemHeight = 15
+    OnCloseUp = cbFieldTypeCloseUp
+    Style = csDropDownList
+    TabOrder = 4
+    Visible = False
+  end
+  object TableType: TComboBox
+    Left = 437
+    Height = 23
+    Top = 273
+    Width = 184
+    ItemHeight = 15
+    ItemIndex = 1
+    Items.Strings = (
+      'dBase III+'
+      'dBase IV'
+      'Visual dBase VII'
+      'FoxPro'
+    )
+    OnChange = TableTypeChange
+    Style = csDropDownList
+    TabOrder = 5
+    Text = 'dBase IV'
+  end
+  object BitBtn2: TBitBtn
+    Left = 472
+    Height = 30
+    Top = 376
+    Width = 75
+    Caption = '&OK'
+    Default = True
+    Kind = bkOK
+    OnClick = BitBtn2Click
+    TabOrder = 6
+  end
+  object BitBtn1: TBitBtn
+    Left = 547
+    Height = 30
+    Top = 376
+    Width = 75
+    Caption = '&Close'
+    Kind = bkClose
+    TabOrder = 7
+  end
+  object SaveTable: TSaveDialog
+    Title = 'Save Table As...'
+    DefaultExt = '.dbf'
+    Filter = 'dBase Table|*.dbf|All Files|*.*'
+    Options = [ofPathMustExist, ofEnableSizing, ofViewDetail]
+    Left = 258
+    Top = 227
+  end
+  object DbTable: TDbf
+    Exclusive = True
+    IndexDefs = <>
+    TableLevel = 4
+    FilterOptions = []
+    Left = 184
+    Top = 227
+  end
+end

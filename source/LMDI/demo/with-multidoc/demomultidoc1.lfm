@@ -1,0 +1,64 @@
+object Form1: TForm1
+  Caption = 'Test TButtonsBar Component - With MultiDoc Component'
+  Menu = MainMenu1
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  HorzScrollBar.Page = 564
+  VertScrollBar.Page = 382
+  Left = 250
+  Height = 400
+  Top = 130
+  Width = 700
+  object MultiDoc1: TMultiDoc
+    Align = alClient
+    ParentColor = False
+    TabOrder = 0
+  end
+  object ButtonsBar: TButtonsBar
+    Align = alTop
+    ClientHeight = 20
+    ClientWidth = 565
+    ParentShowHint = False
+    TabOrder = 1
+    Visible = False
+    Height = 20
+    Width = 565
+  end
+  object MainMenu1: TMainMenu
+    left = 61
+    top = 20
+    object File1: TMenuItem
+      Caption = 'File'
+      object Close1: TMenuItem
+        Caption = 'Close'
+        OnClick = Close1Click
+      end
+    end
+    object NewChild1: TMenuItem
+      Caption = 'New Child'
+      OnClick = NewChild1Click
+    end
+    object SendText: TMenuItem
+      Caption = 'SendText'
+      OnClick = SendTextClick
+    end
+    object Window1: TMenuItem
+      Caption = 'Window'
+      object Cascade: TMenuItem
+        Caption = 'Cascade'
+        OnClick = CascadeClick
+      end
+      object TileVer: TMenuItem
+        Caption = 'Tile Vertically'
+        OnClick = TileVerClick
+      end
+      object TileHor: TMenuItem
+        Caption = 'Tile Horizontally'
+        OnClick = TileHorClick
+      end
+      object MenuItem3: TMenuItem
+        Caption = '-'
+      end
+    end
+  end
+end

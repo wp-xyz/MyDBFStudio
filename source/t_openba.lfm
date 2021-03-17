@@ -1,0 +1,165 @@
+object OpenBA: TOpenBA
+  Left = 384
+  Height = 587
+  Top = 217
+  Width = 595
+  BorderIcons = [biSystemMenu]
+  Caption = 'Open tables by Alias'
+  ClientHeight = 587
+  ClientWidth = 595
+  OnClose = FormClose
+  OnShow = FormShow
+  Position = poMainFormCenter
+  LCLVersion = '2.1.0.0'
+  object GroupBox1: TGroupBox
+    AnchorSideTop.Control = Owner
+    Left = 6
+    Height = 274
+    Top = 6
+    Width = 583
+    Align = alTop
+    BorderSpacing.Around = 6
+    Caption = ' MyDbf Studio Alias '
+    ClientHeight = 254
+    ClientWidth = 579
+    TabOrder = 0
+    object DBGrid1: TDBGrid
+      AnchorSideLeft.Control = GroupBox1
+      AnchorSideTop.Control = GroupBox1
+      AnchorSideRight.Control = GroupBox1
+      AnchorSideRight.Side = asrBottom
+      AnchorSideBottom.Control = Button1
+      Left = 6
+      Height = 209
+      Top = 6
+      Width = 567
+      AlternateColor = clMoneyGreen
+      Anchors = [akTop, akLeft, akRight, akBottom]
+      BorderSpacing.Around = 6
+      Color = clWindow
+      Columns = <      
+        item
+          Title.Caption = 'Alias'
+          Width = 200
+          FieldName = 'ALIAS'
+        end      
+        item
+          Title.Caption = 'Path'
+          Width = 350
+          FieldName = 'PATH'
+        end>
+      DataSource = DS
+      Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
+      ReadOnly = True
+      TabOrder = 0
+      OnCellClick = DBGrid1CellClick
+    end
+    object Button1: TButton
+      AnchorSideLeft.Control = GroupBox1
+      AnchorSideTop.Side = asrBottom
+      AnchorSideBottom.Control = GroupBox1
+      AnchorSideBottom.Side = asrBottom
+      Left = 8
+      Height = 25
+      Top = 221
+      Width = 90
+      Anchors = [akLeft, akBottom]
+      BorderSpacing.Left = 8
+      BorderSpacing.Bottom = 8
+      Caption = 'Add Alias'
+      OnClick = Button1Click
+      TabOrder = 1
+    end
+    object Button2: TButton
+      AnchorSideLeft.Control = Button1
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Side = asrBottom
+      AnchorSideBottom.Control = GroupBox1
+      AnchorSideBottom.Side = asrBottom
+      Left = 102
+      Height = 25
+      Top = 221
+      Width = 90
+      Anchors = [akLeft, akBottom]
+      BorderSpacing.Left = 4
+      BorderSpacing.Bottom = 8
+      Caption = 'Delete Alias'
+      OnClick = Button2Click
+      TabOrder = 2
+    end
+  end
+  object GroupBox2: TGroupBox
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = GroupBox1
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideBottom.Control = BitBtn1
+    Left = 6
+    Height = 257
+    Top = 286
+    Width = 583
+    Align = alTop
+    Anchors = [akTop, akLeft, akBottom]
+    BorderSpacing.Around = 6
+    Caption = ' Files '
+    ClientHeight = 237
+    ClientWidth = 579
+    TabOrder = 1
+    object Elenco: TFileListBox
+      Left = 6
+      Height = 225
+      Top = 6
+      Width = 567
+      Align = alClient
+      BorderSpacing.Around = 6
+      FileType = [ftReadOnly, ftNormal]
+      ItemHeight = 15
+      MultiSelect = True
+      OnDblClick = BitBtn2Click
+      TabOrder = 0
+    end
+  end
+  object BitBtn1: TBitBtn
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 512
+    Height = 30
+    Top = 549
+    Width = 75
+    Anchors = [akRight, akBottom]
+    BorderSpacing.Right = 8
+    BorderSpacing.Bottom = 8
+    Caption = '&Close'
+    Kind = bkClose
+    TabOrder = 2
+  end
+  object BitBtn2: TBitBtn
+    AnchorSideTop.Control = BitBtn1
+    AnchorSideRight.Control = BitBtn1
+    Left = 433
+    Height = 30
+    Top = 549
+    Width = 75
+    Anchors = [akTop, akRight]
+    BorderSpacing.Right = 4
+    Caption = '&Open'
+    Default = True
+    Kind = bkYes
+    OnClick = BitBtn2Click
+    TabOrder = 3
+  end
+  object AliasDB: TDbf
+    IndexDefs = <>
+    TableLevel = 4
+    FilterOptions = []
+    Left = 248
+    Top = 80
+  end
+  object DS: TDataSource
+    DataSet = AliasDB
+    Left = 248
+    Top = 144
+  end
+end
