@@ -11,10 +11,10 @@ object ExpXml: TExpXml
   ClientWidth = 400
   OnShow = FormShow
   Position = poDesktopCenter
-  LCLVersion = '0.9.28.2'
+  LCLVersion = '2.1.0.0'
   object Label1: TLabel
     Left = 0
-    Height = 16
+    Height = 15
     Top = 0
     Width = 400
     Align = alTop
@@ -23,16 +23,16 @@ object ExpXml: TExpXml
   end
   object Label11: TLabel
     Left = 192
-    Height = 16
+    Height = 15
     Top = 16
-    Width = 46
+    Width = 45
     Caption = 'Progress'
     ParentColor = False
   end
   object ClbField: TCheckListBox
     Left = 0
-    Height = 322
-    Top = 16
+    Height = 323
+    Top = 15
     Width = 187
     Align = alLeft
     Items.Strings = (
@@ -76,14 +76,14 @@ object ExpXml: TExpXml
     DefaultExt = '.xml'
     Filter = 'XML File|*.xml|All Files|*.*'
     Options = [ofOverwritePrompt, ofPathMustExist, ofEnableSizing, ofViewDetail]
-    left = 128
-    top = 184
+    Left = 128
+    Top = 184
   end
   object Tmp: TDbf
     IndexDefs = <>
     TableLevel = 4
     FilterOptions = []
-    left = 80
-    top = 184
+    Left = 80
+    Top = 184
   end
 end

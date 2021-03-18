@@ -43,6 +43,8 @@ var
 
 implementation
 
+{$R *.lfm}
+
 { TSetFV }
 
 procedure TSetFV.FormShow(Sender: TObject);
@@ -190,8 +192,6 @@ begin
   End;
 end;
 
-initialization
-  {$I t_setfv.lrs}
 
 end.
 

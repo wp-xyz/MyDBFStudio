@@ -43,6 +43,8 @@ var
 
 implementation
 
+{$R *.lfm}
+
 { TExpSQL }
 
 procedure TExpSQL.FormShow(Sender: TObject);
@@ -270,8 +272,6 @@ begin
    End;
 end;
 
-initialization
-  {$I t_expsql.lrs}
 
 end.
 

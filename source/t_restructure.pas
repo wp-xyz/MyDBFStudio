@@ -63,7 +63,10 @@ var
 
 implementation
 
-Uses T_IdxTable;
+{$R *.lfm}
+
+uses
+  T_IdxTable;
 
 { TRestructure }
 
@@ -584,8 +587,6 @@ begin
       End;
 end;
 
-initialization
-  {$I t_restructure.lrs}
 
 end.
 

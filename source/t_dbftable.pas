@@ -53,7 +53,10 @@ var
 
 implementation
 
-Uses T_Restructure, T_SetFV;
+{$R *.lfm}
+
+uses
+  T_Restructure, T_SetFV;
 
 { TDbfTable }
 
@@ -201,8 +204,6 @@ begin
  ShowTableInfo(DbTable);
 end;
 
-initialization
-  {$I t_dbftable.lrs}
 
 end.
 

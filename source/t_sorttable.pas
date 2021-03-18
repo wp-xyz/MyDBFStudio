@@ -49,6 +49,8 @@ var
 
 implementation
 
+{$R *.lfm}
+
 { TSortTable }
 
 procedure TSortTable.FormShow(Sender: TObject);
@@ -248,8 +250,6 @@ begin
  T.Free;
 end;
 
-initialization
-  {$I t_sorttable.lrs}
 
 end.
 

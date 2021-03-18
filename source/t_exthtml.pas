@@ -69,6 +69,8 @@ var
 
 implementation
 
+{$R *.lfm}
+
 { TExpHTML }
 
 procedure TExpHTML.BitBtn2Click(Sender: TObject);
@@ -193,8 +195,6 @@ begin
    ExpObj.Fields.Add().Assign(Tmp.Fields[Ind]);
 end;
 
-initialization
-  {$I t_exthtml.lrs}
 
 end.
 

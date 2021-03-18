@@ -37,6 +37,8 @@ var
 
 implementation
 
+{$R *.lfm}
+
 { TAddAlias }
 
 procedure TAddAlias.Button1Click(Sender: TObject);
@@ -123,8 +125,6 @@ begin
  End;
 end;
 
-initialization
-  {$I t_addalias.lrs}
 
 end.
 

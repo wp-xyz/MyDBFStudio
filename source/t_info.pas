@@ -29,7 +29,10 @@ var
 
 implementation
 
-Uses T_MainForm;
+{$R *.lfm}
+
+uses
+  T_MainForm;
 
 { TInfo }
 
@@ -44,8 +47,6 @@ begin
   Version.Caption:='Version: ' + T_MainForm.StrVer;
 end;
 
-initialization
-  {$I t_info.lrs}
 
 end.
 

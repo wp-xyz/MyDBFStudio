@@ -44,6 +44,8 @@ var
 
 implementation
 
+{$R *.lfm}
+
 { TExpCSV }
 
 procedure TExpCSV.FormShow(Sender: TObject);
@@ -128,9 +130,6 @@ begin
 
  Application.ProcessMessages;
 end;
-
-initialization
-  {$I t_expcsv.lrs}
 
 end.
 

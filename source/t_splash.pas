@@ -30,7 +30,10 @@ var
 
 implementation
 
-Uses T_MainForm;
+{$R *.lfm}
+
+uses
+  T_MainForm;
 
 { TSplash }
 
@@ -38,7 +41,7 @@ procedure TSplash.FormShow(Sender: TObject);
 var
   fn: String;
 begin
-  fn := Application.Location + 'img\Splash.png';
+  fn := Application.Location + 'img/Splash.png';
   if FileExists(fn) then
     Img.Picture.LoadFromFile(fn);
 
@@ -59,8 +62,6 @@ begin
   Close;
 end;
 
-initialization
-  {$I t_splash.lrs}
 
 end.
 

@@ -42,6 +42,8 @@ var
 
 implementation
 
+{R *.lfm}
+
 { TExpDbf }
 
 procedure TExpDbf.FormShow(Sender: TObject);
@@ -153,9 +155,6 @@ begin
    End;
   End;
 end;
-
-initialization
-  {$I t_expdbf.lrs}
 
 end.
 

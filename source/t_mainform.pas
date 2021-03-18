@@ -134,8 +134,11 @@ var
 
 implementation
 
-Uses T_DbfTable, T_NewTable, T_ExpCSV, T_ExtHTML, T_ExpXls, T_AddTables, T_SubTables,
-     T_ExpDbf, T_Splash, T_ExpXml, T_Info, T_OpenBA, T_SortTable, T_ExpSQL;
+{$R *.lfm}
+
+uses
+  T_DbfTable, T_NewTable, T_ExpCSV, T_ExtHTML, T_ExpXls, T_AddTables, T_SubTables,
+  T_ExpDbf, T_Splash, T_ExpXml, T_Info, T_OpenBA, T_SortTable, T_ExpSQL;
 
 Procedure FuncStrD_StrEq(Param: PExpressionRec);
 Begin
@@ -911,8 +914,6 @@ begin
   End;
 end;
 
-initialization
-  {$I t_mainform.lrs}
 
 end.
 

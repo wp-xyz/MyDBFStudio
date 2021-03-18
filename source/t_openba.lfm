@@ -112,6 +112,7 @@ object OpenBA: TOpenBA
       Width = 567
       Align = alClient
       BorderSpacing.Around = 6
+      Directory = 'd:\Prog_Lazarus'
       FileType = [ftReadOnly, ftNormal]
       ItemHeight = 15
       MultiSelect = True

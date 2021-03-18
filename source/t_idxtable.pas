@@ -36,7 +36,10 @@ var
 
 implementation
 
-Uses T_Restructure, T_NewTable;
+{$R *.lfm}
+
+uses
+  T_Restructure, T_NewTable;
 
 { TIdxTable }
 
@@ -90,8 +93,6 @@ begin
  Close;
 end;
 
-initialization
-  {$I t_idxtable.lrs}
 
 end.
 

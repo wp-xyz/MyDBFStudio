@@ -5291,7 +5291,7 @@ object Splash: TSplash
   end
   object Timer1: TTimer
     Enabled = False
-    Interval = 4000
+    Interval = 2000
     OnTimer = Timer1Timer
     Left = 184
     Top = 88

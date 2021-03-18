@@ -38,6 +38,8 @@ var
 
 implementation
 
+{$R *.lfm}
+
 { TExpXml }
 
 procedure TExpXml.FormShow(Sender: TObject);
@@ -154,8 +156,6 @@ begin
    End;
 end;
 
-initialization
-  {$I t_expxml.lrs}
 
 end.
 

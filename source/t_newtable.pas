@@ -69,7 +69,10 @@ var
 
 implementation
 
-Uses T_IdxTable;
+{$R *.lfm}
+
+uses
+  T_IdxTable;
 
 { TNewTable }
 
@@ -581,9 +584,6 @@ begin
       Break;
      End;
 end;
-
-initialization
-  {$I t_newtable.lrs}
 
 end.
 

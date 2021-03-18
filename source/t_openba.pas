@@ -40,7 +40,10 @@ var
 
 implementation
 
-Uses T_AddAlias, T_MainForm;
+{$R *.lfm}
+
+uses
+  T_AddAlias, T_MainForm;
 
 { TOpenBA }
 
@@ -135,8 +138,6 @@ begin
    Elenco.Directory:=AliasDB.FieldByName('PATH').AsString;
 end;
 
-initialization
-  {$I t_openba.lrs}
 
 end.
 

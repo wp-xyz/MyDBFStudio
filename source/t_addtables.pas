@@ -41,7 +41,10 @@ var
 
 implementation
 
-Uses T_MainForm, T_DbfTable;
+{$R *.lfm}
+
+uses
+  T_MainForm, T_DbfTable;
 
 { TAddTables }
 
@@ -162,8 +165,6 @@ begin
    AddTable(T2,T1);
 end;
 
-initialization
-  {$I t_addtables.lrs}
 
 end.
 

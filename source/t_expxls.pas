@@ -47,6 +47,8 @@ var
 
 implementation
 
+{$R *.lfm}
+
 { TExpXls }
 
 procedure TExpXls.BitBtn2Click(Sender: TObject);
@@ -245,8 +247,6 @@ begin
    End;
 end;
 
-initialization
-  {$I t_expxls.lrs}
 
 end.
 
