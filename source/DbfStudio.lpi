@@ -53,7 +53,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="86">
+    <Units Count="87">
       <Unit0>
         <Filename Value="DbfStudio.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -500,7 +500,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_Splash"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="22"/>
         <TopLine Value="29"/>
         <CursorPos X="32" Y="59"/>
@@ -702,7 +701,7 @@
       <Unit80>
         <Filename Value="multidoc-0.3/multidoc.pas"/>
         <UnitName Value="MultiDoc"/>
-        <EditorIndex Value="24"/>
+        <EditorIndex Value="25"/>
         <TopLine Value="436"/>
         <CursorPos X="23" Y="446"/>
         <UsageCount Value="14"/>
@@ -745,6 +744,15 @@
         <CursorPos X="36" Y="244"/>
         <UsageCount Value="10"/>
       </Unit85>
+      <Unit86>
+        <Filename Value="LMDI/buttonsbar.pas"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="24"/>
+        <TopLine Value="775"/>
+        <CursorPos X="25" Y="791"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit86>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
