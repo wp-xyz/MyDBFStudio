@@ -53,12 +53,12 @@ uses
 procedure TSubTables.FormShow(Sender: TObject);
  Var Ind : Word;
 begin
- If MainForm.MultiWnd.ChildCount > 0 Then
+ If Main.MultiWnd.ChildCount > 0 Then
   Begin
-   For Ind:=0 To MainForm.MultiWnd.ChildCount - 1 Do
-    If Assigned(MainForm.MultiWnd.Childs[Ind]) Then
+   For Ind:=0 To Main.MultiWnd.ChildCount - 1 Do
+    If Assigned(Main.MultiWnd.Childs[Ind]) Then
      Begin
-      With MainForm.MultiWnd.Childs[Ind].DockedObject As TDbfTable Do
+      With Main.MultiWnd.Childs[Ind].DockedObject As TDbfTable Do
        Begin
         cbFT.Items.Add(DbTable.FilePathFull + DBTable.TableName);
 
@@ -175,10 +175,10 @@ begin
    Exit;
   End;
 
- With MainForm.MultiWnd.Childs[cbFT.ItemIndex].DockedObject As TDbfTable Do
+ With Main.MultiWnd.Childs[cbFT.ItemIndex].DockedObject As TDbfTable Do
   T1:=DbTable;
 
- With MainForm.MultiWnd.Childs[cbST.ItemIndex].DockedObject As TDbfTable Do
+ With Main.MultiWnd.Childs[cbST.ItemIndex].DockedObject As TDbfTable Do
   T2:=DbTable;
 
  If T1.Fields.Count <> T2.Fields.Count Then

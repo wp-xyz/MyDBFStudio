@@ -4,7 +4,7 @@ object AddAlias: TAddAlias
   Top = 270
   Width = 383
   BorderStyle = bsDialog
-  Caption = 'Add alias for tables'
+  Caption = 'Add Alias For Tables'
   ClientHeight = 147
   ClientWidth = 383
   Font.Height = -12

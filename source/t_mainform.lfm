@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object Main: TMain
   Left = 837
   Height = 600
   Top = 208

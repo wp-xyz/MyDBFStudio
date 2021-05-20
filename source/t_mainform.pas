@@ -22,9 +22,9 @@ Const
 
 type
 
-  { TMainForm }
+  { TMain }
 
-  TMainForm = class(TForm)
+  TMain = class(TForm)
     HTMLBrowserHelpViewer1: THTMLBrowserHelpViewer;
     HtmlHD: THTMLHelpDatabase;
 //    AppTmpImg: TImage;
@@ -130,7 +130,7 @@ type
   end; 
 
 var
-  MainForm: TMainForm;
+  Main: TMain;
 
 implementation
 
@@ -138,7 +138,7 @@ implementation
 
 uses
   T_DbfTable, T_NewTable, T_ExpCSV, T_ExtHTML, T_ExpXls, T_AddTables, T_SubTables,
-  T_ExpDbf, uSplash, T_ExpXml, uInfo, T_OpenBA, T_SortTable, T_ExpSQL;
+  T_ExpDbf, uSplash, T_ExpXml, uInfo, uOpenBA, T_SortTable, T_ExpSQL;
 
 Procedure FuncStrD_StrEq(Param: PExpressionRec);
 Begin
@@ -188,9 +188,9 @@ Begin
   Res.MemoryPos^^:=Char(Tmp = UpperCase(Args[1]));
 End;
 
-{ TMainForm }
+{ TMain }
 
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TMain.FormCreate(Sender: TObject);
 var
   dir: String;
 begin
@@ -241,7 +241,7 @@ begin
     Open_Table(ParamStr(1));
 end;
 
-procedure TMainForm.FormResize(Sender: TObject);
+procedure TMain.FormResize(Sender: TObject);
  Var Ind : Word;
      TmpLeft,TmpTop : Integer;
 begin
@@ -268,18 +268,18 @@ begin
   End;
 end;
 
-procedure TMainForm.MenuItem10Click(Sender: TObject);
+procedure TMain.MenuItem10Click(Sender: TObject);
 begin
  ShowHelpOrErrorForKeyword('','help/index.html');
 end;
 
-procedure TMainForm.MenuItem11Click(Sender: TObject);
+procedure TMain.MenuItem11Click(Sender: TObject);
 begin
  If MessageDlg('Do you want to close MyDbf Studio?',mtWarning,[mbYes, mbCancel],0) = mrYes Then
   Application.Terminate;
 end;
 
-procedure TMainForm.MenuItem13Click(Sender: TObject);
+procedure TMain.MenuItem13Click(Sender: TObject);
 begin
  AddTables:=TAddTables.Create(Self);
 
@@ -288,7 +288,7 @@ begin
  AddTables.Release;
 end;
 
-procedure TMainForm.MenuItem14Click(Sender: TObject);
+procedure TMain.MenuItem14Click(Sender: TObject);
 begin
  SubTables:=TSubTables.Create(Self);
 
@@ -297,7 +297,7 @@ begin
  SubTables.Release;
 end;
 
-procedure TMainForm.ButtonsBarClickMaximize(Sender: TObject);
+procedure TMain.ButtonsBarClickMaximize(Sender: TObject);
 begin
  If MultiWnd.ActiveChild <> Nil Then
   Begin
@@ -314,7 +314,7 @@ begin
   End;
 end;
 
-procedure TMainForm.ButtonsBarClickClose(Sender: TObject);
+procedure TMain.ButtonsBarClickClose(Sender: TObject);
  Var Ind : Word;
      BBVisible : Boolean;
 begin
@@ -337,7 +337,7 @@ begin
   End;
 end;
 
-procedure TMainForm.ButtonsBarClickMinimize(Sender: TObject);
+procedure TMain.ButtonsBarClickMinimize(Sender: TObject);
 begin
  If MultiWnd.ActiveChild <> Nil Then
   Begin
@@ -351,7 +351,7 @@ begin
   End;
 end;
 
-procedure TMainForm.FormCloseQuery(Sender: TObject; var CanClose: boolean);
+procedure TMain.FormCloseQuery(Sender: TObject; var CanClose: boolean);
 begin
  If MessageDlg('Do you want to close MyDbf Studio?',mtWarning,[mbYes, mbCancel],0) = mrYes Then
   Application.Terminate
@@ -359,7 +359,7 @@ begin
   CanClose:=False;
 end;
 
-procedure TMainForm.MenuItem15Click(Sender: TObject);
+procedure TMain.MenuItem15Click(Sender: TObject);
  Var Ind : Word;
 begin
  If OpenTable.Execute Then
@@ -369,7 +369,7 @@ begin
   End;
 end;
 
-procedure TMainForm.MenuItem16Click(Sender: TObject);
+procedure TMain.MenuItem16Click(Sender: TObject);
 begin
  If MultiWnd.ActiveObject Is TDbfTable Then
   With MultiWnd.ActiveObject As TDbfTable Do
@@ -389,7 +389,7 @@ begin
    End;
 end;
 
-procedure TMainForm.MenuItem17Click(Sender: TObject);
+procedure TMain.MenuItem17Click(Sender: TObject);
 begin
  If MultiWnd.ActiveObject Is TDbfTable Then
   With MultiWnd.ActiveObject As TDbfTable Do
@@ -409,7 +409,7 @@ begin
    End;
 end;
 
-procedure TMainForm.MenuItem18Click(Sender: TObject);
+procedure TMain.MenuItem18Click(Sender: TObject);
 begin
  If MultiWnd.ActiveObject Is TDbfTable Then
   With MultiWnd.ActiveObject As TDbfTable Do
@@ -429,7 +429,7 @@ begin
    End;
 end;
 
-procedure TMainForm.MenuItem19Click(Sender: TObject);
+procedure TMain.MenuItem19Click(Sender: TObject);
 begin
   if MultiWnd.ActiveObject Is TDbfTable then
   with MultiWnd.ActiveObject As TDbfTable Do
@@ -449,22 +449,22 @@ begin
   end;
 end;
 
-procedure TMainForm.MenuItem20Click(Sender: TObject);
+procedure TMain.MenuItem20Click(Sender: TObject);
 begin
   MultiWnd.Cascade;
 end;
 
-procedure TMainForm.MenuItem21Click(Sender: TObject);
+procedure TMain.MenuItem21Click(Sender: TObject);
 begin
   MultiWnd.TileVertical;
 end;
 
-procedure TMainForm.MenuItem22Click(Sender: TObject);
+procedure TMain.MenuItem22Click(Sender: TObject);
 begin
  MultiWnd.TileHorizontal;
 end;
 
-procedure TMainForm.MenuItem24Click(Sender: TObject);
+procedure TMain.MenuItem24Click(Sender: TObject);
 begin
  If MultiWnd.ActiveObject Is TDbfTable Then
   With MultiWnd.ActiveObject As TDbfTable Do
@@ -484,7 +484,7 @@ begin
    End;
 end;
 
-procedure TMainForm.MenuItem25Click(Sender: TObject);
+procedure TMain.MenuItem25Click(Sender: TObject);
  Var Ind : Word;
      Tmp : TDbf;
 begin
@@ -514,7 +514,7 @@ begin
   End;
 end;
 
-procedure TMainForm.MenuItem26Click(Sender: TObject);
+procedure TMain.MenuItem26Click(Sender: TObject);
 begin
  OpenBA:=TOpenBA.Create(Self);
 
@@ -523,7 +523,7 @@ begin
  OpenBA.Release;
 end;
 
-procedure TMainForm.MenuItem28Click(Sender: TObject);
+procedure TMain.MenuItem28Click(Sender: TObject);
 begin
  If MultiWnd.ActiveObject Is TDbfTable Then
   With MultiWnd.ActiveObject As TDbfTable Do
@@ -543,7 +543,7 @@ begin
    End;
 end;
 
-procedure TMainForm.MenuItem29Click(Sender: TObject);
+procedure TMain.MenuItem29Click(Sender: TObject);
 begin
  If MultiWnd.ActiveObject Is TDbfTable Then
   With MultiWnd.ActiveObject As TDbfTable Do
@@ -563,7 +563,7 @@ begin
    End;
 end;
 
-procedure TMainForm.MenuItem3Click(Sender: TObject);
+procedure TMain.MenuItem3Click(Sender: TObject);
  Var IdxName : String;
 begin
  If MultiWnd.ActiveObject Is TDbfTable Then
@@ -589,7 +589,7 @@ begin
     End;
 end;
 
-procedure TMainForm.MenuItem5Click(Sender: TObject);
+procedure TMain.MenuItem5Click(Sender: TObject);
 begin
  NewTable:=TNewTable.Create(Self);
 
@@ -601,13 +601,13 @@ begin
  NewTable.Release;
 end;
 
-procedure TMainForm.MenuItem6Click(Sender: TObject);
+procedure TMain.MenuItem6Click(Sender: TObject);
 begin
  If MultiWnd.ActiveChild <> Nil Then
   MultiWnd.ActiveChild.Close;
 end;
 
-procedure TMainForm.MenuItem7Click(Sender: TObject);
+procedure TMain.MenuItem7Click(Sender: TObject);
  Var NumCh : Word;
 begin
  If MultiWnd.ChildCount > 0 Then
@@ -632,7 +632,7 @@ begin
   End;
 end;
 
-procedure TMainForm.MenuItem9Click(Sender: TObject);
+procedure TMain.MenuItem9Click(Sender: TObject);
 begin
  Info:=TInfo.Create(Self);
 
@@ -641,12 +641,12 @@ begin
  Info.Release;
 end;
 
-procedure TMainForm.MultiDocMaximize(Sender: TObject);
+procedure TMain.MultiDocMaximize(Sender: TObject);
 begin
  ButtonsBar.Visible:=MultiWnd.Visible;
 end;
 
-procedure TMainForm.ChildMinimize(Sender: TObject);
+procedure TMain.ChildMinimize(Sender: TObject);
  Var Ind : Word;
      TmpLeft,TmpTop : Integer;
 begin
@@ -685,7 +685,7 @@ begin
   End;
 end;
 
-procedure TMainForm.ChildMaximize(Sender: TObject);
+procedure TMain.ChildMaximize(Sender: TObject);
 begin
  If MultiWnd.ActiveChild <> Nil Then
   Begin
@@ -694,7 +694,7 @@ begin
   End;
 end;
 
-procedure TMainForm.ChildClose(Sender: TObject; var CanClose: boolean);
+procedure TMain.ChildClose(Sender: TObject; var CanClose: boolean);
 begin
  If MultiWnd.ActiveObject Is TDbfTable Then
   With MultiWnd.ActiveObject As TDbfTable Do
@@ -706,14 +706,14 @@ begin
    End;
 end;
 
-procedure TMainForm.ChildEnter(Sender: TObject);
+procedure TMain.ChildEnter(Sender: TObject);
 begin
  If MultiWnd.ActiveObject Is TDbfTable Then
   With MultiWnd.ActiveObject As TDbfTable Do
    StatusBar.SimpleText:=DBTable.FilePathFull + DBTable.TableName;
 end;
 
-procedure TMainForm.Set_Up();
+procedure TMain.Set_Up();
 begin
  IconList[0].FileName:='open.png';
  IconList[0].MaskR:=255;
@@ -811,7 +811,7 @@ begin
  IconMenu[12].MaskB:=255;
 end;
 
-procedure TMainForm.ShowSplashScreen();
+procedure TMain.ShowSplashScreen();
 begin
  Splash:=TSplash.Create(Self);
 
@@ -820,7 +820,7 @@ begin
  Splash.Release;
 end;
 
-procedure TMainForm.Load_Icons();
+procedure TMain.Load_Icons();
 var
   Ind : Word;
   dir: String;
@@ -858,7 +858,7 @@ begin
   end;
 end;
 
-procedure TMainForm.Open_Table(TblName: String);
+procedure TMain.Open_Table(TblName: String);
 var
   Tmp: TChildDoc;
   DbfTmp: TDbfTable;
@@ -889,7 +889,7 @@ begin
    Tmp.Height := MultiWnd.Height - 21;
 end;
 
-procedure TMainForm.CreateAliasDB();
+procedure TMain.CreateAliasDB();
 var
   T : TDbf;
 begin
