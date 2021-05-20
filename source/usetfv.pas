@@ -1,34 +1,37 @@
-unit T_SetFV;
+unit uSetFV;
 
 {$mode objfpc}{$H+}
 
 interface
 
 uses
-  Classes, SysUtils, dbf, FileUtil, LResources, Forms, Controls, Graphics,
-  Dialogs, StdCtrls, ExtCtrls, Buttons;
+  Classes, SysUtils, dbf, FileUtil, Forms, Controls, Graphics, Dialogs,
+  StdCtrls, ExtCtrls, Buttons;
 
 type
 
   { TSetFV }
 
   TSetFV = class(TForm)
-    BitBtn1: TBitBtn;
-    BitBtn2: TBitBtn;
-    CheckBox1: TCheckBox;
+    CloseBtn: TBitBtn;
+    ConfirmBtn: TBitBtn;
     cbFirst: TComboBox;
-    cbSecond: TComboBox;
-    cbOp: TComboBox;
     CbMode: TRadioGroup;
-    SetTable: TDbf;
-    gbMath: TGroupBox;
-    Label1: TLabel;
+    cbOp: TComboBox;
+    cbSecond: TComboBox;
+    CheckBox1: TCheckBox;
     FieldList: TListBox;
+    gbMath: TGroupBox;
+    gbSelField: TGroupBox;
+    gbSetVal: TGroupBox;
+    Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
-    sSetVal: TLabeledEdit;
-    SelField: TLabeledEdit;
-    procedure BitBtn2Click(Sender: TObject);
+    SelField: TEdit;
+    sSetVal: TEdit;
+    SetTable: TDbf;
+    procedure CloseBtnClick(Sender: TObject);
+    procedure ConfirmBtnClick(Sender: TObject);
     procedure CheckBox1Change(Sender: TObject);
     procedure FieldListClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -36,7 +39,7 @@ type
     { private declarations }
   public
     { public declarations }
-  end; 
+  end;
 
 var
   SetFV: TSetFV;
@@ -50,14 +53,16 @@ implementation
 procedure TSetFV.FormShow(Sender: TObject);
  Var Ind : Word;
 begin
- CbMode.ItemIndex:=0;
- gbMath.Enabled:=False;
+ CloseBtn.Constraints.MinWidth := ConfirmBtn.Width;
+
+ CbMode.ItemIndex := 0;
+ gbMath.Enabled := False;
 
  FieldList.Clear;
  cbFirst.Clear;
  cbSecond.Clear;
 
- For Ind:=0 To SetTable.FieldDefs.Count - 1 Do
+ For Ind := 0 To SetTable.FieldDefs.Count - 1 Do
   Begin
    FieldList.Items.Add(SetTable.FieldDefs.Items[Ind].Name);
 
@@ -66,19 +71,19 @@ begin
   End;
 end;
 
-procedure TSetFV.FieldListClick(Sender: TObject);
-begin
- SelField.Text:=FieldList.Items[FieldList.ItemIndex];
-end;
-
 procedure TSetFV.CheckBox1Change(Sender: TObject);
 begin
- gbMath.Enabled:=CheckBox1.Checked;
+ gbMath.Enabled := CheckBox1.Checked;
 
- sSetVal.Enabled:=Not CheckBox1.Checked;
+ sSetVal.Enabled := Not CheckBox1.Checked;
 end;
 
-procedure TSetFV.BitBtn2Click(Sender: TObject);
+procedure TSetFV.CloseBtnClick(Sender: TObject);
+begin
+ Close;
+end;
+
+procedure TSetFV.ConfirmBtnClick(Sender: TObject);
  Var Error : Boolean;
 begin
  If Trim(SelField.Text) = '' Then
@@ -122,12 +127,12 @@ begin
     End;
   End;
 
- If MessageDlg('Do you want to attempt to set field?',mtWarning,[mbYes, mbCancel],0) = mrYes Then
+ If MessageDlg('Do you want to attempt to set field?',mtWarning,[mbok, mbCancel],0) = mrOk Then
   Begin
-   Error:=False;
+   Error := False;
 
    If CbMode.ItemIndex = 1 Then
-    SetTable.Filter:='';
+    SetTable.Filter := '';
 
    SetTable.First;
 
@@ -138,12 +143,12 @@ begin
        Try
          SetTable.Edit;
 
-         SetTable.FieldByName(SelField.Text).AsVariant:=sSetVal.Text;
+         SetTable.FieldByName(SelField.Text).AsVariant := sSetVal.Text;
 
          SetTable.Post;
        Except
          ShowMessage('Error while set value in table. Check if the value match width field type or size.');
-         Error:=True;
+         Error := True;
 
          Break;
 
@@ -192,6 +197,10 @@ begin
   End;
 end;
 
+procedure TSetFV.FieldListClick(Sender: TObject);
+begin
+ SelField.Text := FieldList.Items[FieldList.ItemIndex];
+end;
 
 end.
 

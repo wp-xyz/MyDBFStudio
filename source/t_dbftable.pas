@@ -56,7 +56,7 @@ implementation
 {$R *.lfm}
 
 uses
-  T_Restructure, T_SetFV;
+  T_Restructure, uSetFV;
 
 { TDbfTable }
 

@@ -54,13 +54,13 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="91">
+    <Units Count="92">
       <Unit0>
         <Filename Value="DbfStudio.lpr"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <CursorPos X="57" Y="19"/>
-        <UsageCount Value="125"/>
+        <CursorPos X="39" Y="13"/>
+        <UsageCount Value="126"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -71,9 +71,7 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_MainForm"/>
         <EditorIndex Value="15"/>
-        <TopLine Value="121"/>
-        <CursorPos X="57" Y="142"/>
-        <UsageCount Value="125"/>
+        <UsageCount Value="126"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -85,9 +83,9 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_DbfTable"/>
         <EditorIndex Value="7"/>
-        <TopLine Value="171"/>
-        <CursorPos Y="207"/>
-        <UsageCount Value="125"/>
+        <TopLine Value="25"/>
+        <CursorPos X="19" Y="59"/>
+        <UsageCount Value="126"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit2>
@@ -184,7 +182,7 @@
         <EditorIndex Value="18"/>
         <TopLine Value="553"/>
         <CursorPos Y="591"/>
-        <UsageCount Value="115"/>
+        <UsageCount Value="116"/>
         <Loaded Value="True"/>
       </Unit16>
       <Unit17>
@@ -271,7 +269,7 @@
         <EditorIndex Value="14"/>
         <TopLine Value="60"/>
         <CursorPos Y="96"/>
-        <UsageCount Value="107"/>
+        <UsageCount Value="108"/>
         <Loaded Value="True"/>
       </Unit30>
       <Unit31>
@@ -296,21 +294,19 @@
         <EditorIndex Value="16"/>
         <TopLine Value="551"/>
         <CursorPos Y="588"/>
-        <UsageCount Value="103"/>
+        <UsageCount Value="104"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit33>
       <Unit34>
         <Filename Value="t_setfv.pas"/>
-        <IsPartOfProject Value="True"/>
         <ComponentName Value="SetFV"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_SetFV"/>
-        <EditorIndex Value="19"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="159"/>
         <CursorPos Y="195"/>
         <UsageCount Value="100"/>
-        <Loaded Value="True"/>
       </Unit34>
       <Unit35>
         <Filename Value="dscsv.pas"/>
@@ -319,7 +315,7 @@
         <EditorIndex Value="1"/>
         <TopLine Value="337"/>
         <CursorPos Y="486"/>
-        <UsageCount Value="98"/>
+        <UsageCount Value="99"/>
         <Loaded Value="True"/>
       </Unit35>
       <Unit36>
@@ -331,7 +327,7 @@
         <EditorIndex Value="8"/>
         <TopLine Value="97"/>
         <CursorPos Y="134"/>
-        <UsageCount Value="96"/>
+        <UsageCount Value="97"/>
         <Loaded Value="True"/>
       </Unit36>
       <Unit37>
@@ -354,7 +350,7 @@
         <EditorIndex Value="2"/>
         <TopLine Value="278"/>
         <CursorPos X="50" Y="317"/>
-        <UsageCount Value="88"/>
+        <UsageCount Value="89"/>
         <Loaded Value="True"/>
       </Unit39>
       <Unit40>
@@ -364,7 +360,7 @@
         <EditorIndex Value="3"/>
         <TopLine Value="178"/>
         <CursorPos Y="172"/>
-        <UsageCount Value="87"/>
+        <UsageCount Value="88"/>
         <Loaded Value="True"/>
       </Unit40>
       <Unit41>
@@ -383,7 +379,7 @@
         <EditorIndex Value="13"/>
         <TopLine Value="162"/>
         <CursorPos Y="198"/>
-        <UsageCount Value="84"/>
+        <UsageCount Value="85"/>
         <Loaded Value="True"/>
       </Unit42>
       <Unit43>
@@ -405,7 +401,7 @@
         <EditorIndex Value="4"/>
         <TopLine Value="67"/>
         <CursorPos X="24" Y="29"/>
-        <UsageCount Value="27"/>
+        <UsageCount Value="28"/>
         <Loaded Value="True"/>
       </Unit45>
       <Unit46>
@@ -426,7 +422,7 @@
         <EditorIndex Value="11"/>
         <TopLine Value="214"/>
         <CursorPos Y="250"/>
-        <UsageCount Value="73"/>
+        <UsageCount Value="74"/>
         <Loaded Value="True"/>
       </Unit47>
       <Unit48>
@@ -450,7 +446,7 @@
         <EditorIndex Value="6"/>
         <TopLine Value="132"/>
         <CursorPos Y="168"/>
-        <UsageCount Value="69"/>
+        <UsageCount Value="70"/>
         <Loaded Value="True"/>
       </Unit50>
       <Unit51>
@@ -459,10 +455,10 @@
         <ComponentName Value="SubTables"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_SubTables"/>
-        <EditorIndex Value="21"/>
+        <EditorIndex Value="20"/>
         <TopLine Value="162"/>
         <CursorPos X="17" Y="168"/>
-        <UsageCount Value="67"/>
+        <UsageCount Value="68"/>
         <Loaded Value="True"/>
       </Unit51>
       <Unit52>
@@ -492,7 +488,7 @@
         <EditorIndex Value="9"/>
         <TopLine Value="122"/>
         <CursorPos Y="159"/>
-        <UsageCount Value="63"/>
+        <UsageCount Value="64"/>
         <Loaded Value="True"/>
       </Unit55>
       <Unit56>
@@ -505,7 +501,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="4"/>
         <CursorPos X="30" Y="11"/>
-        <UsageCount Value="59"/>
+        <UsageCount Value="60"/>
       </Unit56>
       <Unit57>
         <Filename Value="C:/lazarus/lcl/interfaces/win32/win32wscontrols.pp"/>
@@ -541,7 +537,7 @@
         <EditorIndex Value="12"/>
         <TopLine Value="123"/>
         <CursorPos Y="159"/>
-        <UsageCount Value="55"/>
+        <UsageCount Value="56"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit61>
@@ -571,10 +567,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uInfo"/>
-        <EditorIndex Value="22"/>
+        <EditorIndex Value="21"/>
         <TopLine Value="18"/>
         <CursorPos X="53" Y="18"/>
-        <UsageCount Value="52"/>
+        <UsageCount Value="53"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit65>
@@ -615,7 +611,7 @@
         <EditorIndex Value="17"/>
         <TopLine Value="105"/>
         <CursorPos Y="141"/>
-        <UsageCount Value="45"/>
+        <UsageCount Value="46"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit70>
@@ -629,7 +625,7 @@
         <EditorIndex Value="5"/>
         <TopLine Value="24"/>
         <CursorPos Y="41"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="45"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit71>
@@ -645,10 +641,10 @@
         <ComponentName Value="SortTable"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_SortTable"/>
-        <EditorIndex Value="20"/>
+        <EditorIndex Value="19"/>
         <TopLine Value="217"/>
         <CursorPos Y="253"/>
-        <UsageCount Value="41"/>
+        <UsageCount Value="42"/>
         <Loaded Value="True"/>
       </Unit73>
       <Unit74>
@@ -668,7 +664,7 @@
         <EditorIndex Value="10"/>
         <TopLine Value="239"/>
         <CursorPos Y="275"/>
-        <UsageCount Value="33"/>
+        <UsageCount Value="34"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit75>
@@ -778,7 +774,7 @@
         <UnitName Value="uUtils"/>
         <EditorIndex Value="23"/>
         <CursorPos Y="11"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
       </Unit89>
       <Unit90>
@@ -794,126 +790,140 @@
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit90>
+      <Unit91>
+        <Filename Value="usetfv.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="SetFV"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="uSetFV"/>
+        <EditorIndex Value="22"/>
+        <TopLine Value="61"/>
+        <CursorPos X="30" Y="86"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit91>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="t_expdbf.pas"/>
-        <Caret Line="161" TopLine="123"/>
+        <Filename Value="t_newtable.pas"/>
+        <Caret Line="77" Column="2" TopLine="39"/>
       </Position1>
       <Position2>
-        <Filename Value="t_expdbf.pas"/>
-        <Caret Line="57" TopLine="19"/>
+        <Filename Value="t_openba.pas"/>
+        <Caret Line="77" TopLine="39"/>
       </Position2>
       <Position3>
-        <Filename Value="t_expsql.pas"/>
-        <Caret Line="243" Column="10" TopLine="222"/>
+        <Filename Value="t_restructure.pas"/>
+        <Caret Line="477" Column="33" TopLine="477"/>
       </Position3>
       <Position4>
-        <Filename Value="t_expsql.pas"/>
-        <Caret Line="57" TopLine="19"/>
+        <Filename Value="t_restructure.pas"/>
+        <Caret Line="76" Column="3" TopLine="38"/>
       </Position4>
       <Position5>
-        <Filename Value="t_expxls.pas"/>
-        <Caret Line="53" TopLine="15"/>
+        <Filename Value="t_sorttable.pas"/>
+        <Caret Line="103" Column="68" TopLine="103"/>
       </Position5>
       <Position6>
-        <Filename Value="t_expxml.pas"/>
-        <Caret Line="122" Column="33" TopLine="122"/>
+        <Filename Value="t_sorttable.pas"/>
+        <Caret Line="75" TopLine="37"/>
       </Position6>
       <Position7>
-        <Filename Value="t_expxml.pas"/>
-        <Caret Line="57" TopLine="19"/>
+        <Filename Value="t_subtables.pas"/>
+        <Caret Line="51" Column="3" TopLine="13"/>
       </Position7>
       <Position8>
-        <Filename Value="t_exthtml.pas"/>
-        <Caret Line="101" Column="11" TopLine="63"/>
+        <Filename Value="t_mainform.pas"/>
+        <Caret Line="880" Column="38" TopLine="880"/>
       </Position8>
       <Position9>
-        <Filename Value="t_idxtable.pas"/>
-        <Caret Line="51" TopLine="13"/>
+        <Filename Value="t_mainform.pas"/>
+        <Caret Line="21" Column="27" TopLine="21"/>
       </Position9>
       <Position10>
         <Filename Value="t_mainform.pas"/>
-        <Caret Line="370" Column="26" TopLine="370"/>
       </Position10>
       <Position11>
-        <Filename Value="t_mainform.pas"/>
-        <Caret Line="151" Column="3" TopLine="113"/>
+        <Filename Value="uinfo.pas"/>
+        <Caret Line="44" Column="9" TopLine="11"/>
       </Position11>
       <Position12>
-        <Filename Value="t_newtable.pas"/>
-        <Caret Line="77" Column="2" TopLine="39"/>
+        <Filename Value="uinfo.pas"/>
+        <Caret Line="46" Column="9" TopLine="11"/>
       </Position12>
       <Position13>
-        <Filename Value="t_openba.pas"/>
-        <Caret Line="77" TopLine="39"/>
+        <Filename Value="uinfo.pas"/>
+        <Caret Line="54" Column="9" TopLine="20"/>
       </Position13>
       <Position14>
-        <Filename Value="t_restructure.pas"/>
-        <Caret Line="477" Column="33" TopLine="477"/>
+        <Filename Value="uinfo.pas"/>
+        <Caret Line="53" Column="9" TopLine="19"/>
       </Position14>
       <Position15>
-        <Filename Value="t_restructure.pas"/>
-        <Caret Line="76" Column="3" TopLine="38"/>
+        <Filename Value="t_mainform.pas"/>
+        <Caret Line="142" Column="57" TopLine="121"/>
       </Position15>
       <Position16>
-        <Filename Value="t_setfv.pas"/>
-        <Caret Line="54" TopLine="16"/>
+        <Filename Value="DbfStudio.lpr"/>
+        <Caret Line="26" Column="14"/>
       </Position16>
       <Position17>
-        <Filename Value="t_sorttable.pas"/>
-        <Caret Line="103" Column="68" TopLine="103"/>
+        <Filename Value="DbfStudio.lpr"/>
+        <Caret Line="25"/>
       </Position17>
       <Position18>
-        <Filename Value="t_sorttable.pas"/>
-        <Caret Line="75" TopLine="37"/>
+        <Filename Value="DbfStudio.lpr"/>
+        <Caret Line="8" Column="58"/>
       </Position18>
       <Position19>
-        <Filename Value="t_subtables.pas"/>
-        <Caret Line="51" Column="3" TopLine="13"/>
+        <Filename Value="t_dbftable.pas"/>
+        <Caret Line="170" Column="15" TopLine="170"/>
       </Position19>
       <Position20>
         <Filename Value="t_mainform.pas"/>
-        <Caret Line="880" Column="38" TopLine="880"/>
+        <Caret Line="121" Column="27" TopLine="121"/>
       </Position20>
       <Position21>
-        <Filename Value="t_mainform.pas"/>
-        <Caret Line="21" Column="27" TopLine="21"/>
+        <Filename Value="DbfStudio.lpr"/>
+        <Caret Line="5" Column="42"/>
       </Position21>
       <Position22>
-        <Filename Value="t_mainform.pas"/>
+        <Filename Value="usetfv.pas"/>
+        <Caret Line="18" Column="44"/>
       </Position22>
       <Position23>
-        <Filename Value="uinfo.pas"/>
-        <Caret Line="44" Column="9" TopLine="11"/>
+        <Filename Value="usetfv.pas"/>
+        <Caret Line="33" Column="80"/>
       </Position23>
       <Position24>
-        <Filename Value="uinfo.pas"/>
-        <Caret Line="46" Column="9" TopLine="11"/>
+        <Filename Value="usetfv.pas"/>
+        <Caret Line="32" Column="80"/>
       </Position24>
       <Position25>
-        <Filename Value="uinfo.pas"/>
-        <Caret Line="54" Column="9" TopLine="20"/>
+        <Filename Value="usetfv.pas"/>
+        <Caret Line="33" Column="80"/>
       </Position25>
       <Position26>
-        <Filename Value="uinfo.pas"/>
-        <Caret Line="53" Column="9" TopLine="19"/>
+        <Filename Value="usetfv.pas"/>
+        <Caret Line="35" Column="80"/>
       </Position26>
       <Position27>
-        <Filename Value="t_mainform.pas"/>
-        <Caret Line="142" Column="57" TopLine="121"/>
+        <Filename Value="usetfv.pas"/>
+        <Caret Line="34" Column="80"/>
       </Position27>
       <Position28>
-        <Filename Value="DbfStudio.lpr"/>
-        <Caret Line="26" Column="14"/>
+        <Filename Value="usetfv.pas"/>
+        <Caret Line="37" Column="16"/>
       </Position28>
       <Position29>
-        <Filename Value="DbfStudio.lpr"/>
-        <Caret Line="25"/>
+        <Filename Value="usetfv.pas"/>
+        <Caret Line="56" Column="2" TopLine="53"/>
       </Position29>
       <Position30>
-        <Filename Value="DbfStudio.lpr"/>
-        <Caret Line="8" Column="58"/>
+        <Filename Value="usetfv.pas"/>
+        <Caret Line="37" Column="25" TopLine="18"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
