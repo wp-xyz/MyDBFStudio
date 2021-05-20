@@ -43,7 +43,7 @@ implementation
 {$R *.lfm}
 
 uses
-  T_AddAlias, T_MainForm;
+  uAddAlias, T_MainForm;
 
 { TOpenBA }
 

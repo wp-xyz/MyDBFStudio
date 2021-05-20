@@ -58,8 +58,7 @@
       <Unit0>
         <Filename Value="DbfStudio.lpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <CursorPos X="39" Y="13"/>
+        <CursorPos X="27" Y="18"/>
         <UsageCount Value="126"/>
         <Loaded Value="True"/>
       </Unit0>
@@ -70,7 +69,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_MainForm"/>
-        <EditorIndex Value="15"/>
+        <EditorIndex Value="14"/>
         <UsageCount Value="126"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -82,7 +81,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_DbfTable"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="6"/>
         <TopLine Value="25"/>
         <CursorPos X="19" Y="59"/>
         <UsageCount Value="126"/>
@@ -179,7 +178,7 @@
         <ComponentName Value="Restructure"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_Restructure"/>
-        <EditorIndex Value="18"/>
+        <EditorIndex Value="17"/>
         <TopLine Value="553"/>
         <CursorPos Y="591"/>
         <UsageCount Value="116"/>
@@ -266,7 +265,7 @@
         <ComponentName Value="IdxTable"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_IdxTable"/>
-        <EditorIndex Value="14"/>
+        <EditorIndex Value="13"/>
         <TopLine Value="60"/>
         <CursorPos Y="96"/>
         <UsageCount Value="108"/>
@@ -291,7 +290,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_NewTable"/>
-        <EditorIndex Value="16"/>
+        <EditorIndex Value="15"/>
         <TopLine Value="551"/>
         <CursorPos Y="588"/>
         <UsageCount Value="104"/>
@@ -324,7 +323,7 @@
         <ComponentName Value="ExpCSV"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_ExpCSV"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="7"/>
         <TopLine Value="97"/>
         <CursorPos Y="134"/>
         <UsageCount Value="97"/>
@@ -376,7 +375,7 @@
         <ComponentName Value="ExpHTML"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_ExtHTML"/>
-        <EditorIndex Value="13"/>
+        <EditorIndex Value="12"/>
         <TopLine Value="162"/>
         <CursorPos Y="198"/>
         <UsageCount Value="85"/>
@@ -419,7 +418,7 @@
         <ComponentName Value="ExpXls"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_ExpXls"/>
-        <EditorIndex Value="11"/>
+        <EditorIndex Value="10"/>
         <TopLine Value="214"/>
         <CursorPos Y="250"/>
         <UsageCount Value="74"/>
@@ -443,7 +442,7 @@
         <ComponentName Value="AddTables"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_AddTables"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="132"/>
         <CursorPos Y="168"/>
         <UsageCount Value="70"/>
@@ -455,7 +454,7 @@
         <ComponentName Value="SubTables"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_SubTables"/>
-        <EditorIndex Value="20"/>
+        <EditorIndex Value="19"/>
         <TopLine Value="162"/>
         <CursorPos X="17" Y="168"/>
         <UsageCount Value="68"/>
@@ -485,7 +484,7 @@
         <ComponentName Value="ExpDbf"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_ExpDbf"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="8"/>
         <TopLine Value="122"/>
         <CursorPos Y="159"/>
         <UsageCount Value="64"/>
@@ -534,7 +533,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_ExpXml"/>
-        <EditorIndex Value="12"/>
+        <EditorIndex Value="11"/>
         <TopLine Value="123"/>
         <CursorPos Y="159"/>
         <UsageCount Value="56"/>
@@ -608,23 +607,23 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_OpenBA"/>
-        <EditorIndex Value="17"/>
-        <TopLine Value="105"/>
-        <CursorPos Y="141"/>
+        <EditorIndex Value="16"/>
+        <CursorPos X="4" Y="46"/>
         <UsageCount Value="46"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit70>
       <Unit71>
-        <Filename Value="t_addalias.pas"/>
+        <Filename Value="uaddalias.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="AddAlias"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="T_AddAlias"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="24"/>
-        <CursorPos Y="41"/>
+        <UnitName Value="uAddAlias"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="20"/>
+        <TopLine Value="37"/>
+        <CursorPos X="54" Y="54"/>
         <UsageCount Value="45"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -641,7 +640,7 @@
         <ComponentName Value="SortTable"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_SortTable"/>
-        <EditorIndex Value="19"/>
+        <EditorIndex Value="18"/>
         <TopLine Value="217"/>
         <CursorPos Y="253"/>
         <UsageCount Value="42"/>
@@ -661,7 +660,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_ExpSQL"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="9"/>
         <TopLine Value="239"/>
         <CursorPos Y="275"/>
         <UsageCount Value="34"/>
@@ -785,7 +784,7 @@
         <UnitName Value="uInfo"/>
         <WindowIndex Value="1"/>
         <TopLine Value="16"/>
-        <CursorPos X="20" Y="41"/>
+        <CursorPos X="32" Y="27"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -807,123 +806,123 @@
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="t_newtable.pas"/>
-        <Caret Line="77" Column="2" TopLine="39"/>
-      </Position1>
-      <Position2>
-        <Filename Value="t_openba.pas"/>
-        <Caret Line="77" TopLine="39"/>
-      </Position2>
-      <Position3>
-        <Filename Value="t_restructure.pas"/>
-        <Caret Line="477" Column="33" TopLine="477"/>
-      </Position3>
-      <Position4>
-        <Filename Value="t_restructure.pas"/>
-        <Caret Line="76" Column="3" TopLine="38"/>
-      </Position4>
-      <Position5>
-        <Filename Value="t_sorttable.pas"/>
-        <Caret Line="103" Column="68" TopLine="103"/>
-      </Position5>
-      <Position6>
-        <Filename Value="t_sorttable.pas"/>
-        <Caret Line="75" TopLine="37"/>
-      </Position6>
-      <Position7>
-        <Filename Value="t_subtables.pas"/>
-        <Caret Line="51" Column="3" TopLine="13"/>
-      </Position7>
-      <Position8>
-        <Filename Value="t_mainform.pas"/>
-        <Caret Line="880" Column="38" TopLine="880"/>
-      </Position8>
-      <Position9>
         <Filename Value="t_mainform.pas"/>
         <Caret Line="21" Column="27" TopLine="21"/>
-      </Position9>
-      <Position10>
+      </Position1>
+      <Position2>
         <Filename Value="t_mainform.pas"/>
-      </Position10>
-      <Position11>
+      </Position2>
+      <Position3>
         <Filename Value="uinfo.pas"/>
         <Caret Line="44" Column="9" TopLine="11"/>
-      </Position11>
-      <Position12>
+      </Position3>
+      <Position4>
         <Filename Value="uinfo.pas"/>
         <Caret Line="46" Column="9" TopLine="11"/>
-      </Position12>
-      <Position13>
+      </Position4>
+      <Position5>
         <Filename Value="uinfo.pas"/>
         <Caret Line="54" Column="9" TopLine="20"/>
-      </Position13>
-      <Position14>
+      </Position5>
+      <Position6>
         <Filename Value="uinfo.pas"/>
         <Caret Line="53" Column="9" TopLine="19"/>
-      </Position14>
-      <Position15>
+      </Position6>
+      <Position7>
         <Filename Value="t_mainform.pas"/>
         <Caret Line="142" Column="57" TopLine="121"/>
-      </Position15>
-      <Position16>
+      </Position7>
+      <Position8>
         <Filename Value="DbfStudio.lpr"/>
         <Caret Line="26" Column="14"/>
-      </Position16>
-      <Position17>
+      </Position8>
+      <Position9>
         <Filename Value="DbfStudio.lpr"/>
         <Caret Line="25"/>
-      </Position17>
-      <Position18>
+      </Position9>
+      <Position10>
         <Filename Value="DbfStudio.lpr"/>
         <Caret Line="8" Column="58"/>
-      </Position18>
-      <Position19>
+      </Position10>
+      <Position11>
         <Filename Value="t_dbftable.pas"/>
         <Caret Line="170" Column="15" TopLine="170"/>
-      </Position19>
-      <Position20>
+      </Position11>
+      <Position12>
         <Filename Value="t_mainform.pas"/>
         <Caret Line="121" Column="27" TopLine="121"/>
-      </Position20>
-      <Position21>
+      </Position12>
+      <Position13>
         <Filename Value="DbfStudio.lpr"/>
         <Caret Line="5" Column="42"/>
+      </Position13>
+      <Position14>
+        <Filename Value="usetfv.pas"/>
+        <Caret Line="18" Column="44"/>
+      </Position14>
+      <Position15>
+        <Filename Value="usetfv.pas"/>
+        <Caret Line="33" Column="80"/>
+      </Position15>
+      <Position16>
+        <Filename Value="usetfv.pas"/>
+        <Caret Line="32" Column="80"/>
+      </Position16>
+      <Position17>
+        <Filename Value="usetfv.pas"/>
+        <Caret Line="33" Column="80"/>
+      </Position17>
+      <Position18>
+        <Filename Value="usetfv.pas"/>
+        <Caret Line="35" Column="80"/>
+      </Position18>
+      <Position19>
+        <Filename Value="usetfv.pas"/>
+        <Caret Line="34" Column="80"/>
+      </Position19>
+      <Position20>
+        <Filename Value="usetfv.pas"/>
+        <Caret Line="37" Column="16"/>
+      </Position20>
+      <Position21>
+        <Filename Value="usetfv.pas"/>
+        <Caret Line="56" Column="2" TopLine="53"/>
       </Position21>
       <Position22>
         <Filename Value="usetfv.pas"/>
-        <Caret Line="18" Column="44"/>
+        <Caret Line="37" Column="25" TopLine="18"/>
       </Position22>
       <Position23>
-        <Filename Value="usetfv.pas"/>
-        <Caret Line="33" Column="80"/>
+        <Filename Value="uaddalias.pas"/>
+        <Caret Line="74" Column="28" TopLine="35"/>
       </Position23>
       <Position24>
-        <Filename Value="usetfv.pas"/>
-        <Caret Line="32" Column="80"/>
+        <Filename Value="uaddalias.pas"/>
+        <Caret Line="49" Column="47" TopLine="35"/>
       </Position24>
       <Position25>
-        <Filename Value="usetfv.pas"/>
-        <Caret Line="33" Column="80"/>
+        <Filename Value="uaddalias.pas"/>
+        <Caret Line="59" Column="14" TopLine="35"/>
       </Position25>
       <Position26>
-        <Filename Value="usetfv.pas"/>
-        <Caret Line="35" Column="80"/>
+        <Filename Value="uaddalias.pas"/>
+        <Caret Line="60" Column="14" TopLine="36"/>
       </Position26>
       <Position27>
-        <Filename Value="usetfv.pas"/>
-        <Caret Line="34" Column="80"/>
+        <Filename Value="uaddalias.pas"/>
+        <Caret Line="59" Column="14" TopLine="35"/>
       </Position27>
       <Position28>
-        <Filename Value="usetfv.pas"/>
-        <Caret Line="37" Column="16"/>
+        <Filename Value="uaddalias.pas"/>
+        <Caret Line="60" Column="14" TopLine="36"/>
       </Position28>
       <Position29>
-        <Filename Value="usetfv.pas"/>
-        <Caret Line="56" Column="2" TopLine="53"/>
+        <Filename Value="uaddalias.pas"/>
+        <Caret Line="61" Column="14" TopLine="37"/>
       </Position29>
       <Position30>
-        <Filename Value="usetfv.pas"/>
-        <Caret Line="37" Column="25" TopLine="18"/>
+        <Filename Value="uaddalias.pas"/>
+        <Caret Line="60" Column="14" TopLine="36"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>

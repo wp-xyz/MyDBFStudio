@@ -114,7 +114,7 @@ object OpenBA: TOpenBA
       BorderSpacing.Around = 6
       Directory = 'd:\Prog_Lazarus'
       FileType = [ftReadOnly, ftNormal]
-      ItemHeight = 15
+      ItemHeight = 0
       MultiSelect = True
       OnDblClick = BitBtn2Click
       TabOrder = 0
