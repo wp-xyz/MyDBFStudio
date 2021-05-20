@@ -71,8 +71,8 @@
         <UnitName Value="T_MainForm"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="16"/>
-        <TopLine Value="109"/>
-        <CursorPos X="21" Y="135"/>
+        <TopLine Value="122"/>
+        <CursorPos X="17" Y="127"/>
         <UsageCount Value="125"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -504,7 +504,7 @@
         <UnitName Value="uSplash"/>
         <EditorIndex Value="23"/>
         <TopLine Value="4"/>
-        <CursorPos X="84" Y="33"/>
+        <CursorPos X="30" Y="11"/>
         <UsageCount Value="59"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -763,7 +763,7 @@
         <EditorIndex Value="1"/>
         <WindowIndex Value="1"/>
         <TopLine Value="30"/>
-        <CursorPos X="36" Y="43"/>
+        <CursorPos X="29" Y="50"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>

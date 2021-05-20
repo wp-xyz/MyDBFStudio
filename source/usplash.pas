@@ -1,4 +1,4 @@
-unit T_Splash; 
+unit uSplash;
 
 {$mode objfpc}{$H+}
 

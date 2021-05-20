@@ -20,6 +20,7 @@ object Splash: TSplash
     Top = 1
     Width = 448
     Align = alClient
+    AutoSize = True
     Picture.Data = {
       1754506F727461626C654E6574776F726B47726170686963B388020089504E47
       0D0A1A0A0000000D49484452000001C20000012C08060000005056B3B7000000
@@ -5228,9 +5229,8 @@ object Splash: TSplash
   end
   object Timer1: TTimer
     Enabled = False
-    Interval = 2000
     OnTimer = Timer1Timer
-    Left = 184
-    Top = 88
+    Left = 216
+    Top = 128
   end
 end
