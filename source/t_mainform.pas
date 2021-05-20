@@ -138,7 +138,7 @@ implementation
 
 uses
   T_DbfTable, T_NewTable, T_ExpCSV, T_ExtHTML, T_ExpXls, T_AddTables, T_SubTables,
-  T_ExpDbf, uSplash, T_ExpXml, T_Info, T_OpenBA, T_SortTable, T_ExpSQL;
+  T_ExpDbf, uSplash, T_ExpXml, uInfo, T_OpenBA, T_SortTable, T_ExpSQL;
 
 Procedure FuncStrD_StrEq(Param: PExpressionRec);
 Begin

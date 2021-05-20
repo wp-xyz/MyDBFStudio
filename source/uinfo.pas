@@ -1,4 +1,4 @@
-unit T_Info;
+unit uInfo;
 
 {$mode objfpc}{$H+}
 
@@ -17,6 +17,7 @@ type
     Img: TImage;
     Memo1: TMemo;
     Version: TLabel;
+    procedure CloseBtnClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
@@ -31,10 +32,15 @@ implementation
 
 {$R *.lfm}
 
-const
-  StrVer = '0.5.1-2021';
+uses
+  uUtils;
 
 { TInfo }
+
+procedure TInfo.CloseBtnClick(Sender: TObject);
+begin
+  Close;
+end;
 
 procedure TInfo.FormShow(Sender: TObject);
 var
@@ -44,9 +50,8 @@ begin
   if FileExists(fn) Then
    Img.Picture.LoadFromFile(fn);
 
-  Version.Caption:='Version: ' + StrVer;
+  Version.Caption:='Version: ' + GetVersionStr;
 end;
-
 
 end.
 
