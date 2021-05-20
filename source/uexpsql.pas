@@ -1,42 +1,44 @@
-unit T_ExpSQL;
+unit uExpSQL;
 
 {$mode objfpc}{$H+}
 
 interface
 
 uses
-  Classes, SysUtils, dbf, FileUtil, LResources, Forms, Controls, Graphics,
-  Dialogs, CheckLst, StdCtrls, ComCtrls, Buttons, db;
+  Classes, SysUtils, dbf, FileUtil, Forms, Controls, Graphics, Dialogs,
+  CheckLst, StdCtrls, ComCtrls, Buttons, DB;
 
 type
 
   { TExpSQL }
 
   TExpSQL = class(TForm)
-    BitBtn1: TBitBtn;
-    BitBtn2: TBitBtn;
-    ExpRec: TCheckBox;
-    CrTab: TCheckBox;
+    CloseBtn: TBitBtn;
+    ExportBtn: TBitBtn;
     ClbField: TCheckListBox;
+    CrTab: TCheckBox;
+    ExpRec: TCheckBox;
     Label1: TLabel;
     Label11: TLabel;
     pBar: TProgressBar;
     SaveExp: TSaveDialog;
     Tmp: TDbf;
-    procedure BitBtn2Click(Sender: TObject);
+    procedure CloseBtnClick(Sender: TObject);
+    procedure ExportBtnClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
 
-    Procedure GenCreateTableScript();
+    Procedure GenCreateTableScript;
 
     Function Remove_FileExtension(Val : String) : String;
+
     Function ConvertFloat(Val : String) : String;
 
-    Procedure CreateSQLScript();
+    Procedure CreateSQLScript;
   public
     { public declarations }
-  end; 
+  end;
 
 var
   ExpSQL: TExpSQL;
@@ -45,37 +47,43 @@ implementation
 
 {$R *.lfm}
 
+uses
+  Math;
+
 { TExpSQL }
 
 procedure TExpSQL.FormShow(Sender: TObject);
- Var Ind : Word;
+ Var Ind : Integer;
 begin
+ ExportBtn.Constraints.MinWidth := Max(ExportBtn.Width, CloseBtn.Width);
+ CloseBtn.Constraints.MinWidth := ExportBtn.Constraints.MinWidth;
+
  ClbField.Clear;
 
- For Ind:=0 To Tmp.FieldDefs.Count - 1 Do
+ For Ind := 0 To Tmp.FieldDefs.Count - 1 Do
   Begin
    ClbField.Items.Add(Tmp.FieldDefs.Items[Ind].Name);
 
-   ClbField.Checked[Ind]:=True;
+   ClbField.Checked[Ind] := True;
   End;
 end;
 
-procedure TExpSQL.GenCreateTableScript();
+procedure TExpSQL.GenCreateTableScript;
  Var App : String;
      F : TextFile;
      Ind : Word;
      Str : TStringList;
 begin
- App:=Remove_FileExtension(ExtractFileName(SaveExp.FileName));
- App:=App + '-crt.sql';
- App:=ExtractFilePath(SaveExp.FileName) + App;
+ App := Remove_FileExtension(ExtractFileName(SaveExp.FileName));
+ App := App + '-crt.sql';
+ App := ExtractFilePath(SaveExp.FileName) + App;
 
  AssignFile(F,App);
  ReWrite(F);
 
- Str:=TStringList.Create;
+ Str := TStringList.Create;
 
- For Ind:=0 To ClbField.Items.Count - 1 Do
+ For Ind := 0 To ClbField.Items.Count - 1 Do
   If ClbField.Checked[Ind] Then
    Begin
     Case Tmp.FieldByName(ClbField.Items[Ind]).DataType Of
@@ -114,7 +122,7 @@ begin
   Begin
    Writeln(F,'CREATE TABLE ' + UpperCase(Remove_FileExtension(Tmp.TableName)) + ' (');
 
-   For Ind:=0 To Str.Count - 1 Do
+   For Ind := 0 To Str.Count - 1 Do
     If Ind < Str.Count - 1 Then
      Writeln(F,Str.Strings[Ind] + ',')
     Else
@@ -131,43 +139,43 @@ end;
 function TExpSQL.Remove_FileExtension(Val: String): String;
  Var Ind : Word;
 begin
- Result:='';
+ Result := '';
 
  If Val <> '' Then
-  For Ind:=1 To Pos('.',Val) - 1 Do
-   Result:=Result + Val[Ind];
+  For Ind := 1 To Pos('.',Val) - 1 Do
+   Result := Result + Val[Ind];
 end;
 
 function TExpSQL.ConvertFloat(Val: String): String;
  Var I : Word;
-Begin
- Result:=Val;
+begin
+ Result := Val;
 
  If Pos(',',Val) > 0 Then
   Begin
-   Result:='';
+   Result := '';
 
-   For I:=1 To Pos(',',Val) - 1 Do
-    Result:=Result + Val[I];
+   For I := 1 To Pos(',',Val) - 1 Do
+    Result := Result + Val[I];
 
-   Result:=Result + '.';
+   Result := Result + '.';
 
-   For I:=Pos(',',Val) + 1 To Length(Val) Do
-    Result:=Result + Val[I];
+   For I := Pos(',',Val) + 1 To Length(Val) Do
+    Result := Result + Val[I];
   End;
-End;
+end;
 
-procedure TExpSQL.CreateSQLScript();
+procedure TExpSQL.CreateSQLScript;
  Var Ind : Word;
      Str : TStringList;
      F : TextFile;
 begin
  Tmp.First;
- pBar.Min:=0;
- pBar.Max:=Tmp.ExactRecordCount;
- pBar.Position:=0;
+ pBar.Min := 0;
+ pBar.Max := Tmp.ExactRecordCount;
+ pBar.Position := 0;
 
- Str:=TStringList.Create;
+ Str := TStringList.Create;
 
  AssignFile(F,SaveExp.FileName);
  ReWrite(F);
@@ -176,7 +184,7 @@ begin
   Begin
    Str.Clear;
 
-   For Ind:=0 To ClbField.Items.Count - 1 Do
+   For Ind := 0 To ClbField.Items.Count - 1 Do
     If ClbField.Checked[Ind] Then
      Begin
       Case Tmp.FieldByName(ClbField.Items[Ind]).DataType Of
@@ -234,7 +242,7 @@ begin
     Begin
      Writeln(F,'INSERT INTO ' + UpperCase(Remove_FileExtension(Tmp.TableName)) + ' VALUES(');
 
-     For Ind:=0 To Str.Count - 1 Do
+     For Ind := 0 To Str.Count - 1 Do
       If Ind < Str.Count - 1 Then
        Writeln(F,Str.Strings[Ind] + ',')
       Else
@@ -243,35 +251,39 @@ begin
      Writeln(F,');');
     End;
 
-   pBar.Position:=pBar.Position + 1;
+   pBar.Position := pBar.Position + 1;
   End;
 
- pBar.Position:=0;
+ pBar.Position := 0;
 
  System.Close(F);
 
  Str.Free;
 end;
 
-procedure TExpSQL.BitBtn2Click(Sender: TObject);
+procedure TExpSQL.CloseBtnClick(Sender: TObject);
+begin
+ Close;
+end;
+
+procedure TExpSQL.ExportBtnClick(Sender: TObject);
 begin
  If SaveExp.Execute Then
-  If MessageDlg('Do you want to attempt to export data?',mtWarning,[mbYes, mbCancel],0) = mrYes Then
+  If MessageDlg('Do you want to attempt to export data?',mtWarning,[mbOk, mbCancel],0) = mrOk Then
    Begin
     Try
       If CrTab.Checked Then
-       GenCreateTableScript();
+       GenCreateTableScript;
 
       If ExpRec.Checked Then
-       CreateSQLScript();
+       CreateSQLScript;
 
-      Close;
+      ShowMessage('Export completed!');
     Except
       ShowMessage('Error writing file');
     End;
    End;
 end;
-
 
 end.
 
