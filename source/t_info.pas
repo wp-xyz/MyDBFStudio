@@ -13,7 +13,7 @@ type
   { TInfo }
 
   TInfo = class(TForm)
-    BitBtn1: TBitBtn;
+    CloseBtn: TBitBtn;
     Img: TImage;
     Memo1: TMemo;
     Version: TLabel;
@@ -31,8 +31,8 @@ implementation
 
 {$R *.lfm}
 
-uses
-  T_MainForm;
+const
+  StrVer = '0.5.1-2021';
 
 { TInfo }
 
@@ -44,7 +44,7 @@ begin
   if FileExists(fn) Then
    Img.Picture.LoadFromFile(fn);
 
-  Version.Caption:='Version: ' + T_MainForm.StrVer;
+  Version.Caption:='Version: ' + StrVer;
 end;
 
 

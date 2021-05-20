@@ -18,7 +18,8 @@
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
-      <MinorVersionNr Value="4"/>
+      <MinorVersionNr Value="5"/>
+      <RevisionNr Value="1"/>
       <StringTable FileDescription="Administrative tool for Dbf and Paradox Tables." LegalCopyright="Calogiuri Enzo Antonio" ProductName="MyDbf Studio"/>
     </VersionInfo>
     <BuildModes Count="1">
@@ -53,7 +54,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="87">
+    <Units Count="90">
       <Unit0>
         <Filename Value="DbfStudio.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -68,9 +69,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_MainForm"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="16"/>
-        <TopLine Value="881"/>
-        <CursorPos Y="917"/>
+        <TopLine Value="109"/>
+        <CursorPos X="21" Y="135"/>
         <UsageCount Value="125"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -457,7 +459,7 @@
         <ComponentName Value="SubTables"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_SubTables"/>
-        <EditorIndex Value="23"/>
+        <EditorIndex Value="22"/>
         <TopLine Value="162"/>
         <CursorPos X="17" Y="168"/>
         <UsageCount Value="67"/>
@@ -494,15 +496,15 @@
         <Loaded Value="True"/>
       </Unit55>
       <Unit56>
-        <Filename Value="t_splash.pas"/>
+        <Filename Value="usplash.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Splash"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="T_Splash"/>
-        <EditorIndex Value="22"/>
-        <TopLine Value="29"/>
-        <CursorPos X="32" Y="59"/>
+        <UnitName Value="uSplash"/>
+        <EditorIndex Value="23"/>
+        <TopLine Value="4"/>
+        <CursorPos X="84" Y="33"/>
         <UsageCount Value="59"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -573,7 +575,7 @@
         <UnitName Value="T_Info"/>
         <EditorIndex Value="15"/>
         <TopLine Value="13"/>
-        <CursorPos Y="50"/>
+        <CursorPos X="57" Y="18"/>
         <UsageCount Value="52"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -701,8 +703,8 @@
       <Unit80>
         <Filename Value="multidoc-0.3/multidoc.pas"/>
         <UnitName Value="MultiDoc"/>
-        <EditorIndex Value="25"/>
-        <TopLine Value="436"/>
+        <EditorIndex Value="26"/>
+        <TopLine Value="280"/>
         <CursorPos X="23" Y="446"/>
         <UsageCount Value="14"/>
         <Loaded Value="True"/>
@@ -746,134 +748,163 @@
       </Unit85>
       <Unit86>
         <Filename Value="LMDI/buttonsbar.pas"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="24"/>
-        <TopLine Value="775"/>
+        <EditorIndex Value="25"/>
+        <TopLine Value="774"/>
         <CursorPos X="25" Y="791"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
       </Unit86>
+      <Unit87>
+        <Filename Value="../../../thirdparty_applications/mydbfstudio-0.5/MyDbfStudio/usplash.pas"/>
+        <ComponentName Value="Splash"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="uSplash"/>
+        <EditorIndex Value="1"/>
+        <WindowIndex Value="1"/>
+        <TopLine Value="30"/>
+        <CursorPos X="36" Y="43"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit87>
+      <Unit88>
+        <Filename Value="../../../thirdparty_applications/mydbfstudio-0.5/MyDbfStudio/umain.pas"/>
+        <UnitName Value="uMain"/>
+        <WindowIndex Value="1"/>
+        <CursorPos X="38" Y="20"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit88>
+      <Unit89>
+        <Filename Value="uutils.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uUtils"/>
+        <EditorIndex Value="24"/>
+        <CursorPos Y="11"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit89>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="t_mainform.pas"/>
-        <Caret Line="394" Column="22" TopLine="362"/>
-      </Position1>
-      <Position2>
-        <Filename Value="t_mainform.pas"/>
-        <Caret Line="395" Column="12" TopLine="363"/>
-      </Position2>
-      <Position3>
-        <Filename Value="t_mainform.pas"/>
-        <Caret Line="400" Column="12" TopLine="368"/>
-      </Position3>
-      <Position4>
         <Filename Value="dscsv.pas"/>
         <Caret Line="307" Column="41" TopLine="307"/>
-      </Position4>
-      <Position5>
+      </Position1>
+      <Position2>
         <Filename Value="t_addtables.pas"/>
         <Caret Line="70" TopLine="32"/>
-      </Position5>
-      <Position6>
+      </Position2>
+      <Position3>
         <Filename Value="t_dbftable.pas"/>
         <Caret Line="157" Column="49" TopLine="157"/>
-      </Position6>
-      <Position7>
+      </Position3>
+      <Position4>
         <Filename Value="t_dbftable.pas"/>
         <Caret Line="57" TopLine="19"/>
-      </Position7>
-      <Position8>
+      </Position4>
+      <Position5>
         <Filename Value="t_expcsv.pas"/>
         <Caret Line="48" TopLine="39"/>
+      </Position5>
+      <Position6>
+        <Filename Value="t_expdbf.pas"/>
+        <Caret Line="92" Column="28" TopLine="92"/>
+      </Position6>
+      <Position7>
+        <Filename Value="t_expdbf.pas"/>
+        <Caret Line="20" TopLine="20"/>
+      </Position7>
+      <Position8>
+        <Filename Value="t_expdbf.pas"/>
+        <Caret Line="161" TopLine="123"/>
       </Position8>
       <Position9>
         <Filename Value="t_expdbf.pas"/>
-        <Caret Line="92" Column="28" TopLine="92"/>
+        <Caret Line="57" TopLine="19"/>
       </Position9>
       <Position10>
-        <Filename Value="t_expdbf.pas"/>
-        <Caret Line="20" TopLine="20"/>
-      </Position10>
-      <Position11>
-        <Filename Value="t_expdbf.pas"/>
-        <Caret Line="161" TopLine="123"/>
-      </Position11>
-      <Position12>
-        <Filename Value="t_expdbf.pas"/>
-        <Caret Line="57" TopLine="19"/>
-      </Position12>
-      <Position13>
         <Filename Value="t_expsql.pas"/>
         <Caret Line="243" Column="10" TopLine="222"/>
+      </Position10>
+      <Position11>
+        <Filename Value="t_expsql.pas"/>
+        <Caret Line="57" TopLine="19"/>
+      </Position11>
+      <Position12>
+        <Filename Value="t_expxls.pas"/>
+        <Caret Line="53" TopLine="15"/>
+      </Position12>
+      <Position13>
+        <Filename Value="t_expxml.pas"/>
+        <Caret Line="122" Column="33" TopLine="122"/>
       </Position13>
       <Position14>
-        <Filename Value="t_expsql.pas"/>
+        <Filename Value="t_expxml.pas"/>
         <Caret Line="57" TopLine="19"/>
       </Position14>
       <Position15>
-        <Filename Value="t_expxls.pas"/>
-        <Caret Line="53" TopLine="15"/>
-      </Position15>
-      <Position16>
-        <Filename Value="t_expxml.pas"/>
-        <Caret Line="122" Column="33" TopLine="122"/>
-      </Position16>
-      <Position17>
-        <Filename Value="t_expxml.pas"/>
-        <Caret Line="57" TopLine="19"/>
-      </Position17>
-      <Position18>
         <Filename Value="t_exthtml.pas"/>
         <Caret Line="101" Column="11" TopLine="63"/>
-      </Position18>
-      <Position19>
+      </Position15>
+      <Position16>
         <Filename Value="t_idxtable.pas"/>
         <Caret Line="51" TopLine="13"/>
-      </Position19>
-      <Position20>
+      </Position16>
+      <Position17>
         <Filename Value="t_mainform.pas"/>
         <Caret Line="370" Column="26" TopLine="370"/>
-      </Position20>
-      <Position21>
+      </Position17>
+      <Position18>
         <Filename Value="t_mainform.pas"/>
         <Caret Line="151" Column="3" TopLine="113"/>
-      </Position21>
-      <Position22>
+      </Position18>
+      <Position19>
         <Filename Value="t_newtable.pas"/>
         <Caret Line="77" Column="2" TopLine="39"/>
-      </Position22>
-      <Position23>
+      </Position19>
+      <Position20>
         <Filename Value="t_openba.pas"/>
         <Caret Line="77" TopLine="39"/>
-      </Position23>
-      <Position24>
+      </Position20>
+      <Position21>
         <Filename Value="t_restructure.pas"/>
         <Caret Line="477" Column="33" TopLine="477"/>
-      </Position24>
-      <Position25>
+      </Position21>
+      <Position22>
         <Filename Value="t_restructure.pas"/>
         <Caret Line="76" Column="3" TopLine="38"/>
-      </Position25>
-      <Position26>
+      </Position22>
+      <Position23>
         <Filename Value="t_setfv.pas"/>
         <Caret Line="54" TopLine="16"/>
-      </Position26>
-      <Position27>
+      </Position23>
+      <Position24>
         <Filename Value="t_sorttable.pas"/>
         <Caret Line="103" Column="68" TopLine="103"/>
-      </Position27>
-      <Position28>
+      </Position24>
+      <Position25>
         <Filename Value="t_sorttable.pas"/>
         <Caret Line="75" TopLine="37"/>
-      </Position28>
-      <Position29>
-        <Filename Value="t_splash.pas"/>
-        <Caret Line="39" Column="3"/>
-      </Position29>
-      <Position30>
+      </Position25>
+      <Position26>
         <Filename Value="t_subtables.pas"/>
         <Caret Line="51" Column="3" TopLine="13"/>
+      </Position26>
+      <Position27>
+        <Filename Value="t_mainform.pas"/>
+        <Caret Line="880" Column="38" TopLine="880"/>
+      </Position27>
+      <Position28>
+        <Filename Value="../../../thirdparty_applications/mydbfstudio-0.5/MyDbfStudio/usplash.pas"/>
+        <Caret Line="46" Column="35" TopLine="18"/>
+      </Position28>
+      <Position29>
+        <Filename Value="t_mainform.pas"/>
+        <Caret Line="21" Column="27" TopLine="21"/>
+      </Position29>
+      <Position30>
+        <Filename Value="t_mainform.pas"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>

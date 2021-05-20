@@ -33,7 +33,7 @@ implementation
 {$R *.lfm}
 
 uses
-  T_MainForm;
+  uUtils;
 
 { TSplash }
 
@@ -41,11 +41,11 @@ procedure TSplash.FormShow(Sender: TObject);
 var
   fn: String;
 begin
-  fn := Application.Location + 'img/Splash.png';
+  fn := Application.Location + 'img/splash.png';
   if FileExists(fn) then
     Img.Picture.LoadFromFile(fn);
 
-  Ver.Caption:=Ver.Caption + StrVer;
+  Ver.Caption := Ver.Caption + GetVersionStr;
 
  Timer1.Enabled:=True;
 end;
