@@ -26,6 +26,7 @@ Type
       FDelimiter,
       FFieldIndicator            : String;
       FAutoOpen,
+      FExpHeader,
       FUseDelimiter,
       FSilentExport,
       FTrimData,
@@ -95,6 +96,7 @@ Type
       Property ImportProgress : TDsCSVProgressEvent Read FImportProgress Write FImportProgress;
       Property OnAddRecord : TNotifyEvent Read FOnAddRecord Write FOnAddRecord;
       Property ExportError : TDsCSVExportErrorEvent Read FExportError Write FExportError;
+      Property ExportHeader : Boolean Read FExpHeader Write FExpHeader;
 
       Procedure CSVToDataset();
       Procedure DatasetToCSV();
@@ -253,6 +255,7 @@ begin
  FBeforeImport:=Nil;
  FAfterImport:=Nil;
  FOnAddRecord:=Nil;
+ FExpHeader := False;
 end;
 
 procedure TDsCSV.CSVToDataset();
@@ -290,8 +293,9 @@ begin
   FBeforeExport(Self);
 
  C:=0;
- Temp:=ShortDateFormat;
- ShortDateFormat:=FDateFormat;
+
+ Temp := FormatSettings.ShortDateFormat;
+ FormatSettings.ShortDateFormat := FDateFormat;
 
  FDataset.DisableControls;
 
@@ -365,7 +369,7 @@ begin
 
  FreeMem(Buffer);
 
- ShortDateFormat:=Temp;
+ FormatSettings.ShortDateFormat := Temp;
 
  FFieldCache.Free;
 end;
@@ -423,13 +427,30 @@ begin
 
  FDataset.DisableControls;
 
+ If FExpHeader Then
+  Begin
+   S := '';
+
+   For I := 1 To CountMapItems() Do
+    Begin
+     D := GetMapItem(I, B);
+
+     If B Then
+      S := S + D + FSeprator;
+    end;
+
+   Delete(S, Length(S), 1);
+
+   Writeln(FFile, S);
+  end;
+
  While (Not FDataset.Eof) And (Not FStop) Do
   Begin
    S:='';
 
-   For I:=1 To CountMapItems() Do
+   For I := 1 To CountMapItems Do
     Begin
-     D:=GetMapItem(I,B);
+     D := GetMapItem(I,B);
 
      If B Then
       Begin
@@ -437,14 +458,12 @@ begin
         T:=Trim(FDataset.FieldByName(D).AsString)
        Else
         T:=FDataset.FieldByName(D).AsString;
-      End
-     Else
-      T:=D;
 
-     If FUseDelimiter Then
-      T:=FDelimiter + T + FDelimiter;
+       If FUseDelimiter Then
+        T:=FDelimiter + T + FDelimiter;
 
-     S:=S + T + FSeprator;
+       S:=S + T + FSeprator;
+      End;
     End;
 
    Delete(S,Length(S),1);
