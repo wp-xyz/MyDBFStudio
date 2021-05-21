@@ -37,7 +37,7 @@ type
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure FieldListKeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
+      {%H-}Shift: TShiftState);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure IndexListDblClick(Sender: TObject);
@@ -64,7 +64,7 @@ var
 implementation
 
 Uses
-  Math, uMain, uIdxTable;
+  Math, uIdxTable;
 
 {$R *.lfm}
 
@@ -496,6 +496,7 @@ end;
 
 function TRestructure.RetFieldType(Val: String): TFieldType;
 begin
+ Result := ftUnknown;
  If Val = Fieldtypenames[ftString] Then
   Result:=ftString
  Else

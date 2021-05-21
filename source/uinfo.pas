@@ -48,7 +48,7 @@ var
 begin
   fn := Application.Location + 'img/splash.png';
   if FileExists(fn) Then
-   Img.Picture.LoadFromFile(fn);
+    Img.Picture.LoadFromFile(fn);
 
   Version.Caption:='Version: ' + GetVersionStr;
 end;

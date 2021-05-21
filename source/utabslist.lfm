@@ -129,7 +129,7 @@ object TabsList: TTabsList
     BorderSpacing.Around = 6
     Caption = 'Close tab'
     Images = CommonData.Images
-    ImageIndex = 4
+    ImageIndex = 5
     OnClick = BitBtn5Click
     TabOrder = 5
   end

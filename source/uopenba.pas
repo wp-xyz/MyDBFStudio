@@ -28,7 +28,7 @@ type
     procedure OpenTableBtnClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
-    procedure DBGrid1CellClick(Column: TColumn);
+    procedure DBGrid1CellClick({%H-}Column: TColumn);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -43,7 +43,7 @@ var
 
 implementation
 
-Uses Math, uMain, uAddAlias;
+Uses uMain, uAddAlias;
 
 {$R *.lfm}
 

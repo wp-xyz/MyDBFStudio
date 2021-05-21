@@ -14,7 +14,6 @@ type
 
   TDbfTable = class(TForm)
     cbShowDel: TCheckBox;
-    ImageList1: TImageList;
     Indexes: TComboBox;
     DBGrid1: TDBGrid;
     DBNavigator1: TDBNavigator;
@@ -38,8 +37,7 @@ type
     procedure EmptyClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure IndexesChange(Sender: TObject);
-    procedure leFilterKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState
-      );
+    procedure leFilterKeyDown(Sender: TObject; var Key: Word; {%H-}Shift: TShiftState);
     procedure PackClick(Sender: TObject);
     procedure RestructClick(Sender: TObject);
     procedure SetFieldClick(Sender: TObject);
@@ -172,10 +170,12 @@ end;
 
 procedure TDbfTable.ShowTableInfo(DataSet: TDataSet);
 begin
- SbInfo.Panels[0].Text := 'Record Count: ' + IntToStr(DbTable.ExactRecordCount);
+ Assert(Dataset is TDbf, 'Dataset must be a TDbf');
+
+ SbInfo.Panels[0].Text := 'Record Count: ' + IntToStr(TDbf(DataSet).ExactRecordCount);
 
  If Not DbTable.IsEmpty Then
-  SbInfo.Panels[1].Text := 'Record Number: ' + IntToStr(DbTable.RecNo)
+  SbInfo.Panels[1].Text := 'Record Number: ' + IntToStr(Dataset.RecNo)
  Else
   SbInfo.Panels[1].Text := 'Record Number: 0';
 end;

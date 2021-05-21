@@ -39,7 +39,7 @@ type
     procedure Button2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; {%H-}Shift: TShiftState);
     procedure FormShow(Sender: TObject);
     procedure IndexListDblClick(Sender: TObject);
     procedure TableTypeChange(Sender: TObject);
@@ -462,6 +462,7 @@ end;
 
 function TNewTable.RetFieldType(Val: String): TFieldType;
 begin
+ Result := ftUnknown;
  If Val = Fieldtypenames[ftString] Then
   Result:=ftString
  Else

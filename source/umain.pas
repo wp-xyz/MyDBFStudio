@@ -10,10 +10,7 @@ uses
   ComCtrls,
   LazHelpHTML, HelpIntfs,
   dbf_prscore, dbf_prsdef, dbf, DB,
-  HistoryFiles, uDataModule, uTabForm;
-
-Const
-     StrVer                          = '0.5-2017';
+  HistoryFiles, uTabForm;
 
 type
 
@@ -22,7 +19,6 @@ type
   TMain = class(TForm)
     HTMLBrowserHelpViewer1: THTMLBrowserHelpViewer;
     HtmlHD: THTMLHelpDatabase;
-    ImageList1: TImageList;
     MainMenu1: TMainMenu;
     MenuItem1: TMenuItem;
     MenuItem10: TMenuItem;
@@ -73,7 +69,7 @@ type
     WorkSite: TPageControl;
     StatusBar: TStatusBar;
     ToolBar1: TToolBar;
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormClose(Sender: TObject; var {%H-}CloseAction: TCloseAction);
     procedure FormCloseQuery(Sender: TObject; var CanClose: boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -103,7 +99,7 @@ type
     procedure WorkSiteChange(Sender: TObject);
     procedure WorkSiteCloseTabClicked(Sender: TObject);
 
-    Procedure ClickOnHistoryFile(Sender : TObject; Item : TMenuItem; Const FileName : String);
+    Procedure ClickOnHistoryFile(Sender : TObject; {%H-}Item : TMenuItem; Const FileName : String);
   private
     { private declarations }
     WorkSpace : TTabForm;
@@ -125,11 +121,11 @@ var
 
 implementation
 
+{$R *.lfm}
+
 Uses uNewTable, uDbfTable, uOpenBA, uExpCSV, uExpHtml, uExpXLS, uExpDBF,
      uExpXML, uExpSQL, uAddTables, uSubTables, uSortTable, uTabsList,
      uOptions, uSplash, uInfo, uUtils;
-
-{$R *.lfm}
 
 Procedure FuncStrD_StrEq(Param: PExpressionRec);
 Begin
@@ -195,15 +191,13 @@ begin
 
  Splash.Free;
 
- ChDir(ExtractFilePath(Application.ExeName));
-
- If Not FileExists('alias.dbf') Then
+ If Not FileExists(Application.Location + 'alias.dbf') Then
   CreateAliasDB();
 
  FileHistory := THistoryFiles.Create(Self);
  FileHistory.ParentMenu := miRecentFiles;
- FileHistory.LocalPath := ExtractFilePath(Application.ExeName);
- FileHistory.IniFile := ExtractFilePath(Application.ExeName) + 'recentf.ini';
+ FileHistory.LocalPath := Application.Location;
+ FileHistory.IniFile := Application.Location + 'recentf.ini';
  FileHistory.OnClickHistoryItem := @ClickOnHistoryFile;
  FileHistory.FileMustExist := True;
  FileHistory.MaxItems := Options.RecOptions.MaxHistoryRecords;
@@ -223,7 +217,7 @@ begin
 
  Caption := Caption + ' v' + GetVersionStr;
 
- HtmlHD.BaseURL := 'file://' + ExtractFilePath(Application.ExeName) + 'html';
+ HtmlHD.BaseURL := 'file://' + Application.Location + 'html';
 
  If ParamStr(1) <> '' Then
   Open_Table(ParamStr(1));
@@ -232,9 +226,9 @@ end;
 procedure TMain.FormCloseQuery(Sender: TObject; var CanClose: boolean);
 begin
  If MessageDlg('Do you want to close MyDbf Studio?',mtWarning,[mbOk, mbCancel],0) = mrOk Then
-  Application.Terminate
+   CanClose := true
  Else
-  CanClose := False;
+   CanClose := False;
 end;
 
 procedure TMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);

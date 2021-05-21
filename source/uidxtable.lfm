@@ -95,6 +95,7 @@ object IdxTable: TIdxTable
     Width = 75
     AutoSize = True
     BorderSpacing.Top = 32
+    BorderSpacing.Right = 6
     BorderSpacing.Bottom = 6
     Caption = '&Close'
     Images = CommonData.Images

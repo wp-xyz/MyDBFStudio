@@ -1,13 +1,13 @@
 object Info: TInfo
-  Left = 453
-  Height = 453
-  Top = 228
-  Width = 378
+  Left = 419
+  Height = 528
+  Top = 147
+  Width = 457
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Info'
-  ClientHeight = 453
-  ClientWidth = 378
+  ClientHeight = 528
+  ClientWidth = 457
   OnShow = FormShow
   Position = poDesktopCenter
   LCLVersion = '2.1.0.0'
@@ -17,10 +17,11 @@ object Info: TInfo
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 6
-    Height = 247
+    Height = 300
     Top = 6
-    Width = 366
+    Width = 445
     Anchors = [akTop, akLeft, akRight]
+    AutoSize = True
     BorderSpacing.Around = 6
     Picture.Data = {
       1754506F727461626C654E6574776F726B47726170686963B388020089504E47
@@ -5215,39 +5216,43 @@ object Info: TInfo
       2FF365BECC97F9F2B95EE6209C2FF365BECC97F9F2395E2693FF1F80F0139B4D
       B783C00000000049454E44AE426082
     }
-    Proportional = True
     Stretch = True
   end
   object Version: TLabel
-    Left = 3
-    Height = 15
-    Top = 256
-    Width = 38
+    AnchorSideLeft.Control = Img
+    AnchorSideBottom.Control = Img
+    AnchorSideBottom.Side = asrBottom
+    Left = 6
+    Height = 18
+    Top = 288
+    Width = 41
+    Anchors = [akTop, akLeft, akBottom]
     Caption = 'Version'
+    Font.Style = [fsBold]
     ParentColor = False
+    ParentFont = False
   end
   object Memo1: TMemo
     AnchorSideTop.Control = Img
     AnchorSideTop.Side = asrBottom
     AnchorSideBottom.Control = CloseBtn
     Left = 3
-    Height = 156
-    Top = 259
-    Width = 373
+    Height = 178
+    Top = 312
+    Width = 452
     Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Left = 6
     BorderSpacing.Right = 6
-    Color = clBtnFace
+    Color = clWindow
     Lines.Strings = (
       'License: GPL/LGPL'
       'Autor: Calogiuri Enzo Antonio Aka Fog76'
       ''
-      'MyDbfStudio is an administrative tool to'
-      'create and manage Dbf and Paradox Table'
-      'that run on Windows, Linux and other'
-      'platform where is capable to run Lazarus IDE.'
+      'MyDbfStudio is an administrative tool to create and manage dBase tables that run on Windows, Linux and other platforms supported by the Lazarus IDE.'
       ''
       'More developers needed!!!'
+      ''
+      'Icons provided by icons8.com (style: Windows Metro, https://icons8.com/icons/metro).'
     )
     ReadOnly = True
     ScrollBars = ssAutoBoth
@@ -5259,9 +5264,9 @@ object Info: TInfo
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 297
+    Left = 376
     Height = 26
-    Top = 421
+    Top = 496
     Width = 75
     Anchors = [akRight, akBottom]
     AutoSize = True
