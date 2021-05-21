@@ -95,14 +95,14 @@ begin
  IdxT1 := StrToInt(ListT1PageIdx.Strings[cbFT.ItemIndex]);
  IdxT2 := StrToInt(ListT1PageIdx.Strings[cbST.ItemIndex]);
 
- { to do }
+ { todo }
  With Main.MultiWnd.Childs[cbFT.ItemIndex].DockedObject As TDbfTable Do
   T1:=DbTable;
 
  With Main.MultiWnd.Childs[cbST.ItemIndex].DockedObject As TDbfTable Do
   T2:=DbTable;
 
- {to do }
+ {todo }
  {
  fT1 := (Main.WorkSite.Pages[IdxT1] As TTabForm).ParentForm;
  fT2 := (Main.WorkSite.Pages[IdxT2] As TTabForm).ParentForm;
@@ -158,7 +158,7 @@ begin
  Constraints.MinHeight := Height;
  Constraints.MaxHeight := Height;
 
- { to do }
+ { todo }
  If Main.MultiWnd.ChildCount > 0 Then
   Begin
    For Ind:=0 To Main.MultiWnd.ChildCount - 1 Do
@@ -200,7 +200,7 @@ begin
   end;
  }
 
- // to do
+ // todo
  If Main.MultiWnd.ChildCount > 0 Then
   Begin
    For Ind:=0 To Main.MultiWnd.ChildCount - 1 Do

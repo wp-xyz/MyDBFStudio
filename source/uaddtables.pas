@@ -46,7 +46,7 @@ var
 
 implementation
 
-{ to do }
+{ todo }
 uses
   Math,
   T_MainForm, T_DbfTable;
@@ -91,7 +91,7 @@ begin
    Exit;
   End;
 
- { to do }
+ { todo }
  {
  IdxT1 := StrToInt(ListT1PageIdx.Strings[cbFT.ItemIndex]);
  IdxT2 := StrToInt(ListT1PageIdx.Strings[cbST.ItemIndex]);
@@ -163,7 +163,7 @@ begin
  Constraints.MinHeight := Height;
  Constraints.MaxHeight := Height;
 
- { to do }
+ { todo }
  {
  If Main.WorkSite.PageCount > 0 Then
   For Ind := 0 To Main.WorkSite.PageCount - 1 Do

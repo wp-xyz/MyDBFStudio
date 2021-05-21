@@ -66,7 +66,7 @@ implementation
 {$R *.lfm}
 
 uses
-  T_IdxTable;
+  uIdxTable;
 
 { TRestructure }
 
