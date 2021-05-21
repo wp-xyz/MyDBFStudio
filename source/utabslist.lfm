@@ -1,22 +1,27 @@
 object TabsList: TTabsList
   Left = 338
-  Height = 396
+  Height = 395
   Top = 204
-  Width = 645
-  BorderStyle = bsDialog
+  Width = 664
   Caption = 'Tabs list'
-  ClientHeight = 396
-  ClientWidth = 645
+  ClientHeight = 395
+  ClientWidth = 664
   Font.Height = -12
   OnShow = FormShow
   Position = poDesktopCenter
   LCLVersion = '2.1.0.0'
   object lvTabs: TListView
-    Left = 0
-    Height = 352
-    Top = 0
-    Width = 645
-    Align = alTop
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = BitBtn1
+    Left = 6
+    Height = 343
+    Top = 6
+    Width = 652
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    BorderSpacing.Around = 6
     Color = clWindow
     Columns = <    
       item
@@ -32,7 +37,6 @@ object TabsList: TTabsList
         Caption = 'File'
         Width = 403
       end>
-    GridLines = True
     ReadOnly = True
     RowSelect = True
     ScrollBars = ssAutoBoth
@@ -41,10 +45,17 @@ object TabsList: TTabsList
     OnDblClick = BitBtn4Click
   end
   object BitBtn1: TBitBtn
-    Left = 568
-    Height = 35
-    Top = 357
-    Width = 75
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 575
+    Height = 34
+    Top = 355
+    Width = 83
+    Anchors = [akRight, akBottom]
+    AutoSize = True
+    BorderSpacing.Around = 6
     Caption = '&Close'
     Glyph.Data = {
       36090000424D3609000000000000360000002800000018000000180000000100
@@ -126,10 +137,16 @@ object TabsList: TTabsList
     TabOrder = 1
   end
   object BitBtn2: TBitBtn
-    Left = 8
-    Height = 35
-    Top = 357
-    Width = 104
+    AnchorSideLeft.Control = Owner
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 6
+    Height = 34
+    Top = 356
+    Width = 102
+    Anchors = [akLeft]
+    AutoSize = True
+    BorderSpacing.Around = 6
     Caption = 'Move Up'
     Glyph.Data = {
       36090000424D3609000000000000360000002800000018000000180000000100
@@ -211,10 +228,17 @@ object TabsList: TTabsList
     TabOrder = 2
   end
   object BitBtn3: TBitBtn
-    Left = 116
-    Height = 35
-    Top = 357
-    Width = 104
+    AnchorSideLeft.Control = BitBtn2
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 114
+    Height = 34
+    Top = 355
+    Width = 118
+    Anchors = [akLeft, akBottom]
+    AutoSize = True
+    BorderSpacing.Around = 6
     Caption = 'Move Down'
     Glyph.Data = {
       36090000424D3609000000000000360000002800000018000000180000000100
@@ -296,10 +320,17 @@ object TabsList: TTabsList
     TabOrder = 3
   end
   object BitBtn4: TBitBtn
-    Left = 224
-    Height = 35
-    Top = 357
-    Width = 104
+    AnchorSideLeft.Control = BitBtn3
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 238
+    Height = 34
+    Top = 355
+    Width = 103
+    Anchors = [akLeft, akBottom]
+    AutoSize = True
+    BorderSpacing.Around = 6
     Caption = 'Go to tab'
     Glyph.Data = {
       36090000424D3609000000000000360000002800000018000000180000000100
@@ -381,10 +412,17 @@ object TabsList: TTabsList
     TabOrder = 4
   end
   object BitBtn5: TBitBtn
-    Left = 332
-    Height = 35
-    Top = 357
-    Width = 104
+    AnchorSideLeft.Control = BitBtn4
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 347
+    Height = 34
+    Top = 355
+    Width = 103
+    Anchors = [akLeft, akBottom]
+    AutoSize = True
+    BorderSpacing.Around = 6
     Caption = 'Close tab'
     Glyph.Data = {
       36090000424D3609000000000000360000002800000018000000180000000100
