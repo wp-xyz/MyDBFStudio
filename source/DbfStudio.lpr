@@ -8,8 +8,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, T_MainForm, DBFLaz, T_DbfTable, T_Restructure, T_IdxTable, T_NewTable,
-  T_AddTables, T_SubTables,
-  T_SortTable;
+  T_AddTables, T_SubTables;
 
 //{$IFDEF WINDOWS}{$R DbfStudio.rc}{$ENDIF}
 
