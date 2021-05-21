@@ -70,7 +70,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="17"/>
         <TopLine Value="266"/>
         <CursorPos Y="284"/>
@@ -298,9 +297,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uNewTable"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="18"/>
-        <TopLine Value="444"/>
-        <CursorPos X="22" Y="465"/>
+        <TopLine Value="297"/>
+        <CursorPos X="54" Y="318"/>
         <UsageCount Value="122"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -961,122 +961,122 @@
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="umain.pas"/>
-        <Caret Line="206" Column="11" TopLine="174"/>
+        <Caret Line="237" Column="2" TopLine="234"/>
       </Position1>
       <Position2>
-        <Filename Value="umain.pas"/>
-        <Caret Line="73" Column="48" TopLine="51"/>
+        <Filename Value="uopenba.pas"/>
+        <Caret Line="46" Column="6" TopLine="26"/>
       </Position2>
       <Position3>
-        <Filename Value="umain.pas"/>
-        <Caret Line="237" Column="2" TopLine="234"/>
+        <Filename Value="uopenba.pas"/>
+        <Caret Line="31" Column="32" TopLine="10"/>
       </Position3>
       <Position4>
         <Filename Value="uopenba.pas"/>
-        <Caret Line="46" Column="6" TopLine="26"/>
+        <Caret Line="136" Column="2" TopLine="103"/>
       </Position4>
       <Position5>
-        <Filename Value="uopenba.pas"/>
-        <Caret Line="31" Column="32" TopLine="10"/>
+        <Filename Value="urestructure.pas"/>
+        <Caret Line="40" Column="12" TopLine="20"/>
       </Position5>
       <Position6>
-        <Filename Value="uopenba.pas"/>
-        <Caret Line="136" Column="2" TopLine="103"/>
+        <Filename Value="urestructure.pas"/>
+        <Caret Line="498" TopLine="484"/>
       </Position6>
       <Position7>
         <Filename Value="urestructure.pas"/>
-        <Caret Line="40" Column="12" TopLine="20"/>
+        <Caret Line="499" Column="22" TopLine="484"/>
       </Position7>
       <Position8>
         <Filename Value="urestructure.pas"/>
-        <Caret Line="498" TopLine="484"/>
+        <Caret Line="67" Column="9" TopLine="47"/>
       </Position8>
       <Position9>
-        <Filename Value="urestructure.pas"/>
-        <Caret Line="499" Column="22" TopLine="484"/>
-      </Position9>
-      <Position10>
-        <Filename Value="urestructure.pas"/>
-        <Caret Line="67" Column="9" TopLine="47"/>
-      </Position10>
-      <Position11>
         <Filename Value="unewtable.pas"/>
         <Caret Line="42" Column="64" TopLine="22"/>
-      </Position11>
-      <Position12>
+      </Position9>
+      <Position10>
         <Filename Value="unewtable.pas"/>
         <Caret Line="465" Column="22" TopLine="444"/>
+      </Position10>
+      <Position11>
+        <Filename Value="udbftable.pas"/>
+        <Caret Line="42" TopLine="22"/>
+      </Position11>
+      <Position12>
+        <Filename Value="udbftable.pas"/>
+        <Caret Line="26" Column="23" TopLine="26"/>
       </Position12>
       <Position13>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="42" TopLine="22"/>
       </Position13>
       <Position14>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="26" Column="23" TopLine="26"/>
+        <Caret Line="45" Column="28" TopLine="13"/>
       </Position14>
       <Position15>
         <Filename Value="udbftable.pas"/>
+        <Caret Line="94" Column="17" TopLine="62"/>
       </Position15>
       <Position16>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="45" Column="28" TopLine="13"/>
+        <Caret Line="177" Column="64" TopLine="143"/>
       </Position16>
       <Position17>
-        <Filename Value="udbftable.pas"/>
-        <Caret Line="94" Column="17" TopLine="62"/>
-      </Position17>
-      <Position18>
-        <Filename Value="udbftable.pas"/>
-        <Caret Line="177" Column="64" TopLine="143"/>
-      </Position18>
-      <Position19>
         <Filename Value="uopenba.pas"/>
         <Caret Line="46" Column="6" TopLine="26"/>
+      </Position17>
+      <Position18>
+        <Filename Value="umain.pas"/>
+        <Caret Line="73" Column="51" TopLine="54"/>
+      </Position18>
+      <Position19>
+        <Filename Value="umain.pas"/>
+        <Caret Line="103" Column="52" TopLine="84"/>
       </Position19>
       <Position20>
         <Filename Value="umain.pas"/>
-        <Caret Line="73" Column="51" TopLine="54"/>
+        <Caret Line="686" Column="26" TopLine="656"/>
       </Position20>
       <Position21>
-        <Filename Value="umain.pas"/>
-        <Caret Line="103" Column="52" TopLine="84"/>
+        <Filename Value="udbftable.pas"/>
+        <Caret Line="154" Column="63" TopLine="154"/>
       </Position21>
       <Position22>
         <Filename Value="umain.pas"/>
         <Caret Line="686" Column="26" TopLine="656"/>
       </Position22>
       <Position23>
-        <Filename Value="udbftable.pas"/>
-        <Caret Line="154" Column="63" TopLine="154"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="685" Column="26" TopLine="655"/>
       </Position23>
       <Position24>
-        <Filename Value="umain.pas"/>
-        <Caret Line="686" Column="26" TopLine="656"/>
+        <Filename Value="udbftable.pas"/>
+        <Caret Line="174" Column="44" TopLine="174"/>
       </Position24>
       <Position25>
         <Filename Value="umain.pas"/>
-        <Caret Line="685" Column="26" TopLine="655"/>
+        <Caret Line="668" Column="100" TopLine="655"/>
       </Position25>
       <Position26>
-        <Filename Value="udbftable.pas"/>
-        <Caret Line="174" Column="44" TopLine="174"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="530" TopLine="527"/>
       </Position26>
       <Position27>
         <Filename Value="umain.pas"/>
-        <Caret Line="668" Column="100" TopLine="655"/>
+        <Caret Line="55" Column="5" TopLine="36"/>
       </Position27>
       <Position28>
-        <Filename Value="umain.pas"/>
-        <Caret Line="530" TopLine="527"/>
-      </Position28>
-      <Position29>
-        <Filename Value="umain.pas"/>
-        <Caret Line="55" Column="5" TopLine="36"/>
-      </Position29>
-      <Position30>
         <Filename Value="uaddtables.pas"/>
         <Caret Line="159" Column="44" TopLine="143"/>
+      </Position28>
+      <Position29>
+        <Filename Value="unewtable.pas"/>
+        <Caret Line="469" Column="18" TopLine="444"/>
+      </Position29>
+      <Position30>
+        <Filename Value="unewtable.pas"/>
+        <Caret Line="43" Column="14" TopLine="17"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>

@@ -1,12 +1,12 @@
 object NewTable: TNewTable
   Left = 295
-  Height = 481
+  Height = 442
   Top = 192
-  Width = 762
+  Width = 719
   AutoSize = True
   Caption = 'Create a new table'
-  ClientHeight = 481
-  ClientWidth = 762
+  ClientHeight = 442
+  ClientWidth = 719
   Font.Height = -12
   KeyPreview = True
   OnCreate = FormCreate
@@ -21,9 +21,9 @@ object NewTable: TNewTable
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
     Left = 6
-    Height = 469
+    Height = 430
     Top = 6
-    Width = 428
+    Width = 452
     AlternateColor = clMoneyGreen
     Anchors = [akTop, akLeft, akRight, akBottom]
     AutoFillColumns = True
@@ -43,7 +43,7 @@ object NewTable: TNewTable
       end    
       item
         Title.Caption = 'Field Name'
-        Width = 225
+        Width = 249
       end    
       item
         SizePriority = 0
@@ -56,7 +56,6 @@ object NewTable: TNewTable
         Title.Caption = 'Length'
         Width = 64
       end>
-    Constraints.MinWidth = 400
     FixedCols = 0
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goSmoothScroll]
     RowCount = 2
@@ -64,7 +63,7 @@ object NewTable: TNewTable
     TitleFont.Height = -12
     ColWidths = (
       35
-      225
+      249
       100
       64
     )
@@ -76,18 +75,18 @@ object NewTable: TNewTable
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = CloseBtn
-    Left = 440
-    Height = 437
+    Left = 464
+    Height = 398
     Top = 6
-    Width = 316
+    Width = 249
     Anchors = [akTop, akRight, akBottom]
     AutoSize = True
     BorderSpacing.Top = 6
     BorderSpacing.Right = 6
     BorderSpacing.Bottom = 6
     Caption = ' Table Options '
-    ClientHeight = 417
-    ClientWidth = 312
+    ClientHeight = 378
+    ClientWidth = 245
     TabOrder = 1
     object lblIndexList: TLabel
       AnchorSideLeft.Control = GroupBox1
@@ -109,16 +108,15 @@ object NewTable: TNewTable
       AnchorSideRight.Side = asrBottom
       AnchorSideBottom.Control = DefineIndexBtn
       Left = 8
-      Height = 271
+      Height = 232
       Hint = 'Double Click to edit index...'
       Top = 21
-      Width = 296
+      Width = 229
       Anchors = [akTop, akLeft, akRight, akBottom]
       BorderSpacing.Left = 8
       BorderSpacing.Top = 2
       BorderSpacing.Right = 8
       BorderSpacing.Bottom = 8
-      Constraints.MinHeight = 200
       ItemHeight = 0
       OnDblClick = IndexListDblClick
       ParentShowHint = False
@@ -131,7 +129,7 @@ object NewTable: TNewTable
       AnchorSideBottom.Control = TableType
       Left = 8
       Height = 15
-      Top = 338
+      Top = 299
       Width = 54
       Anchors = [akLeft, akBottom]
       BorderSpacing.Left = 8
@@ -146,8 +144,8 @@ object NewTable: TNewTable
       AnchorSideBottom.Control = cbOpenTB
       Left = 8
       Height = 23
-      Top = 355
-      Width = 296
+      Top = 316
+      Width = 229
       Anchors = [akLeft, akBottom]
       BorderSpacing.Left = 8
       BorderSpacing.Right = 8
@@ -166,13 +164,15 @@ object NewTable: TNewTable
       Text = 'dBase IV'
     end
     object cbOpenTB: TCheckBox
+      AnchorSideLeft.Control = GroupBox1
       AnchorSideBottom.Control = GroupBox1
       AnchorSideBottom.Side = asrBottom
-      Left = 0
+      Left = 8
       Height = 19
-      Top = 390
+      Top = 351
       Width = 173
       Anchors = [akLeft, akBottom]
+      BorderSpacing.Left = 8
       BorderSpacing.Bottom = 8
       Caption = 'After create the table, open it'
       TabOrder = 2
@@ -184,7 +184,7 @@ object NewTable: TNewTable
       AnchorSideRight.Side = asrBottom
       Left = 126
       Height = 26
-      Top = 300
+      Top = 261
       Width = 111
       AutoSize = True
       BorderSpacing.Left = 6
@@ -200,7 +200,7 @@ object NewTable: TNewTable
       AnchorSideBottom.Control = lblTableType
       Left = 8
       Height = 26
-      Top = 300
+      Top = 261
       Width = 112
       Anchors = [akLeft, akBottom]
       AutoSize = True
@@ -217,9 +217,9 @@ object NewTable: TNewTable
     AnchorSideRight.Control = CloseBtn
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 566
+    Left = 523
     Height = 26
-    Top = 449
+    Top = 410
     Width = 109
     Anchors = [akRight, akBottom]
     AutoSize = True
@@ -237,9 +237,9 @@ object NewTable: TNewTable
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 681
+    Left = 638
     Height = 26
-    Top = 449
+    Top = 410
     Width = 75
     Anchors = [akRight, akBottom]
     AutoSize = True

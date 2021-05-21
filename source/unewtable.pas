@@ -299,19 +299,20 @@ var
   w: Integer;
   i: Integer;
 begin
+ {
   w := 0; //GetSystemMetrics(SM_CXVSCROLL);
   for i := 0 to FieldList.Columns.Count-1 do
      w := w + FieldList.Columns[i].Width + FieldList.GridLineWidth;
   FieldList.Constraints.MinWidth := w;
-
+  }
   DefineIndexBtn.Constraints.MinWidth := Max(DefineIndexBtn.Width, DeleteIndexBtn.Width);
   DeleteIndexBtn.Constraints.MinWidth := DefineIndexBtn.Constraints.MinWidth;
 
   CreateTableBtn.Constraints.MinWidth := Max(CreateTableBtn.Width, CloseBtn.Width);
   CloseBtn.Constraints.MinWidth := CreateTableBtn.Constraints.MinWidth;
 
-  Constraints.MinWidth := Width;
-  Constraints.MinHeight := Height;
+  //Constraints.MinWidth := Width;
+  //Constraints.MinHeight := Height;
 end;
 
 procedure TNewTable.IndexListDblClick(Sender: TObject);
