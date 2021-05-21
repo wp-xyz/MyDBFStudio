@@ -54,12 +54,12 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="96">
+    <Units Count="98">
       <Unit0>
         <Filename Value="DbfStudio.lpr"/>
         <IsPartOfProject Value="True"/>
         <CursorPos X="28" Y="12"/>
-        <UsageCount Value="130"/>
+        <UsageCount Value="131"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit0>
@@ -70,10 +70,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_MainForm"/>
-        <EditorIndex Value="8"/>
-        <TopLine Value="121"/>
-        <CursorPos X="32" Y="137"/>
-        <UsageCount Value="130"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="151"/>
+        <CursorPos X="56" Y="136"/>
+        <UsageCount Value="131"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -84,10 +84,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_DbfTable"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="25"/>
         <CursorPos X="19" Y="59"/>
-        <UsageCount Value="130"/>
+        <UsageCount Value="131"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit2>
@@ -182,10 +182,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_Restructure"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="9"/>
         <TopLine Value="553"/>
         <CursorPos Y="591"/>
-        <UsageCount Value="120"/>
+        <UsageCount Value="121"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit16>
@@ -271,10 +271,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_IdxTable"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="6"/>
         <TopLine Value="60"/>
         <CursorPos Y="96"/>
-        <UsageCount Value="112"/>
+        <UsageCount Value="113"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit30>
@@ -297,10 +297,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="T_NewTable"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="8"/>
         <TopLine Value="551"/>
         <CursorPos Y="588"/>
-        <UsageCount Value="108"/>
+        <UsageCount Value="109"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit33>
@@ -320,7 +320,7 @@
         <UnitName Value="DsCsv"/>
         <EditorIndex Value="1"/>
         <CursorPos X="43" Y="5"/>
-        <UsageCount Value="103"/>
+        <UsageCount Value="104"/>
         <Loaded Value="True"/>
       </Unit35>
       <Unit36>
@@ -333,7 +333,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="40"/>
         <CursorPos X="40" Y="43"/>
-        <UsageCount Value="101"/>
+        <UsageCount Value="102"/>
       </Unit36>
       <Unit37>
         <Filename Value="C:/lazarus/fpc/2.2.4/source/rtl/objpas/sysutils/sysinth.inc"/>
@@ -355,7 +355,7 @@
         <EditorIndex Value="2"/>
         <TopLine Value="264"/>
         <CursorPos X="11" Y="271"/>
-        <UsageCount Value="93"/>
+        <UsageCount Value="94"/>
         <Loaded Value="True"/>
       </Unit39>
       <Unit40>
@@ -365,7 +365,7 @@
         <EditorIndex Value="3"/>
         <TopLine Value="178"/>
         <CursorPos Y="172"/>
-        <UsageCount Value="92"/>
+        <UsageCount Value="93"/>
         <Loaded Value="True"/>
       </Unit40>
       <Unit41>
@@ -382,10 +382,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uExpHTML"/>
-        <EditorIndex Value="12"/>
+        <EditorIndex Value="11"/>
         <TopLine Value="132"/>
         <CursorPos X="52" Y="149"/>
-        <UsageCount Value="89"/>
+        <UsageCount Value="90"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit42>
@@ -407,7 +407,7 @@
         <UnitName Value="DsXls"/>
         <EditorIndex Value="4"/>
         <CursorPos X="30" Y="83"/>
-        <UsageCount Value="32"/>
+        <UsageCount Value="33"/>
         <Loaded Value="True"/>
       </Unit45>
       <Unit46>
@@ -426,10 +426,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uExpXLS"/>
-        <EditorIndex Value="14"/>
+        <EditorIndex Value="13"/>
         <TopLine Value="41"/>
         <CursorPos X="23" Y="55"/>
-        <UsageCount Value="78"/>
+        <UsageCount Value="79"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit47>
@@ -446,30 +446,31 @@
         <UsageCount Value="10"/>
       </Unit49>
       <Unit50>
-        <Filename Value="t_addtables.pas"/>
+        <Filename Value="uaddtables.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="AddTables"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="T_AddTables"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="129"/>
-        <CursorPos X="11" Y="151"/>
-        <UsageCount Value="74"/>
+        <UnitName Value="uAddTables"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="10"/>
+        <TopLine Value="153"/>
+        <CursorPos X="15" Y="183"/>
+        <UsageCount Value="75"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit50>
       <Unit51>
-        <Filename Value="t_subtables.pas"/>
+        <Filename Value="usubtables.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="SubTables"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="T_SubTables"/>
-        <EditorIndex Value="11"/>
-        <TopLine Value="159"/>
-        <CursorPos X="71" Y="170"/>
-        <UsageCount Value="72"/>
+        <UnitName Value="uSubTables"/>
+        <EditorIndex Value="16"/>
+        <TopLine Value="147"/>
+        <CursorPos X="68" Y="164"/>
+        <UsageCount Value="73"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit51>
@@ -501,7 +502,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="66"/>
         <CursorPos X="25" Y="73"/>
-        <UsageCount Value="68"/>
+        <UsageCount Value="69"/>
       </Unit55>
       <Unit56>
         <Filename Value="usplash.pas"/>
@@ -513,7 +514,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="4"/>
         <CursorPos X="30" Y="11"/>
-        <UsageCount Value="64"/>
+        <UsageCount Value="65"/>
       </Unit56>
       <Unit57>
         <Filename Value="C:/lazarus/lcl/interfaces/win32/win32wscontrols.pp"/>
@@ -546,10 +547,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uExpXML"/>
-        <EditorIndex Value="15"/>
+        <EditorIndex Value="14"/>
         <TopLine Value="18"/>
-        <CursorPos X="38" Y="29"/>
-        <UsageCount Value="60"/>
+        <CursorPos X="12" Y="26"/>
+        <UsageCount Value="61"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit61>
@@ -582,7 +583,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="18"/>
         <CursorPos X="53" Y="18"/>
-        <UsageCount Value="57"/>
+        <UsageCount Value="58"/>
       </Unit65>
       <Unit66>
         <Filename Value="t_mainform.lfm"/>
@@ -621,7 +622,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="53"/>
         <CursorPos X="43" Y="70"/>
-        <UsageCount Value="50"/>
+        <UsageCount Value="51"/>
       </Unit70>
       <Unit71>
         <Filename Value="uaddalias.pas"/>
@@ -633,7 +634,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="37"/>
         <CursorPos X="26" Y="58"/>
-        <UsageCount Value="49"/>
+        <UsageCount Value="50"/>
       </Unit71>
       <Unit72>
         <Filename Value="C:/lazarus/fpc/2.2.4/source/rtl/objpas/sysutils/filutilh.inc"/>
@@ -648,11 +649,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uSortTable"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="16"/>
-        <TopLine Value="217"/>
+        <EditorIndex Value="15"/>
+        <TopLine Value="177"/>
         <CursorPos X="63" Y="235"/>
-        <UsageCount Value="46"/>
+        <UsageCount Value="47"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit73>
@@ -670,10 +670,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uExpSQL"/>
-        <EditorIndex Value="13"/>
+        <EditorIndex Value="12"/>
         <TopLine Value="67"/>
         <CursorPos X="28" Y="88"/>
-        <UsageCount Value="38"/>
+        <UsageCount Value="39"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit75>
@@ -781,7 +781,7 @@
         <UnitName Value="uUtils"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="11"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="26"/>
       </Unit89>
       <Unit90>
         <Filename Value="../../../thirdparty_applications/mydbfstudio-0.5/MyDbfStudio/uinfo.pas"/>
@@ -805,7 +805,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="61"/>
         <CursorPos X="30" Y="86"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="26"/>
       </Unit91>
       <Unit92>
         <Filename Value="t_openba - Kopie.pas"/>
@@ -844,127 +844,143 @@
         <TopLine Value="214"/>
         <UsageCount Value="10"/>
       </Unit95>
+      <Unit96>
+        <Filename Value="t_subtables - Kopie.pas"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="1"/>
+        <TopLine Value="40"/>
+        <CursorPos Y="56"/>
+        <UsageCount Value="10"/>
+      </Unit96>
+      <Unit97>
+        <Filename Value="t_addtables - Kopie.pas"/>
+        <WindowIndex Value="1"/>
+        <TopLine Value="37"/>
+        <CursorPos X="28" Y="39"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit97>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="t_subtables.pas"/>
-        <Caret Line="63" Column="16" TopLine="37"/>
+        <Filename Value="uexphtml.pas"/>
+        <Caret Line="52" Column="24" TopLine="20"/>
       </Position1>
       <Position2>
-        <Filename Value="DbfStudio.lpr"/>
-        <Caret Line="10" Column="36"/>
+        <Filename Value="uexphtml.pas"/>
+        <Caret Line="76" TopLine="48"/>
       </Position2>
       <Position3>
-        <Filename Value="uexpxml.pas"/>
-        <Caret Line="147" Column="62" TopLine="123"/>
+        <Filename Value="uexphtml.pas"/>
+        <Caret Line="77" TopLine="49"/>
       </Position3>
       <Position4>
-        <Filename Value="DbfStudio.lpr"/>
-        <Caret Line="12" Column="28"/>
+        <Filename Value="uexphtml.pas"/>
+        <Caret Line="76" TopLine="48"/>
       </Position4>
       <Position5>
-        <Filename Value="uexpxls.pas"/>
-        <Caret Line="214" Column="30" TopLine="214"/>
+        <Filename Value="uexphtml.pas"/>
+        <Caret Line="77" TopLine="49"/>
       </Position5>
       <Position6>
-        <Filename Value="uexpxls.pas"/>
-        <Caret Line="21" Column="32"/>
+        <Filename Value="uexphtml.pas"/>
+        <Caret Line="78" TopLine="50"/>
       </Position6>
       <Position7>
-        <Filename Value="uexpxls.pas"/>
-        <Caret Line="22" Column="32"/>
+        <Filename Value="uexphtml.pas"/>
+        <Caret Line="77" TopLine="49"/>
       </Position7>
       <Position8>
-        <Filename Value="uexpxls.pas"/>
-        <Caret Line="23" Column="32"/>
+        <Filename Value="uexphtml.pas"/>
+        <Caret Line="78" TopLine="50"/>
       </Position8>
       <Position9>
-        <Filename Value="uexpxls.pas"/>
-        <Caret Line="24" Column="32"/>
+        <Filename Value="uexphtml.pas"/>
+        <Caret Line="79" TopLine="51"/>
       </Position9>
       <Position10>
-        <Filename Value="uexpxls.pas"/>
-        <Caret Line="25" Column="32"/>
+        <Filename Value="uexphtml.pas"/>
+        <Caret Line="78" TopLine="50"/>
       </Position10>
       <Position11>
-        <Filename Value="uexpxls.pas"/>
-        <Caret Line="26" Column="25"/>
+        <Filename Value="uexphtml.pas"/>
+        <Caret Line="79" TopLine="51"/>
       </Position11>
       <Position12>
-        <Filename Value="t_mainform.pas"/>
-        <Caret Line="137" Column="32" TopLine="121"/>
+        <Filename Value="uexphtml.pas"/>
+        <Caret Line="80" TopLine="52"/>
       </Position12>
       <Position13>
         <Filename Value="uexphtml.pas"/>
-        <Caret Line="52" Column="24" TopLine="20"/>
+        <Caret Line="79" TopLine="51"/>
       </Position13>
       <Position14>
         <Filename Value="uexphtml.pas"/>
-        <Caret Line="76" TopLine="48"/>
+        <Caret Line="80" TopLine="52"/>
       </Position14>
       <Position15>
         <Filename Value="uexphtml.pas"/>
-        <Caret Line="77" TopLine="49"/>
+        <Caret Line="81" TopLine="53"/>
       </Position15>
       <Position16>
         <Filename Value="uexphtml.pas"/>
-        <Caret Line="76" TopLine="48"/>
+        <Caret Line="82" TopLine="54"/>
       </Position16>
       <Position17>
         <Filename Value="uexphtml.pas"/>
-        <Caret Line="77" TopLine="49"/>
+        <Caret Line="81" TopLine="53"/>
       </Position17>
       <Position18>
         <Filename Value="uexphtml.pas"/>
-        <Caret Line="78" TopLine="50"/>
+        <Caret Line="154" Column="37" TopLine="128"/>
       </Position18>
       <Position19>
-        <Filename Value="uexphtml.pas"/>
-        <Caret Line="77" TopLine="49"/>
+        <Filename Value="t_mainform.pas"/>
+        <Caret Line="136" Column="50" TopLine="121"/>
       </Position19>
       <Position20>
-        <Filename Value="uexphtml.pas"/>
-        <Caret Line="78" TopLine="50"/>
+        <Filename Value="usubtables.pas"/>
+        <Caret Line="51" Column="6" TopLine="31"/>
       </Position20>
       <Position21>
-        <Filename Value="uexphtml.pas"/>
-        <Caret Line="79" TopLine="51"/>
+        <Filename Value="usubtables.pas"/>
+        <Caret Line="114" TopLine="92"/>
       </Position21>
       <Position22>
-        <Filename Value="uexphtml.pas"/>
-        <Caret Line="78" TopLine="50"/>
+        <Filename Value="usubtables.pas"/>
+        <Caret Line="101" Column="3" TopLine="82"/>
       </Position22>
       <Position23>
-        <Filename Value="uexphtml.pas"/>
-        <Caret Line="79" TopLine="51"/>
+        <Filename Value="usubtables.pas"/>
+        <Caret Line="177" Column="53" TopLine="161"/>
       </Position23>
       <Position24>
-        <Filename Value="uexphtml.pas"/>
-        <Caret Line="80" TopLine="52"/>
+        <Filename Value="usubtables.pas"/>
+        <Caret Line="157" Column="34" TopLine="148"/>
       </Position24>
       <Position25>
-        <Filename Value="uexphtml.pas"/>
-        <Caret Line="79" TopLine="51"/>
+        <Filename Value="usubtables.pas"/>
+        <Caret Line="153" Column="63" TopLine="133"/>
       </Position25>
       <Position26>
-        <Filename Value="uexphtml.pas"/>
-        <Caret Line="80" TopLine="52"/>
+        <Filename Value="usubtables.pas"/>
+        <Caret Line="114" Column="35" TopLine="95"/>
       </Position26>
       <Position27>
-        <Filename Value="uexphtml.pas"/>
-        <Caret Line="81" TopLine="53"/>
+        <Filename Value="usubtables.pas"/>
+        <Caret Line="52" Column="3" TopLine="20"/>
       </Position27>
       <Position28>
-        <Filename Value="uexphtml.pas"/>
-        <Caret Line="82" TopLine="54"/>
+        <Filename Value="t_mainform.pas"/>
+        <Caret Line="136" Column="56" TopLine="151"/>
       </Position28>
       <Position29>
-        <Filename Value="uexphtml.pas"/>
-        <Caret Line="81" TopLine="53"/>
+        <Filename Value="uaddtables.pas"/>
+        <Caret Line="53" TopLine="29"/>
       </Position29>
       <Position30>
-        <Filename Value="uexphtml.pas"/>
-        <Caret Line="154" Column="37" TopLine="128"/>
+        <Filename Value="uaddtables.pas"/>
+        <Caret Line="98" Column="23" TopLine="84"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>

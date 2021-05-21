@@ -7,8 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, T_MainForm, DBFLaz, T_DbfTable, T_Restructure, T_IdxTable, T_NewTable,
-  T_AddTables, T_SubTables;
+  Forms, T_MainForm, DBFLaz, T_DbfTable, T_Restructure, T_IdxTable, T_NewTable;
 
 //{$IFDEF WINDOWS}{$R DbfStudio.rc}{$ENDIF}
 
