@@ -72,12 +72,7 @@ var
 implementation
 
 uses
-  Math, LCLIntf, LCLType,
-  uIdxTable;
-
-{ todo
-Uses uMain, uIdxTable;
-}
+  Math, uMain, uIdxTable;
 
 {$R *.lfm}
 
@@ -85,9 +80,7 @@ Uses uMain, uIdxTable;
 
 procedure TNewTable.CloseBtnClick(Sender: TObject);
 begin
- { todo
  Main.WorkSiteCloseTabClicked(Main.WorkSite.Pages[Self.PageIdx]);
- }
 end;
 
 procedure TNewTable.CreateTableBtnClick(Sender: TObject);
@@ -162,12 +155,10 @@ begin
 
      Ret := True;
 
-     { todo
-     BitBtn1Click(Sender);
+     CloseBtnClick(Sender);
 
      If cbOpenTB.Checked Then
       Main.Open_Table(SaveTable.FileName);
-      }
    Except
    end;
   end;

@@ -64,8 +64,7 @@ var
 implementation
 
 Uses
-  Math,
-  {todo uMain} t_MainForm, uIdxTable;
+  Math, uMain, uIdxTable;
 
 {$R *.lfm}
 

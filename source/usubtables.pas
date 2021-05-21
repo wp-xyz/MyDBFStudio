@@ -49,10 +49,7 @@ var
 implementation
 
 uses
-  Math,
-  T_MainForm, T_DbfTable;
-
-//Uses uMain, U_TabForm, uDbfTable;
+  Math, uMain, uDbfTable, uTabForm;
 
 {$R *.lfm}
 
@@ -95,15 +92,6 @@ begin
  IdxT1 := StrToInt(ListT1PageIdx.Strings[cbFT.ItemIndex]);
  IdxT2 := StrToInt(ListT1PageIdx.Strings[cbST.ItemIndex]);
 
- { todo }
- With Main.MultiWnd.Childs[cbFT.ItemIndex].DockedObject As TDbfTable Do
-  T1:=DbTable;
-
- With Main.MultiWnd.Childs[cbST.ItemIndex].DockedObject As TDbfTable Do
-  T2:=DbTable;
-
- {todo }
- {
  fT1 := (Main.WorkSite.Pages[IdxT1] As TTabForm).ParentForm;
  fT2 := (Main.WorkSite.Pages[IdxT2] As TTabForm).ParentForm;
 
@@ -112,7 +100,6 @@ begin
 
  With (fT2 As TDbfTable) Do
   T2 := DbTable;
-}
 
  If T1.Fields.Count <> T2.Fields.Count Then
   Begin
@@ -158,21 +145,6 @@ begin
  Constraints.MinHeight := Height;
  Constraints.MaxHeight := Height;
 
- { todo }
- If Main.MultiWnd.ChildCount > 0 Then
-  Begin
-   For Ind:=0 To Main.MultiWnd.ChildCount - 1 Do
-    If Assigned(Main.MultiWnd.Childs[Ind]) Then
-     Begin
-      With Main.MultiWnd.Childs[Ind].DockedObject As TDbfTable Do
-       Begin
-        cbFT.Items.Add(DbTable.FilePathFull + DBTable.TableName);
-
-        cbST.Items.Add(DbTable.FilePathFull + DBTable.TableName);
-       End;
-     End;
-  End;
-  {
  If Main.WorkSite.PageCount > 0 Then
   For Ind := 0 To Main.WorkSite.PageCount - 1 Do
    If (Main.WorkSite.Pages[Ind] Is TTabForm) Then
@@ -198,25 +170,6 @@ begin
    cbFT.ItemIndex := 0;
    cbST.ItemIndex := 0;
   end;
- }
-
- // todo
- If Main.MultiWnd.ChildCount > 0 Then
-  Begin
-   For Ind:=0 To Main.MultiWnd.ChildCount - 1 Do
-    If Assigned(Main.MultiWnd.Childs[Ind]) Then
-     Begin
-      With Main.MultiWnd.Childs[Ind].DockedObject As TDbfTable Do
-       Begin
-        cbFT.Items.Add(DbTable.FilePathFull + DBTable.TableName);
-
-        cbST.Items.Add(DbTable.FilePathFull + DBTable.TableName);
-       End;
-     End;
-  End;
-
- cbFT.ItemIndex:=0;
- cbST.ItemIndex:=0;
 end;
 
 function TSubTables.Check_Table_Structure: Boolean;

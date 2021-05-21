@@ -46,12 +46,9 @@ var
 
 implementation
 
-{ todo }
 uses
   Math,
-  T_MainForm, T_DbfTable;
-
-//Uses uMain, U_TabForm, uDbfTable;
+  uMain, uTabForm, uDbfTable;
 
 {$R *.lfm}
 
@@ -91,8 +88,6 @@ begin
    Exit;
   End;
 
- { todo }
- {
  IdxT1 := StrToInt(ListT1PageIdx.Strings[cbFT.ItemIndex]);
  IdxT2 := StrToInt(ListT1PageIdx.Strings[cbST.ItemIndex]);
 
@@ -104,13 +99,6 @@ begin
 
  With (fT2 As TDbfTable) Do
   T2 := DbTable;
- }
-
- With Main.MultiWnd.Childs[cbFT.ItemIndex].DockedObject As TDbfTable Do
-  T1:=DbTable;
-
- With Main.MultiWnd.Childs[cbST.ItemIndex].DockedObject As TDbfTable Do
-  T2:=DbTable;
 
  If T1.Fields.Count <> T2.Fields.Count Then
   Begin
@@ -163,8 +151,6 @@ begin
  Constraints.MinHeight := Height;
  Constraints.MaxHeight := Height;
 
- { todo }
- {
  If Main.WorkSite.PageCount > 0 Then
   For Ind := 0 To Main.WorkSite.PageCount - 1 Do
    If (Main.WorkSite.Pages[Ind] Is TTabForm) Then
@@ -184,7 +170,6 @@ begin
        end;
 
      end;
-  }
 
  If cbFT.Items.Count > 0 Then
   Begin

@@ -54,40 +54,41 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="100">
+    <Units Count="107">
       <Unit0>
         <Filename Value="DbfStudio.lpr"/>
         <IsPartOfProject Value="True"/>
         <CursorPos Y="22"/>
-        <UsageCount Value="134"/>
+        <UsageCount Value="136"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="t_mainform.pas"/>
+        <Filename Value="umain.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Main"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="T_MainForm"/>
-        <EditorIndex Value="6"/>
-        <UsageCount Value="134"/>
+        <UnitName Value="uMain"/>
+        <EditorIndex Value="12"/>
+        <TopLine Value="259"/>
+        <CursorPos Y="291"/>
+        <UsageCount Value="136"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
-        <Filename Value="t_dbftable.pas"/>
+        <Filename Value="udbftable.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="DbfTable"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="T_DbfTable"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="28"/>
-        <CursorPos X="38" Y="28"/>
-        <UsageCount Value="134"/>
+        <UnitName Value="uDbfTable"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="174"/>
+        <CursorPos X="49" Y="188"/>
+        <UsageCount Value="136"/>
         <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="C:/lazarus/components/LMDI/buttonsbar.pas"/>
@@ -180,11 +181,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uRestructure"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="14"/>
+        <EditorIndex Value="15"/>
         <TopLine Value="260"/>
-        <CursorPos X="42" Y="278"/>
-        <UsageCount Value="124"/>
+        <CursorPos X="42" Y="272"/>
+        <UsageCount Value="126"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit16>
@@ -270,10 +270,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uIdxTable"/>
-        <EditorIndex Value="12"/>
+        <EditorIndex Value="11"/>
         <TopLine Value="36"/>
         <CursorPos X="75" Y="50"/>
-        <UsageCount Value="116"/>
+        <UsageCount Value="118"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit30>
@@ -297,9 +297,9 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uNewTable"/>
         <EditorIndex Value="13"/>
-        <TopLine Value="133"/>
-        <CursorPos X="10" Y="165"/>
-        <UsageCount Value="112"/>
+        <TopLine Value="139"/>
+        <CursorPos X="89" Y="145"/>
+        <UsageCount Value="114"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit33>
@@ -319,7 +319,7 @@
         <UnitName Value="DsCsv"/>
         <EditorIndex Value="1"/>
         <CursorPos X="43" Y="5"/>
-        <UsageCount Value="107"/>
+        <UsageCount Value="109"/>
         <Loaded Value="True"/>
       </Unit35>
       <Unit36>
@@ -332,7 +332,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="40"/>
         <CursorPos X="40" Y="43"/>
-        <UsageCount Value="105"/>
+        <UsageCount Value="107"/>
       </Unit36>
       <Unit37>
         <Filename Value="C:/lazarus/fpc/2.2.4/source/rtl/objpas/sysutils/sysinth.inc"/>
@@ -354,7 +354,7 @@
         <EditorIndex Value="2"/>
         <TopLine Value="264"/>
         <CursorPos X="11" Y="271"/>
-        <UsageCount Value="97"/>
+        <UsageCount Value="99"/>
         <Loaded Value="True"/>
       </Unit39>
       <Unit40>
@@ -364,7 +364,7 @@
         <EditorIndex Value="3"/>
         <TopLine Value="178"/>
         <CursorPos Y="172"/>
-        <UsageCount Value="96"/>
+        <UsageCount Value="98"/>
         <Loaded Value="True"/>
       </Unit40>
       <Unit41>
@@ -381,10 +381,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uExpHTML"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="7"/>
         <TopLine Value="132"/>
         <CursorPos X="52" Y="149"/>
-        <UsageCount Value="93"/>
+        <UsageCount Value="95"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit42>
@@ -406,7 +406,7 @@
         <UnitName Value="DsXls"/>
         <EditorIndex Value="4"/>
         <CursorPos X="30" Y="83"/>
-        <UsageCount Value="36"/>
+        <UsageCount Value="38"/>
         <Loaded Value="True"/>
       </Unit45>
       <Unit46>
@@ -425,10 +425,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uExpXLS"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="9"/>
         <TopLine Value="41"/>
         <CursorPos X="23" Y="55"/>
-        <UsageCount Value="82"/>
+        <UsageCount Value="84"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit47>
@@ -451,10 +451,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uAddTables"/>
-        <EditorIndex Value="7"/>
-        <TopLine Value="134"/>
-        <CursorPos X="6" Y="166"/>
-        <UsageCount Value="78"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="143"/>
+        <CursorPos X="13" Y="154"/>
+        <UsageCount Value="80"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit50>
@@ -465,10 +465,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uSubTables"/>
-        <EditorIndex Value="16"/>
-        <TopLine Value="171"/>
-        <CursorPos X="50" Y="183"/>
-        <UsageCount Value="76"/>
+        <EditorIndex Value="17"/>
+        <TopLine Value="153"/>
+        <CursorPos X="46" Y="168"/>
+        <UsageCount Value="78"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit51>
@@ -500,7 +500,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="66"/>
         <CursorPos X="25" Y="73"/>
-        <UsageCount Value="72"/>
+        <UsageCount Value="74"/>
       </Unit55>
       <Unit56>
         <Filename Value="usplash.pas"/>
@@ -512,7 +512,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="4"/>
         <CursorPos X="30" Y="11"/>
-        <UsageCount Value="68"/>
+        <UsageCount Value="70"/>
       </Unit56>
       <Unit57>
         <Filename Value="C:/lazarus/lcl/interfaces/win32/win32wscontrols.pp"/>
@@ -545,10 +545,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uExpXML"/>
-        <EditorIndex Value="11"/>
+        <EditorIndex Value="10"/>
         <TopLine Value="18"/>
         <CursorPos X="38" Y="30"/>
-        <UsageCount Value="64"/>
+        <UsageCount Value="66"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit61>
@@ -581,7 +581,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="18"/>
         <CursorPos X="53" Y="18"/>
-        <UsageCount Value="61"/>
+        <UsageCount Value="63"/>
       </Unit65>
       <Unit66>
         <Filename Value="t_mainform.lfm"/>
@@ -617,10 +617,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uOpenBA"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="53"/>
-        <CursorPos X="43" Y="70"/>
-        <UsageCount Value="54"/>
+        <EditorIndex Value="14"/>
+        <TopLine Value="103"/>
+        <CursorPos X="49" Y="125"/>
+        <UsageCount Value="56"/>
+        <Loaded Value="True"/>
       </Unit70>
       <Unit71>
         <Filename Value="uaddalias.pas"/>
@@ -632,7 +633,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="37"/>
         <CursorPos X="26" Y="58"/>
-        <UsageCount Value="53"/>
+        <UsageCount Value="55"/>
       </Unit71>
       <Unit72>
         <Filename Value="C:/lazarus/fpc/2.2.4/source/rtl/objpas/sysutils/filutilh.inc"/>
@@ -647,8 +648,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uSortTable"/>
-        <EditorIndex Value="15"/>
-        <UsageCount Value="50"/>
+        <EditorIndex Value="16"/>
+        <UsageCount Value="52"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit73>
@@ -666,10 +667,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uExpSQL"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="8"/>
         <TopLine Value="67"/>
         <CursorPos X="28" Y="88"/>
-        <UsageCount Value="42"/>
+        <UsageCount Value="44"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit75>
@@ -777,7 +778,7 @@
         <UnitName Value="uUtils"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="11"/>
-        <UsageCount Value="29"/>
+        <UsageCount Value="31"/>
       </Unit89>
       <Unit90>
         <Filename Value="../../../thirdparty_applications/mydbfstudio-0.5/MyDbfStudio/uinfo.pas"/>
@@ -866,130 +867,201 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uRestructure"/>
+        <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <TopLine Value="118"/>
-        <CursorPos X="32" Y="125"/>
+        <CursorPos X="49" Y="126"/>
+        <UsageCount Value="10"/>
+      </Unit99>
+      <Unit100>
+        <Filename Value="utabslist.pas"/>
+        <ComponentName Value="TabsList"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="uTabsList"/>
+        <EditorIndex Value="22"/>
+        <TopLine Value="21"/>
+        <CursorPos X="33" Y="37"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit100>
+      <Unit101>
+        <Filename Value="uoptions.lfm"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit101>
+      <Unit102>
+        <Filename Value="uoptions.pas"/>
+        <ComponentName Value="Options"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="uOptions"/>
+        <EditorIndex Value="21"/>
+        <TopLine Value="48"/>
+        <CursorPos X="47" Y="56"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
-      </Unit99>
+      </Unit102>
+      <Unit103>
+        <Filename Value="t_mainform - Kopie.pas"/>
+        <WindowIndex Value="1"/>
+        <TopLine Value="557"/>
+        <CursorPos X="13" Y="571"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit103>
+      <Unit104>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/components/lazutils/fileutil.pas"/>
+        <UnitName Value="FileUtil"/>
+        <EditorIndex Value="20"/>
+        <TopLine Value="48"/>
+        <CursorPos X="10" Y="68"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit104>
+      <Unit105>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/helpintfs.pas"/>
+        <UnitName Value="HelpIntfs"/>
+        <EditorIndex Value="18"/>
+        <TopLine Value="330"/>
+        <CursorPos Y="350"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit105>
+      <Unit106>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <UnitName Value="LazHelpIntf"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="19"/>
+        <TopLine Value="1611"/>
+        <CursorPos X="51" Y="1633"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit106>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="unewtable.pas"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/helpintfs.pas"/>
+        <Caret Line="498" TopLine="475"/>
       </Position1>
       <Position2>
-        <Filename Value="unewtable.pas"/>
-        <Caret Line="78" Column="7" TopLine="46"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/helpintfs.pas"/>
+        <Caret Line="495" TopLine="475"/>
       </Position2>
       <Position3>
-        <Filename Value="unewtable.pas"/>
-        <Caret Line="88" Column="6" TopLine="56"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/helpintfs.pas"/>
+        <Caret Line="498" TopLine="475"/>
       </Position3>
       <Position4>
-        <Filename Value="usubtables.pas"/>
-        <Caret Line="147" Column="24" TopLine="147"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/helpintfs.pas"/>
+        <Caret Line="350" TopLine="330"/>
       </Position4>
       <Position5>
-        <Filename Value="usubtables.pas"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1547" TopLine="1527"/>
       </Position5>
       <Position6>
-        <Filename Value="usubtables.pas"/>
-        <Caret Line="105" Column="5" TopLine="66"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1548" TopLine="1527"/>
       </Position6>
       <Position7>
-        <Filename Value="usubtables.pas"/>
-        <Caret Line="161" Column="6" TopLine="129"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1550" TopLine="1527"/>
       </Position7>
       <Position8>
-        <Filename Value="usorttable.pas"/>
-        <Caret Line="178" Column="12" TopLine="178"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1552" TopLine="1527"/>
       </Position8>
       <Position9>
-        <Filename Value="uaddtables.pas"/>
-        <Caret Line="153" Column="10" TopLine="153"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1554" TopLine="1527"/>
       </Position9>
       <Position10>
-        <Filename Value="uaddtables.pas"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1556" TopLine="1527"/>
       </Position10>
       <Position11>
-        <Filename Value="uaddtables.pas"/>
-        <Caret Line="49" Column="5" TopLine="17"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1557" TopLine="1527"/>
       </Position11>
       <Position12>
-        <Filename Value="uaddtables.pas"/>
-        <Caret Line="94" Column="6" TopLine="62"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1617" TopLine="1597"/>
       </Position12>
       <Position13>
-        <Filename Value="uidxtable.pas"/>
-        <Caret Line="89" Column="33" TopLine="60"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1618" TopLine="1597"/>
       </Position13>
       <Position14>
-        <Filename Value="uidxtable.pas"/>
-        <Caret Line="90" Column="33" TopLine="61"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1619" TopLine="1597"/>
       </Position14>
       <Position15>
-        <Filename Value="uidxtable.pas"/>
-        <Caret Line="91" Column="33" TopLine="62"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1622" TopLine="1597"/>
       </Position15>
       <Position16>
-        <Filename Value="uidxtable.pas"/>
-        <Caret Line="90" Column="33" TopLine="61"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1623" TopLine="1597"/>
       </Position16>
       <Position17>
-        <Filename Value="uidxtable.pas"/>
-        <Caret Line="91" Column="33" TopLine="62"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1624" TopLine="1597"/>
       </Position17>
       <Position18>
-        <Filename Value="uidxtable.pas"/>
-        <Caret Line="90" Column="33" TopLine="61"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1630" TopLine="1598"/>
       </Position18>
       <Position19>
-        <Filename Value="uidxtable.pas"/>
-        <Caret Line="97" Column="33" TopLine="68"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1825" TopLine="1805"/>
       </Position19>
       <Position20>
-        <Filename Value="uidxtable.pas"/>
-        <Caret Line="57" Column="72" TopLine="53"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1826" TopLine="1805"/>
       </Position20>
       <Position21>
-        <Filename Value="uidxtable.pas"/>
-        <Caret Line="43" Column="25" TopLine="23"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1827" TopLine="1805"/>
       </Position21>
       <Position22>
-        <Filename Value="urestructure.pas"/>
-        <Caret Line="515" Column="22" TopLine="503"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1828" TopLine="1805"/>
       </Position22>
       <Position23>
-        <Filename Value="urestructure.pas"/>
-        <Caret Line="508" Column="52" TopLine="481"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1829" TopLine="1805"/>
       </Position23>
       <Position24>
-        <Filename Value="urestructure.pas"/>
-        <Caret Line="509" Column="52" TopLine="482"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1827" TopLine="1805"/>
       </Position24>
       <Position25>
-        <Filename Value="urestructure.pas"/>
-        <Caret Line="66" Column="29" TopLine="46"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1831" TopLine="1805"/>
       </Position25>
       <Position26>
-        <Filename Value="t_mainform.pas"/>
-        <Caret Line="151" Column="16" TopLine="151"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1832" TopLine="1805"/>
       </Position26>
       <Position27>
-        <Filename Value="t_mainform.pas"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1631" TopLine="1611"/>
       </Position27>
       <Position28>
-        <Filename Value="urestructure.pas"/>
-        <Caret Line="69" Column="37" TopLine="46"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1635" TopLine="1611"/>
       </Position28>
       <Position29>
-        <Filename Value="urestructure.pas"/>
-        <Caret Line="281" Column="2" TopLine="271"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1636" TopLine="1611"/>
       </Position29>
       <Position30>
-        <Filename Value="urestructure.pas"/>
-        <Caret Line="68" Column="3" TopLine="58"/>
+        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lazhelpintf.pas"/>
+        <Caret Line="1637" TopLine="1611"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
@@ -1029,6 +1101,15 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
+    <BreakPoints Count="1">
+      <Item1>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="umain.pas"/>
+        <Line Value="291"/>
+      </Item1>
+    </BreakPoints>
     <Exceptions Count="3">
       <Item1>
         <Name Value="EAbort"/>

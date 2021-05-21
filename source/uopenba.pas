@@ -43,7 +43,7 @@ var
 
 implementation
 
-Uses Math, t_MainForm, uAddAlias;
+Uses Math, uMain, uAddAlias;
 
 {$R *.lfm}
 
@@ -80,7 +80,7 @@ end;
 
 procedure TOpenBA.CloseBtnClick(Sender: TObject);
 begin
- // todo: //Main.WorkSiteCloseTabClicked(Main.WorkSite.Pages[Self.PageIdx]);
+  Main.WorkSiteCloseTabClicked(Main.WorkSite.Pages[Self.PageIdx]);
 end;
 
 procedure TOpenBA.OpenTableBtnClick(Sender: TObject);

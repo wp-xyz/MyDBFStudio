@@ -42,7 +42,6 @@ object NewTable: TNewTable
         Width = 35
       end    
       item
-        MinSize = 10
         Title.Caption = 'Field Name'
         Width = 225
       end    
@@ -54,8 +53,8 @@ object NewTable: TNewTable
       item
         Alignment = taRightJustify
         SizePriority = 0
-        Title.Alignment = taLeftJustify
         Title.Caption = 'Length'
+        Width = 64
       end>
     Constraints.MinWidth = 400
     FixedCols = 0
