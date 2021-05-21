@@ -8,7 +8,6 @@ object Options: TOptions
   Caption = 'Options'
   ClientHeight = 314
   ClientWidth = 254
-  Font.Height = -12
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poDesktopCenter

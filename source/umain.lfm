@@ -6,7 +6,6 @@ object Main: TMain
   Caption = 'MyDBF Studio'
   ClientHeight = 530
   ClientWidth = 750
-  Font.Height = -12
   Menu = MainMenu1
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery

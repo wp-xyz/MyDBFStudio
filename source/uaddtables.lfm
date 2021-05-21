@@ -9,7 +9,6 @@ object AddTables: TAddTables
   Caption = 'Add Two Tables'
   ClientHeight = 327
   ClientWidth = 399
-  Font.Height = -12
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow

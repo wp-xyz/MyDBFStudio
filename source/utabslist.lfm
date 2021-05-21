@@ -6,7 +6,6 @@ object TabsList: TTabsList
   Caption = 'Tabs list'
   ClientHeight = 395
   ClientWidth = 664
-  Font.Height = -12
   OnShow = FormShow
   Position = poDesktopCenter
   LCLVersion = '2.1.0.0'

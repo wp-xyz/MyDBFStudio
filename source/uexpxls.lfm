@@ -8,7 +8,6 @@ object ExpXLS: TExpXLS
   Caption = 'Export Table To XLS File'
   ClientHeight = 396
   ClientWidth = 462
-  Font.Height = -12
   OnShow = FormShow
   Position = poDesktopCenter
   LCLVersion = '2.1.0.0'

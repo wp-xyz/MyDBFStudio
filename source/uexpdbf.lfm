@@ -8,7 +8,6 @@ object ExpDBF: TExpDBF
   Caption = 'Export Table To DBF Table'
   ClientHeight = 372
   ClientWidth = 441
-  Font.Height = -12
   OnShow = FormShow
   Position = poDesktopCenter
   LCLVersion = '2.1.0.0'

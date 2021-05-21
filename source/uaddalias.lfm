@@ -9,7 +9,6 @@ object AddAlias: TAddAlias
   ClientHeight = 147
   ClientWidth = 383
   Constraints.MinWidth = 360
-  Font.Height = -12
   OnShow = FormShow
   Position = poDesktopCenter
   LCLVersion = '2.1.0.0'

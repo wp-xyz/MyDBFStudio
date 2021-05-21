@@ -6,7 +6,6 @@ object OpenBA: TOpenBA
   Caption = 'Open table by alias'
   ClientHeight = 553
   ClientWidth = 691
-  Font.Height = -12
   OnDestroy = FormDestroy
   OnShow = FormShow
   LCLVersion = '2.1.0.0'

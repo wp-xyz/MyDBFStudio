@@ -7,7 +7,6 @@ object NewTable: TNewTable
   Caption = 'Create a new table'
   ClientHeight = 442
   ClientWidth = 719
-  Font.Height = -12
   KeyPreview = True
   OnCreate = FormCreate
   OnDestroy = FormDestroy

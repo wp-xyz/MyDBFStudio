@@ -8,7 +8,6 @@ object ExpHTML: TExpHTML
   Caption = 'Export Table To HTML File'
   ClientHeight = 511
   ClientWidth = 503
-  Font.Height = -12
   OnClose = FormClose
   OnShow = FormShow
   Position = poDesktopCenter

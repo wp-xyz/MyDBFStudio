@@ -9,7 +9,6 @@ object SortTable: TSortTable
   ClientHeight = 426
   ClientWidth = 518
   Constraints.MinWidth = 400
-  Font.Height = -12
   OnClose = FormClose
   OnShow = FormShow
   Position = poDesktopCenter

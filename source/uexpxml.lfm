@@ -8,7 +8,6 @@ object ExpXML: TExpXML
   Caption = 'Export Table To XML File'
   ClientHeight = 332
   ClientWidth = 439
-  Font.Height = -12
   OnShow = FormShow
   Position = poDesktopCenter
   LCLVersion = '2.1.0.0'

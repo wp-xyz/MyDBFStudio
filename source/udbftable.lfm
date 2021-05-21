@@ -6,7 +6,6 @@ object DbfTable: TDbfTable
   Caption = 'DbfTable'
   ClientHeight = 495
   ClientWidth = 708
-  Font.Height = -12
   KeyPreview = True
   OnDestroy = FormDestroy
   LCLVersion = '2.1.0.0'

@@ -8,7 +8,6 @@ object ExpCSV: TExpCSV
   Caption = 'Export Table To CSV File'
   ClientHeight = 374
   ClientWidth = 510
-  Font.Height = -12
   OnShow = FormShow
   Position = poDesktopCenter
   LCLVersion = '2.1.0.0'

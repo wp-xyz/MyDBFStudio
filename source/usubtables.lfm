@@ -8,7 +8,6 @@ object SubTables: TSubTables
   Caption = 'Substract Two Tables'
   ClientHeight = 308
   ClientWidth = 399
-  Font.Height = -12
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
