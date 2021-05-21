@@ -290,15 +290,14 @@ begin
 end;
 
 procedure TDsDataExport.SaveRecords;
- Var Bookmark : TBookmark;  //TBookmarkStr;
+ Var Bookmark : TBookmarkStr;
      ACancel : Boolean;
 begin
  FDataSet.DisableControls;
 
  Try
    If FPreserveBookmark Then
-    Bookmark := Dataset.GetBookmark;
-//    Bookmark:=DataSet.Bookmark;
+    Bookmark := PAnsiChar(@DataSet.Bookmark[0]);
 
    Try
      FRecNo:=0;
@@ -328,9 +327,7 @@ begin
       End;
    Finally
      If FPreserveBookmark Then
-      //      FDataSet.Bookmark:=Bookmark;
-      FDataset.GotoBookmark(Bookmark);
-     FDataset.FreeBookmark(Bookmark);
+      FDataSet.Bookmark := @Bookmark;
    End;
  Finally
    FDataSet.EnableControls;
@@ -372,7 +369,7 @@ begin
  FSaveIfEmpty:=False;
  FMaxRecords:=0;
  FStream:=Nil;
- FPreserveBookmark:=True;
+ FPreserveBookmark := False;
 end;
 
 destructor TDsDataExport.Destroy;
