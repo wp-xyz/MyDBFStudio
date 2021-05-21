@@ -162,7 +162,7 @@ object Options: TOptions
     Anchors = [akTop, akRight]
     AutoSize = True
     BorderSpacing.Right = 6
-    Caption = '&Confirm'
+    Caption = 'Con&firm'
     Default = True
     Images = CommonData.Images
     ImageIndex = 28

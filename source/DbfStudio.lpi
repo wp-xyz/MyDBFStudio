@@ -59,7 +59,7 @@
         <Filename Value="DbfStudio.lpr"/>
         <IsPartOfProject Value="True"/>
         <CursorPos X="31" Y="2"/>
-        <UsageCount Value="144"/>
+        <UsageCount Value="145"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit0>
@@ -73,7 +73,7 @@
         <EditorIndex Value="17"/>
         <TopLine Value="266"/>
         <CursorPos X="83" Y="283"/>
-        <UsageCount Value="144"/>
+        <UsageCount Value="145"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -87,7 +87,7 @@
         <EditorIndex Value="8"/>
         <TopLine Value="174"/>
         <CursorPos X="82" Y="183"/>
-        <UsageCount Value="144"/>
+        <UsageCount Value="145"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit2>
@@ -185,7 +185,7 @@
         <EditorIndex Value="21"/>
         <TopLine Value="47"/>
         <CursorPos X="54" Y="68"/>
-        <UsageCount Value="134"/>
+        <UsageCount Value="135"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit16>
@@ -274,7 +274,7 @@
         <EditorIndex Value="15"/>
         <TopLine Value="36"/>
         <CursorPos X="69" Y="50"/>
-        <UsageCount Value="126"/>
+        <UsageCount Value="127"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit30>
@@ -300,19 +300,24 @@
         <EditorIndex Value="18"/>
         <TopLine Value="297"/>
         <CursorPos X="68" Y="319"/>
-        <UsageCount Value="122"/>
+        <UsageCount Value="123"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit33>
       <Unit34>
         <Filename Value="usetfv.pas"/>
+        <IsPartOfProject Value="True"/>
         <ComponentName Value="SetFV"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uSetFV"/>
-        <EditorIndex Value="-1"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="22"/>
         <TopLine Value="159"/>
-        <CursorPos Y="195"/>
+        <CursorPos X="48" Y="183"/>
         <UsageCount Value="99"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit34>
       <Unit35>
         <Filename Value="dscsv.pas"/>
@@ -320,7 +325,7 @@
         <UnitName Value="DsCsv"/>
         <EditorIndex Value="1"/>
         <CursorPos X="54" Y="10"/>
-        <UsageCount Value="117"/>
+        <UsageCount Value="118"/>
         <Loaded Value="True"/>
       </Unit35>
       <Unit36>
@@ -333,7 +338,7 @@
         <EditorIndex Value="9"/>
         <TopLine Value="39"/>
         <CursorPos X="46" Y="65"/>
-        <UsageCount Value="115"/>
+        <UsageCount Value="116"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit36>
@@ -357,7 +362,7 @@
         <EditorIndex Value="2"/>
         <TopLine Value="264"/>
         <CursorPos X="11" Y="271"/>
-        <UsageCount Value="107"/>
+        <UsageCount Value="108"/>
         <Loaded Value="True"/>
       </Unit39>
       <Unit40>
@@ -367,7 +372,7 @@
         <EditorIndex Value="3"/>
         <TopLine Value="178"/>
         <CursorPos Y="172"/>
-        <UsageCount Value="106"/>
+        <UsageCount Value="107"/>
         <Loaded Value="True"/>
       </Unit40>
       <Unit41>
@@ -387,7 +392,7 @@
         <EditorIndex Value="11"/>
         <TopLine Value="132"/>
         <CursorPos X="69" Y="144"/>
-        <UsageCount Value="103"/>
+        <UsageCount Value="104"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit42>
@@ -409,7 +414,7 @@
         <UnitName Value="DsXls"/>
         <EditorIndex Value="4"/>
         <CursorPos X="30" Y="83"/>
-        <UsageCount Value="46"/>
+        <UsageCount Value="47"/>
         <Loaded Value="True"/>
       </Unit45>
       <Unit46>
@@ -431,7 +436,7 @@
         <EditorIndex Value="13"/>
         <TopLine Value="41"/>
         <CursorPos X="72" Y="53"/>
-        <UsageCount Value="92"/>
+        <UsageCount Value="93"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit47>
@@ -457,7 +462,7 @@
         <EditorIndex Value="6"/>
         <TopLine Value="143"/>
         <CursorPos X="86" Y="152"/>
-        <UsageCount Value="88"/>
+        <UsageCount Value="89"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit50>
@@ -468,10 +473,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uSubTables"/>
-        <EditorIndex Value="24"/>
+        <EditorIndex Value="25"/>
         <TopLine Value="152"/>
         <CursorPos X="56" Y="175"/>
-        <UsageCount Value="86"/>
+        <UsageCount Value="87"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit51>
@@ -503,7 +508,7 @@
         <EditorIndex Value="10"/>
         <TopLine Value="66"/>
         <CursorPos X="70" Y="69"/>
-        <UsageCount Value="82"/>
+        <UsageCount Value="83"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit55>
@@ -514,10 +519,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uSplash"/>
-        <EditorIndex Value="23"/>
+        <EditorIndex Value="24"/>
         <TopLine Value="4"/>
         <CursorPos X="30" Y="11"/>
-        <UsageCount Value="78"/>
+        <UsageCount Value="79"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit56>
@@ -555,7 +560,7 @@
         <EditorIndex Value="14"/>
         <TopLine Value="18"/>
         <CursorPos X="68" Y="32"/>
-        <UsageCount Value="74"/>
+        <UsageCount Value="75"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit61>
@@ -588,7 +593,7 @@
         <EditorIndex Value="16"/>
         <TopLine Value="18"/>
         <CursorPos X="76" Y="36"/>
-        <UsageCount Value="71"/>
+        <UsageCount Value="72"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit65>
@@ -629,7 +634,7 @@
         <EditorIndex Value="19"/>
         <TopLine Value="26"/>
         <CursorPos X="46" Y="55"/>
-        <UsageCount Value="64"/>
+        <UsageCount Value="65"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit70>
@@ -643,7 +648,7 @@
         <EditorIndex Value="5"/>
         <TopLine Value="37"/>
         <CursorPos X="47" Y="53"/>
-        <UsageCount Value="63"/>
+        <UsageCount Value="64"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit71>
@@ -660,9 +665,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uSortTable"/>
-        <EditorIndex Value="22"/>
+        <EditorIndex Value="23"/>
         <CursorPos X="51" Y="29"/>
-        <UsageCount Value="60"/>
+        <UsageCount Value="61"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit73>
@@ -683,7 +688,7 @@
         <EditorIndex Value="12"/>
         <TopLine Value="67"/>
         <CursorPos X="70" Y="90"/>
-        <UsageCount Value="52"/>
+        <UsageCount Value="53"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit75>
@@ -791,7 +796,7 @@
         <UnitName Value="uUtils"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="11"/>
-        <UsageCount Value="39"/>
+        <UsageCount Value="40"/>
       </Unit89>
       <Unit90>
         <Filename Value="../../../thirdparty_applications/mydbfstudio-0.5/MyDbfStudio/uinfo.pas"/>
@@ -893,11 +898,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uTabsList"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="25"/>
+        <EditorIndex Value="26"/>
         <TopLine Value="21"/>
         <CursorPos X="75" Y="42"/>
-        <UsageCount Value="21"/>
+        <UsageCount Value="22"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit100>
@@ -916,8 +920,8 @@
         <UnitName Value="uOptions"/>
         <EditorIndex Value="20"/>
         <TopLine Value="5"/>
-        <CursorPos X="41" Y="33"/>
-        <UsageCount Value="20"/>
+        <CursorPos X="62" Y="13"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit102>
@@ -954,7 +958,7 @@
         <UnitName Value="uDatamodule"/>
         <EditorIndex Value="7"/>
         <CursorPos X="26" Y="18"/>
-        <UsageCount Value="28"/>
+        <UsageCount Value="29"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit106>
