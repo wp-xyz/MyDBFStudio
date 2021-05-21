@@ -137,8 +137,8 @@ implementation
 {$R *.lfm}
 
 uses
-  T_DbfTable, T_NewTable, T_ExtHTML, T_AddTables, T_SubTables,
-  uExpCSV, uExpDbf, uSplash, uExpXls, uExpXml, uExpSQL, uInfo, uOpenBA, T_SortTable;
+  T_DbfTable, T_NewTable, T_AddTables, T_SubTables, T_SortTable, uOpenBA,
+  uExpCSV, uExpDbf, uExpHtml, uExpXls, uExpXml, uExpSQL, uSplash, uInfo;
 
 Procedure FuncStrD_StrEq(Param: PExpressionRec);
 Begin
