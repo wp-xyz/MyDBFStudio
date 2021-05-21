@@ -12,24 +12,25 @@ object DbfTable: TDbfTable
   LCLVersion = '2.1.0.0'
   object Panel1: TPanel
     Left = 0
-    Height = 73
+    Height = 72
     Top = 0
     Width = 708
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
-    ClientHeight = 73
+    ClientHeight = 72
     ClientWidth = 708
     TabOrder = 0
     object Label1: TLabel
       AnchorSideLeft.Control = Panel1
       AnchorSideTop.Control = ToolBar1
       AnchorSideTop.Side = asrBottom
-      Left = 0
+      Left = 6
       Height = 15
-      Top = 27
+      Top = 26
       Width = 26
-      BorderSpacing.Top = 3
+      BorderSpacing.Left = 6
+      BorderSpacing.Top = 2
       Caption = 'Filter'
       ParentColor = False
     end
@@ -38,11 +39,12 @@ object DbfTable: TDbfTable
       AnchorSideTop.Control = Label1
       AnchorSideTop.Side = asrBottom
       AnchorSideRight.Control = Indexes
-      Left = 0
+      Left = 6
       Height = 23
-      Top = 44
-      Width = 361
+      Top = 43
+      Width = 355
       Anchors = [akTop, akLeft, akRight]
+      BorderSpacing.Left = 6
       BorderSpacing.Top = 2
       BorderSpacing.Right = 6
       BorderSpacing.Bottom = 6
@@ -57,7 +59,7 @@ object DbfTable: TDbfTable
       AnchorSideBottom.Side = asrBottom
       Left = 569
       Height = 19
-      Top = 46
+      Top = 45
       Width = 133
       Anchors = [akTop, akRight]
       BorderSpacing.Left = 6
@@ -74,7 +76,7 @@ object DbfTable: TDbfTable
       AnchorSideRight.Control = cbShowDel
       Left = 367
       Height = 23
-      Top = 44
+      Top = 43
       Width = 196
       Anchors = [akTop, akRight]
       ItemHeight = 15
@@ -87,7 +89,7 @@ object DbfTable: TDbfTable
       AnchorSideTop.Control = Label1
       Left = 367
       Height = 15
-      Top = 27
+      Top = 26
       Width = 40
       Caption = 'Indexes'
       ParentColor = False
@@ -219,12 +221,13 @@ object DbfTable: TDbfTable
     SimplePanel = False
   end
   object DBGrid1: TDBGrid
-    Left = 0
-    Height = 399
-    Top = 73
-    Width = 708
+    Left = 6
+    Height = 388
+    Top = 78
+    Width = 696
     Align = alClient
     AlternateColor = clMoneyGreen
+    BorderSpacing.Around = 6
     Color = clWindow
     Columns = <>
     DataSource = Ds
