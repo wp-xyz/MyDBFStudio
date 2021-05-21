@@ -44,19 +44,21 @@ object SetFV: TSetFV
   object CbMode: TRadioGroup
     AnchorSideLeft.Control = FieldList
     AnchorSideLeft.Side = asrBottom
-    AnchorSideTop.Control = FieldList
+    AnchorSideTop.Control = Owner
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 228
-    Height = 56
-    Top = 23
+    Height = 51
+    Top = 6
     Width = 417
     Anchors = [akTop, akLeft, akRight]
     AutoFill = True
+    AutoSize = True
     BorderSpacing.Left = 6
+    BorderSpacing.Top = 6
     BorderSpacing.Right = 6
     Caption = ' Set Field Mode '
-    ChildSizing.LeftRightSpacing = 12
+    ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 6
     ChildSizing.HorizontalSpacing = 24
     ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
@@ -65,7 +67,7 @@ object SetFV: TSetFV
     ChildSizing.ShrinkVertical = crsScaleChilds
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 36
+    ClientHeight = 31
     ClientWidth = 413
     Columns = 2
     ItemIndex = 0
@@ -83,14 +85,15 @@ object SetFV: TSetFV
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 228
-    Height = 80
-    Top = 225
+    Height = 78
+    Top = 199
     Width = 417
     Anchors = [akTop, akLeft, akRight]
+    AutoSize = True
     BorderSpacing.Left = 6
     BorderSpacing.Top = 12
     BorderSpacing.Right = 6
-    ClientHeight = 60
+    ClientHeight = 58
     ClientWidth = 413
     TabOrder = 4
     object Label2: TLabel
@@ -127,6 +130,7 @@ object SetFV: TSetFV
       Anchors = [akTop, akLeft, akRight]
       BorderSpacing.Top = 2
       BorderSpacing.Right = 6
+      BorderSpacing.Bottom = 6
       ItemHeight = 15
       Style = csDropDownList
       TabOrder = 0
@@ -176,7 +180,7 @@ object SetFV: TSetFV
     AnchorSideRight.Control = CloseBtn
     Left = 474
     Height = 26
-    Top = 317
+    Top = 289
     Width = 90
     Anchors = [akTop, akRight]
     AutoSize = True
@@ -195,7 +199,7 @@ object SetFV: TSetFV
     AnchorSideRight.Side = asrBottom
     Left = 570
     Height = 26
-    Top = 317
+    Top = 289
     Width = 75
     Anchors = [akTop, akRight]
     AutoSize = True
@@ -213,7 +217,7 @@ object SetFV: TSetFV
     AnchorSideTop.Control = gbMath
     Left = 236
     Height = 19
-    Top = 225
+    Top = 199
     Width = 171
     BorderSpacing.Left = 8
     Caption = 'Use Mathematical Operation'
@@ -227,14 +231,14 @@ object SetFV: TSetFV
     AnchorSideRight.Control = CbMode
     AnchorSideRight.Side = asrBottom
     Left = 228
-    Height = 55
-    Top = 91
+    Height = 53
+    Top = 69
     Width = 417
     Anchors = [akTop, akLeft, akRight]
     AutoSize = True
     BorderSpacing.Top = 12
     Caption = 'Selected Field'
-    ClientHeight = 35
+    ClientHeight = 33
     ClientWidth = 413
     TabOrder = 2
     object SelField: TEdit
@@ -243,15 +247,15 @@ object SetFV: TSetFV
       AnchorSideRight.Control = gbSelField
       AnchorSideRight.Side = asrBottom
       AnchorSideBottom.Side = asrBottom
-      Left = 10
+      Left = 12
       Height = 23
       Top = 4
-      Width = 397
+      Width = 389
       Anchors = [akTop, akLeft, akRight]
-      BorderSpacing.Left = 10
+      BorderSpacing.Left = 12
       BorderSpacing.Top = 4
-      BorderSpacing.Right = 6
-      BorderSpacing.Bottom = 8
+      BorderSpacing.Right = 12
+      BorderSpacing.Bottom = 6
       ReadOnly = True
       TabOrder = 0
     end
@@ -263,14 +267,14 @@ object SetFV: TSetFV
     AnchorSideRight.Control = CbMode
     AnchorSideRight.Side = asrBottom
     Left = 228
-    Height = 55
-    Top = 158
+    Height = 53
+    Top = 134
     Width = 417
     Anchors = [akTop, akLeft, akRight]
     AutoSize = True
     BorderSpacing.Top = 12
     Caption = 'Simple Value To Set'
-    ClientHeight = 35
+    ClientHeight = 33
     ClientWidth = 413
     TabOrder = 3
     object sSetVal: TEdit
@@ -279,15 +283,15 @@ object SetFV: TSetFV
       AnchorSideRight.Control = gbSetVal
       AnchorSideRight.Side = asrBottom
       AnchorSideBottom.Side = asrBottom
-      Left = 10
+      Left = 12
       Height = 23
       Top = 4
-      Width = 397
+      Width = 389
       Anchors = [akTop, akLeft, akRight]
-      BorderSpacing.Left = 10
+      BorderSpacing.Left = 12
       BorderSpacing.Top = 4
-      BorderSpacing.Right = 6
-      BorderSpacing.Bottom = 8
+      BorderSpacing.Right = 12
+      BorderSpacing.Bottom = 6
       TabOrder = 0
     end
   end
