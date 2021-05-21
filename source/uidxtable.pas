@@ -40,7 +40,7 @@ var
 
 implementation
 
-Uses Math, uNewTable, {to do }t_Restructure;
+Uses Math, uNewTable, uRestructure;
 
 {$R *.lfm}
 
