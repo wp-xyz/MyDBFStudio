@@ -10,8 +10,7 @@ uses
   ComCtrls,
   LazHelpHTML, HelpIntfs,
   dbf_prscore, dbf_prsdef, dbf, DB,
-  HistoryFiles,
-  uTabForm;
+  HistoryFiles, uDataModule, uTabForm;
 
 Const
      StrVer                          = '0.5-2017';

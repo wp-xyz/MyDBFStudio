@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, uMain;
+  Forms, uMain, uDatamodule, uTabsList;
 
 //{$IFDEF WINDOWS}{$R DbfStudio.rc}{$ENDIF}
 
@@ -17,6 +17,7 @@ begin
   Application.Scaled:=True;
   Application.Title:='MyDbf Studio';
   Application.Initialize;
+  Application.CreateForm(TCommonData, CommonData);
   Application.CreateForm(TMain, Main);
   Application.Run;
 end.

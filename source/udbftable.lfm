@@ -104,8 +104,7 @@ object DbfTable: TDbfTable
       EdgeBorders = []
       EdgeInner = esNone
       EdgeOuter = esNone
-      Images = ImageList1
-      ImagesWidth = 16
+      Images = CommonData.Images
       TabOrder = 3
       Transparent = True
       object DBNavigator1: TDBNavigator
@@ -132,7 +131,7 @@ object DbfTable: TDbfTable
         Hint = 'Pack table (reduce size)'
         Top = 0
         Caption = 'Pack'
-        ImageIndex = 4
+        ImageIndex = 26
         OnClick = PackClick
         ParentShowHint = False
         ShowHint = True
@@ -143,7 +142,7 @@ object DbfTable: TDbfTable
         Hint = 'Delete all record into table'
         Top = 0
         Caption = 'Empty'
-        ImageIndex = 3
+        ImageIndex = 25
         OnClick = EmptyClick
         ParentShowHint = False
         ShowHint = True
@@ -153,7 +152,7 @@ object DbfTable: TDbfTable
         Hint = 'Delete only visible records'
         Top = 0
         Caption = 'ViewDel'
-        ImageIndex = 2
+        ImageIndex = 24
         OnClick = ViewDelClick
         ParentShowHint = False
         ShowHint = True
@@ -163,7 +162,7 @@ object DbfTable: TDbfTable
         Hint = 'Restructure the table'
         Top = 0
         Caption = 'Restruct'
-        ImageIndex = 0
+        ImageIndex = 22
         OnClick = RestructClick
         ParentShowHint = False
         ShowCaption = False
@@ -174,17 +173,20 @@ object DbfTable: TDbfTable
         Hint = 'Set field value'
         Top = 0
         Caption = 'SetField'
-        ImageIndex = 1
+        ImageIndex = 23
         OnClick = SetFieldClick
         ParentShowHint = False
         ShowHint = True
       end
       object ToolButton1: TToolButton
         Left = 394
+        Hint = 'Close this tab'
         Top = 0
         Caption = 'X'
         ImageIndex = 5
         OnClick = ToolButton1Click
+        ParentShowHint = False
+        ShowHint = True
       end
       object ToolButton2: TToolButton
         Left = 389

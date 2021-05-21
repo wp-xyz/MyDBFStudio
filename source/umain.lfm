@@ -1,7 +1,7 @@
 object Main: TMain
-  Left = 307
+  Left = 392
   Height = 550
-  Top = 107
+  Top = 193
   Width = 750
   Caption = 'MyDBF Studio'
   ClientHeight = 530
@@ -17,15 +17,16 @@ object Main: TMain
   LCLVersion = '2.1.0.0'
   object ToolBar1: TToolBar
     Left = 0
-    Height = 26
     Top = 0
     Width = 750
-    ButtonHeight = 24
-    ButtonWidth = 24
+    AutoSize = True
+    ButtonHeight = 32
+    ButtonWidth = 34
     Caption = 'ToolBar1'
     EdgeInner = esNone
     EdgeOuter = esNone
-    Images = ImageList1
+    Images = CommonData.Images
+    ImagesWidth = 24
     TabOrder = 0
     object ToolButton1: TToolButton
       Left = 1
@@ -38,7 +39,7 @@ object Main: TMain
       ShowHint = True
     end
     object ToolButton2: TToolButton
-      Left = 29
+      Left = 35
       Hint = 'Open a table'
       Top = 0
       Caption = 'ToolButton2'
@@ -48,7 +49,7 @@ object Main: TMain
       ShowHint = True
     end
     object ToolButton3: TToolButton
-      Left = 57
+      Left = 69
       Hint = 'Save table as...'
       Top = 0
       Caption = 'ToolButton3'
@@ -58,14 +59,14 @@ object Main: TMain
       ShowHint = True
     end
     object ToolButton4: TToolButton
-      Left = 113
-      Height = 24
+      Left = 137
+      Height = 32
       Top = 0
       Caption = 'ToolButton4'
       Style = tbsSeparator
     end
     object ToolButton5: TToolButton
-      Left = 85
+      Left = 103
       Hint = 'Open tables by alias'
       Top = 0
       Caption = 'ToolButton5'
@@ -75,7 +76,7 @@ object Main: TMain
       ShowHint = True
     end
     object ToolButton6: TToolButton
-      Left = 121
+      Left = 145
       Hint = 'Empty a table'
       Top = 0
       Caption = 'ToolButton6'
@@ -85,7 +86,7 @@ object Main: TMain
       ShowHint = True
     end
     object ToolButton7: TToolButton
-      Left = 149
+      Left = 179
       Hint = 'Sort a table'
       Top = 0
       Caption = 'ToolButton7'
@@ -95,7 +96,7 @@ object Main: TMain
       ShowHint = True
     end
     object ToolButton8: TToolButton
-      Left = 177
+      Left = 213
       Hint = 'Show tabs list'
       Top = 0
       Caption = 'ToolButton8'
@@ -105,14 +106,14 @@ object Main: TMain
       ShowHint = True
     end
     object ToolButton9: TToolButton
-      Left = 205
-      Height = 24
+      Left = 247
+      Height = 32
       Top = 0
       Caption = 'ToolButton9'
       Style = tbsSeparator
     end
     object ToolButton10: TToolButton
-      Left = 213
+      Left = 255
       Hint = 'Close all tabs'
       Top = 0
       Caption = 'ToolButton10'
@@ -122,14 +123,14 @@ object Main: TMain
       ShowHint = True
     end
     object ToolButton11: TToolButton
-      Left = 241
-      Height = 24
+      Left = 289
+      Height = 32
       Top = 0
       Caption = 'ToolButton11'
       Style = tbsSeparator
     end
     object ToolButton12: TToolButton
-      Left = 249
+      Left = 297
       Top = 0
       Caption = 'ToolButton12'
       ImageIndex = 6
@@ -145,8 +146,8 @@ object Main: TMain
   end
   object WorkSite: TPageControl
     Left = 0
-    Height = 481
-    Top = 26
+    Height = 475
+    Top = 32
     Width = 750
     Align = alClient
     TabOrder = 2
@@ -154,7 +155,7 @@ object Main: TMain
     OnCloseTabClicked = WorkSiteCloseTabClicked
   end
   object MainMenu1: TMainMenu
-    Images = ImageList1
+    Images = CommonData.Images
     ImagesWidth = 16
     Left = 504
     Top = 172
@@ -292,10 +293,12 @@ object Main: TMain
       Caption = '&Help'
       object miInfo: TMenuItem
         Caption = 'Info'
+        ImageIndex = 20
         OnClick = miInfoClick
       end
       object MenuItem3: TMenuItem
         Caption = 'Help'
+        ImageIndex = 21
         OnClick = MenuItem3Click
       end
     end
