@@ -1,13 +1,15 @@
 object Info: TInfo
   Left = 419
-  Height = 528
+  Height = 525
   Top = 147
   Width = 457
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Info'
-  ClientHeight = 528
+  ClientHeight = 525
   ClientWidth = 457
+  OnActivate = FormActivate
   OnShow = FormShow
   Position = poDesktopCenter
   LCLVersion = '2.1.0.0'
@@ -5233,31 +5235,36 @@ object Info: TInfo
     ParentFont = False
   end
   object Memo1: TMemo
+    AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Img
     AnchorSideTop.Side = asrBottom
-    AnchorSideBottom.Control = CloseBtn
-    Left = 3
-    Height = 178
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Bevel1
+    Left = 6
+    Height = 169
     Top = 312
-    Width = 452
+    Width = 445
     Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Left = 6
     BorderSpacing.Right = 6
-    Color = clWindow
+    BorderStyle = bsNone
+    Color = clForm
     Lines.Strings = (
-      'License: GPL/LGPL'
-      'Autor: Calogiuri Enzo Antonio Aka Fog76'
-      ''
-      'MyDbfStudio is an administrative tool to create and manage dBase tables that run on Windows, Linux and other platforms supported by the Lazarus IDE.'
+      'MyDbfStudio is an administrative tool to create and manage dBase tables. It runs on Windows, Linux and other platforms supported by the Lazarus IDE.'
       ''
       'More developers needed!!!'
       ''
+      'Autor: Calogiuri Enzo Antonio Aka Fog76'
+      'Modifications ins current port by W. Pamler'
+      ''
+      'License: GPL/LGPL'
       'Icons provided by icons8.com (style: Windows Metro, https://icons8.com/icons/metro).'
     )
     ReadOnly = True
-    ScrollBars = ssAutoBoth
     TabOrder = 0
     TabStop = False
+    WantReturns = False
   end
   object CloseBtn: TBitBtn
     AnchorSideRight.Control = Owner
@@ -5266,7 +5273,7 @@ object Info: TInfo
     AnchorSideBottom.Side = asrBottom
     Left = 376
     Height = 26
-    Top = 496
+    Top = 493
     Width = 75
     Anchors = [akRight, akBottom]
     AutoSize = True
@@ -5278,5 +5285,20 @@ object Info: TInfo
     ImageIndex = 27
     OnClick = CloseBtnClick
     TabOrder = 1
+  end
+  object Bevel1: TBevel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = CloseBtn
+    Left = 6
+    Height = 6
+    Top = 481
+    Width = 445
+    Anchors = [akLeft, akRight, akBottom]
+    BorderSpacing.Left = 6
+    BorderSpacing.Right = 6
+    Shape = bsBottomLine
   end
 end

@@ -5,6 +5,7 @@ object CommonData: TCommonData
   VerticalOffset = 231
   Width = 459
   object Images: TImageList
+    Scaled = True
     Left = 96
     Top = 32
     Bitmap = {
