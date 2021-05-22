@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, uMain, uDatamodule, uTabsList, uOptions, uSetFV;
+  Forms, uMain, uDatamodule, uTabsList, uOptions, uSetFV, HistoryFiles;
 
 //{$IFDEF WINDOWS}{$R DbfStudio.rc}{$ENDIF}
 

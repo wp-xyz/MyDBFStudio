@@ -6,8 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, LazFileUtils,
-  Forms, Controls, Graphics, Dialogs, Menus,
-  ComCtrls,
+  Forms, Controls, Graphics, Dialogs, Menus, ComCtrls,
   LazHelpHTML, HelpIntfs,
   dbf_prscore, dbf_prsdef, dbf, DB,
   HistoryFiles, uTabForm;
@@ -23,6 +22,9 @@ type
     MenuItem1: TMenuItem;
     MenuItem10: TMenuItem;
     MenuItem11: TMenuItem;
+    MenuItem12: TMenuItem;
+    MenuItem13: TMenuItem;
+    MenuItem14: TMenuItem;
     MenuItem3: TMenuItem;
     miHelp: TMenuItem;
     miInfo: TMenuItem;
@@ -54,12 +56,13 @@ type
     miOpen: TMenuItem;
     miNew: TMenuItem;
     OpenTable: TOpenDialog;
+    HistoryPopup: TPopupMenu;
     SaveAsTable: TSaveDialog;
     ToolButton1: TToolButton;
     ToolButton10: TToolButton;
     ToolButton11: TToolButton;
-    ToolButton12: TToolButton;
-    ToolButton2: TToolButton;
+    tbQuit: TToolButton;
+    tbFileOpen: TToolButton;
     ToolButton3: TToolButton;
     ToolButton4: TToolButton;
     ToolButton5: TToolButton;
@@ -96,7 +99,9 @@ type
     procedure miSortTableClick(Sender: TObject);
     procedure miSubTablesClick(Sender: TObject);
     procedure miTabsListClick(Sender: TObject);
-    procedure ToolButton12Click(Sender: TObject);
+    procedure tbQuitClick(Sender: TObject);
+    procedure tbFileOpenMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
     procedure WorkSiteChange(Sender: TObject);
     procedure WorkSiteCloseTabClicked(Sender: TObject);
 
@@ -108,6 +113,7 @@ type
 
     Procedure CreateAliasDB;
 
+    procedure HistoryPopupClick(Sender: TObject);
     Function TableIsAlredyOpened(TblName : String) : Integer;
     Function OBAIsAlredyOpened : Integer;
   public
@@ -282,6 +288,17 @@ begin
 
    FirstShow := False;
   end;
+end;
+
+procedure TMain.HistoryPopupClick(Sender: TObject);
+var
+  item: TMenuItem;
+  idx: Integer;
+begin
+  if not (Sender is TMenuItem) then exit;
+  idx := TMenuItem(Sender).Tag;
+  item := FileHistory.ParentMenu.Items[idx];
+  if item.OnClick <> nil then item.OnClick(item);
 end;
 
 procedure TMain.miHelpClick(Sender: TObject);
@@ -622,9 +639,25 @@ begin
  TabsList.Free;
 end;
 
-procedure TMain.ToolButton12Click(Sender: TObject);
+procedure TMain.tbQuitClick(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TMain.tbFileOpenMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+var
+  i: Integer;
+  item: TMenuItem;
+begin
+  HistoryPopup.Items.Clear;
+  for i := 0 to FileHistory.ParentMenu.Count-1 do begin
+    item := TMenuItem.Create(HistoryPopup);
+    item.Caption := FileHistory.ParentMenu.Items[i].caption;
+    item.OnClick := @HistoryPopupClick;
+    item.Tag := i;
+    HistoryPopup.Items.Add(item);
+  end;
 end;
 
 procedure TMain.WorkSiteChange(Sender: TObject);
