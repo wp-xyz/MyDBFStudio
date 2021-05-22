@@ -5225,10 +5225,10 @@ object Info: TInfo
     AnchorSideBottom.Control = Img
     AnchorSideBottom.Side = asrBottom
     Left = 6
-    Height = 18
-    Top = 288
+    Height = 15
+    Top = 291
     Width = 41
-    Anchors = [akTop, akLeft, akBottom]
+    Anchors = [akLeft, akBottom]
     Caption = 'Version'
     Font.Style = [fsBold]
     ParentColor = False

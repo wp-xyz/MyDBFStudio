@@ -14,6 +14,7 @@ object Splash: TSplash
   OnShow = FormShow
   Position = poDesktopCenter
   LCLVersion = '2.1.0.0'
+  Scaled = False
   object Img: TImage
     Left = 1
     Height = 298
@@ -5216,10 +5217,17 @@ object Splash: TSplash
     }
   end
   object Ver: TStaticText
+    AnchorSideLeft.Control = Owner
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
     Left = 7
-    Height = 20
-    Top = 278
-    Width = 385
+    Height = 16
+    Top = 280
+    Width = 48
+    Anchors = [akLeft, akBottom]
+    AutoSize = True
+    BorderSpacing.Left = 6
+    BorderSpacing.Bottom = 3
     Caption = 'Version: '
     Color = clWhite
     Font.Style = [fsBold]
@@ -5229,6 +5237,7 @@ object Splash: TSplash
   end
   object Timer1: TTimer
     Enabled = False
+    Interval = 1500
     OnTimer = Timer1Timer
     Left = 216
     Top = 128

@@ -496,10 +496,13 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uSplash"/>
-        <EditorIndex Value="-1"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="7"/>
         <TopLine Value="4"/>
-        <CursorPos X="30" Y="11"/>
+        <CursorPos X="13" Y="36"/>
         <UsageCount Value="86"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit56>
       <Unit57>
         <Filename Value="C:/lazarus/lcl/interfaces/win32/win32wscontrols.pp"/>
@@ -563,10 +566,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uInfo"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
         <TopLine Value="44"/>
-        <CursorPos X="58" Y="65"/>
+        <CursorPos X="21" Y="56"/>
         <UsageCount Value="79"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -936,21 +938,19 @@
       <Unit108>
         <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lclintf.pas"/>
         <UnitName Value="LCLIntf"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="49"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit108>
       <Unit109>
         <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/include/winapih.inc"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="53"/>
         <CursorPos X="18" Y="85"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit109>
     </Units>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="28" HistoryIndex="27">
       <Position1>
         <Filename Value="umain.pas"/>
         <Caret Line="26" Column="11"/>
@@ -1043,32 +1043,25 @@
         <Caret Line="36" Column="10" TopLine="18"/>
       </Position23>
       <Position24>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lclintf.pas"/>
-        <Caret TopLine="49"/>
+        <Filename Value="uinfo.pas"/>
+        <Caret Line="60" TopLine="31"/>
       </Position24>
       <Position25>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/include/winapih.inc"/>
+        <Filename Value="uinfo.pas"/>
+        <Caret Line="25" Column="27" TopLine="10"/>
       </Position25>
       <Position26>
         <Filename Value="uinfo.pas"/>
-        <Caret Line="60" TopLine="31"/>
+        <Caret Line="80" Column="7" TopLine="42"/>
       </Position26>
       <Position27>
         <Filename Value="uinfo.pas"/>
-        <Caret Line="25" Column="27" TopLine="10"/>
+        <Caret Line="72" Column="16" TopLine="44"/>
       </Position27>
       <Position28>
         <Filename Value="uinfo.pas"/>
-        <Caret Line="80" Column="7" TopLine="42"/>
-      </Position28>
-      <Position29>
-        <Filename Value="uinfo.pas"/>
-        <Caret Line="72" Column="16" TopLine="44"/>
-      </Position29>
-      <Position30>
-        <Filename Value="uinfo.pas"/>
         <Caret Line="64" Column="58" TopLine="43"/>
-      </Position30>
+      </Position28>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
