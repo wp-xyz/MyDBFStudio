@@ -96,15 +96,13 @@ begin
 end;
 
 function TExpDBF.ReturnTableLevel: Word;
+const
+  TABLE_LEVELS: array[0..3] of Integer = (3, 4, 7, 25);
 begin
- Result := 4;
-
- Case TableType.ItemIndex Of
-      0                   : Result:=3;
-      1                   : Result:=4;
-      2                   : Result:=7;
-      3                   : Result:=25;
- End;
+   if (TableType.ItemIndex >= 0) and (TableType.ItemIndex <= 3) then
+     Result := TABLE_LEVELS[TableType.ItemIndex]
+   else
+     Result := 4;
 end;
 
 procedure TExpDBF.Create_Fields_List;

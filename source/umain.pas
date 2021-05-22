@@ -19,11 +19,12 @@ type
   TMain = class(TForm)
     HTMLBrowserHelpViewer1: THTMLBrowserHelpViewer;
     HtmlHD: THTMLHelpDatabase;
-    MainMenu1: TMainMenu;
+    MainMenu: TMainMenu;
     MenuItem1: TMenuItem;
     MenuItem10: TMenuItem;
     MenuItem11: TMenuItem;
     MenuItem3: TMenuItem;
+    miHelp: TMenuItem;
     miInfo: TMenuItem;
     miRecentFiles: TMenuItem;
     miTabsList: TMenuItem;
@@ -74,7 +75,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure MenuItem3Click(Sender: TObject);
+    procedure miHelpClick(Sender: TObject);
     procedure miAdd2TblsClick(Sender: TObject);
     procedure miCloseAllClick(Sender: TObject);
     procedure miCloseClick(Sender: TObject);
@@ -126,6 +127,9 @@ implementation
 Uses uNewTable, uDbfTable, uOpenBA, uExpCSV, uExpHtml, uExpXLS, uExpDBF,
      uExpXML, uExpSQL, uAddTables, uSubTables, uSortTable, uTabsList,
      uOptions, uSplash, uInfo, uUtils;
+
+const
+  KEYWORD_PREFIX = 'help';
 
 Procedure FuncStrD_StrEq(Param: PExpressionRec);
 Begin
@@ -215,9 +219,10 @@ begin
 
  dbf_prscore.DbfWordsSensPartialList.Add(TFunction.CreateOper('=', 'BS', etBoolean, @FuncStrB_StrEq, 80));
 
- Caption := Caption + ' v' + GetVersionStr;
+ Caption := Caption + ' ' + GetVersionStr;
 
- HtmlHD.BaseURL := 'file://' + Application.Location + 'html';
+ HtmlHD.KeywordPrefix := KEYWORD_PREFIX + '/';
+ HtmlHD.BaseURL := 'file://' + Application.Location + KEYWORD_PREFIX;
 
  If ParamStr(1) <> '' Then
   Open_Table(ParamStr(1));
@@ -279,9 +284,9 @@ begin
   end;
 end;
 
-procedure TMain.MenuItem3Click(Sender: TObject);
+procedure TMain.miHelpClick(Sender: TObject);
 begin
- ShowHelpOrErrorForKeyword('', 'html/index.html');
+   ShowHelpOrErrorForKeyword('', KEYWORD_PREFIX + '/index.html');
 end;
 
 procedure TMain.miAdd2TblsClick(Sender: TObject);

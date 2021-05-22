@@ -58,6 +58,7 @@ object ExpDBF: TExpDBF
     Top = 23
     Width = 184
     BorderSpacing.Top = 2
+    BorderSpacing.Right = 6
     ItemHeight = 15
     ItemIndex = 1
     Items.Strings = (
@@ -105,6 +106,7 @@ object ExpDBF: TExpDBF
     Top = 95
     Width = 184
     BorderSpacing.Top = 2
+    BorderSpacing.Right = 6
     Step = 1
     TabOrder = 2
   end
