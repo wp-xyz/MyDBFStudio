@@ -3,6 +3,7 @@ object Splash: TSplash
   Height = 300
   Top = 327
   Width = 450
+  AutoSize = True
   BorderIcons = []
   BorderStyle = bsNone
   BorderWidth = 1
