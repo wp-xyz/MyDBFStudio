@@ -5282,7 +5282,7 @@ object Info: TInfo
     Caption = '&Close'
     Default = True
     Images = CommonData.Images
-    ImageIndex = 27
+    ImageIndex = 37
     OnClick = CloseBtnClick
     TabOrder = 1
   end

@@ -39,7 +39,7 @@ object AddAlias: TAddAlias
     Caption = '&OK'
     Default = True
     Images = CommonData.Images
-    ImageIndex = 28
+    ImageIndex = 7
     OnClick = OKBtnClick
     TabOrder = 3
   end
@@ -61,7 +61,7 @@ object AddAlias: TAddAlias
     Caption = 'Cancel'
     ModalResult = 2
     Images = CommonData.Images
-    ImageIndex = 29
+    ImageIndex = 8
     OnClick = CancelBtnClick
     TabOrder = 4
   end

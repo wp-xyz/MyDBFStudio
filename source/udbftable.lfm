@@ -7,7 +7,6 @@ object DbfTable: TDbfTable
   ClientHeight = 495
   ClientWidth = 708
   KeyPreview = True
-  OnCreate = FormCreate
   OnDestroy = FormDestroy
   LCLVersion = '2.1.0.0'
   object Panel1: TPanel
@@ -129,13 +128,14 @@ object DbfTable: TDbfTable
         Flat = True
         Options = []
         TabOrder = 0
+        Images = CommonData.Images
       end
       object Pack: TToolButton
         Left = 97
         Hint = 'Pack table (reduce size)'
         Top = 0
         Caption = 'Pack'
-        ImageIndex = 26
+        ImageIndex = 36
         OnClick = PackClick
         ParentShowHint = False
         ShowHint = True
@@ -143,10 +143,10 @@ object DbfTable: TDbfTable
       end
       object Empty: TToolButton
         Left = 73
-        Hint = 'Delete all record into table'
+        Hint = 'Delete all record in table'
         Top = 0
         Caption = 'Empty'
-        ImageIndex = 25
+        ImageIndex = 35
         OnClick = EmptyClick
         ParentShowHint = False
         ShowHint = True
@@ -156,7 +156,7 @@ object DbfTable: TDbfTable
         Hint = 'Delete only visible records'
         Top = 0
         Caption = 'ViewDel'
-        ImageIndex = 24
+        ImageIndex = 34
         OnClick = ViewDelClick
         ParentShowHint = False
         ShowHint = True
@@ -166,7 +166,7 @@ object DbfTable: TDbfTable
         Hint = 'Restructure the table'
         Top = 0
         Caption = 'Restruct'
-        ImageIndex = 22
+        ImageIndex = 32
         OnClick = RestructClick
         ParentShowHint = False
         ShowCaption = False
@@ -177,7 +177,7 @@ object DbfTable: TDbfTable
         Hint = 'Set field value'
         Top = 0
         Caption = 'SetField'
-        ImageIndex = 23
+        ImageIndex = 33
         OnClick = SetFieldClick
         ParentShowHint = False
         ShowHint = True
@@ -187,7 +187,7 @@ object DbfTable: TDbfTable
         Hint = 'Close this tab'
         Top = 0
         Caption = 'X'
-        ImageIndex = 5
+        ImageIndex = 15
         OnClick = ToolButton1Click
         ParentShowHint = False
         ShowHint = True

@@ -57,7 +57,7 @@ object TabsList: TTabsList
     BorderSpacing.Around = 6
     Caption = '&Close'
     Images = CommonData.Images
-    ImageIndex = 27
+    ImageIndex = 37
     OnClick = BitBtn1Click
     TabOrder = 1
   end
@@ -74,7 +74,7 @@ object TabsList: TTabsList
     BorderSpacing.Around = 6
     Caption = 'Move Up'
     Images = CommonData.Images
-    ImageIndex = 33
+    ImageIndex = 38
     OnClick = BitBtn2Click
     TabOrder = 2
   end
@@ -92,7 +92,7 @@ object TabsList: TTabsList
     BorderSpacing.Around = 6
     Caption = 'Move Down'
     Images = CommonData.Images
-    ImageIndex = 34
+    ImageIndex = 39
     OnClick = BitBtn3Click
     TabOrder = 3
   end
@@ -110,7 +110,7 @@ object TabsList: TTabsList
     BorderSpacing.Around = 6
     Caption = 'Go to tab'
     Images = CommonData.Images
-    ImageIndex = 35
+    ImageIndex = 7
     OnClick = BitBtn4Click
     TabOrder = 4
   end
@@ -128,7 +128,7 @@ object TabsList: TTabsList
     BorderSpacing.Around = 6
     Caption = 'Close tab'
     Images = CommonData.Images
-    ImageIndex = 5
+    ImageIndex = 15
     OnClick = BitBtn5Click
     TabOrder = 5
   end

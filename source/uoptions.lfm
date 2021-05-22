@@ -104,20 +104,6 @@ object Options: TOptions
     ItemHeight = 16
     TabOrder = 6
   end
-  object Button1: TButton
-    AnchorSideLeft.Control = Owner
-    AnchorSideLeft.Side = asrCenter
-    AnchorSideTop.Control = tbMaxNumberFileHistory
-    AnchorSideTop.Side = asrBottom
-    Left = 54
-    Height = 25
-    Top = 231
-    Width = 147
-    AutoSize = True
-    Caption = 'Clear recent file history'
-    OnClick = Button1Click
-    TabOrder = 8
-  end
   object tbMaxNumberFileHistory: TTrackBar
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Label2
@@ -157,7 +143,7 @@ object Options: TOptions
     AnchorSideRight.Control = CloseBtn
     Left = 77
     Height = 26
-    Top = 274
+    Top = 272
     Width = 90
     Anchors = [akTop, akRight]
     AutoSize = True
@@ -165,9 +151,9 @@ object Options: TOptions
     Caption = 'Con&firm'
     Default = True
     Images = CommonData.Images
-    ImageIndex = 28
+    ImageIndex = 7
     OnClick = ConfirmBtnClick
-    TabOrder = 9
+    TabOrder = 8
   end
   object CloseBtn: TBitBtn
     AnchorSideTop.Control = Bevel1
@@ -176,7 +162,7 @@ object Options: TOptions
     AnchorSideRight.Side = asrBottom
     Left = 173
     Height = 26
-    Top = 274
+    Top = 272
     Width = 75
     Anchors = [akTop, akRight]
     AutoSize = True
@@ -184,9 +170,9 @@ object Options: TOptions
     BorderSpacing.Bottom = 6
     Caption = '&Close'
     Images = CommonData.Images
-    ImageIndex = 27
+    ImageIndex = 37
     OnClick = CloseBtnClick
-    TabOrder = 10
+    TabOrder = 9
   end
   object lNumberOf: TLabel
     AnchorSideLeft.Control = Label2
@@ -215,18 +201,33 @@ object Options: TOptions
   end
   object Bevel1: TBevel
     AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = Button1
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 6
-    Height = 6
-    Top = 268
+    Height = 8
+    Top = 264
     Width = 242
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 6
-    BorderSpacing.Top = 12
+    BorderSpacing.Top = 8
     BorderSpacing.Right = 6
     Shape = bsTopLine
+  end
+  object Button1: TBitBtn
+    AnchorSideLeft.Control = Owner
+    AnchorSideLeft.Side = asrCenter
+    AnchorSideTop.Control = tbMaxNumberFileHistory
+    AnchorSideTop.Side = asrBottom
+    Left = 44
+    Height = 26
+    Top = 231
+    Width = 167
+    AutoSize = True
+    Caption = 'Clear recent file history'
+    Images = CommonData.Images
+    ImageIndex = 12
+    OnClick = Button1Click
+    TabOrder = 10
   end
 end

@@ -4,7 +4,7 @@ object Restructure: TRestructure
   Top = 316
   Width = 736
   AutoSize = True
-  Caption = 'Table restructure'
+  Caption = 'Table Restructure'
   ClientHeight = 373
   ClientWidth = 736
   KeyPreview = True
@@ -84,7 +84,7 @@ object Restructure: TRestructure
     Caption = '&Restructure table'
     Default = True
     Images = CommonData.Images
-    ImageIndex = 28
+    ImageIndex = 7
     OnClick = RestructureBtnClick
     TabOrder = 2
   end
@@ -104,7 +104,7 @@ object Restructure: TRestructure
     BorderSpacing.Bottom = 6
     Caption = '&Close'
     Images = CommonData.Images
-    ImageIndex = 27
+    ImageIndex = 37
     OnClick = CloseBtnClick
     TabOrder = 3
   end
@@ -167,7 +167,7 @@ object Restructure: TRestructure
       BorderSpacing.Top = 6
       Caption = 'Define'
       Images = CommonData.Images
-      ImageIndex = 30
+      ImageIndex = 4
       OnClick = Button1Click
       TabOrder = 1
     end
@@ -183,7 +183,7 @@ object Restructure: TRestructure
       BorderSpacing.Left = 6
       Caption = 'Edit'
       Images = CommonData.Images
-      ImageIndex = 32
+      ImageIndex = 6
       OnClick = Button3Click
       TabOrder = 2
     end
@@ -199,7 +199,7 @@ object Restructure: TRestructure
       BorderSpacing.Left = 6
       Caption = 'Delete'
       Images = CommonData.Images
-      ImageIndex = 31
+      ImageIndex = 5
       OnClick = Button2Click
       TabOrder = 3
     end

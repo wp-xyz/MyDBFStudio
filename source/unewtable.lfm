@@ -181,7 +181,7 @@ object NewTable: TNewTable
       AnchorSideLeft.Side = asrBottom
       AnchorSideTop.Control = DefineIndexBtn
       AnchorSideRight.Side = asrBottom
-      Left = 126
+      Left = 114
       Height = 26
       Top = 261
       Width = 111
@@ -190,7 +190,7 @@ object NewTable: TNewTable
       BorderSpacing.Right = 8
       Caption = 'Delete Index'
       Images = CommonData.Images
-      ImageIndex = 31
+      ImageIndex = 5
       OnClick = Button2Click
       TabOrder = 3
     end
@@ -200,14 +200,14 @@ object NewTable: TNewTable
       Left = 8
       Height = 26
       Top = 261
-      Width = 112
+      Width = 100
       Anchors = [akLeft, akBottom]
       AutoSize = True
       BorderSpacing.Left = 8
       BorderSpacing.Bottom = 12
-      Caption = 'Define Index'
+      Caption = 'Add Index'
       Images = CommonData.Images
-      ImageIndex = 30
+      ImageIndex = 4
       OnClick = Button1Click
       TabOrder = 4
     end
@@ -227,7 +227,7 @@ object NewTable: TNewTable
     Caption = '&Create table'
     Default = True
     Images = CommonData.Images
-    ImageIndex = 28
+    ImageIndex = 7
     OnClick = CreateTableBtnClick
     TabOrder = 2
   end
@@ -246,7 +246,7 @@ object NewTable: TNewTable
     BorderSpacing.Bottom = 6
     Caption = '&Close'
     Images = CommonData.Images
-    ImageIndex = 27
+    ImageIndex = 37
     OnClick = CloseBtnClick
     TabOrder = 3
   end

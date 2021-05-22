@@ -126,7 +126,7 @@ object ExpCSV: TExpCSV
     Caption = '&Export'
     Default = True
     Images = CommonData.Images
-    ImageIndex = 28
+    ImageIndex = 7
     OnClick = ExportBtnClick
     TabOrder = 7
   end
@@ -146,7 +146,7 @@ object ExpCSV: TExpCSV
     BorderSpacing.Bottom = 6
     Caption = '&Close'
     Images = CommonData.Images
-    ImageIndex = 27
+    ImageIndex = 37
     OnClick = CloseBtnClick
     TabOrder = 8
   end

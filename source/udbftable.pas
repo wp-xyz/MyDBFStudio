@@ -35,7 +35,6 @@ type
     SetField: TToolButton;
     procedure cbShowDelChange(Sender: TObject);
     procedure EmptyClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure IndexesChange(Sender: TObject);
     procedure leFilterKeyDown(Sender: TObject; var Key: Word; {%H-}Shift: TShiftState);
@@ -48,7 +47,6 @@ type
     procedure ViewDelClick(Sender: TObject);
   private
     { private declarations }
-    Procedure Fix_DBNavigatorIcons;
     Procedure Load_Table_Indexes;
   public
     { public declarations }
@@ -150,39 +148,6 @@ begin
     DbTable.Close;
     DbTable.Open;
    End;
-end;
-
-procedure TDbfTable.FormCreate(Sender: TObject);
-begin
-  Fix_DBNavigatorIcons;
-end;
-
-procedure TDbfTable.Fix_DBNavigatorIcons;
-const
-  // Image indices of the navigator's buttons in the CommonData imagelist.
-  NAV_IMG_INDEX: array[TDBNavButtonType] of Integer = (
-    37,  // nbFirst
-    38,  // nbPrior
-    39,  // nbNext
-    40,  // nbLast
-    30,  // nbInsert
-    31,  // nbDelete
-    32,  // nbEdit
-    28,  // nbPost
-    29,  // nbCancel
-    36   // nbRefresh
-  );
-var
-  i: Integer;
-  btn: TDBNavButton;
-begin
-  DBNavigator1.Images := CommonData.Images;
-  for i := 0 to DBNavigator1.ControlCount-1 do
-    if DBNavigator1.Controls[i] is TDBNavButton then
-    begin
-      btn := TDBNavButton(DBNavigator1.Controls[i]);
-      btn.ImageIndex := NAV_IMG_INDEX[btn.Index];
-    end;
 end;
 
 procedure TDbfTable.FormDestroy(Sender: TObject);

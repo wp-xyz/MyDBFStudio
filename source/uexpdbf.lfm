@@ -124,7 +124,7 @@ object ExpDBF: TExpDBF
     Caption = '&Export'
     Default = True
     Images = CommonData.Images
-    ImageIndex = 28
+    ImageIndex = 7
     OnClick = ExportBtnClick
     TabOrder = 3
   end
@@ -144,7 +144,7 @@ object ExpDBF: TExpDBF
     BorderSpacing.Bottom = 6
     Caption = '&Close'
     Images = CommonData.Images
-    ImageIndex = 27
+    ImageIndex = 37
     OnClick = CloseBtnClick
     TabOrder = 4
   end

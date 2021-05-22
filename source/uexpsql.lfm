@@ -120,7 +120,7 @@ object ExpSQL: TExpSQL
     Caption = '&Export'
     Default = True
     Images = CommonData.Images
-    ImageIndex = 28
+    ImageIndex = 7
     OnClick = ExportBtnClick
     TabOrder = 4
   end
@@ -141,7 +141,7 @@ object ExpSQL: TExpSQL
     BorderSpacing.Bottom = 6
     Caption = '&Close'
     Images = CommonData.Images
-    ImageIndex = 27
+    ImageIndex = 37
     OnClick = CloseBtnClick
     TabOrder = 5
   end

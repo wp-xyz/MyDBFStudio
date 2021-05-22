@@ -72,7 +72,7 @@ object OpenBA: TOpenBA
       BorderSpacing.Left = 6
       Caption = 'Delete Alias'
       Images = CommonData.Images
-      ImageIndex = 31
+      ImageIndex = 5
       OnClick = Button2Click
       TabOrder = 1
     end
@@ -90,7 +90,7 @@ object OpenBA: TOpenBA
       BorderSpacing.Bottom = 6
       Caption = 'Add Alias'
       Images = CommonData.Images
-      ImageIndex = 30
+      ImageIndex = 4
       OnClick = Button1Click
       TabOrder = 2
     end
@@ -152,7 +152,7 @@ object OpenBA: TOpenBA
     Caption = '&Open table(s)'
     Default = True
     Images = CommonData.Images
-    ImageIndex = 28
+    ImageIndex = 7
     OnClick = OpenTableBtnClick
     TabOrder = 2
   end
@@ -171,7 +171,7 @@ object OpenBA: TOpenBA
     BorderSpacing.Bottom = 6
     Caption = '&Close'
     Images = CommonData.Images
-    ImageIndex = 27
+    ImageIndex = 37
     OnClick = CloseBtnClick
     TabOrder = 3
   end

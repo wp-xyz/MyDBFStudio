@@ -26,13 +26,15 @@ object Main: TMain
     EdgeOuter = esNone
     Images = CommonData.Images
     ImagesWidth = 24
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 0
     object ToolButton1: TToolButton
       Left = 1
       Hint = 'Create a new table'
       Top = 0
       Caption = 'ToolButton1'
-      ImageIndex = 0
+      ImageIndex = 10
       OnClick = miNewClick
       ParentShowHint = False
       ShowHint = True
@@ -42,7 +44,7 @@ object Main: TMain
       Hint = 'Open a table'
       Top = 0
       Caption = 'ToolButton2'
-      ImageIndex = 1
+      ImageIndex = 11
       OnClick = miOpenClick
       ParentShowHint = False
       ShowHint = True
@@ -52,7 +54,7 @@ object Main: TMain
       Hint = 'Save table as...'
       Top = 0
       Caption = 'ToolButton3'
-      ImageIndex = 3
+      ImageIndex = 13
       OnClick = miSaveAsClick
       ParentShowHint = False
       ShowHint = True
@@ -69,7 +71,7 @@ object Main: TMain
       Hint = 'Open tables by alias'
       Top = 0
       Caption = 'ToolButton5'
-      ImageIndex = 19
+      ImageIndex = 29
       OnClick = miOpenAliasClick
       ParentShowHint = False
       ShowHint = True
@@ -79,7 +81,7 @@ object Main: TMain
       Hint = 'Empty a table'
       Top = 0
       Caption = 'ToolButton6'
-      ImageIndex = 16
+      ImageIndex = 26
       OnClick = miEmptyTablesClick
       ParentShowHint = False
       ShowHint = True
@@ -89,7 +91,7 @@ object Main: TMain
       Hint = 'Sort a table'
       Top = 0
       Caption = 'ToolButton7'
-      ImageIndex = 17
+      ImageIndex = 27
       OnClick = miSortTableClick
       ParentShowHint = False
       ShowHint = True
@@ -99,7 +101,7 @@ object Main: TMain
       Hint = 'Show tabs list'
       Top = 0
       Caption = 'ToolButton8'
-      ImageIndex = 18
+      ImageIndex = 28
       OnClick = miTabsListClick
       ParentShowHint = False
       ShowHint = True
@@ -116,7 +118,7 @@ object Main: TMain
       Hint = 'Close all tabs'
       Top = 0
       Caption = 'ToolButton10'
-      ImageIndex = 4
+      ImageIndex = 14
       OnClick = miCloseAllClick
       ParentShowHint = False
       ShowHint = True
@@ -130,9 +132,10 @@ object Main: TMain
     end
     object ToolButton12: TToolButton
       Left = 297
+      Hint = 'Close application'
       Top = 0
       Caption = 'ToolButton12'
-      ImageIndex = 6
+      ImageIndex = 37
       OnClick = ToolButton12Click
     end
   end
@@ -162,19 +165,19 @@ object Main: TMain
       Caption = '&File'
       object miNew: TMenuItem
         Caption = 'New...'
-        ImageIndex = 0
+        ImageIndex = 10
         ShortCut = 16462
         OnClick = miNewClick
       end
       object miOpen: TMenuItem
         Caption = 'Open...'
-        ImageIndex = 1
+        ImageIndex = 11
         ShortCut = 16463
         OnClick = miOpenClick
       end
       object miOpenAlias: TMenuItem
         Caption = 'Open by Alias'
-        ImageIndex = 19
+        ImageIndex = 29
         OnClick = miOpenAliasClick
       end
       object MenuItem11: TMenuItem
@@ -182,14 +185,14 @@ object Main: TMain
       end
       object miRecentFiles: TMenuItem
         Caption = 'Recent tables...'
-        ImageIndex = 2
+        ImageIndex = 12
       end
       object MenuItem5: TMenuItem
         Caption = '-'
       end
       object miSaveAs: TMenuItem
         Caption = 'Save as...'
-        ImageIndex = 3
+        ImageIndex = 13
         OnClick = miSaveAsClick
       end
       object MenuItem6: TMenuItem
@@ -197,13 +200,13 @@ object Main: TMain
       end
       object miClose: TMenuItem
         Caption = 'Close'
-        ImageIndex = 4
+        ImageIndex = 15
         ShortCut = 16499
         OnClick = miCloseClick
       end
       object miCloseAll: TMenuItem
         Caption = 'Close all'
-        ImageIndex = 5
+        ImageIndex = 14
         OnClick = miCloseAllClick
       end
       object MenuItem7: TMenuItem
@@ -211,7 +214,7 @@ object Main: TMain
       end
       object miExit: TMenuItem
         Caption = 'Exit'
-        ImageIndex = 6
+        ImageIndex = 37
         OnClick = miExitClick
       end
     end
@@ -219,51 +222,51 @@ object Main: TMain
       Caption = '&Tools'
       object MenuItem8: TMenuItem
         Caption = 'Export to...'
-        ImageIndex = 7
+        ImageIndex = 17
         object miExpCSV: TMenuItem
           Caption = 'CSV File'
-          ImageIndex = 8
+          ImageIndex = 18
           OnClick = miExpCSVClick
         end
         object miExpHtml: TMenuItem
           Caption = 'HTML File'
-          ImageIndex = 9
+          ImageIndex = 19
           OnClick = miExpHtmlClick
         end
         object miExpXLS: TMenuItem
           Caption = 'XLS File'
-          ImageIndex = 10
+          ImageIndex = 20
           OnClick = miExpXLSClick
         end
         object miExpDbf: TMenuItem
           Caption = 'DBF Table'
-          ImageIndex = 11
+          ImageIndex = 21
           OnClick = miExpDbfClick
         end
         object miexpXML: TMenuItem
           Caption = 'XML File'
-          ImageIndex = 12
+          ImageIndex = 22
           OnClick = miexpXMLClick
         end
         object miExpSQL: TMenuItem
           Caption = 'SQL Script'
-          ImageIndex = 13
+          ImageIndex = 23
           OnClick = miExpSQLClick
         end
       end
       object miAdd2Tbls: TMenuItem
         Caption = 'Add two tables'
-        ImageIndex = 14
+        ImageIndex = 24
         OnClick = miAdd2TblsClick
       end
       object miSubTables: TMenuItem
         Caption = 'Substract two tables'
-        ImageIndex = 15
+        ImageIndex = 25
         OnClick = miSubTablesClick
       end
       object miEmptyTables: TMenuItem
         Caption = 'Empty tables'
-        ImageIndex = 16
+        ImageIndex = 26
         OnClick = miEmptyTablesClick
       end
       object MenuItem9: TMenuItem
@@ -271,7 +274,7 @@ object Main: TMain
       end
       object miSortTable: TMenuItem
         Caption = 'Sort table'
-        ImageIndex = 17
+        ImageIndex = 27
         OnClick = miSortTableClick
       end
       object MenuItem10: TMenuItem
@@ -279,7 +282,7 @@ object Main: TMain
       end
       object miTabsList: TMenuItem
         Caption = 'Tabs list'
-        ImageIndex = 18
+        ImageIndex = 28
         ShortCut = 16460
         OnClick = miTabsListClick
       end
@@ -292,7 +295,7 @@ object Main: TMain
       Caption = '&Help'
       object miInfo: TMenuItem
         Caption = 'Info...'
-        ImageIndex = 20
+        ImageIndex = 30
         OnClick = miInfoClick
       end
       object MenuItem3: TMenuItem
@@ -300,7 +303,7 @@ object Main: TMain
       end
       object miHelp: TMenuItem
         Caption = 'Help'
-        ImageIndex = 21
+        ImageIndex = 31
         OnClick = miHelpClick
       end
     end

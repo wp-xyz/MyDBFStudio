@@ -181,7 +181,7 @@ object SortTable: TSortTable
     Caption = '&Start'
     Default = True
     Images = CommonData.Images
-    ImageIndex = 28
+    ImageIndex = 7
     OnClick = BitBtn2Click
     TabOrder = 4
   end
@@ -201,7 +201,7 @@ object SortTable: TSortTable
     BorderSpacing.Bottom = 6
     Caption = '&Close'
     Images = CommonData.Images
-    ImageIndex = 27
+    ImageIndex = 37
     OnClick = BitBtn1Click
     TabOrder = 5
   end

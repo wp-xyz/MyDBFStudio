@@ -30,9 +30,9 @@ type
 
   TOptions = class(TForm)
     Bevel1: TBevel;
+    Button1: TBitBtn;
     CloseBtn: TBitBtn;
     ConfirmBtn: TBitBtn;
-    Button1: TButton;
     cbRememberWPos: TCheckBox;
     cbStartWithOBA: TCheckBox;
     cbGotoToLastRec: TCheckBox;
