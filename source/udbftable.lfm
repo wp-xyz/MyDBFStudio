@@ -7,6 +7,7 @@ object DbfTable: TDbfTable
   ClientHeight = 495
   ClientWidth = 708
   KeyPreview = True
+  OnCreate = FormCreate
   OnDestroy = FormDestroy
   LCLVersion = '2.1.0.0'
   object Panel1: TPanel
@@ -80,6 +81,8 @@ object DbfTable: TDbfTable
       Anchors = [akTop, akRight]
       ItemHeight = 15
       OnChange = IndexesChange
+      ParentShowHint = False
+      ShowHint = True
       Style = csDropDownList
       TabOrder = 2
     end

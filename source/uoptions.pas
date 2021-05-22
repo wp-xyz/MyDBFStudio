@@ -116,7 +116,7 @@ begin
  RecOptions.RememberWindowsSizePos := False;
  RecOptions.StartWithOBA := False;
  RecOptions.GotoToLastRecord := False;
- RecOptions.AlternateColor := clMoneyGreen;
+ RecOptions.AlternateColor := clCream;
  RecOptions.ShowSplashScreen := True;
 
  OptFName := ExtractFilePath(Application.ExeName) + 'options.reg';
