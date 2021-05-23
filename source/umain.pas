@@ -16,7 +16,7 @@ type
   { TMain }
 
   TMain = class(TForm)
-    HTMLBrowserHelpViewer1: THTMLBrowserHelpViewer;
+    HTMLBrowserHelpViewer: THTMLBrowserHelpViewer;
     HtmlHD: THTMLHelpDatabase;
     MainMenu: TMainMenu;
     MenuItem1: TMenuItem;

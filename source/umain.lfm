@@ -332,7 +332,7 @@ object Main: TMain
     Left = 256
     Top = 172
   end
-  object HTMLBrowserHelpViewer1: THTMLBrowserHelpViewer
+  object HTMLBrowserHelpViewer: THTMLBrowserHelpViewer
     BrowserParams = '%s'
     AutoRegister = True
     Left = 256

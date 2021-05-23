@@ -17,6 +17,7 @@ type
     Ver: TStaticText;
     Timer1: TTimer;
     procedure FormCloseQuery(Sender: TObject; var CanClose: boolean);
+    procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
   private
@@ -38,15 +39,7 @@ uses
 { TSplash }
 
 procedure TSplash.FormShow(Sender: TObject);
-var
-  fn: String;
 begin
-  fn := Application.Location + 'img/splash.png';
-  if FileExists(fn) then
-    Img.Picture.LoadFromFile(fn);
-
-  Ver.Caption := Ver.Caption + GetVersionStr;
-
  Timer1.Enabled:=True;
 end;
 
@@ -54,6 +47,13 @@ procedure TSplash.FormCloseQuery(Sender: TObject; var CanClose: boolean);
 begin
   if Timer1.Enabled Then
     CanClose:=False;
+end;
+
+procedure TSplash.FormCreate(Sender: TObject);
+begin
+  Img.Picture.LoadFromResourceName(HINSTANCE, 'SPLASH', TPortableNetworkGraphic);
+  Img.AutoSize := true;
+  Ver.Caption := Ver.Caption + GetVersionStr;
 end;
 
 procedure TSplash.Timer1Timer(Sender: TObject);

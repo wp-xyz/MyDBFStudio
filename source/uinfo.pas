@@ -20,7 +20,7 @@ type
     Version: TLabel;
     procedure CloseBtnClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure FormShow(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { private declarations }
     procedure MeasureMemo;
@@ -50,15 +50,11 @@ begin
   MeasureMemo;
 end;
 
-procedure TInfo.FormShow(Sender: TObject);
-var
-  fn: String;
+procedure TInfo.FormCreate(Sender: TObject);
 begin
-  fn := Application.Location + 'img/splash.png';
-  if FileExists(fn) Then
-    Img.Picture.LoadFromFile(fn);
-
-  Version.Caption:='Version: ' + GetVersionStr;
+  Version.Caption := 'Version: ' + GetVersionStr;
+  Img.Picture.LoadFromResourceName(HINSTANCE, 'SPLASH', TPortableNetworkGraphic);
+  Img.AutoSize := true;
 end;
 
 procedure TInfo.MeasureMemo;
