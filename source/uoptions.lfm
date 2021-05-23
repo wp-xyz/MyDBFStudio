@@ -1,14 +1,13 @@
-object Options: TOptions
+object OptionsForm: TOptionsForm
   Left = 451
   Height = 314
   Top = 138
   Width = 254
   AutoSize = True
   BorderStyle = bsDialog
-  Caption = 'Options'
+  Caption = 'OptionsForm'
   ClientHeight = 314
   ClientWidth = 254
-  OnCreate = FormCreate
   OnShow = FormShow
   Position = poDesktopCenter
   LCLVersion = '2.1.0.0'
@@ -36,7 +35,7 @@ object Options: TOptions
     Caption = 'At start, show Open by alias tab'
     TabOrder = 1
   end
-  object cbGotoToLastRec: TCheckBox
+  object cbGotoLastRec: TCheckBox
     AnchorSideLeft.Control = cbRememberWPos
     AnchorSideTop.Control = cbStartWithOBA
     AnchorSideTop.Side = asrBottom
@@ -49,7 +48,7 @@ object Options: TOptions
   end
   object cbEnableToolbar: TCheckBox
     AnchorSideLeft.Control = cbRememberWPos
-    AnchorSideTop.Control = cbGotoToLastRec
+    AnchorSideTop.Control = cbGotoLastRec
     AnchorSideTop.Side = asrBottom
     Left = 12
     Height = 19

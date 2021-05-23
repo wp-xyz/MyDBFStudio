@@ -2,12 +2,12 @@ object SubTables: TSubTables
   Left = 404
   Height = 308
   Top = 269
-  Width = 399
+  Width = 321
   AutoSize = True
   BorderIcons = []
   Caption = 'Substract Two Tables'
   ClientHeight = 308
-  ClientWidth = 399
+  ClientWidth = 321
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
@@ -21,7 +21,7 @@ object SubTables: TSubTables
     Left = 6
     Height = 51
     Top = 6
-    Width = 387
+    Width = 309
     Anchors = [akTop, akLeft, akRight]
     AutoSize = True
     BorderSpacing.Left = 6
@@ -29,7 +29,7 @@ object SubTables: TSubTables
     BorderSpacing.Right = 6
     Caption = ' Select First Table... '
     ClientHeight = 31
-    ClientWidth = 383
+    ClientWidth = 305
     TabOrder = 0
     object cbFT: TComboBox
       AnchorSideLeft.Control = GroupBox1
@@ -39,7 +39,7 @@ object SubTables: TSubTables
       Left = 6
       Height = 23
       Top = 2
-      Width = 371
+      Width = 293
       Anchors = [akTop, akLeft, akRight]
       BorderSpacing.Left = 6
       BorderSpacing.Top = 2
@@ -59,7 +59,7 @@ object SubTables: TSubTables
     Left = 6
     Height = 51
     Top = 69
-    Width = 387
+    Width = 309
     Anchors = [akTop, akLeft, akRight]
     AutoSize = True
     BorderSpacing.Left = 6
@@ -67,7 +67,7 @@ object SubTables: TSubTables
     BorderSpacing.Right = 6
     Caption = ' Select Second Table... '
     ClientHeight = 31
-    ClientWidth = 383
+    ClientWidth = 305
     TabOrder = 1
     object cbST: TComboBox
       AnchorSideLeft.Control = GroupBox2
@@ -77,7 +77,7 @@ object SubTables: TSubTables
       Left = 6
       Height = 23
       Top = 2
-      Width = 371
+      Width = 293
       Anchors = [akTop, akLeft, akRight]
       BorderSpacing.Left = 6
       BorderSpacing.Top = 2
@@ -97,7 +97,7 @@ object SubTables: TSubTables
     Left = 6
     Height = 74
     Top = 132
-    Width = 387
+    Width = 309
     Anchors = [akTop, akLeft, akRight]
     AutoFill = True
     AutoSize = True
@@ -115,7 +115,7 @@ object SubTables: TSubTables
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 1
     ClientHeight = 54
-    ClientWidth = 383
+    ClientWidth = 305
     ItemIndex = 0
     Items.Strings = (
       'Substract First Table From Second Table'
@@ -145,7 +145,7 @@ object SubTables: TSubTables
     Left = 6
     Height = 20
     Top = 235
-    Width = 387
+    Width = 309
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 6
     BorderSpacing.Top = 2
@@ -155,7 +155,7 @@ object SubTables: TSubTables
   object StartBtn: TBitBtn
     AnchorSideTop.Control = CloseBtn
     AnchorSideRight.Control = CloseBtn
-    Left = 242
+    Left = 164
     Height = 26
     Top = 267
     Width = 70
@@ -174,7 +174,7 @@ object SubTables: TSubTables
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 318
+    Left = 240
     Height = 26
     Top = 267
     Width = 75

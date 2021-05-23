@@ -105,7 +105,6 @@ type
     procedure WorkSiteChange(Sender: TObject);
     procedure WorkSiteCloseTabClicked(Sender: TObject);
 
-    Procedure ClickOnHistoryFile(Sender : TObject; {%H-}Item : TMenuItem; Const FileName : String);
   private
     { private declarations }
     WorkSpace : TTabForm;
@@ -113,6 +112,7 @@ type
 
     Procedure CreateAliasDB;
 
+    Procedure ClickOnHistoryFile(Sender : TObject; {%H-}Item : TMenuItem; Const FileName : String);
     procedure HistoryPopupClick(Sender: TObject);
     Function TableIsAlredyOpened(TblName : String) : Integer;
     Function OBAIsAlredyOpened : Integer;
@@ -130,9 +130,11 @@ implementation
 
 {$R *.lfm}
 
-Uses uNewTable, uDbfTable, uOpenBA, uExpCSV, uExpHtml, uExpXLS, uExpDBF,
-     uExpXML, uExpSQL, uAddTables, uSubTables, uSortTable, uTabsList,
-     uOptions, uSplash, uInfo, uUtils;
+Uses
+  Math,
+  uNewTable, uDbfTable, uOpenBA, uExpCSV, uExpHtml, uExpXLS, uExpDBF,
+  uExpXML, uExpSQL, uAddTables, uSubTables, uSortTable, uTabsList,
+  uOptions, uSplash, uInfo, uUtils;
 
 const
   KEYWORD_PREFIX = 'help';
@@ -191,15 +193,15 @@ procedure TMain.FormCreate(Sender: TObject);
 begin
  FirstShow := True;
 
- Options := TOptions.Create(Self);
- Options.LoadOptions;
+ LoadOptions;
 
  Splash := TSplash.Create(Self);
-
- If Options.RecOptions.ShowSplashScreen Then
-  Splash.ShowModal;
-
- Splash.Free;
+ try
+   if Options.ShowSplashScreen Then
+     Splash.ShowModal;
+ finally
+   FreeAndNil(Splash);
+ end;
 
  If Not FileExists(Application.Location + 'alias.dbf') Then
   CreateAliasDB();
@@ -207,10 +209,10 @@ begin
  FileHistory := THistoryFiles.Create(Self);
  FileHistory.ParentMenu := miRecentFiles;
  FileHistory.LocalPath := Application.Location;
- FileHistory.IniFile := Application.Location + 'recentf.ini';
+ FileHistory.IniFile := IniFileName;
  FileHistory.OnClickHistoryItem := @ClickOnHistoryFile;
  FileHistory.FileMustExist := True;
- FileHistory.MaxItems := Options.RecOptions.MaxHistoryRecords;
+ FileHistory.MaxItems := Options.MaxHistoryRecords;
 
  WorkSpace := TTabForm.Create(WorkSite);
 
@@ -222,7 +224,6 @@ begin
  dbf_prscore.DbfWordsSensPartialList.Add(TFunction.CreateOper('<', 'DS', etBoolean, @FuncStrD_StrMin, 80));
  dbf_prscore.DbfWordsSensPartialList.Add(TFunction.CreateOper('>=', 'DS', etBoolean, @FuncStrD_StrMaxEq, 80));
  dbf_prscore.DbfWordsSensPartialList.Add(TFunction.CreateOper('<=', 'DS', etBoolean, @FuncStrD_StrMinEq, 80));
-
  dbf_prscore.DbfWordsSensPartialList.Add(TFunction.CreateOper('=', 'BS', etBoolean, @FuncStrB_StrEq, 80));
 
  Caption := Caption + ' ' + GetVersionStr;
@@ -244,49 +245,66 @@ end;
 
 procedure TMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
- If Options.RecOptions.RememberWindowsSizePos Then
+  If Options.RememberWindowSizePos Then
   Begin
-   Options.RecOptions.WindowsState := Self.WindowState;
-   Options.RecOptions.wHeight := Self.Height;
-   Options.RecOptions.wLeft := Self.Left;
-   Options.RecOptions.wTop := Self.Top;
-   Options.RecOptions.wWidth := Self.Width;
+    Options.MainWindowState := WindowState;
+    if WindowState = wsNormal then
+    begin
+      Options.MainHeight := Height;
+      Options.MainLeft := Left;
+      Options.MainTop := Top;
+      Options.MainWidth := Width;
+    end;
   end;
 
- Options.SaveOptions;
+  SaveOptions;
 end;
 
 procedure TMain.FormDestroy(Sender: TObject);
 begin
- Options.Free;
-
- WorkSpace.Free;
+  WorkSpace.Free;
 end;
 
 procedure TMain.FormShow(Sender: TObject);
+var
+  W, H, L, T: Integer;
+  R: TRect;
 begin
- If FirstShow Then
+  If FirstShow Then
   Begin
-   FileHistory.MaxItems := Options.RecOptions.MaxHistoryRecords;
-
+   FileHistory.MaxItems := Options.MaxHistoryRecords;
    FileHistory.UpdateParentMenu;
 
-   ToolBar1.Visible := Options.RecOptions.EnableToolBar;
-   StatusBar.Visible := Options.RecOptions.EnaleStatusBar;
+   ToolBar1.Visible := Options.EnableToolBar;
+   StatusBar.Visible := Options.EnableStatusBar;
 
-   If Options.RecOptions.StartWithOBA Then
+   If Options.StartWithOBA Then
     miOpenAliasClick(Sender);
 
-   If Options.RecOptions.RememberWindowsSizePos Then
-    Begin
-     Self.WindowState := Options.RecOptions.WindowsState;
-     Self.Height := Options.RecOptions.wHeight;
-     Self.Left := Options.RecOptions.wLeft;
-     Self.Top := Options.RecOptions.wTop;
-     Self.Width := Options.RecOptions.wWidth;
+   If Options.RememberWindowSizePos Then
+   Begin
+     WindowState := Options.MainWindowState;
+     if WindowState = wsNormal then
+     begin
+       R := Screen.WorkAreaRect;
+       H := Options.MainHeight;
+       if H = 0 then H := Height;
+       L := Options.MainLeft;
+       if L = 0 then L := Left;
+       T := Options.MainTop;
+       if T = 0 then T := Top;
+       W := Options.MainWidth;
+       if W = 0 then W := Width;
+       if W > R.Width then W := R.Width;
+       if H > R.Height then H := R.Height;
+       if L < R.Left then L := R.Left;
+       if T < R.Top then T := R.Top;
+       if L + W > R.Right then L := R.Right - W;
+       if T + H > R.Bottom then T := R.Bottom - H;
+       SetBounds(L, T, W, H);
     end;
-
-   FirstShow := False;
+    FirstShow := False;
+   end;
   end;
 end;
 
@@ -303,16 +321,18 @@ end;
 
 procedure TMain.miHelpClick(Sender: TObject);
 begin
-   ShowHelpOrErrorForKeyword('', KEYWORD_PREFIX + '/index.html');
+  ShowHelpOrErrorForKeyword('', KEYWORD_PREFIX + '/index.html');
 end;
 
 procedure TMain.miAdd2TblsClick(Sender: TObject);
 begin
  AddTables := TAddTables.Create(Self);
-
- AddTables.ShowModal;
-
- AddTables.Free;
+ try
+   AddTables.ShowModal;
+   Options.AddTablesWidth := AddTables.Width;
+ finally
+   FreeAndNil(AddTables);
+ end;
 end;
 
 procedure TMain.miCloseAllClick(Sender: TObject);
@@ -375,22 +395,24 @@ procedure TMain.miExpCSVClick(Sender: TObject);
 begin
  If (WorkSite.ActivePage Is TTabForm) Then
   If (WorkSite.ActivePage As TTabForm).ParentForm Is TDbfTable Then
-   Begin
+  Begin
     Tmp := (WorkSite.ActivePage As TTabForm).ParentForm;
 
-    ExpCSV := TExpCSV.Create(Self);
-    ExpCSV.Tmp := (Tmp As TDbfTable).DBTable;
+    ExpCSV := TExpCSV.Create(nil);
+    try
+      ExpCSV.Tmp := (Tmp As TDbfTable).DBTable;
 
-    (Tmp As TDbfTable).Ds.Enabled := False;
-    (Tmp As TDbfTable).Ds.DataSet := Nil;
+      (Tmp As TDbfTable).Ds.Enabled := False;
+      (Tmp As TDbfTable).Ds.DataSet := Nil;
 
-    ExpCSV.ShowModal;
+      ExpCSV.ShowModal;
 
-    (Tmp As TDbfTable).Ds.DataSet := (Tmp As TDbfTable).DBTable;
-    (Tmp As TDbfTable).Ds.Enabled := True;
-
-    ExpCSV.Free;
-   end;
+      (Tmp As TDbfTable).Ds.DataSet := (Tmp As TDbfTable).DBTable;
+      (Tmp As TDbfTable).Ds.Enabled := True;
+    finally
+      FreeAndNil(ExpCSV);
+    end;
+  end;
 end;
 
 procedure TMain.miExpDbfClick(Sender: TObject);
@@ -401,18 +423,21 @@ begin
    Begin
     Tmp := (WorkSite.ActivePage As TTabForm).ParentForm;
 
-    ExpDBF := TExpDBF.Create(Self);
-    ExpDBF.Tmp := (Tmp As TDbfTable).DBTable;
+    ExpDBF := TExpDBF.Create(nil);
+    try
+      ExpDBF.Tmp := (Tmp As TDbfTable).DBTable;
 
-    (Tmp As TDbfTable).Ds.Enabled := False;
-    (Tmp As TDbfTable).Ds.DataSet := Nil;
+      (Tmp As TDbfTable).Ds.Enabled := False;
+      (Tmp As TDbfTable).Ds.DataSet := Nil;
 
-    ExpDBF.ShowModal;
+      ExpDBF.ShowModal;
 
-    (Tmp As TDbfTable).Ds.DataSet := (Tmp As TDbfTable).DBTable;
-    (Tmp As TDbfTable).Ds.Enabled := True;
+      (Tmp As TDbfTable).Ds.DataSet := (Tmp As TDbfTable).DBTable;
+      (Tmp As TDbfTable).Ds.Enabled := True;
 
-    ExpDBF.Free;
+    finally
+      FreeAndNil(ExpDBF);
+    end;
    end;
 end;
 
@@ -424,18 +449,21 @@ begin
    Begin
     Tmp := (WorkSite.ActivePage As TTabForm).ParentForm;
 
-    ExpHTML := TExpHTML.Create(Self);
-    ExpHTML.Tmp := (Tmp As TDbfTable).DBTable;
+    ExpHTML := TExpHTML.Create(nil);
+    try
+      ExpHTML.Tmp := (Tmp As TDbfTable).DBTable;
 
-    (Tmp As TDbfTable).Ds.Enabled := False;
-    (Tmp As TDbfTable).Ds.DataSet := Nil;
+      (Tmp As TDbfTable).Ds.Enabled := False;
+      (Tmp As TDbfTable).Ds.DataSet := Nil;
 
-    ExpHTML.ShowModal;
+      ExpHTML.ShowModal;
 
-    (Tmp As TDbfTable).Ds.DataSet := (Tmp As TDbfTable).DBTable;
-    (Tmp As TDbfTable).Ds.Enabled := True;
+      (Tmp As TDbfTable).Ds.DataSet := (Tmp As TDbfTable).DBTable;
+      (Tmp As TDbfTable).Ds.Enabled := True;
 
-    ExpHTML.Free;
+    finally
+      FreeAndNil(ExpHTML);
+    end;
    end;
 end;
 
@@ -447,18 +475,20 @@ begin
    Begin
     Tmp := (WorkSite.ActivePage As TTabForm).ParentForm;
 
-    ExpSQL := TExpSQL.Create(Self);
-    ExpSQL.Tmp := (Tmp As TDbfTable).DBTable;
+    ExpSQL := TExpSQL.Create(nil);
+    try
+      ExpSQL.Tmp := (Tmp As TDbfTable).DBTable;
 
-    (Tmp As TDbfTable).Ds.Enabled := False;
-    (Tmp As TDbfTable).Ds.DataSet := Nil;
+      (Tmp As TDbfTable).Ds.Enabled := False;
+      (Tmp As TDbfTable).Ds.DataSet := Nil;
 
-    ExpSQL.ShowModal;
+      ExpSQL.ShowModal;
 
-    (Tmp As TDbfTable).Ds.DataSet := (Tmp As TDbfTable).DBTable;
-    (Tmp As TDbfTable).Ds.Enabled := True;
-
-    ExpSQL.Free;
+      (Tmp As TDbfTable).Ds.DataSet := (Tmp As TDbfTable).DBTable;
+      (Tmp As TDbfTable).Ds.Enabled := True;
+    finally
+      FreeAndNil(ExpSQL);
+    end;
    end;
 end;
 
@@ -470,18 +500,20 @@ begin
    Begin
     Tmp := (WorkSite.ActivePage As TTabForm).ParentForm;
 
-    ExpXLS := TExpXLS.Create(Self);
-    ExpXLS.Tmp := (Tmp As TDbfTable).DBTable;
+    ExpXLS := TExpXLS.Create(nil);
+    try
+      ExpXLS.Tmp := (Tmp As TDbfTable).DBTable;
 
-    (Tmp As TDbfTable).Ds.Enabled := False;
-    (Tmp As TDbfTable).Ds.DataSet := Nil;
+      (Tmp As TDbfTable).Ds.Enabled := False;
+      (Tmp As TDbfTable).Ds.DataSet := Nil;
 
-    ExpXLS.ShowModal;
+      ExpXLS.ShowModal;
 
-    (Tmp As TDbfTable).Ds.DataSet := (Tmp As TDbfTable).DBTable;
-    (Tmp As TDbfTable).Ds.Enabled := True;
-
-    ExpXLS.Free;
+      (Tmp As TDbfTable).Ds.DataSet := (Tmp As TDbfTable).DBTable;
+      (Tmp As TDbfTable).Ds.Enabled := True;
+    finally
+      FreeAndNil(ExpXLS);
+    end;
    end;
 end;
 
@@ -493,39 +525,41 @@ begin
    Begin
     Tmp := (WorkSite.ActivePage As TTabForm).ParentForm;
 
-    ExpXML := TExpXML.Create(Self);
-    ExpXML.Tmp := (Tmp As TDbfTable).DBTable;
+    ExpXML := TExpXML.Create(nil);
+    try
+      ExpXML.Tmp := (Tmp As TDbfTable).DBTable;
 
-    (Tmp As TDbfTable).Ds.Enabled := False;
-    (Tmp As TDbfTable).Ds.DataSet := Nil;
+      (Tmp As TDbfTable).Ds.Enabled := False;
+      (Tmp As TDbfTable).Ds.DataSet := Nil;
 
-    ExpXML.ShowModal;
+      ExpXML.ShowModal;
 
-    (Tmp As TDbfTable).Ds.DataSet := (Tmp As TDbfTable).DBTable;
-    (Tmp As TDbfTable).Ds.Enabled := True;
-
-    ExpXML.Free;
+      (Tmp As TDbfTable).Ds.DataSet := (Tmp As TDbfTable).DBTable;
+      (Tmp As TDbfTable).Ds.Enabled := True;
+    finally
+      FreeAndNil(ExpXML);
+    end;
    end;
 end;
 
 procedure TMain.miInfoClick(Sender: TObject);
 begin
- Info := TInfo.Create(Self);
-
- Info.ShowModal;
-
- Info.Free;
+  Info := TInfo.Create(Self);
+  try
+    Info.ShowModal;
+  finally
+    FreeAndNil(Info);
+  end;
 end;
 
 procedure TMain.miNewClick(Sender: TObject);
- Var NT : TNewTable;
+var
+  NT: TNewTable;
 begin
- NT := TNewTable.Create(WorkSite);
- NT.FieldList.AlternateColor := Options.RecOptions.AlternateColor;
-
- WorkSpace.AddFormToPageControl(NT);
-
- NT.PageIdx := WorkSite.ActivePage.PageIndex;
+  NT := TNewTable.Create(WorkSite);
+  NT.FieldList.AlternateColor := Options.AlternateColor;
+  WorkSpace.AddFormToPageControl(NT);
+  NT.PageIdx := WorkSite.ActivePage.PageIndex;
 end;
 
 procedure TMain.miOpenAliasClick(Sender: TObject);
@@ -558,7 +592,12 @@ end;
 
 procedure TMain.miOptionsClick(Sender: TObject);
 begin
- Options.ShowModal;
+  OptionsForm := TOptionsForm.Create(nil);
+  try
+    OptionsForm.ShowModal;
+  finally
+    FreeAndNil(OptionsForm);
+  end;
 end;
 
 procedure TMain.miSaveAsClick(Sender: TObject);
@@ -575,8 +614,6 @@ begin
       With (Tmp As TDbfTable) Do
        Begin
         DBTable.Close;
-
-        //ChDir(DbTable.FilePathFull);
 
         If CopyFile(DbTable.FilePathFull + DBTable.TableName, SaveAsTable.FileName) Then
          Begin
@@ -605,15 +642,17 @@ begin
 
     With (Tmp As TDbfTable) Do
      Begin
-      SortTable := TSortTable.Create(Self);
-      SortTable.Orig := DBTable;
+      SortTable := TSortTable.Create(nil);
+      try
+        SortTable.Orig := DBTable;
 
-      Ds.Enabled := False;
-      Ds.DataSet := Nil;
+        Ds.Enabled := False;
+        Ds.DataSet := Nil;
 
-      SortTable.ShowModal;
-
-      SortTable.Free;
+        SortTable.ShowModal;
+      finally
+        FreeAndNil(SortTable);
+      end;
 
       Ds.DataSet := DBTable;
       Ds.Enabled := True;
@@ -623,20 +662,23 @@ end;
 
 procedure TMain.miSubTablesClick(Sender: TObject);
 begin
- SubTables := TSubTables.Create(Self);
-
- SubTables.ShowModal;
-
- SubTables.Free;
+  SubTables := TSubTables.Create(nil);
+  try
+    SubTables.ShowModal;
+    Options.SubtractTablesWidth := SubTables.Width;
+  finally
+    FreeAndNil(SubTables);
+  end;
 end;
 
 procedure TMain.miTabsListClick(Sender: TObject);
 begin
- TabsList := TTabsList.Create(Self);
-
- TabsList.ShowModal;
-
- TabsList.Free;
+  TabsList := TTabsList.Create(nil);
+  try
+    TabsList.ShowModal;
+  finally
+    FreeAndNil(TabsList);
+  end;
 end;
 
 procedure TMain.tbQuitClick(Sender: TObject);
@@ -702,26 +744,23 @@ procedure TMain.CreateAliasDB;
 begin
  Try
    T := TDbf.Create(Self);
-   T.TableName := 'alias.dbf';
-   T.FilePath := ExtractFilePath(Application.ExeName);
+   try
+     T.TableName := 'alias.dbf';
+     T.FilePath := ExtractFilePath(Application.ExeName);
+     T.FieldDefs.Add('ALIAS', ftString, 80);
+     T.FieldDefs.Add('PATH', ftString, 255);
+     T.CreateTable;
 
-   T.FieldDefs.Add('ALIAS', ftString, 80);
-   T.FieldDefs.Add('PATH', ftString, 255);
-
-   T.CreateTable;
-
-   T.Open;
-
-   T.AddIndex('ALIAS', 'ALIAS', [ixPrimary]);
-
-   T.Close;
-
+     T.Open;
+     T.AddIndex('ALIAS', 'ALIAS', [ixPrimary]);
+     ShowMessage('Alias DB not found! Created!');
+     T.Close;
+   except
+     ShowMessage('Error while creating alias db.');
+   end;
+ finally
    T.Free;
-
-   ShowMessage('Alias DB not found! Created!');
- Except
-   ShowMessage('Error while creating alias db.');
- End;
+ end;
 end;
 
 function TMain.TableIsAlredyOpened(TblName: String): Integer;
@@ -784,10 +823,10 @@ begin
    WorkSpace.AddFormToPageControl(OT);
 
    OT.DBTable.TableName := TblName;
-   OT.DBGrid1.AlternateColor := Options.RecOptions.AlternateColor;
+   OT.DBGrid1.AlternateColor := Options.AlternateColor;
    OT.DBTable.Open;
 
-   If Options.RecOptions.GotoToLastRecord Then
+   If Options.GotoLastRecord Then
     OT.DBTable.Last;
 
    OT.Set_Up;

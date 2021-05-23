@@ -48,7 +48,7 @@ implementation
 
 uses
   Math,
-  uMain, uTabForm, uDbfTable;
+  uMain, uTabForm, uDbfTable, uOptions;
 
 {$R *.lfm}
 
@@ -148,8 +148,15 @@ begin
  StartBtn.Constraints.MinWidth := Max(StartBtn.Width, CloseBtn.Width);
  CloseBtn.Constraints.MinWidth := StartBtn.Constraints.MinWidth;
 
+ Constraints.MinWidth := Width;
  Constraints.MinHeight := Height;
  Constraints.MaxHeight := Height;
+
+ if Options.RememberWindowSizePos and (Options.AddTablesWidth > 0) then
+ begin
+   AutoSize := false;
+   Width := Min(Options.AddTablesWidth, Screen.WorkAreaWidth);
+ end;
 
  If Main.WorkSite.PageCount > 0 Then
   For Ind := 0 To Main.WorkSite.PageCount - 1 Do

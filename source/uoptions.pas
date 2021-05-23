@@ -9,33 +9,54 @@ uses
   ColorBox, ComCtrls, Buttons, ExtCtrls;
 
 type
-
-  TRecOptions                 = Packed Record
-    RememberWindowsSizePos    : Boolean;
-    WindowsState              : TWindowState;
-    wWidth,
-    wHeight,
-    wTop,
-    wLeft                     : Integer;
+  TRecOptions = Record
+    RememberWindowSizePos     : Boolean;
+    MainWindowState           : TWindowState;
+    MainWidth                 : Integer;
+    MainHeight                : Integer;
+    MainTop                   : Integer;
+    MainLeft                  : Integer;
+    AddTablesWidth            : Integer;
+    SubtractTablesWidth       : Integer;
     StartWithOBA              : Boolean;
-    GotoToLastRecord          : Boolean;
+    GotoLastRecord            : Boolean;
     EnableToolBar             : Boolean;
-    EnaleStatusBar            : Boolean;
+    EnableStatusBar           : Boolean;
     AlternateColor            : TColor;
     MaxHistoryRecords         : Integer;
     ShowSplashScreen          : Boolean;
   end;
 
-  { TOptions }
+var
+  Options: TRecOptions = (
+    RememberWindowSizePos: false;
+    MainWindowState: wsNormal;
+    MainWidth: 0;
+    MainHeight: 0;
+    MainTop: 0;
+    MainLeft: 0;
+    AddTablesWidth: 0;
+    SubtractTablesWidth: 0;
+    StartWithOBA: false;
+    GotoLastRecord: false;
+    EnableToolBar: true;
+    EnableStatusBar: true;
+    AlternateColor: clCream;
+    MaxHistoryRecords: 10;
+    ShowSplashScreen: true
+  );
 
-  TOptions = class(TForm)
+type
+  { TOptionsForm }
+
+  TOptionsForm = class(TForm)
     Bevel1: TBevel;
     Button1: TBitBtn;
     CloseBtn: TBitBtn;
     ConfirmBtn: TBitBtn;
     cbRememberWPos: TCheckBox;
     cbStartWithOBA: TCheckBox;
-    cbGotoToLastRec: TCheckBox;
+    cbGotoLastRec: TCheckBox;
     cbEnableToolbar: TCheckBox;
     cbEnableStatusBar: TCheckBox;
     cbAlternateColor: TColorBox;
@@ -47,126 +68,168 @@ type
     procedure CloseBtnClick(Sender: TObject);
     procedure ConfirmBtnClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure tbMaxNumberFileHistoryChange(Sender: TObject);
   private
     { private declarations }
-    OptFName : String;
+    procedure OptionsToControls;
+    procedure ControlsToOptions;
   public
     { public declarations }
-    RecOptions : TRecOptions;
-
-    Procedure LoadOptions;
-    Procedure SaveOptions;
   end;
 
 var
-  Options: TOptions;
+  OptionsForm: TOptionsForm;
+
+function IniFileName: String;
+procedure LoadOptions;
+procedure SaveOptions;
+
 
 implementation
 
-Uses Math, uMain;
+Uses Math, IniFiles, uMain;
 
 {$R *.lfm}
 
-{ TOptions }
+{ TOptionsForm }
 
-procedure TOptions.CloseBtnClick(Sender: TObject);
+procedure TOptionsForm.CloseBtnClick(Sender: TObject);
 begin
  Close;
 end;
 
-procedure TOptions.ConfirmBtnClick(Sender: TObject);
+procedure TOptionsForm.ConfirmBtnClick(Sender: TObject);
 begin
- RecOptions.RememberWindowsSizePos := cbRememberWPos.Checked;
- RecOptions.StartWithOBA := cbStartWithOBA.Checked;
- RecOptions.GotoToLastRecord := cbGotoToLastRec.Checked;
- RecOptions.EnableToolBar := cbEnableToolbar.Checked;
- RecOptions.EnaleStatusBar := cbEnableStatusBar.Checked;
- RecOptions.AlternateColor := cbAlternateColor.Selected;
- RecOptions.MaxHistoryRecords := tbMaxNumberFileHistory.Position;
- RecOptions.ShowSplashScreen := cbShowSplashScreen.Checked;
+  ControlsToOptions;
+  SaveOptions;
 
- SaveOptions;
+  ShowMessage('Some changes will become effective only at the next reboot.');
 
- ShowMessage('Changes will take effect at the next reboot.');
-
- Close;
+  Close;
 end;
 
-procedure TOptions.Button1Click(Sender: TObject);
+procedure TOptionsForm.Button1Click(Sender: TObject);
+var
+  ini: TCustomIniFile;
 begin
- If FileExists(ExtractFilePath(Application.ExeName) + 'recentf.ini') Then
-  Begin
-   If DeleteFile(ExtractFilePath(Application.ExeName) + 'recentf.ini') Then
-    Begin
-     Main.FileHistory.UpdateParentMenu;
-
-     ShowMessage('History cleared!');
-    end;
+  ini := TIniFile.Create(IniFileName);
+  try
+    ini.EraseSection('RecentFiles');
+  finally
+    ini.Free;
   end;
+  Main.FileHistory.UpdateParentMenu;
+  ShowMessage('History cleared!');
 end;
 
-procedure TOptions.FormCreate(Sender: TObject);
+procedure TOptionsForm.FormShow(Sender: TObject);
 begin
- RecOptions.EnableToolBar := True;
- RecOptions.EnaleStatusBar := True;
- RecOptions.MaxHistoryRecords := 10;
- RecOptions.RememberWindowsSizePos := False;
- RecOptions.StartWithOBA := False;
- RecOptions.GotoToLastRecord := False;
- RecOptions.AlternateColor := clCream;
- RecOptions.ShowSplashScreen := True;
+  ConfirmBtn.Constraints.MinWidth := Max(ConfirmBtn.Width, CloseBtn.Width);
+  CloseBtn.Constraints.MinWidth := ConfirmBtn.Constraints.MinWidth;
 
- OptFName := ExtractFilePath(Application.ExeName) + 'options.reg';
+  LoadOptions;
+  OptionsToControls;
 end;
 
-procedure TOptions.FormShow(Sender: TObject);
-begin
- ConfirmBtn.Constraints.MinWidth := Max(ConfirmBtn.Width, CloseBtn.Width);
- CloseBtn.Constraints.MinWidth := ConfirmBtn.Constraints.MinWidth;
-
- LoadOptions;
-end;
-
-procedure TOptions.tbMaxNumberFileHistoryChange(Sender: TObject);
+procedure TOptionsForm.tbMaxNumberFileHistoryChange(Sender: TObject);
 begin
  lNumberOf.Caption := '(' + IntToStr(tbMaxNumberFileHistory.Position) + ')';
 end;
 
-procedure TOptions.LoadOptions;
- Var F : File Of TRecOptions;
+procedure TOptionsForm.ControlsToOptions;
 begin
- If FileExists(OptFName) Then
-  Begin
-   AssignFile(F, OptFName);
-   Reset(F);
-
-   Read(F, RecOptions);
-
-   CloseFile(F);
-  end;
-
- cbRememberWPos.Checked := RecOptions.RememberWindowsSizePos;
- cbStartWithOBA.Checked := RecOptions.StartWithOBA;
- cbGotoToLastRec.Checked := RecOptions.GotoToLastRecord;
- cbEnableToolbar.Checked := RecOptions.EnableToolBar;
- cbEnableStatusBar.Checked := RecOptions.EnaleStatusBar;
- cbAlternateColor.Selected := RecOptions.AlternateColor;
- tbMaxNumberFileHistory.Position := RecOptions.MaxHistoryRecords;
- cbShowSplashScreen.Checked := RecOptions.ShowSplashScreen;
+  Options.RememberWindowSizePos := cbRememberWPos.Checked;
+  Options.StartWithOBA := cbStartWithOBA.Checked;
+  Options.GotoLastRecord := cbGotoLastRec.Checked;
+  Options.EnableToolBar := cbEnableToolbar.Checked;
+  Options.EnableStatusBar := cbEnableStatusBar.Checked;
+  Options.AlternateColor := cbAlternateColor.Selected;
+  Options.MaxHistoryRecords := tbMaxNumberFileHistory.Position;
+  Options.ShowSplashScreen := cbShowSplashScreen.Checked;
 end;
 
-procedure TOptions.SaveOptions;
- Var F : File Of TRecOptions;
+procedure TOptionsForm.OptionsToControls;
 begin
- AssignFile(F, OptFName);
- ReWrite(F);
+  cbRememberWPos.Checked := Options.RememberWindowSizePos;
+  cbStartWithOBA.Checked := Options.StartWithOBA;
+  cbGoToLastRec.Checked := Options.GotoLastRecord;
+  cbEnableToolbar.Checked := Options.EnableToolbar;
+  cbEnableStatusBar.Checked := Options.EnableStatusbar;
+  cbAlternateColor.Selected := Options.AlternateColor;
+  tbMaxNumberFileHistory.Position := Options.MaxHistoryRecords;
+  cbShowSplashScreen.Checked := Options.ShowSplashScreen;
+end;
 
- Write(F, RecOptions);
 
- CloseFile(F);
+{ Global procedures }
+
+function IniFileName: String;
+begin
+  Result := ChangeFileExt(GetAppConfigFile(false), '.ini');
+end;
+
+procedure LoadOptions;
+var
+  ini: TCustomIniFile;
+begin
+  ini := TIniFile.Create(IniFileName);
+  try
+    Options.RememberWindowSizePos := ini.ReadBool('Options', 'RememberWindowSizePos',
+      Options.RememberWindowSizePos);
+    if Options.RememberWindowSizePos then
+    begin
+      Options.MainWindowState := TWindowState(ini.ReadInteger('Options', 'MainWindowState',
+        Integer(Options.MainWindowState)));
+      if Options.MainWindowState = wsNormal then
+      begin
+        Options.MainWidth := ini.ReadInteger('Options', 'MainWidth', Options.MainWidth);
+        Options.MainHeight := ini.ReadInteger('Options', 'MainHeight', Options.MainHeight);
+        Options.MainLeft := ini.ReadInteger('Options', 'MainLeft', Options.MainLeft);
+        Options.MainTop := ini.ReadInteger('Options', 'MainTop', Options.MainTop);
+      end;
+      Options.AddTablesWidth := ini.ReadInteger('Options', 'AddTablesWidth', Options.AddTablesWidth);
+      Options.SubtractTablesWidth := ini.ReadInteger('Options', 'SubtractTablesWidth', Options.SubtractTablesWidth);
+    end;
+    Options.StartWithOBA := ini.ReadBool('Options', 'StartWithOBA', Options.StartWithOBA);
+    Options.GotoLastRecord := ini.ReadBool('Options', 'GotoLastRecord', Options.GotoLastRecord);
+    Options.EnableToolbar := ini.ReadBool('Options', 'EnableToolbar', Options.EnableToolbar);
+    Options.EnableStatusbar := ini.ReadBool('Options', 'EnableStatusbar', Options.EnableStatusbar);
+    Options.AlternateColor := TColor(ini.ReadInteger('Options', 'AlternateColor', Integer(Options.AlternateColor)));
+    Options.MaxHistoryRecords := ini.ReadInteger('Options', 'MaxHistoryRecords', Options.MaxHistoryRecords);
+    Options.ShowSplashScreen := ini.ReadBool('Options', 'ShowSplashScreen', Options.ShowSplashScreen);
+  finally
+    ini.Free;
+  end;
+end;
+
+procedure SaveOptions;
+var
+  ini: TCustomIniFile;
+begin
+  ini := TIniFile.Create(IniFileName);
+  try
+    ini.WriteBool('Options', 'RememberWindowSizePos', Options.RememberWindowSizePos);
+    ini.WriteInteger('Options', 'MainWindowState', ord(Options.MainWindowState));
+    if Options.MainWindowState = wsNormal then
+    begin
+      ini.WriteInteger('Options', 'MainWidth', Options.MainWidth);
+      ini.WriteInteger('Options', 'MainHeight', Options.MainHeight);
+      ini.WriteInteger('Options', 'MainLeft', Options.MainLeft);
+      ini.WriteInteger('Options', 'MainTop', Options.MainTop);
+    end;
+    ini.WriteInteger('Options', 'AddTablesWidth', Options.AddTablesWidth);
+    ini.WriteInteger('Options', 'SubtractTablesWidth', Options.SubtractTablesWidth);
+    ini.WriteBool('Options', 'StartWithOBA', Options.StartWithOBA);
+    ini.WriteBool('Options', 'GotoLastRecord', Options.GotoLastRecord);
+    ini.WriteBool('Options', 'EnableToolbar', Options.EnableToolbar);
+    ini.WriteBool('Options', 'EnableStatusbar', Options.EnableStatusbar);
+    ini.WriteInteger('Options', 'AlternateColor', integer(Options.AlternateColor));
+    ini.WriteInteger('Options', 'MaxHistoryRecords', Options.MaxHistoryRecords);
+    ini.WriteBool('Options', 'ShowSplashScreen', Options.ShowSplashScreen);
+  finally
+    ini.Free;
+  end;
 end;
 
 end.
