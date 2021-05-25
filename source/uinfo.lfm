@@ -88,7 +88,7 @@ object Info: TInfo
     BorderSpacing.Left = 6
     BorderSpacing.Top = 6
     BorderSpacing.Right = 6
-    Caption = 'MyDbfStudio is an administrative tool to create and manage dBase tables. It runs on Windows, Linux and other platforms supported by the Lazarus IDE.'#13#10#13#10'More developers needed!!!'#13#10#13#10'Autor: Calogiuri Enzo Antonio Aka Fog76'#13#10'Modifications in current port by W. Pamler'#13#10#13#10'License: GPL/LGPL'#13#10#13#10'Icons provided by icons8.com, style: Windows Metro,'
+    Caption = 'MyDbfStudio is an administrative tool to create and manage dBase tables. It runs on Windows, Linux and other platforms supported by the Lazarus IDE.'#13#10' '#13#10'More developers needed!!!'#13#10' '#13#10'Autor: Calogiuri Enzo Antonio Aka Fog76'#13#10'Modifications in current port by W. Pamler'#13#10' '#13#10'License: GPL/LGPL'#13#10' '#13#10'Icons provided by icons8.com, style: Windows Metro,'
     ParentColor = False
     WordWrap = True
   end
