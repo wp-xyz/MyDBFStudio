@@ -1,15 +1,14 @@
 object Info: TInfo
   Left = 419
-  Height = 525
+  Height = 630
   Top = 147
   Width = 457
   AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Info'
-  ClientHeight = 525
+  ClientHeight = 630
   ClientWidth = 457
-  OnActivate = FormActivate
   OnCreate = FormCreate
   Position = poDesktopCenter
   LCLVersion = '2.1.0.0'
@@ -40,48 +39,16 @@ object Info: TInfo
     ParentColor = False
     ParentFont = False
   end
-  object Memo1: TMemo
-    AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = Img
-    AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = Owner
-    AnchorSideRight.Side = asrBottom
-    AnchorSideBottom.Control = Bevel1
-    Left = 6
-    Height = 169
-    Top = 312
-    Width = 445
-    Anchors = [akTop, akLeft, akRight, akBottom]
-    BorderSpacing.Left = 6
-    BorderSpacing.Right = 6
-    BorderStyle = bsNone
-    Color = clForm
-    Lines.Strings = (
-      'MyDbfStudio is an administrative tool to create and manage dBase tables. It runs on Windows, Linux and other platforms supported by the Lazarus IDE.'
-      ''
-      'More developers needed!!!'
-      ''
-      'Autor: Calogiuri Enzo Antonio Aka Fog76'
-      'Modifications ins current port by W. Pamler'
-      ''
-      'License: GPL/LGPL'
-      'Icons provided by icons8.com (style: Windows Metro, https://icons8.com/icons/metro).'
-    )
-    ReadOnly = True
-    TabOrder = 0
-    TabStop = False
-    WantReturns = False
-  end
   object CloseBtn: TBitBtn
+    AnchorSideTop.Control = Bevel1
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
     Left = 376
     Height = 26
-    Top = 493
+    Top = 504
     Width = 75
-    Anchors = [akRight, akBottom]
+    Anchors = [akTop, akRight]
     AutoSize = True
     BorderSpacing.Around = 6
     Cancel = True
@@ -90,21 +57,58 @@ object Info: TInfo
     Images = CommonData.Images
     ImageIndex = 37
     OnClick = CloseBtnClick
-    TabOrder = 1
+    TabOrder = 0
   end
   object Bevel1: TBevel
     AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Label2
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    AnchorSideBottom.Control = CloseBtn
     Left = 6
     Height = 6
-    Top = 481
+    Top = 498
     Width = 445
-    Anchors = [akLeft, akRight, akBottom]
+    Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 6
     BorderSpacing.Right = 6
-    Shape = bsBottomLine
+    Shape = bsTopLine
+  end
+  object Label1: TLabel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Img
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 6
+    Height = 165
+    Top = 312
+    Width = 445
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Left = 6
+    BorderSpacing.Top = 6
+    BorderSpacing.Right = 6
+    Caption = 'MyDbfStudio is an administrative tool to create and manage dBase tables. It runs on Windows, Linux and other platforms supported by the Lazarus IDE.'#13#10#13#10'More developers needed!!!'#13#10#13#10'Autor: Calogiuri Enzo Antonio Aka Fog76'#13#10'Modifications in current port by W. Pamler'#13#10#13#10'License: GPL/LGPL'#13#10#13#10'Icons provided by icons8.com, style: Windows Metro,'
+    ParentColor = False
+    WordWrap = True
+  end
+  object Label2: TLabel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Label1
+    AnchorSideTop.Side = asrBottom
+    Cursor = crHandPoint
+    Left = 6
+    Height = 15
+    Top = 477
+    Width = 171
+    BorderSpacing.Left = 6
+    BorderSpacing.Bottom = 6
+    Caption = 'https://icons8.com/icons/metro'
+    Font.Color = clBlue
+    ParentColor = False
+    ParentFont = False
+    OnClick = Label2Click
+    OnMouseEnter = Label2MouseEnter
+    OnMouseLeave = Label2MouseLeave
   end
 end
