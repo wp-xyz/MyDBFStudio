@@ -570,7 +570,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uInfo"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
         <TopLine Value="28"/>
         <CursorPos X="21" Y="44"/>
@@ -895,9 +894,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uOptions"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="6"/>
         <TopLine Value="186"/>
-        <CursorPos Y="202"/>
+        <CursorPos X="83" Y="197"/>
         <UsageCount Value="36"/>
         <Bookmarks Count="1">
           <Item0 X="33" Y="213" ID="1"/>

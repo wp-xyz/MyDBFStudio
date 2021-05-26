@@ -51,7 +51,7 @@ type
 
   TOptionsForm = class(TForm)
     Bevel1: TBevel;
-    Button1: TBitBtn;
+    ClearRecentBtn: TBitBtn;
     CloseBtn: TBitBtn;
     ConfirmBtn: TBitBtn;
     cbRememberWPos: TCheckBox;
@@ -67,7 +67,7 @@ type
     tbMaxNumberFileHistory: TTrackBar;
     procedure CloseBtnClick(Sender: TObject);
     procedure ConfirmBtnClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
+    procedure ClearRecentBtnClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure tbMaxNumberFileHistoryChange(Sender: TObject);
   private
@@ -109,7 +109,7 @@ begin
   Close;
 end;
 
-procedure TOptionsForm.Button1Click(Sender: TObject);
+procedure TOptionsForm.ClearRecentBtnClick(Sender: TObject);
 var
   ini: TCustomIniFile;
 begin
