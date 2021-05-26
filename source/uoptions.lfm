@@ -119,7 +119,7 @@ object OptionsForm: TOptionsForm
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 12
     BorderSpacing.Right = 6
-    Caption = 'Number of records for history file'
+    Caption = 'Maximum count of recently-used file items'
     ParentColor = False
     WordWrap = True
   end
