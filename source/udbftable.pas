@@ -51,6 +51,8 @@ type
     { private declarations }
     Procedure Load_Table_Indexes;
     procedure ShowMemo(ATable: TDbf);
+    function TranslateHandler(ATable: TDbf; Src, Dest: PChar; ToOem: Boolean): Integer;
+
   public
     { public declarations }
     PageIdx : Integer;
@@ -63,7 +65,8 @@ var
 
 implementation
 
-Uses 
+Uses
+  LConvEncoding,
   uDataModule, uRestructure, uSetFV, uMain;
 
 {$R *.lfm}
@@ -211,10 +214,18 @@ begin
 end;
 
 procedure TDbfTable.Set_Up;
+var
+  field: TField;
 begin
   Load_Table_Indexes();
   ShowMemo(DbTable);
   ShowTableInfo(DbTable);
+
+  // Make sure that strings are converted to UTF-8.
+  DbTable.OnTranslate := @TranslateHandler;
+  for field in DbTable.Fields do
+    if (field is TStringField) then
+      TStringField(field).Transliterate := true;
 end;
 
 procedure TDbfTable.ShowMemo(ATable: TDbf);
@@ -234,6 +245,20 @@ begin
   // No memo found
   DBMemo.Hide;
   MemoSplitter.Hide;
+end;
+
+function TDbfTable.TranslateHandler(ATable: TDbf; Src, Dest: PChar; ToOem: Boolean): Integer;
+var
+  s: String;
+  cp: String;
+begin
+  cp := 'cp' + IntToStr(ATable.CodePage);
+  if ToOEM then
+    s := ConvertEncoding(Src, 'utf8', cp)
+  else
+    s := ConvertEncoding(Src, cp, 'utf8');
+  StrCopy(Dest, PChar(s));
+  Result := StrLen(Dest);
 end;
 
 end.
