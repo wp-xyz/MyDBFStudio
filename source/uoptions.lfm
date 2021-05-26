@@ -142,7 +142,7 @@ object OptionsForm: TOptionsForm
     AnchorSideRight.Control = CloseBtn
     Left = 66
     Height = 26
-    Top = 295
+    Top = 301
     Width = 90
     Anchors = [akTop, akRight]
     AutoSize = True
@@ -161,7 +161,7 @@ object OptionsForm: TOptionsForm
     AnchorSideRight.Side = asrBottom
     Left = 162
     Height = 26
-    Top = 295
+    Top = 301
     Width = 75
     Anchors = [akTop, akRight]
     AutoSize = True
@@ -206,7 +206,7 @@ object OptionsForm: TOptionsForm
     AnchorSideRight.Side = asrBottom
     Left = 6
     Height = 16
-    Top = 279
+    Top = 285
     Width = 243
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 6
@@ -221,9 +221,10 @@ object OptionsForm: TOptionsForm
     AnchorSideTop.Side = asrBottom
     Left = 44
     Height = 26
-    Top = 237
+    Top = 243
     Width = 167
     AutoSize = True
+    BorderSpacing.Top = 6
     Caption = 'Clear recent file history'
     Images = CommonData.Images
     ImageIndex = 12

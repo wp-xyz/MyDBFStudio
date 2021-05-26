@@ -896,8 +896,8 @@
         <UnitName Value="uOptions"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="6"/>
-        <TopLine Value="186"/>
-        <CursorPos X="83" Y="197"/>
+        <TopLine Value="185"/>
+        <CursorPos X="31" Y="216"/>
         <UsageCount Value="36"/>
         <Bookmarks Count="1">
           <Item0 X="33" Y="213" ID="1"/>
