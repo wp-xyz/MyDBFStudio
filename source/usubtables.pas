@@ -110,16 +110,16 @@ begin
 
  If Check_Table_Structure Then
   Begin
-   (fT1 As TDbfTable).DBGrid1.BeginUpdate;
-   (fT2 As TDbfTable).DBGrid1.BeginUpdate;
+   (fT1 As TDbfTable).DBGrid.BeginUpdate;
+   (fT2 As TDbfTable).DBGrid.BeginUpdate;
 
    If rgTPri.ItemIndex = 0 Then
     SubTable(T1, T2)
    Else
     SubTable(T2, T1);
 
-   (fT1 As TDbfTable).DBGrid1.EndUpdate(False);
-   (fT2 As TDbfTable).DBGrid1.EndUpdate(False);
+   (fT1 As TDbfTable).DBGrid.EndUpdate(False);
+   (fT2 As TDbfTable).DBGrid.EndUpdate(False);
   end;
 end;
 

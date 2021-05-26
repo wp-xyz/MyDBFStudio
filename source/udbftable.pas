@@ -14,8 +14,9 @@ type
 
   TDbfTable = class(TForm)
     cbShowDel: TCheckBox;
+    DBMemo: TDBMemo;
     Indexes: TComboBox;
-    DBGrid1: TDBGrid;
+    DBGrid: TDBGrid;
     DBNavigator1: TDBNavigator;
     DBTable: TDbf;
     Ds: TDataSource;
@@ -24,6 +25,7 @@ type
     leFilter: TEdit;
     Panel1: TPanel;
     sbInfo: TStatusBar;
+    MemoSplitter: TSplitter;
     ToolBar1: TToolBar;
     Pack: TToolButton;
     Empty: TToolButton;
@@ -48,6 +50,7 @@ type
   private
     { private declarations }
     Procedure Load_Table_Indexes;
+    procedure ShowMemo(ATable: TDbf);
   public
     { public declarations }
     PageIdx : Integer;
@@ -139,11 +142,11 @@ begin
  If DbTable.Active Then
   If MessageDlg('Delete all records in the table?', mtWarning, [mbOk, mbCancel],0) = mrOk Then
    Begin
-    DbGrid1.BeginUpdate;
+    DBGrid.BeginUpdate;
 
     DbTable.EmptyTable;
 
-    DbGrid1.EndUpdate(False);
+    DBGrid.EndUpdate(False);
 
     DbTable.Close;
     DbTable.Open;
@@ -187,31 +190,50 @@ end;
 
 procedure TDbfTable.ToolButton1Click(Sender: TObject);
 begin
- Main.WorkSiteCloseTabClicked(Main.WorkSite.Pages[Self.PageIdx]);
+  Main.WorkSiteCloseTabClicked(Main.WorkSite.Pages[Self.PageIdx]);
 end;
 
 procedure TDbfTable.ViewDelClick(Sender: TObject);
 begin
- If DbTable.Active Then
-  If MessageDlg('Delete all records in grid?', mtWarning, [mbOk, mbCancel],0) = mrOk Then
-   Begin
-    DbGrid1.BeginUpdate;
-
-    While Not DbTable.EOF Do
-     DbTable.Delete;
-
-    DbGrid1.EndUpdate(False);
-
-    DbTable.Close;
-    DbTable.Open;
-   End;
+  if DbTable.Active then
+    if MessageDlg('Delete all records in grid?', mtWarning, [mbOk, mbCancel],0) = mrOk then
+    begin
+      DBGrid.BeginUpdate;
+      try
+        while Not DbTable.EOF do
+          DbTable.Delete;
+      finally
+        DBGrid.EndUpdate(False);
+      end;
+      DbTable.Close;
+      DbTable.Open;
+    end;
 end;
 
 procedure TDbfTable.Set_Up;
 begin
- Load_Table_Indexes();
+  Load_Table_Indexes();
+  ShowMemo(DbTable);
+  ShowTableInfo(DbTable);
+end;
 
- ShowTableInfo(DbTable);
+procedure TDbfTable.ShowMemo(ATable: TDbf);
+var
+  field: TField;
+begin
+  for field in ATable.Fields do
+    if field.DataType in [ftMemo, ftWideMemo] then
+    begin
+      DBMemo.DataField := field.FieldName;
+      DBMemo.Show;
+      MemoSplitter.Show;
+      MemoSplitter.Top := 0;
+      exit;
+    end;
+
+  // No memo found
+  DBMemo.Hide;
+  MemoSplitter.Hide;
 end;
 
 end.

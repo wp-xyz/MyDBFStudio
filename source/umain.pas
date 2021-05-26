@@ -831,7 +831,7 @@ begin
    WorkSpace.AddFormToPageControl(OT);
 
    OT.DBTable.TableName := TblName;
-   OT.DBGrid1.AlternateColor := Options.AlternateColor;
+   OT.DBGrid.AlternateColor := Options.AlternateColor;
    OT.DBTable.Open;
 
    If Options.GotoLastRecord Then
