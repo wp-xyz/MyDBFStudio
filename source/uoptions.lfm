@@ -10,6 +10,7 @@ object OptionsForm: TOptionsForm
   ClientWidth = 310
   OnShow = FormShow
   Position = poDesktopCenter
+  ShowHint = True
   LCLVersion = '2.1.0.0'
   object cbRememberWPos: TCheckBox
     AnchorSideLeft.Control = Owner
@@ -111,9 +112,9 @@ object OptionsForm: TOptionsForm
     AnchorSideTop.Side = asrCenter
     AnchorSideRight.Control = seMaxNumberFileHistory
     Left = 19
-    Height = 15
-    Top = 209
-    Width = 209
+    Height = 30
+    Top = 202
+    Width = 150
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 12
@@ -127,7 +128,7 @@ object OptionsForm: TOptionsForm
     AnchorSideRight.Control = CloseBtn
     Left = 121
     Height = 26
-    Top = 298
+    Top = 262
     Width = 90
     Anchors = [akTop, akRight]
     AutoSize = True
@@ -146,7 +147,7 @@ object OptionsForm: TOptionsForm
     AnchorSideRight.Side = asrBottom
     Left = 217
     Height = 26
-    Top = 298
+    Top = 262
     Width = 75
     Anchors = [akTop, akRight]
     AutoSize = True
@@ -181,7 +182,7 @@ object OptionsForm: TOptionsForm
     AnchorSideRight.Side = asrBottom
     Left = 6
     Height = 16
-    Top = 282
+    Top = 246
     Width = 298
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 6
@@ -190,34 +191,35 @@ object OptionsForm: TOptionsForm
     Shape = bsTopLine
   end
   object ClearRecentBtn: TBitBtn
-    AnchorSideLeft.Control = Owner
-    AnchorSideLeft.Side = asrCenter
-    AnchorSideTop.Control = seMaxNumberFileHistory
+    AnchorSideTop.Control = cbAlternateColor
     AnchorSideTop.Side = asrBottom
-    Left = 72
-    Height = 26
-    Top = 240
-    Width = 167
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 239
+    Height = 25
+    Hint = 'Clear recently used file names'
+    Top = 205
+    Width = 53
+    Anchors = [akTop, akRight]
     AutoSize = True
-    BorderSpacing.Top = 12
-    Caption = 'Clear recent file history'
-    Images = CommonData.Images
-    ImageIndex = 12
+    BorderSpacing.Top = 16
+    BorderSpacing.Right = 18
+    Caption = 'Clear'
     OnClick = ClearRecentBtnClick
     TabOrder = 9
   end
   object seMaxNumberFileHistory: TSpinEdit
-    AnchorSideTop.Control = cbAlternateColor
-    AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = cbAlternateColor
-    AnchorSideRight.Side = asrBottom
-    Left = 234
+    AnchorSideTop.Control = ClearRecentBtn
+    AnchorSideTop.Side = asrCenter
+    AnchorSideRight.Control = ClearRecentBtn
+    Left = 175
     Height = 23
-    Top = 205
+    Top = 206
     Width = 58
     Alignment = taRightJustify
     Anchors = [akTop, akRight]
     BorderSpacing.Top = 16
+    BorderSpacing.Right = 6
     MaxValue = 100
     TabOrder = 10
   end
