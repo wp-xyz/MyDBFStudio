@@ -99,7 +99,7 @@ object Restructure: TRestructure
     Width = 75
     Anchors = [akRight, akBottom]
     AutoSize = True
-    BorderSpacing.Top = 6
+    BorderSpacing.Top = 16
     BorderSpacing.Right = 6
     BorderSpacing.Bottom = 6
     Caption = '&Close'
@@ -114,7 +114,7 @@ object Restructure: TRestructure
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 493
-    Height = 270
+    Height = 316
     Top = 6
     Width = 237
     Anchors = [akTop, akRight]
@@ -122,7 +122,7 @@ object Restructure: TRestructure
     BorderSpacing.Top = 6
     BorderSpacing.Right = 6
     BevelOuter = bvNone
-    ClientHeight = 270
+    ClientHeight = 316
     ClientWidth = 237
     TabOrder = 1
     object lblIndexList: TLabel
@@ -168,7 +168,7 @@ object Restructure: TRestructure
       Caption = 'Define'
       Images = CommonData.Images
       ImageIndex = 4
-      OnClick = Button1Click
+      OnClick = DefineBtnlick
       TabOrder = 1
     end
     object EditBtn: TBitBtn
@@ -184,7 +184,7 @@ object Restructure: TRestructure
       Caption = 'Edit'
       Images = CommonData.Images
       ImageIndex = 6
-      OnClick = Button3Click
+      OnClick = EditBtnlick
       TabOrder = 2
     end
     object DeleteBtn: TBitBtn
@@ -200,7 +200,7 @@ object Restructure: TRestructure
       Caption = 'Delete'
       Images = CommonData.Images
       ImageIndex = 5
-      OnClick = Button2Click
+      OnClick = DeleteBtnClick
       TabOrder = 3
     end
     object cbPack: TCheckBox
@@ -214,6 +214,29 @@ object Restructure: TRestructure
       BorderSpacing.Top = 12
       Caption = 'Pack Table'
       TabOrder = 4
+    end
+    object lblCodePage: TLabel
+      AnchorSideLeft.Control = Panel1
+      AnchorSideTop.Side = asrCenter
+      Left = 0
+      Height = 15
+      Top = 282
+      Width = 60
+      BorderSpacing.Right = 6
+      Caption = 'Code page:'
+      ParentColor = False
+    end
+    object lblLanguage: TLabel
+      AnchorSideLeft.Control = Panel1
+      AnchorSideTop.Control = lblCodePage
+      AnchorSideTop.Side = asrBottom
+      Left = 0
+      Height = 15
+      Top = 301
+      Width = 55
+      BorderSpacing.Top = 4
+      Caption = 'Language:'
+      ParentColor = False
     end
   end
   object Temp: TDbf

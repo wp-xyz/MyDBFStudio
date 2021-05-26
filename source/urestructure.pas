@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, dbf, FileUtil, Forms, Controls, Graphics, Dialogs, Grids,
-  StdCtrls, Buttons, ExtCtrls, db, dbf_fields;
+  StdCtrls, Buttons, ExtCtrls, db, dbf_fields, Types;
 
 type
 
@@ -21,6 +21,8 @@ type
 
   TRestructure = class(TForm)
     CloseBtn: TBitBtn;
+    lblLanguage: TLabel;
+    lblCodePage: TLabel;
     RestructureBtn: TBitBtn;
     DefineBtn: TBitBtn;
     EditBtn: TBitBtn;
@@ -33,9 +35,9 @@ type
     Temp: TDbf;
     procedure CloseBtnClick(Sender: TObject);
     procedure RestructureBtnClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
+    procedure DefineBtnlick(Sender: TObject);
+    procedure DeleteBtnClick(Sender: TObject);
+    procedure EditBtnlick(Sender: TObject);
     procedure FieldListKeyDown(Sender: TObject; var Key: Word;
       {%H-}Shift: TShiftState);
     procedure FormDestroy(Sender: TObject);
@@ -49,10 +51,11 @@ type
 
     Function Check_Value(Val : String) : Boolean;
 
-    Function CreateNewFieldDefs : TDbfFieldDefs;
-    Procedure RecreateMyIndex;
+    function CreateNewFieldDefs : TDbfFieldDefs;
+    procedure RecreateMyIndex;
+    function RetFieldType(Val : String) : TFieldType;
 
-    Function RetFieldType(Val : String) : TFieldType;
+    procedure ShowInfo(ATable: TDbf);
   public
     { public declarations }
     Function TestIndexName(Val : String) : Boolean;
@@ -64,7 +67,7 @@ var
 implementation
 
 Uses
-  Math, uIdxTable;
+  LCLType, Math, uIdxTable;
 
 {$R *.lfm}
 
@@ -122,7 +125,7 @@ begin
       End;
 end;
 
-procedure TRestructure.Button2Click(Sender: TObject);
+procedure TRestructure.DeleteBtnClick(Sender: TObject);
  Var dName : String;
      Ind : Word;
 begin
@@ -141,7 +144,7 @@ begin
   End;
 end;
 
-procedure TRestructure.Button3Click(Sender: TObject);
+procedure TRestructure.EditBtnlick(Sender: TObject);
 begin
  If IndexList.ItemIndex < 0 Then
   Exit;
@@ -149,7 +152,7 @@ begin
  IndexListDblClick(Sender);
 end;
 
-procedure TRestructure.Button1Click(Sender: TObject);
+procedure TRestructure.DefineBtnlick(Sender: TObject);
  Var Ind : Word;
      lOpt : TIndexOptions;
      ExpField : String;
@@ -198,7 +201,7 @@ end;
 
 procedure TRestructure.CloseBtnClick(Sender: TObject);
 begin
- Close;
+  Close;
 end;
 
 procedure TRestructure.RestructureBtnClick(Sender: TObject);
@@ -332,6 +335,8 @@ begin
 
  If Temp.TableLevel = 7 Then
   FieldList.Columns[2].PickList.Add(Fieldtypenames[ftAutoInc]);
+
+ ShowInfo(Temp);
 end;
 
 procedure TRestructure.IndexListDblClick(Sender: TObject);
@@ -547,6 +552,15 @@ begin
                 Else
                  If Val = Fieldtypenames[ftAutoInc] Then
                   Result:=ftAutoInc;
+end;
+
+procedure TRestructure.ShowInfo(ATable: TDbf);
+begin
+  lblCodepage.Caption := Format('Code page: %d', [ATable.CodePage]);
+  if ATable.LanguageStr <> '' then
+    lblLanguage.Caption := Format('Language: %s', [ATable.LanguageStr])
+  else
+    lblLanguage.Caption := '';
 end;
 
 function TRestructure.TestIndexName(Val: String): Boolean;
