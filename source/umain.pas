@@ -60,11 +60,13 @@ type
     SaveAsTable: TSaveDialog;
     ToolButton1: TToolButton;
     ToolButton10: TToolButton;
-    ToolButton11: TToolButton;
     tbQuit: TToolButton;
     tbFileOpen: TToolButton;
+    ToolButton11: TToolButton;
+    ToolButton12: TToolButton;
+    ToolButton13: TToolButton;
+    ToolButton2: TToolButton;
     ToolButton3: TToolButton;
-    ToolButton4: TToolButton;
     ToolButton5: TToolButton;
     ToolButton6: TToolButton;
     ToolButton7: TToolButton;
@@ -102,6 +104,7 @@ type
     procedure tbQuitClick(Sender: TObject);
     procedure tbFileOpenMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure ToolButton2Click(Sender: TObject);
     procedure WorkSiteChange(Sender: TObject);
     procedure WorkSiteCloseTabClicked(Sender: TObject);
 
@@ -700,6 +703,11 @@ begin
     item.Tag := i;
     HistoryPopup.Items.Add(item);
   end;
+end;
+
+procedure TMain.ToolButton2Click(Sender: TObject);
+begin
+  miOptionsClick(nil);
 end;
 
 procedure TMain.WorkSiteChange(Sender: TObject);

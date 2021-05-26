@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ColorBox, ComCtrls, Buttons, ExtCtrls;
+  ColorBox, ComCtrls, Buttons, ExtCtrls, Spin;
 
 type
   TRecOptions = Record
@@ -29,7 +29,7 @@ type
 
 var
   Options: TRecOptions = (
-    RememberWindowSizePos: false;
+    RememberWindowSizePos: true;
     MainWindowState: wsNormal;
     MainWidth: 0;
     MainHeight: 0;
@@ -63,13 +63,11 @@ type
     cbShowSplashScreen: TCheckBox;
     Label1: TLabel;
     Label2: TLabel;
-    lNumberOf: TLabel;
-    tbMaxNumberFileHistory: TTrackBar;
+    seMaxNumberFileHistory: TSpinEdit;
     procedure CloseBtnClick(Sender: TObject);
     procedure ConfirmBtnClick(Sender: TObject);
     procedure ClearRecentBtnClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure tbMaxNumberFileHistoryChange(Sender: TObject);
   private
     { private declarations }
     procedure OptionsToControls;
@@ -132,11 +130,6 @@ begin
   OptionsToControls;
 end;
 
-procedure TOptionsForm.tbMaxNumberFileHistoryChange(Sender: TObject);
-begin
- lNumberOf.Caption := '(' + IntToStr(tbMaxNumberFileHistory.Position) + ')';
-end;
-
 procedure TOptionsForm.ControlsToOptions;
 begin
   Options.RememberWindowSizePos := cbRememberWPos.Checked;
@@ -145,7 +138,7 @@ begin
   Options.EnableToolBar := cbEnableToolbar.Checked;
   Options.EnableStatusBar := cbEnableStatusBar.Checked;
   Options.AlternateColor := cbAlternateColor.Selected;
-  Options.MaxHistoryRecords := tbMaxNumberFileHistory.Position;
+  Options.MaxHistoryRecords := seMaxNumberFileHistory.Value;
   Options.ShowSplashScreen := cbShowSplashScreen.Checked;
 end;
 
@@ -157,7 +150,7 @@ begin
   cbEnableToolbar.Checked := Options.EnableToolbar;
   cbEnableStatusBar.Checked := Options.EnableStatusbar;
   cbAlternateColor.Selected := Options.AlternateColor;
-  tbMaxNumberFileHistory.Position := Options.MaxHistoryRecords;
+  seMaxNumberFileHistory.Value := Options.MaxHistoryRecords;
   cbShowSplashScreen.Checked := Options.ShowSplashScreen;
 end;
 

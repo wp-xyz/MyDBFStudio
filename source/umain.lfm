@@ -62,13 +62,6 @@ object Main: TMain
       ParentShowHint = False
       ShowHint = True
     end
-    object ToolButton4: TToolButton
-      Left = 149
-      Height = 32
-      Top = 0
-      Caption = 'ToolButton4'
-      Style = tbsSeparator
-    end
     object ToolButton5: TToolButton
       Left = 81
       Hint = 'Open tables by alias'
@@ -80,7 +73,7 @@ object Main: TMain
       ShowHint = True
     end
     object ToolButton6: TToolButton
-      Left = 157
+      Left = 154
       Hint = 'Empty a table'
       Top = 0
       Caption = 'ToolButton6'
@@ -90,7 +83,7 @@ object Main: TMain
       ShowHint = True
     end
     object ToolButton7: TToolButton
-      Left = 191
+      Left = 188
       Hint = 'Sort a table'
       Top = 0
       Caption = 'ToolButton7'
@@ -100,7 +93,7 @@ object Main: TMain
       ShowHint = True
     end
     object ToolButton8: TToolButton
-      Left = 225
+      Left = 222
       Hint = 'Show tabs list'
       Top = 0
       Caption = 'ToolButton8'
@@ -109,15 +102,8 @@ object Main: TMain
       ParentShowHint = False
       ShowHint = True
     end
-    object ToolButton9: TToolButton
-      Left = 259
-      Height = 32
-      Top = 0
-      Caption = 'ToolButton9'
-      Style = tbsSeparator
-    end
     object ToolButton10: TToolButton
-      Left = 267
+      Left = 261
       Hint = 'Close all tabs'
       Top = 0
       Caption = 'ToolButton10'
@@ -126,20 +112,48 @@ object Main: TMain
       ParentShowHint = False
       ShowHint = True
     end
-    object ToolButton11: TToolButton
-      Left = 301
-      Height = 32
-      Top = 0
-      Caption = 'ToolButton11'
-      Style = tbsSeparator
-    end
     object tbQuit: TToolButton
-      Left = 309
+      Left = 339
       Hint = 'Close application'
       Top = 0
       Caption = 'tbQuit'
       ImageIndex = 37
       OnClick = tbQuitClick
+    end
+    object ToolButton2: TToolButton
+      Left = 300
+      Top = 0
+      Caption = 'ToolButton2'
+      ImageIndex = 41
+      OnClick = ToolButton2Click
+    end
+    object ToolButton12: TToolButton
+      Left = 295
+      Height = 32
+      Top = 0
+      Caption = 'ToolButton12'
+      Style = tbsDivider
+    end
+    object ToolButton13: TToolButton
+      Left = 334
+      Height = 32
+      Top = 0
+      Caption = 'ToolButton13'
+      Style = tbsDivider
+    end
+    object ToolButton11: TToolButton
+      Left = 256
+      Height = 32
+      Top = 0
+      Caption = 'ToolButton11'
+      Style = tbsDivider
+    end
+    object ToolButton9: TToolButton
+      Left = 149
+      Height = 32
+      Top = 0
+      Caption = 'ToolButton9'
+      Style = tbsDivider
     end
   end
   object StatusBar: TStatusBar
