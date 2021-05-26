@@ -43,6 +43,7 @@ object OptionsForm: TOptionsForm
     Height = 19
     Top = 50
     Width = 227
+    BorderSpacing.Right = 18
     Caption = 'After opening a table, got to last record'
     TabOrder = 2
   end
@@ -166,6 +167,7 @@ object OptionsForm: TOptionsForm
     Height = 19
     Top = 119
     Width = 175
+    BorderSpacing.Right = 18
     Caption = 'Show splash screen at startup'
     Checked = True
     State = cbChecked
