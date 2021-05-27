@@ -1,6 +1,7 @@
 # MyDBFStudio
 
 ![Screenshot](screenshots/MyDBFStudio_v0.5.2.png)
+
 MyDbf Studio is a multi-platform open source program made with Lazarus that will help you to manage your dbf tables.
 The main features are:
 
