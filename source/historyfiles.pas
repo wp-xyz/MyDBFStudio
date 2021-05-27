@@ -64,6 +64,7 @@ Type
     Public
       Constructor Create(AOwner : TComponent); Override;
       Destructor Destroy; Override;
+      Procedure Clear;
       Procedure UpdateList(TheFile : String);
       Procedure UpdateParentMenu;
       Function GetItemValue(Const Index : Integer) : String;
@@ -466,6 +467,19 @@ begin
  FItemSelectedBitmap.Free;
 end;
 
+procedure THistoryFiles.Clear;
+var
+  ini: TCustomIniFile;
+begin
+  ini := TIniFile.Create(FIniFile);
+  try
+    ini.EraseSection(FIniKey);
+  finally
+    ini.Free;
+  end;
+  UpdateParentMenu;
+end;
+
 procedure THistoryFiles.UpdateList(TheFile: String);
  Var A : String;
      bChanged : Boolean;
@@ -482,7 +496,7 @@ begin
    Try
      List.Clear;
 
-     A := TheFile;
+     A := GetForcedPathDelims(TheFile);
 
      If ExtractFilePath(A) = '' Then
       A := FLocalPath + A;

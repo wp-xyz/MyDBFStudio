@@ -7,7 +7,6 @@ object DbfTable: TDbfTable
   ClientHeight = 495
   ClientWidth = 708
   KeyPreview = True
-  OnClose = FormClose
   OnDestroy = FormDestroy
   LCLVersion = '2.1.0.0'
   object Panel1: TPanel

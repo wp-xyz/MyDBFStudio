@@ -26,16 +26,10 @@ type
     T2: TDbf;
     procedure CloseBtnClick(Sender: TObject);
     procedure StartBtnClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
-    ListT1PageIdx,
-    ListT2PageIdx : TStringList;
-
     Function Check_Table_Structure : Boolean;
-
     Procedure AddTable(D1,D2 : TDbf);
   public
     { public declarations }
@@ -66,30 +60,25 @@ begin
  If cbFT.Text = '' Then
   Begin
    ShowMessage('You MUST select a first table...');
-
    cbFT.SetFocus;
-
    Exit;
   End;
 
  If cbST.Text = '' Then
   Begin
    ShowMessage('You MUST select a second table...');
-
    cbST.SetFocus;
-
    Exit;
   End;
 
  If cbFT.Text = cbST.Text Then
   Begin
    ShowMessage('The tables must be different.');
-
    Exit;
   End;
 
- IdxT1 := StrToInt(ListT1PageIdx.Strings[cbFT.ItemIndex]);
- IdxT2 := StrToInt(ListT1PageIdx.Strings[cbST.ItemIndex]);
+ IdxT1 := cbFT.ItemIndex;
+ IdxT2 := cbST.ItemIndex;
 
  fT1 := (Main.WorkSite.Pages[IdxT1] As TTabForm).ParentForm;
  fT2 := (Main.WorkSite.Pages[IdxT2] As TTabForm).ParentForm;
@@ -103,14 +92,12 @@ begin
  If T1.Fields.Count <> T2.Fields.Count Then
   Begin
    ShowMessage('The structur of the tables is different.');
-
    Exit;
   End;
 
  If T1.Fields.Count <> T2.Fields.Count Then
   Begin
    ShowMessage('The structur of the tables is different.');
-
    Exit;
   End;
 
@@ -127,18 +114,6 @@ begin
    (fT1 As TDbfTable).DBGrid.EndUpdate(False);
    (fT2 As TDbfTable).DBGrid.EndUpdate(False);
   end;
-end;
-
-procedure TAddTables.FormCreate(Sender: TObject);
-begin
- ListT1PageIdx := TStringList.Create;
- ListT2PageIdx := TStringList.Create;
-end;
-
-procedure TAddTables.FormDestroy(Sender: TObject);
-begin
- ListT1PageIdx.Free;
- ListT2PageIdx.Free;
 end;
 
 procedure TAddTables.FormShow(Sender: TObject);
@@ -168,12 +143,7 @@ begin
       With (Tmp As TDbfTable) Do
        Begin
         cbFT.Items.Add(DbTable.FilePathFull + DBTable.TableName);
-
-        ListT1PageIdx.Add(IntToStr(PageIdx));
-
         cbST.Items.Add(DbTable.FilePathFull + DBTable.TableName);
-
-        ListT2PageIdx.Add(IntToStr(PageIdx));
        end;
 
      end;

@@ -8,8 +8,6 @@ object SubTables: TSubTables
   Caption = 'Substract Two Tables'
   ClientHeight = 308
   ClientWidth = 321
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poDesktopCenter
   LCLVersion = '2.1.0.0'

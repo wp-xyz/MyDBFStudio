@@ -26,18 +26,11 @@ type
     T2: TDbf;
     procedure CloseBtnClick(Sender: TObject);
     procedure StartBtnClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
-    ListT1PageIdx,
-    ListT2PageIdx : TStringList;
-
     Function Check_Table_Structure : Boolean;
-
     Function Return_Field_Value(D : TDbf; I : Integer) : String;
-
     Procedure SubTable(D1,D2 : TDbf);
   public
     { public declarations }
@@ -67,30 +60,25 @@ begin
  If cbFT.Text = '' Then
   Begin
    ShowMessage('You MUST select a first table...');
-
    cbFT.SetFocus;
-
    Exit;
   End;
 
  If cbST.Text = '' Then
   Begin
    ShowMessage('You MUST select a second table...');
-
    cbST.SetFocus;
-
    Exit;
   End;
 
  If cbFT.Text = cbST.Text Then
   Begin
    ShowMessage('The tables must be different.');
-
    Exit;
   End;
 
- IdxT1 := StrToInt(ListT1PageIdx.Strings[cbFT.ItemIndex]);
- IdxT2 := StrToInt(ListT1PageIdx.Strings[cbST.ItemIndex]);
+ IdxT1 := cbFT.ItemIndex;
+ IdxT2 := cbST.ItemIndex;
 
  fT1 := (Main.WorkSite.Pages[IdxT1] As TTabForm).ParentForm;
  fT2 := (Main.WorkSite.Pages[IdxT2] As TTabForm).ParentForm;
@@ -123,18 +111,6 @@ begin
   end;
 end;
 
-procedure TSubTables.FormCreate(Sender: TObject);
-begin
- ListT1PageIdx := TStringList.Create;
- ListT2PageIdx := TStringList.Create;
-end;
-
-procedure TSubTables.FormDestroy(Sender: TObject);
-begin
- ListT1PageIdx.Free;
- ListT2PageIdx.Free;
-end;
-
 procedure TSubTables.FormShow(Sender: TObject);
  Var Ind : Word;
      Tmp : TForm;
@@ -159,16 +135,11 @@ begin
      Begin
       Tmp := (Main.WorkSite.Pages[Ind] As TTabForm).ParentForm;
 
-      With (Tmp As TDbfTable) Do
-       Begin
+      with (Tmp As TDbfTable) do
+      begin
         cbFT.Items.Add(DbTable.FilePathFull + DBTable.TableName);
-
-        ListT1PageIdx.Add(IntToStr(PageIdx));
-
         cbST.Items.Add(DbTable.FilePathFull + DBTable.TableName);
-
-        ListT2PageIdx.Add(IntToStr(PageIdx));
-       end;
+      end;
 
      end;
 

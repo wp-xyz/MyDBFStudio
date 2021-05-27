@@ -38,7 +38,6 @@ type
     SetField: TToolButton;
     procedure cbShowDelChange(Sender: TObject);
     procedure EmptyClick(Sender: TObject);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure IndexesChange(Sender: TObject);
     procedure leFilterKeyDown(Sender: TObject; var Key: Word; {%H-}Shift: TShiftState);
@@ -57,9 +56,7 @@ type
 
   public
     { public declarations }
-    PageIdx : Integer;
-
-    Procedure Set_Up;
+    procedure Setup;
   end;
 
 var
@@ -111,17 +108,16 @@ end;
 
 procedure TDbfTable.RestructClick(Sender: TObject);
 begin
- Restructure := TRestructure.Create(Self);
- Restructure.Temp := DbTable;
-
- Restructure.ShowModal;
-
- Restructure.Free;
-
- DbTable.Close;
- DbTable.Open;
-
- Set_Up;
+  Restructure := TRestructure.Create(Self);
+  try
+    Restructure.Temp := DbTable;
+    Restructure.ShowModal;
+  finally
+    Restructure.Free;
+  end;
+  DbTable.Close;
+  DbTable.Open;
+  Setup;
 end;
 
 procedure TDbfTable.SetFieldClick(Sender: TObject);
@@ -158,17 +154,10 @@ begin
    End;
 end;
 
-procedure TDbfTable.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  CloseAction := caFree;
-end;
-
 procedure TDbfTable.FormDestroy(Sender: TObject);
 begin
   if DBTable.Active then
     DBTable.Close;
-  if Parent is TTabSheet then
-    Parent.Free;
 end;
 
 procedure TDbfTable.Load_Table_Indexes;
@@ -202,7 +191,6 @@ end;
 procedure TDbfTable.CloseTabBtnClick(Sender: TObject);
 begin
   Close;
-//  Main.WorkSiteCloseTabClicked(Main.WorkSite.Pages[Self.PageIdx]);
 end;
 
 procedure TDbfTable.ViewDelClick(Sender: TObject);
@@ -222,7 +210,7 @@ begin
     end;
 end;
 
-procedure TDbfTable.Set_Up;
+procedure TDbfTable.Setup;
 var
   field: TField;
 begin

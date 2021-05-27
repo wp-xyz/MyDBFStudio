@@ -117,9 +117,11 @@ type
     Procedure CreateAliasDB;
 
     Procedure ClickOnHistoryFile(Sender : TObject; {%H-}Item : TMenuItem; Const FileName : String);
+    procedure DBFTableCloseHandler(Sender: TObject; var CloseAction: TCloseAction);
     procedure HistoryPopupClick(Sender: TObject);
-    Function TableIsAlredyOpened(TblName : String) : Integer;
-    Function OBAIsAlredyOpened : Integer;
+    Function TableIsAlreadyOpen(TblName : String): Integer;
+    Function OBAIsAlreadyOpen: Integer;
+    procedure ReadCmdLine;
   public
     { public declarations }
     FileHistory : THistoryFiles;
@@ -310,6 +312,8 @@ begin
     FirstShow := False;
    end;
   end;
+
+  ReadCmdLine;
 end;
 
 procedure TMain.HistoryPopupClick(Sender: TObject);
@@ -567,21 +571,18 @@ begin
 end;
 
 procedure TMain.miOpenAliasClick(Sender: TObject);
- Var ObA : TOpenBA;
-     FindOBA : Integer;
+var
+  ObA: TOpenBA;
+  tabIndex: Integer;
 begin
- FindOBA := OBAIsAlredyOpened;
-
- If FindOBA < 0 Then
-  Begin
-   ObA := TOpenBA.Create(WorkSite);
-
-   WorkSpace.AddFormToPageControl(ObA);
-
-   ObA.PageIdx := WorkSite.ActivePage.PageIndex;
+  tabIndex := OBAIsAlreadyOpen;
+  if tabIndex < 0 then
+  begin
+    ObA := TOpenBA.Create(WorkSite);
+    WorkSpace.AddFormToPageControl(ObA);
   end
- Else
-  WorkSite.TabIndex := FindOBA;
+  else
+    WorkSite.TabIndex := tabIndex;
 end;
 
 procedure TMain.miOpenClick(Sender: TObject);
@@ -751,8 +752,8 @@ end;
 procedure TMain.CreateAliasDB;
  Var T : TDbf;
 begin
+ T := TDbf.Create(Self);
  Try
-   T := TDbf.Create(Self);
    try
      T.TableName := 'alias.dbf';
      T.FilePath := ExtractFilePath(Application.ExeName);
@@ -772,84 +773,97 @@ begin
  end;
 end;
 
-function TMain.TableIsAlredyOpened(TblName: String): Integer;
- Var Ind : Integer;
-     Tmp : TForm;
-     fName : String;
+procedure TMain.DBFTableCloseHandler(Sender: TObject; var CloseAction: TCloseAction);
+var
+  dbfForm: TDBFTable;
 begin
- Result := -1;
-
- If WorkSite.PageCount > 0 Then
-  For Ind := 0 To WorkSite.PageCount - 1 Do
-   If (WorkSite.Pages[Ind] Is TTabForm) Then
-    If (WorkSite.Pages[Ind] As TTabForm).ParentForm Is TDbfTable Then
-     Begin
-      Tmp := (WorkSite.Pages[Ind] As TTabForm).ParentForm;
-
-      With (Tmp As TDbfTable) Do
-       Begin
-        fName := DbTable.FilePathFull + DBTable.TableName;
-
-        If fName = TblName Then
-         Begin
-          Result := PageIdx;
-
-          Break;
-         end;
-       end;
-     end;
+  CloseAction := caFree;
+  dbfForm := Sender as TDBFTable;
+  dbfForm.Parent.Free;  // Remove the tabsheet
 end;
 
-function TMain.OBAIsAlredyOpened : Integer;
- Var Ind : Integer;
+function TMain.TableIsAlreadyOpen(TblName: String): Integer;
+var
+  ind: Integer;
+  frm: TForm;
+  fName: String;
 begin
- Result := -1;
+  Result := -1;
 
- If WorkSite.PageCount > 0 Then
-  For Ind := 0 To WorkSite.PageCount - 1 Do
-   If (WorkSite.Pages[Ind] Is TTabForm) Then
-    If (WorkSite.Pages[Ind] As TTabForm).ParentForm Is TOpenBA Then
-     Begin
-      Result := Ind;
+  if WorkSite.PageCount > 0 then
+    for ind := 0 To WorkSite.PageCount - 1 do
+      if (WorkSite.Pages[ind] Is TTabForm) then
+        if (WorkSite.Pages[ind] As TTabForm).ParentForm Is TDbfTable then
+        begin
+          frm := (WorkSite.Pages[ind] As TTabForm).ParentForm;
+          with TDbfTable(frm) do
+          begin
+            fName := DbTable.FilePathFull + DBTable.TableName;
+            if fName = TblName then
+            begin
+              Result := ind;
+              Exit;
+            end;
+          end;
+        end;
+end;
 
-      Break;
-     end;
+function TMain.OBAIsAlreadyOpen: Integer;
+var
+  ind: Integer;
+begin
+  Result := -1;
+  if WorkSite.PageCount > 0 then
+    for ind := 0 To WorkSite.PageCount - 1 do
+      if (WorkSite.Pages[ind] Is TTabForm) then
+        if (WorkSite.Pages[ind] As TTabForm).ParentForm Is TOpenBA then
+        begin
+          Result := ind;
+          exit;
+        end;
 end;
 
 procedure TMain.Open_Table(TblName: String);
- Var OT : TDbfTable;
-     FindTbl : Integer;
+var
+  OT: TDbfTable;
+  tabIndex: Integer;
 begin
- If Not FileExists(TblName) Then
-  Exit;
+  TblName := ExpandFileName(TblName);
+  if not FileExists(TblName) then
+    Exit;
 
- FindTbl := TableIsAlredyOpened(TblName);
+  tabIndex := TableIsAlreadyOpen(TblName);
 
- If FindTbl < 0 Then
-  Begin
-   OT := TDbfTable.Create(WorkSite);
+  if tabIndex < 0 then
+  begin
+    OT := TDbfTable.Create(WorkSite);
+    OT.OnClose := @DBFTableCloseHandler;
 
-   WorkSpace.AddFormToPageControl(OT);
+    WorkSpace.AddFormToPageControl(OT);
 
-   OT.DBTable.TableName := TblName;
-   OT.DBGrid.AlternateColor := Options.AlternateColor;
-   OT.DBTable.Open;
+    OT.DBTable.TableName := TblName;
+    OT.DBGrid.AlternateColor := Options.AlternateColor;
+    OT.DBTable.Open;
 
-   If Options.GotoLastRecord Then
-    OT.DBTable.Last;
+    If Options.GotoLastRecord Then
+      OT.DBTable.Last;
 
-   OT.Set_Up;
-
-   WorkSite.ActivePage.Caption := ExtractFileName(TblName);
-
-   OT.PageIdx := WorkSite.ActivePage.PageIndex;
-
-   StatusBar.SimpleText := OT.DBTable.FilePathFull + OT.DBTable.TableName;
-
-   FileHistory.UpdateList(TblName);
+    OT.Setup;
+    WorkSite.ActivePage.Caption := ExtractFileName(TblName);
+    StatusBar.SimpleText := OT.DBTable.FilePathFull + OT.DBTable.TableName;
+    FileHistory.UpdateList(TblName);
   end
- Else
-  WorkSite.TabIndex := FindTbl;
+  else
+    WorkSite.TabIndex := tabIndex;
+end;
+
+// For easier debugging...
+procedure TMain.ReadCmdLine;
+var
+  i: Integer;
+begin
+  for i := 1 to ParamCount do
+    Open_Table(ParamStr(i));
 end;
 
 end.

@@ -9,8 +9,6 @@ object AddTables: TAddTables
   Caption = 'Add Two Tables'
   ClientHeight = 327
   ClientWidth = 399
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poDesktopCenter
   LCLVersion = '2.1.0.0'

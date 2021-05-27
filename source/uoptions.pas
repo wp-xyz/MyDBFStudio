@@ -108,20 +108,9 @@ begin
 end;
 
 procedure TOptionsForm.ClearRecentBtnClick(Sender: TObject);
-var
-  ini: TCustomIniFile;
 begin
   if MessageDlg('Do you really want to clear the list of recently used files', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-  begin
-    ini := TIniFile.Create(IniFileName);
-    try
-      ini.EraseSection('RecentFiles');
-    finally
-      ini.Free;
-    end;
-    Main.FileHistory.UpdateParentMenu;
-    ShowMessage('History cleared.');
-  end;
+    Main.FileHistory.Clear;
 end;
 
 procedure TOptionsForm.FormShow(Sender: TObject);
