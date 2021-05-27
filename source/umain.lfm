@@ -122,6 +122,7 @@ object Main: TMain
     end
     object ToolButton2: TToolButton
       Left = 300
+      Hint = 'User settings'
       Top = 0
       Caption = 'ToolButton2'
       ImageIndex = 41
@@ -306,7 +307,10 @@ object Main: TMain
     end
     object miOptions: TMenuItem
       Caption = '&Options'
-      OnClick = miOptionsClick
+      object miSettings: TMenuItem
+        Caption = 'Settings...'
+        OnClick = miSettingsClick
+      end
     end
     object MenuItem4: TMenuItem
       Caption = '&Help'

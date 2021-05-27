@@ -25,6 +25,7 @@ type
     MenuItem12: TMenuItem;
     MenuItem13: TMenuItem;
     MenuItem14: TMenuItem;
+    miSettings: TMenuItem;
     MenuItem3: TMenuItem;
     miHelp: TMenuItem;
     miInfo: TMenuItem;
@@ -96,7 +97,7 @@ type
     procedure miNewClick(Sender: TObject);
     procedure miOpenAliasClick(Sender: TObject);
     procedure miOpenClick(Sender: TObject);
-    procedure miOptionsClick(Sender: TObject);
+    procedure miSettingsClick(Sender: TObject);
     procedure miSaveAsClick(Sender: TObject);
     procedure miSortTableClick(Sender: TObject);
     procedure miSubTablesClick(Sender: TObject);
@@ -593,7 +594,7 @@ begin
   End;
 end;
 
-procedure TMain.miOptionsClick(Sender: TObject);
+procedure TMain.miSettingsClick(Sender: TObject);
 begin
   OptionsForm := TOptionsForm.Create(nil);
   try
@@ -707,7 +708,7 @@ end;
 
 procedure TMain.ToolButton2Click(Sender: TObject);
 begin
-  miOptionsClick(nil);
+  miSettingsClick(nil);
 end;
 
 procedure TMain.WorkSiteChange(Sender: TObject);

@@ -5,7 +5,7 @@ object OptionsForm: TOptionsForm
   Width = 310
   AutoSize = True
   BorderStyle = bsDialog
-  Caption = 'Options'
+  Caption = 'Settings'
   ClientHeight = 343
   ClientWidth = 310
   OnShow = FormShow
