@@ -63,9 +63,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="7"/>
-        <TopLine Value="745"/>
-        <CursorPos Y="763"/>
+        <TopLine Value="563"/>
+        <CursorPos X="14" Y="581"/>
         <UsageCount Value="175"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -78,8 +79,7 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uDbfTable"/>
         <EditorIndex Value="5"/>
-        <TopLine Value="89"/>
-        <CursorPos Y="120"/>
+        <CursorPos X="3" Y="15"/>
         <UsageCount Value="175"/>
         <Bookmarks Count="1">
           <Item0 X="9" Y="193" ID="1"/>
@@ -178,7 +178,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uRestructure"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="10"/>
         <TopLine Value="528"/>
         <CursorPos X="48" Y="541"/>
         <UsageCount Value="165"/>
@@ -303,7 +303,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uSetFV"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="11"/>
         <TopLine Value="159"/>
         <CursorPos X="49" Y="170"/>
         <UsageCount Value="129"/>
@@ -454,10 +454,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uSubTables"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="13"/>
+        <EditorIndex Value="14"/>
         <TopLine Value="62"/>
-        <CursorPos X="36" Y="78"/>
+        <CursorPos X="43" Y="71"/>
         <UsageCount Value="117"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -499,7 +498,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uSplash"/>
-        <EditorIndex Value="12"/>
+        <EditorIndex Value="13"/>
         <TopLine Value="27"/>
         <CursorPos X="7" Y="55"/>
         <UsageCount Value="109"/>
@@ -609,10 +608,12 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uOpenBA"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="26"/>
-        <CursorPos X="46" Y="55"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="45"/>
+        <CursorPos X="57" Y="67"/>
         <UsageCount Value="95"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit70>
       <Unit71>
         <Filename Value="uaddalias.pas"/>
@@ -623,7 +624,7 @@
         <UnitName Value="uAddAlias"/>
         <EditorIndex Value="2"/>
         <TopLine Value="59"/>
-        <CursorPos X="2" Y="61"/>
+        <CursorPos X="74" Y="70"/>
         <UsageCount Value="94"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -641,7 +642,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uSortTable"/>
-        <EditorIndex Value="11"/>
+        <EditorIndex Value="12"/>
         <CursorPos X="51" Y="29"/>
         <UsageCount Value="91"/>
         <Loaded Value="True"/>
@@ -872,7 +873,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uTabsList"/>
-        <EditorIndex Value="14"/>
+        <EditorIndex Value="15"/>
         <TopLine Value="21"/>
         <CursorPos X="52" Y="52"/>
         <UsageCount Value="52"/>
@@ -892,7 +893,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uOptions"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="9"/>
         <TopLine Value="110"/>
         <CursorPos Y="114"/>
         <UsageCount Value="51"/>
@@ -1086,7 +1087,7 @@
       <Unit127>
         <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/components/lazutils/lazfileutils.pas"/>
         <UnitName Value="LazFileUtils"/>
-        <EditorIndex Value="15"/>
+        <EditorIndex Value="16"/>
         <TopLine Value="872"/>
         <CursorPos X="29" Y="872"/>
         <UsageCount Value="11"/>
@@ -1101,86 +1102,125 @@
         <UsageCount Value="10"/>
       </Unit128>
     </Units>
-    <JumpHistory Count="20" HistoryIndex="19">
+    <JumpHistory Count="30" HistoryIndex="27">
       <Position1>
         <Filename Value="umain.pas"/>
+        <Caret Line="123" Column="14" TopLine="103"/>
       </Position1>
       <Position2>
         <Filename Value="umain.pas"/>
-        <Caret Line="576" Column="23" TopLine="552"/>
+        <Caret Line="853" Column="5" TopLine="824"/>
       </Position2>
       <Position3>
         <Filename Value="umain.pas"/>
-        <Caret Line="123" Column="39" TopLine="104"/>
+        <Caret Line="585" Column="34" TopLine="564"/>
       </Position3>
       <Position4>
         <Filename Value="umain.pas"/>
-        <Caret Line="856" Column="34" TopLine="818"/>
+        <Caret Line="98" Column="15" TopLine="79"/>
       </Position4>
       <Position5>
         <Filename Value="umain.pas"/>
-        <Caret Line="122" Column="59" TopLine="103"/>
+        <Caret Line="588" Column="21" TopLine="572"/>
       </Position5>
       <Position6>
         <Filename Value="umain.pas"/>
-        <Caret Line="798" Column="30" TopLine="783"/>
+        <Caret Line="119" Column="15" TopLine="99"/>
       </Position6>
       <Position7>
-        <Filename Value="umain.pas"/>
-        <Caret Line="123" Column="14" TopLine="103"/>
+        <Filename Value="usubtables.pas"/>
+        <Caret Line="171" Column="3" TopLine="148"/>
       </Position7>
       <Position8>
-        <Filename Value="umain.pas"/>
-        <Caret Line="853" Column="5" TopLine="824"/>
+        <Filename Value="uaddalias.pas"/>
+        <Caret Line="70" Column="15" TopLine="54"/>
       </Position8>
       <Position9>
-        <Filename Value="umain.pas"/>
-        <Caret Line="585" Column="34" TopLine="564"/>
+        <Filename Value="uaddalias.pas"/>
+        <Caret Line="32" Column="14" TopLine="12"/>
       </Position9>
       <Position10>
-        <Filename Value="umain.pas"/>
-        <Caret Line="98" Column="15" TopLine="79"/>
+        <Filename Value="uaddtables.pas"/>
+        <Caret Line="172" TopLine="143"/>
       </Position10>
       <Position11>
-        <Filename Value="umain.pas"/>
-        <Caret Line="588" Column="21" TopLine="572"/>
+        <Filename Value="uaddtables.pas"/>
+        <Caret Line="28" Column="15" TopLine="11"/>
       </Position11>
       <Position12>
-        <Filename Value="umain.pas"/>
-        <Caret Line="119" Column="15" TopLine="99"/>
+        <Filename Value="uaddtables.pas"/>
+        <Caret Line="131" TopLine="101"/>
       </Position12>
       <Position13>
         <Filename Value="usubtables.pas"/>
-        <Caret Line="171" Column="3" TopLine="148"/>
+        <Caret Line="91" Column="13" TopLine="73"/>
       </Position13>
       <Position14>
-        <Filename Value="uaddalias.pas"/>
-        <Caret Line="70" Column="15" TopLine="54"/>
-      </Position14>
-      <Position15>
-        <Filename Value="uaddalias.pas"/>
-        <Caret Line="32" Column="14" TopLine="12"/>
-      </Position15>
-      <Position16>
-        <Filename Value="uaddtables.pas"/>
-        <Caret Line="172" TopLine="143"/>
-      </Position16>
-      <Position17>
-        <Filename Value="uaddtables.pas"/>
-        <Caret Line="28" Column="15" TopLine="11"/>
-      </Position17>
-      <Position18>
-        <Filename Value="uaddtables.pas"/>
-        <Caret Line="131" TopLine="101"/>
-      </Position18>
-      <Position19>
-        <Filename Value="usubtables.pas"/>
-        <Caret Line="91" Column="13" TopLine="73"/>
-      </Position19>
-      <Position20>
         <Filename Value="usubtables.pas"/>
         <Caret Line="29" Column="5"/>
+      </Position14>
+      <Position15>
+        <Filename Value="uopenba.pas"/>
+        <Caret Line="55" Column="46" TopLine="26"/>
+      </Position15>
+      <Position16>
+        <Filename Value="umain.pas"/>
+        <Caret Line="764" Column="19" TopLine="745"/>
+      </Position16>
+      <Position17>
+        <Filename Value="umain.pas"/>
+        <Caret Line="98" Column="15" TopLine="98"/>
+      </Position17>
+      <Position18>
+        <Filename Value="umain.pas"/>
+      </Position18>
+      <Position19>
+        <Filename Value="umain.pas"/>
+        <Caret Line="123" Column="22" TopLine="91"/>
+      </Position19>
+      <Position20>
+        <Filename Value="umain.pas"/>
+        <Caret Line="578" Column="23" TopLine="555"/>
       </Position20>
+      <Position21>
+        <Filename Value="umain.pas"/>
+        <Caret Line="828" Column="16" TopLine="828"/>
+      </Position21>
+      <Position22>
+        <Filename Value="umain.pas"/>
+      </Position22>
+      <Position23>
+        <Filename Value="umain.pas"/>
+        <Caret Line="141" Column="32" TopLine="109"/>
+      </Position23>
+      <Position24>
+        <Filename Value="umain.pas"/>
+        <Caret Line="582" Column="21" TopLine="552"/>
+      </Position24>
+      <Position25>
+        <Filename Value="umain.pas"/>
+        <Caret Line="120" Column="24" TopLine="91"/>
+      </Position25>
+      <Position26>
+        <Filename Value="umain.pas"/>
+        <Caret Line="777" Column="25" TopLine="772"/>
+      </Position26>
+      <Position27>
+        <Filename Value="umain.pas"/>
+        <Caret Line="120" Column="23" TopLine="120"/>
+      </Position27>
+      <Position28>
+        <Filename Value="umain.pas"/>
+        <Caret Line="582" Column="29" TopLine="563"/>
+      </Position28>
+      <Position29>
+        <Filename Value="umain.pas"/>
+        <Caret Line="841" Column="54" TopLine="776"/>
+      </Position29>
+      <Position30>
+        <Filename Value="udbftable.pas"/>
+        <Caret Line="15" Column="3"/>
+      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -1202,7 +1242,6 @@
     <Linking>
       <Debugging>
         <DebugInfoType Value="dsDwarf2Set"/>
-        <UseHeaptrc Value="True"/>
         <StripSymbols Value="True"/>
       </Debugging>
       <LinkSmart Value="True"/>

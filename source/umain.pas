@@ -117,7 +117,7 @@ type
     Procedure CreateAliasDB;
 
     Procedure ClickOnHistoryFile(Sender : TObject; {%H-}Item : TMenuItem; Const FileName : String);
-    procedure DBFTableCloseHandler(Sender: TObject; var CloseAction: TCloseAction);
+    procedure TabChildCloseHandler(Sender: TObject; var CloseAction: TCloseAction);
     procedure HistoryPopupClick(Sender: TObject);
     Function TableIsAlreadyOpen(TblName : String): Integer;
     Function OBAIsAlreadyOpen: Integer;
@@ -579,6 +579,7 @@ begin
   if tabIndex < 0 then
   begin
     ObA := TOpenBA.Create(WorkSite);
+    ObA.OnClose := @TabChildCloseHandler;
     WorkSpace.AddFormToPageControl(ObA);
   end
   else
@@ -773,13 +774,13 @@ begin
  end;
 end;
 
-procedure TMain.DBFTableCloseHandler(Sender: TObject; var CloseAction: TCloseAction);
-var
-  dbfForm: TDBFTable;
+procedure TMain.TabChildCloseHandler(Sender: TObject; var CloseAction: TCloseAction);
 begin
   CloseAction := caFree;
-  dbfForm := Sender as TDBFTable;
-  dbfForm.Parent.Free;  // Remove the tabsheet
+
+  // Remove the tabsheet
+  if (Sender is TDBFTable) or (Sender is TOpenBA) then
+    TControl(Sender).Parent.Free;
 end;
 
 function TMain.TableIsAlreadyOpen(TblName: String): Integer;
@@ -837,7 +838,7 @@ begin
   if tabIndex < 0 then
   begin
     OT := TDbfTable.Create(WorkSite);
-    OT.OnClose := @DBFTableCloseHandler;
+    OT.OnClose := @TabChildCloseHandler;
 
     WorkSpace.AddFormToPageControl(OT);
 

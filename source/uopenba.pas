@@ -80,7 +80,7 @@ end;
 
 procedure TOpenBA.CloseBtnClick(Sender: TObject);
 begin
-  Main.WorkSiteCloseTabClicked(Main.WorkSite.Pages[Self.PageIdx]);
+  Close;
 end;
 
 procedure TOpenBA.OpenTableBtnClick(Sender: TObject);
