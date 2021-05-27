@@ -1,12 +1,13 @@
 object DbfTable: TDbfTable
-  Left = 356
+  Left = 517
   Height = 495
-  Top = 123
+  Top = 296
   Width = 708
   Caption = 'DbfTable'
   ClientHeight = 495
   ClientWidth = 708
   KeyPreview = True
+  OnClose = FormClose
   OnDestroy = FormDestroy
   LCLVersion = '2.1.0.0'
   object Panel1: TPanel
@@ -182,13 +183,13 @@ object DbfTable: TDbfTable
         ParentShowHint = False
         ShowHint = True
       end
-      object ToolButton1: TToolButton
+      object CloseTabBtn: TToolButton
         Left = 394
         Hint = 'Close this tab'
         Top = 0
         Caption = 'X'
         ImageIndex = 15
-        OnClick = ToolButton1Click
+        OnClick = CloseTabBtnClick
         ParentShowHint = False
         ShowHint = True
       end

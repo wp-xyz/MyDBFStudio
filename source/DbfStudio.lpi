@@ -57,11 +57,11 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="125">
+    <Units Count="126">
       <Unit0>
         <Filename Value="DbfStudio.lpr"/>
         <IsPartOfProject Value="True"/>
-        <CursorPos X="38" Y="17"/>
+        <CursorPos Y="23"/>
         <UsageCount Value="171"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -74,8 +74,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
         <EditorIndex Value="7"/>
-        <TopLine Value="814"/>
-        <CursorPos Y="835"/>
+        <TopLine Value="55"/>
+        <CursorPos X="5" Y="75"/>
         <UsageCount Value="171"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -87,10 +87,14 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uDbfTable"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="5"/>
-        <TopLine Value="178"/>
-        <CursorPos X="44" Y="192"/>
+        <TopLine Value="161"/>
+        <CursorPos X="50" Y="181"/>
         <UsageCount Value="171"/>
+        <Bookmarks Count="1">
+          <Item0 X="9" Y="204" ID="1"/>
+        </Bookmarks>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit2>
@@ -574,10 +578,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uInfo"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="6"/>
         <TopLine Value="28"/>
-        <CursorPos X="67" Y="39"/>
+        <CursorPos X="29" Y="44"/>
         <UsageCount Value="98"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -903,9 +906,6 @@
         <TopLine Value="110"/>
         <CursorPos X="59" Y="120"/>
         <UsageCount Value="47"/>
-        <Bookmarks Count="1">
-          <Item0 X="33" Y="209" ID="1"/>
-        </Bookmarks>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit102>
@@ -1079,128 +1079,130 @@
         <CursorPos X="3" Y="560"/>
         <UsageCount Value="11"/>
       </Unit124>
+      <Unit125>
+        <Filename Value="udbftable.lfm"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="35" Y="4"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit125>
     </Units>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="29" HistoryIndex="28">
       <Position1>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="244" TopLine="216"/>
+        <Caret Line="260" TopLine="240"/>
       </Position1>
       <Position2>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="246" TopLine="216"/>
+        <Caret Line="261" TopLine="240"/>
       </Position2>
       <Position3>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="247" TopLine="216"/>
+        <Caret Line="262" TopLine="240"/>
       </Position3>
       <Position4>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="246" TopLine="216"/>
+        <Caret Line="263" TopLine="240"/>
       </Position4>
       <Position5>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="247" TopLine="216"/>
+        <Caret Line="243" TopLine="235"/>
       </Position5>
       <Position6>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="246" TopLine="216"/>
+        <Caret Line="241" TopLine="233"/>
       </Position6>
       <Position7>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="247" TopLine="216"/>
+        <Caret Line="247" Column="16" TopLine="236"/>
       </Position7>
       <Position8>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="249" TopLine="217"/>
+        <Caret Line="49" Column="15" TopLine="36"/>
       </Position8>
       <Position9>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="246" TopLine="217"/>
+        <Caret Line="198" TopLine="190"/>
       </Position9>
       <Position10>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="247" TopLine="217"/>
+        <Caret Line="245" TopLine="225"/>
       </Position10>
       <Position11>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="249" TopLine="217"/>
+        <Caret Line="198" TopLine="178"/>
       </Position11>
       <Position12>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="246" TopLine="217"/>
+        <Caret Line="199" TopLine="178"/>
       </Position12>
       <Position13>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="251" TopLine="219"/>
+        <Caret Line="200" Column="53" TopLine="178"/>
       </Position13>
       <Position14>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="259" TopLine="240"/>
+        <Caret Line="198" TopLine="178"/>
       </Position14>
       <Position15>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="260" TopLine="240"/>
+        <Caret Line="199" TopLine="178"/>
       </Position15>
       <Position16>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="261" TopLine="240"/>
+        <Caret Line="200" TopLine="178"/>
       </Position16>
       <Position17>
-        <Filename Value="udbftable.pas"/>
-        <Caret Line="262" TopLine="240"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="825" Column="10" TopLine="814"/>
       </Position17>
       <Position18>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="263" TopLine="240"/>
+        <Caret Line="178" Column="25" TopLine="178"/>
       </Position18>
       <Position19>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="243" TopLine="235"/>
       </Position19>
       <Position20>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="241" TopLine="233"/>
+        <Caret Line="48" Column="27" TopLine="17"/>
       </Position20>
       <Position21>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="247" Column="16" TopLine="236"/>
+        <Caret Line="190" Column="33" TopLine="158"/>
       </Position21>
       <Position22>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="49" Column="15" TopLine="36"/>
+        <Caret Line="188" TopLine="187"/>
       </Position22>
       <Position23>
-        <Filename Value="udbftable.pas"/>
-        <Caret Line="198" TopLine="190"/>
+        <Filename Value="DbfStudio.lpr"/>
+        <Caret Line="23"/>
       </Position23>
       <Position24>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="245" TopLine="225"/>
+        <Caret Line="92" Column="23" TopLine="72"/>
       </Position24>
       <Position25>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="198" TopLine="178"/>
+        <Caret Line="49" Column="5" TopLine="24"/>
       </Position25>
       <Position26>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="199" TopLine="178"/>
+        <Caret Line="196" Column="24" TopLine="193"/>
       </Position26>
       <Position27>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="200" Column="53" TopLine="178"/>
+        <Caret Line="41" Column="15" TopLine="30"/>
       </Position27>
       <Position28>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="198" TopLine="178"/>
+        <Caret Line="198" Column="9" TopLine="171"/>
       </Position28>
       <Position29>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="199" TopLine="178"/>
+        <Caret Line="205" TopLine="177"/>
       </Position29>
-      <Position30>
-        <Filename Value="udbftable.pas"/>
-        <Caret Line="200" TopLine="178"/>
-      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

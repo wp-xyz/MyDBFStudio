@@ -30,7 +30,7 @@ type
     ToolBar1: TToolBar;
     Pack: TToolButton;
     Empty: TToolButton;
-    ToolButton1: TToolButton;
+    CloseTabBtn: TToolButton;
     ToolButton2: TToolButton;
     ToolButton3: TToolButton;
     ViewDel: TToolButton;
@@ -38,6 +38,7 @@ type
     SetField: TToolButton;
     procedure cbShowDelChange(Sender: TObject);
     procedure EmptyClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure IndexesChange(Sender: TObject);
     procedure leFilterKeyDown(Sender: TObject; var Key: Word; {%H-}Shift: TShiftState);
@@ -45,9 +46,8 @@ type
     procedure RestructClick(Sender: TObject);
     procedure SetFieldClick(Sender: TObject);
     Procedure ShowTableInfo(DataSet: TDataSet);
-    procedure SpeedButton1Click(Sender: TObject);
     procedure TabControlChange(Sender: TObject);
-    procedure ToolButton1Click(Sender: TObject);
+    procedure CloseTabBtnClick(Sender: TObject);
     procedure ViewDelClick(Sender: TObject);
   private
     { private declarations }
@@ -67,7 +67,7 @@ var
 
 implementation
 
-Uses
+uses
   LConvEncoding,
   uDataModule, uRestructure, uSetFV, uMain;
 
@@ -158,10 +158,17 @@ begin
    End;
 end;
 
+procedure TDbfTable.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  CloseAction := caFree;
+end;
+
 procedure TDbfTable.FormDestroy(Sender: TObject);
 begin
- If DBTable.Active Then
-  DBTable.Close;
+  if DBTable.Active then
+    DBTable.Close;
+  if Parent is TTabSheet then
+    Parent.Free;
 end;
 
 procedure TDbfTable.Load_Table_Indexes;
@@ -187,19 +194,15 @@ begin
     SbInfo.Panels[1].Text := Format('Record Number: %d', [Dataset.RecNo]);
 end;
 
-procedure TDbfTable.SpeedButton1Click(Sender: TObject);
-begin
- Main.WorkSiteCloseTabClicked(Main.WorkSite.Pages[Self.PageIdx]);
-end;
-
 procedure TDbfTable.TabControlChange(Sender: TObject);
 begin
   DBMemo.DataField := TabControl.Tabs[TabControl.TabIndex];
 end;
 
-procedure TDbfTable.ToolButton1Click(Sender: TObject);
+procedure TDbfTable.CloseTabBtnClick(Sender: TObject);
 begin
-  Main.WorkSiteCloseTabClicked(Main.WorkSite.Pages[Self.PageIdx]);
+  Close;
+//  Main.WorkSiteCloseTabClicked(Main.WorkSite.Pages[Self.PageIdx]);
 end;
 
 procedure TDbfTable.ViewDelClick(Sender: TObject);
