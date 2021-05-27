@@ -26,6 +26,7 @@ type
     Panel1: TPanel;
     sbInfo: TStatusBar;
     MemoSplitter: TSplitter;
+    TabControl: TTabControl;
     ToolBar1: TToolBar;
     Pack: TToolButton;
     Empty: TToolButton;
@@ -45,6 +46,7 @@ type
     procedure SetFieldClick(Sender: TObject);
     Procedure ShowTableInfo(DataSet: TDataSet);
     procedure SpeedButton1Click(Sender: TObject);
+    procedure TabControlChange(Sender: TObject);
     procedure ToolButton1Click(Sender: TObject);
     procedure ViewDelClick(Sender: TObject);
   private
@@ -176,19 +178,23 @@ end;
 
 procedure TDbfTable.ShowTableInfo(DataSet: TDataSet);
 begin
- Assert(Dataset is TDbf, 'Dataset must be a TDbf');
+  Assert(Dataset is TDbf, 'Dataset must be a TDbf');
 
- SbInfo.Panels[0].Text := 'Record Count: ' + IntToStr(TDbf(DataSet).ExactRecordCount);
-
- If Not DbTable.IsEmpty Then
-  SbInfo.Panels[1].Text := 'Record Number: ' + IntToStr(Dataset.RecNo)
- Else
-  SbInfo.Panels[1].Text := 'Record Number: 0';
+  SbInfo.Panels[0].Text := Format('Record Count: %d', [TDbf(DataSet).ExactRecordCount]);
+  if DbTable.IsEmpty then
+    SbInfo.Panels[1].Text := 'Record Number: (none)'
+  else
+    SbInfo.Panels[1].Text := Format('Record Number: %d', [Dataset.RecNo]);
 end;
 
 procedure TDbfTable.SpeedButton1Click(Sender: TObject);
 begin
  Main.WorkSiteCloseTabClicked(Main.WorkSite.Pages[Self.PageIdx]);
+end;
+
+procedure TDbfTable.TabControlChange(Sender: TObject);
+begin
+  DBMemo.DataField := TabControl.Tabs[TabControl.TabIndex];
 end;
 
 procedure TDbfTable.ToolButton1Click(Sender: TObject);
@@ -232,19 +238,32 @@ procedure TDbfTable.ShowMemo(ATable: TDbf);
 var
   field: TField;
 begin
-  for field in ATable.Fields do
-    if field.DataType in [ftMemo, ftWideMemo] then
+  TabControl.BeginUpdate;
+  try
+    TabControl.Tabs.Clear;
+//    TabControl.Pages.Clear;
+    for field in ATable.Fields do
+      if (field is TMemoField) or (field is TWideMemoField) then
+//        TabControl.Pages.Add(field.FieldName);
+        TabControl.Tabs.Add(field.FieldName);
+
+    if TabControl.Tabs.Count = 0 then
+//    if Tabcontrol.PageCount = 0 then
     begin
-      DBMemo.DataField := field.FieldName;
-      DBMemo.Show;
+      TabControl.Hide;
+      MemoSplitter.Hide;
+    end else
+    begin
+//      DBMemo.DataField := TabControl.Pages[0];
+      DBMemo.DataField := TabControl.Tabs[0];
+      TabControl.Show;
+      TabControl.PageIndex := 0;
       MemoSplitter.Show;
       MemoSplitter.Top := 0;
-      exit;
     end;
-
-  // No memo found
-  DBMemo.Hide;
-  MemoSplitter.Hide;
+  finally
+    TabControl.EndUpdate;
+  end;
 end;
 
 function TDbfTable.TranslateHandler(ATable: TDbf; Src, Dest: PChar; ToOem: Boolean): Integer;

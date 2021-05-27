@@ -224,7 +224,7 @@ object DbfTable: TDbfTable
   end
   object DBGrid: TDBGrid
     Left = 6
-    Height = 290
+    Height = 247
     Top = 78
     Width = 696
     Align = alClient
@@ -242,30 +242,41 @@ object DbfTable: TDbfTable
     TabOrder = 2
     TitleFont.Height = -12
   end
-  object DBMemo: TDBMemo
-    Left = 6
-    Height = 90
-    Top = 376
-    Width = 696
-    Align = alBottom
-    BorderSpacing.Left = 6
-    BorderSpacing.Top = 2
-    BorderSpacing.Right = 6
-    BorderSpacing.Bottom = 6
-    DataSource = Ds
-    ScrollBars = ssAutoBoth
-    TabOrder = 3
-    Visible = False
-  end
   object MemoSplitter: TSplitter
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 369
+    Top = 326
     Width = 708
     Align = alBottom
     ResizeAnchor = akBottom
     Visible = False
+  end
+  object TabControl: TTabControl
+    Left = 6
+    Height = 134
+    Top = 332
+    Width = 696
+    OnChange = TabControlChange
+    Align = alBottom
+    BorderSpacing.Left = 6
+    BorderSpacing.Top = 1
+    BorderSpacing.Right = 6
+    BorderSpacing.Bottom = 6
+    TabOrder = 4
+    Visible = False
+    object DBMemo: TDBMemo
+      Left = 8
+      Height = 117
+      Top = 9
+      Width = 680
+      Align = alClient
+      BorderSpacing.Around = 6
+      BorderStyle = bsNone
+      DataSource = Ds
+      ScrollBars = ssAutoBoth
+      TabOrder = 1
+    end
   end
   object Ds: TDataSource
     DataSet = DBTable
