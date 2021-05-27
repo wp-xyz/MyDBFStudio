@@ -22,7 +22,7 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <MinorVersionNr Value="5"/>
-      <RevisionNr Value="1"/>
+      <RevisionNr Value="2"/>
       <StringTable FileDescription="Administrative tool for Dbf and Paradox Tables." LegalCopyright="Calogiuri Enzo Antonio" ProductName="MyDbf Studio"/>
     </VersionInfo>
     <BuildModes Count="1">
@@ -87,10 +87,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uDbfTable"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="5"/>
         <TopLine Value="178"/>
-        <CursorPos X="51" Y="188"/>
+        <CursorPos X="44" Y="192"/>
         <UsageCount Value="171"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -575,9 +574,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uInfo"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="6"/>
         <TopLine Value="28"/>
-        <CursorPos X="21" Y="44"/>
+        <CursorPos X="67" Y="39"/>
         <UsageCount Value="98"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
