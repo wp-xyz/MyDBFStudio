@@ -13,7 +13,7 @@ object Splash: TSplash
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnShow = FormShow
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   LCLVersion = '2.1.0.0'
   Scaled = False
   object Img: TImage

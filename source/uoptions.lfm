@@ -8,8 +8,9 @@ object OptionsForm: TOptionsForm
   Caption = 'Settings'
   ClientHeight = 343
   ClientWidth = 310
+  OnCloseQuery = FormCloseQuery
   OnShow = FormShow
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   ShowHint = True
   LCLVersion = '2.1.0.0'
   object cbRememberWPos: TCheckBox

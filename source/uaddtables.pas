@@ -25,8 +25,9 @@ type
     T1: TDbf;
     T2: TDbf;
     procedure CloseBtnClick(Sender: TObject);
-    procedure StartBtnClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormShow(Sender: TObject);
+    procedure StartBtnClick(Sender: TObject);
   private
     { private declarations }
     Function Check_Table_Structure : Boolean;
@@ -51,6 +52,12 @@ uses
 procedure TAddTables.CloseBtnClick(Sender: TObject);
 begin
  Close;
+end;
+
+procedure TAddTables.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  if CanClose then
+    Options.AddTablesWindow.ExtractFromForm(Self);
 end;
 
 procedure TAddTables.StartBtnClick(Sender: TObject);
@@ -127,10 +134,10 @@ begin
  Constraints.MinHeight := Height;
  Constraints.MaxHeight := Height;
 
- if Options.RememberWindowSizePos and (Options.AddTablesWidth > 0) then
+ if Options.RememberWindowSizePos and (Options.AddTablesWindow.Width > 0) then
  begin
    AutoSize := false;
-   Width := Min(Options.AddTablesWidth, Screen.WorkAreaWidth);
+   Options.AddTablesWindow.ApplyToForm(self);
  end;
 
  If Main.WorkSite.PageCount > 0 Then

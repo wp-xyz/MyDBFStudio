@@ -34,14 +34,16 @@ type
     Panel1: TPanel;
     Temp: TDbf;
     procedure CloseBtnClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure RestructureBtnClick(Sender: TObject);
     procedure DefineBtnlick(Sender: TObject);
     procedure DeleteBtnClick(Sender: TObject);
     procedure EditBtnlick(Sender: TObject);
     procedure FieldListKeyDown(Sender: TObject; var Key: Word;
       {%H-}Shift: TShiftState);
-    procedure FormDestroy(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure IndexListDblClick(Sender: TObject);
   private
     { private declarations }
@@ -67,7 +69,7 @@ var
 implementation
 
 Uses
-  LCLType, Math, uIdxTable;
+  LCLType, Math, uIdxTable, uOptions;
 
 {$R *.lfm}
 
@@ -204,6 +206,17 @@ begin
   Close;
 end;
 
+procedure TRestructure.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  if CanClose then
+    Options.RestructureWindow.ExtractFromForm(Self);
+end;
+
+procedure TRestructure.FormCreate(Sender: TObject);
+begin
+  FieldList.AlternateColor := Options.AlternateColor
+end;
+
 procedure TRestructure.RestructureBtnClick(Sender: TObject);
  Var Ind : Word;
 begin
@@ -282,6 +295,12 @@ begin
  Constraints.MinHeight := Panel1.Top + Panel1.Height + CloseBtn.Height + CloseBtn.BorderSpacing.Top*2;
  Constraints.MinWidth := FieldList.Left + FieldList.Constraints.MinWidth +
    FieldList.BorderSpacing.Around + Panel1.Width + Panel1.Borderspacing.Right;
+
+ if Options.RememberWindowSizePos then
+ begin
+   AutoSize := false;
+   Options.RestructureWindow.ApplyToForm(self);
+ end;
 
  FieldList.RowCount := Temp.FieldDefs.Count + 1;
  IndexList.Clear;

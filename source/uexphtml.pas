@@ -53,7 +53,8 @@ type
     UpDown3: TUpDown;
     procedure CloseBtnClick(Sender: TObject);
     procedure ExportBtnClick(Sender: TObject);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
@@ -77,13 +78,12 @@ implementation
 {$R *.lfm}
 
 uses
-  Math;
+  Math, uOptions;
 
 { TExpHTML }
 
-procedure TExpHTML.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+procedure TExpHTML.FormDestroy(Sender: TObject);
 begin
- If Assigned(ExpObj) Then
   ExpObj.Free;
 end;
 
@@ -141,28 +141,44 @@ begin
   End;
 end;
 
-procedure TExpHTML.FormShow(Sender: TObject);
- Var Ind : Integer;
-   w: Integer;
+procedure TExpHTML.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
- w := MaxValue([lblPageBackColor.Width, lblPageFontColor.Width,
-                lblHeaderBackColor.Width, lblHeaderFontColor.Width,
-                lblPageFontStyle.Width, lblHeaderFontStyle.Width,
-                lblTableWidth.Width, lblTableBorderColor.Width,
-                ExportBtn.Width, CloseBtn.Width]);
- ExportBtn.Constraints.MinWidth := w;
- CloseBtn.Constraints.MinWidth := w;
+  if CanClose then
+    Options.ExportHTMLWindow.ExtractFromForm(Self);
+end;
 
- ClbField.Clear;
+procedure TExpHTML.FormShow(Sender: TObject);
+var
+  ind: Integer;
+  w: Integer;
+begin
+  w := MaxValue([lblPageBackColor.Width, lblPageFontColor.Width,
+                 lblHeaderBackColor.Width, lblHeaderFontColor.Width,
+                 lblPageFontStyle.Width, lblHeaderFontStyle.Width,
+                 lblTableWidth.Width, lblTableBorderColor.Width,
+                 ExportBtn.Width, CloseBtn.Width]);
+  ExportBtn.Constraints.MinWidth := w;
+  CloseBtn.Constraints.MinWidth := w;
 
- For Ind := 0 To Tmp.FieldDefs.Count - 1 Do
-  Begin
-   ClbField.Items.Add(Tmp.FieldDefs.Items[Ind].Name);
+  Constraints.MinWidth := (ExportBtn.Width + CloseBtn.Width + 4*CloseBtn.BorderSpacing.Right) * 2;
+  Constraints.MinHeight := pBar.Top + pBar.Height +
+    CloseBtn.BorderSpacing.Top + CloseBtn.Height + CloseBtn.BorderSpacing.Bottom;
 
-   ClbField.Checked[Ind] := True;
-  End;
+  if Options.RememberWindowSizePos and (Options.ExportHTMLWindow.Width > 0) then
+  begin
+    AutoSize := false;
+    Options.ExportHTMLWindow.ApplyToForm(Self);
+  end;
 
- PageTLT.Text := Tmp.TableName;
+  ClbField.Clear;
+
+  for ind := 0 to Tmp.FieldDefs.Count - 1 do
+  begin
+    ClbField.Items.Add(Tmp.FieldDefs.Items[ind].Name);
+    ClbField.Checked[ind] := True;
+  end;
+
+  PageTLT.Text := Tmp.TableName;
 end;
 
 procedure TExpHTML.IncrementPBar(Sender: TObject);

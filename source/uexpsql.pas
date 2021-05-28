@@ -25,6 +25,7 @@ type
     Tmp: TDbf;
     procedure CloseBtnClick(Sender: TObject);
     procedure ExportBtnClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
@@ -48,24 +49,43 @@ implementation
 {$R *.lfm}
 
 uses
-  Math;
+  Math, uOptions;
 
 { TExpSQL }
 
-procedure TExpSQL.FormShow(Sender: TObject);
- Var Ind : Integer;
+procedure TExpSQL.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
- ExportBtn.Constraints.MinWidth := Max(ExportBtn.Width, CloseBtn.Width);
- CloseBtn.Constraints.MinWidth := ExportBtn.Constraints.MinWidth;
+  if CanClose then
+    Options.ExportSQLScriptWindow.ExtractFromForm(Self);
+end;
 
- ClbField.Clear;
+procedure TExpSQL.FormShow(Sender: TObject);
+var
+  ind: Integer;
+  w: Integer;
+begin
+  w := Max(ExportBtn.Width, CloseBtn.Width);
+  w := Max(w, (crTab.Width - ExportBtn.BorderSpacing.Right) div 2);
+  ExportBtn.Constraints.MinWidth := w;
+  CloseBtn.Constraints.MinWidth := w;
 
- For Ind := 0 To Tmp.FieldDefs.Count - 1 Do
-  Begin
-   ClbField.Items.Add(Tmp.FieldDefs.Items[Ind].Name);
+  Constraints.MinWidth := (ExportBtn.Width + CloseBtn.Width + 4*CloseBtn.BorderSpacing.Right) * 2;
+  Constraints.MinHeight := pBar.Top + pBar.Height +
+    CloseBtn.BorderSpacing.Top + CloseBtn.Height + CloseBtn.BorderSpacing.Bottom;
 
-   ClbField.Checked[Ind] := True;
-  End;
+  if Options.RememberWindowSizePos and (Options.ExportSQLScriptWindow.Width > 0) then
+  begin
+    AutoSize := false;
+    Options.ExportSQLScriptWindow.ApplyToForm(Self);
+  end;
+
+  ClbField.Clear;
+
+  for ind := 0 to Tmp.FieldDefs.Count - 1 do
+  begin
+    ClbField.Items.Add(Tmp.FieldDefs.Items[ind].Name);
+    ClbField.Checked[ind] := True;
+  end;
 end;
 
 procedure TExpSQL.GenCreateTableScript;

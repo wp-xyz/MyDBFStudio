@@ -337,7 +337,6 @@ begin
  AddTables := TAddTables.Create(Self);
  try
    AddTables.ShowModal;
-   Options.AddTablesWidth := AddTables.Width;
  finally
    FreeAndNil(AddTables);
  end;
@@ -656,6 +655,7 @@ begin
         Ds.DataSet := Nil;
 
         SortTable.ShowModal;
+        Options.SortTableWindow.ExtractFromForm(SortTable);
       finally
         FreeAndNil(SortTable);
       end;
@@ -671,7 +671,6 @@ begin
   SubTables := TSubTables.Create(nil);
   try
     SubTables.ShowModal;
-    Options.SubtractTablesWidth := SubTables.Width;
   finally
     FreeAndNil(SubTables);
   end;

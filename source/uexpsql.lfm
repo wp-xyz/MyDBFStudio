@@ -4,24 +4,26 @@ object ExpSQL: TExpSQL
   Top = 241
   Width = 464
   AutoSize = True
-  BorderStyle = bsDialog
+  BorderIcons = [biSystemMenu]
   Caption = 'Export Table To SQL Script'
   ClientHeight = 349
   ClientWidth = 464
+  OnCloseQuery = FormCloseQuery
   OnShow = FormShow
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   LCLVersion = '2.1.0.0'
   object ClbField: TCheckListBox
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Label1
     AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = ExportBtn
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
     Left = 6
     Height = 320
     Top = 23
-    Width = 251
-    Anchors = [akTop, akLeft, akBottom]
+    Width = 285
+    Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Left = 6
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
@@ -51,10 +53,11 @@ object ExpSQL: TExpSQL
     AnchorSideLeft.Control = ClbField
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = ClbField
-    Left = 263
+    Left = 297
     Height = 19
     Top = 23
     Width = 180
+    BorderSpacing.Right = 6
     Caption = 'Generate CREATE TABLE Script'
     TabOrder = 1
   end
@@ -63,7 +66,7 @@ object ExpSQL: TExpSQL
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = CrTab
     AnchorSideTop.Side = asrBottom
-    Left = 263
+    Left = 297
     Height = 19
     Top = 48
     Width = 96
@@ -78,7 +81,7 @@ object ExpSQL: TExpSQL
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = ExpRec
     AnchorSideTop.Side = asrBottom
-    Left = 263
+    Left = 297
     Height = 15
     Top = 91
     Width = 45
@@ -93,10 +96,10 @@ object ExpSQL: TExpSQL
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 263
+    Left = 297
     Height = 20
     Top = 108
-    Width = 195
+    Width = 161
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
@@ -104,16 +107,16 @@ object ExpSQL: TExpSQL
     TabOrder = 3
   end
   object ExportBtn: TBitBtn
-    AnchorSideLeft.Control = ClbField
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = CloseBtn
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 263
+    Left = 297
     Height = 26
     Top = 317
     Width = 80
-    Anchors = [akLeft, akBottom]
+    Anchors = [akRight, akBottom]
     AutoSize = True
     BorderSpacing.Right = 6
     BorderSpacing.Bottom = 6
@@ -125,18 +128,19 @@ object ExpSQL: TExpSQL
     TabOrder = 4
   end
   object CloseBtn: TBitBtn
-    AnchorSideLeft.Control = ExportBtn
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = ExportBtn
+    AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 349
+    Left = 383
     Height = 26
     Top = 317
     Width = 75
-    Anchors = [akLeft, akBottom]
+    Anchors = [akRight, akBottom]
     AutoSize = True
+    BorderSpacing.Top = 24
     BorderSpacing.Right = 6
     BorderSpacing.Bottom = 6
     Caption = '&Close'

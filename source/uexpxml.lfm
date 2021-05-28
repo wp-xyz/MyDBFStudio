@@ -1,15 +1,16 @@
 object ExpXML: TExpXML
   Left = 375
-  Height = 332
+  Height = 322
   Top = 225
   Width = 439
   AutoSize = True
-  BorderStyle = bsDialog
+  BorderIcons = [biSystemMenu]
   Caption = 'Export Table To XML File'
-  ClientHeight = 332
+  ClientHeight = 322
   ClientWidth = 439
+  OnCloseQuery = FormCloseQuery
   OnShow = FormShow
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   LCLVersion = '2.1.0.0'
   object Label1: TLabel
     AnchorSideLeft.Control = Owner
@@ -27,13 +28,14 @@ object ExpXML: TExpXML
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Label1
     AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = ExportBtn
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
     Left = 6
-    Height = 303
+    Height = 293
     Top = 23
-    Width = 232
-    Anchors = [akTop, akLeft, akBottom]
+    Width = 260
+    Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Left = 6
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
@@ -51,7 +53,7 @@ object ExpXML: TExpXML
     AnchorSideLeft.Control = ClbField
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = Owner
-    Left = 244
+    Left = 272
     Height = 15
     Top = 6
     Width = 45
@@ -66,26 +68,30 @@ object ExpXML: TExpXML
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 244
+    Left = 272
     Height = 20
     Top = 23
-    Width = 189
+    Width = 161
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
     TabOrder = 1
   end
   object ExportBtn: TBitBtn
-    AnchorSideLeft.Control = ClbField
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = pBar
     AnchorSideTop.Side = asrBottom
-    Left = 244
+    AnchorSideRight.Control = CloseBtn
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 272
     Height = 26
-    Top = 283
+    Top = 290
     Width = 80
+    Anchors = [akRight, akBottom]
     AutoSize = True
-    BorderSpacing.Top = 240
+    BorderSpacing.Top = 32
+    BorderSpacing.Bottom = 6
     Caption = '&Export'
     Default = True
     Images = CommonData.Images
@@ -94,15 +100,19 @@ object ExpXML: TExpXML
     TabOrder = 2
   end
   object CloseBtn: TBitBtn
-    AnchorSideLeft.Control = ExportBtn
     AnchorSideLeft.Side = asrBottom
-    AnchorSideTop.Control = ExportBtn
-    Left = 330
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 358
     Height = 26
-    Top = 283
+    Top = 290
     Width = 75
+    Anchors = [akRight, akBottom]
     AutoSize = True
     BorderSpacing.Left = 6
+    BorderSpacing.Top = 100
     BorderSpacing.Right = 6
     BorderSpacing.Bottom = 6
     Caption = '&Close'

@@ -8,8 +8,9 @@ object SetFV: TSetFV
   Caption = 'Set Field Value'
   ClientHeight = 363
   ClientWidth = 651
+  OnCloseQuery = FormCloseQuery
   OnShow = FormShow
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   LCLVersion = '2.1.0.0'
   object Label1: TLabel
     AnchorSideLeft.Control = Owner

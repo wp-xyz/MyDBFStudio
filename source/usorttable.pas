@@ -28,7 +28,7 @@ type
     Tmp: TDbf;
     procedure BitBtn1Click(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormShow(Sender: TObject);
     procedure OrigFieldsDblClick(Sender: TObject);
     procedure SortFieldsDblClick(Sender: TObject);
@@ -50,11 +50,18 @@ implementation
 
 {$R *.lfm}
 
+uses
+  uOptions;
+
 { TSortTable }
 
-procedure TSortTable.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+procedure TSortTable.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
- Orig.Open;
+  if CanClose then
+  begin
+    Options.SubtractTablesWindow.ExtractFromForm(Self);
+    Orig.Open;
+  end;
 end;
 
 procedure TSortTable.BitBtn1Click(Sender: TObject);
@@ -88,12 +95,15 @@ begin
 end;
 
 procedure TSortTable.FormShow(Sender: TObject);
- Var Ind : Word;
+var
+  Ind : Word;
 begin
- OrigFields.Clear;
+  OrigFields.Clear;
 
- For Ind := 0 To Orig.FieldDefs.Count - 1 Do
-  OrigFields.Items.Add(Orig.FieldDefs.Items[Ind].Name);
+  for Ind := 0 To Orig.FieldDefs.Count - 1 do
+    OrigFields.Items.Add(Orig.FieldDefs.Items[Ind].Name);
+
+  Options.SortTableWindow.ApplyToForm(self);
 end;
 
 procedure TSortTable.OrigFieldsDblClick(Sender: TObject);

@@ -13,17 +13,18 @@ type
   { TTabsList }
 
   TTabsList = class(TForm)
-    BitBtn1: TBitBtn;
+    CloseBtn: TBitBtn;
     BitBtn2: TBitBtn;
     BitBtn3: TBitBtn;
     BitBtn4: TBitBtn;
     BitBtn5: TBitBtn;
     lvTabs: TListView;
-    procedure BitBtn1Click(Sender: TObject);
+    procedure CloseBtnClick(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure BitBtn3Click(Sender: TObject);
     procedure BitBtn4Click(Sender: TObject);
     procedure BitBtn5Click(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
@@ -38,20 +39,28 @@ var
 
 implementation
 
-Uses uMain, uTabForm, uDbfTable;
+uses
+  uMain, uTabForm, uDbfTable, uOptions;
 
 {$R *.lfm}
 
 { TTabsList }
 
-procedure TTabsList.FormShow(Sender: TObject);
+procedure TTabsList.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
- Load_Tabs;
+  if CanClose then
+    Options.TabsListWindow.ExtractFromForm(Self);
 end;
 
-procedure TTabsList.BitBtn1Click(Sender: TObject);
+procedure TTabsList.FormShow(Sender: TObject);
 begin
- Close;
+  Options.TabsListWindow.ApplyToForm(self);
+  Load_Tabs;
+end;
+
+procedure TTabsList.CloseBtnClick(Sender: TObject);
+begin
+  Close;
 end;
 
 procedure TTabsList.BitBtn2Click(Sender: TObject);

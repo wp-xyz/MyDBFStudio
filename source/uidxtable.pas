@@ -23,6 +23,7 @@ type
     SelField: TEdit;
     procedure CloseBtnClick(Sender: TObject);
     procedure CreateIndexBtnClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure IdxListClick(Sender: TObject);
@@ -40,11 +41,17 @@ var
 
 implementation
 
-Uses Math, uNewTable, uRestructure;
+Uses Math, uNewTable, uRestructure, uOptions;
 
 {$R *.lfm}
 
 { TIdxTable }
+
+procedure TIdxTable.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  if CanClose then
+    Options.IndexTableWindow.ExtractFromForm(Self);
+end;
 
 procedure TIdxTable.FormCreate(Sender: TObject);
 begin
@@ -53,8 +60,18 @@ end;
 
 procedure TIdxTable.FormShow(Sender: TObject);
 begin
-  CloseBtn.Constraints.MinWidth := Max(CloseBtn.Width, CreateIndexBtn.Width);
-  CreateindexBtn.Constraints.MinWidth := CloseBtn.Constraints.MinWidth;
+//  CloseBtn.Constraints.MinWidth := Max(CloseBtn.Width, CreateIndexBtn.Width);
+//  CreateIndexBtn.Constraints.MinWidth := CloseBtn.Constraints.MinWidth;
+
+  Constraints.MinWidth := (CreateIndexBtn.Width + CloseBtn.Width + 4*CloseBtn.BorderSpacing.Right) * 2;
+  Constraints.MinHeight := IdxName.Top + Idxname.Height +
+    CloseBtn.BorderSpacing.Top + CloseBtn.Height + CloseBtn.BorderSpacing.Bottom;
+
+  if Options.RememberWindowSizePos and (Options.IndexTableWindow.Width > 0) then
+  begin
+    AutoSize := false;
+    Options.IndexTableWindow.ApplyToForm(Self);
+  end;
 end;
 
 procedure TIdxTable.IdxListClick(Sender: TObject);

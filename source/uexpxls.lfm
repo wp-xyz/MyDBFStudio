@@ -1,15 +1,16 @@
 object ExpXLS: TExpXLS
-  Left = 424
+  Left = 536
   Height = 396
-  Top = 230
-  Width = 462
+  Top = 495
+  Width = 453
   AutoSize = True
-  BorderStyle = bsDialog
+  BorderIcons = [biSystemMenu]
   Caption = 'Export Table To XLS File'
   ClientHeight = 396
-  ClientWidth = 462
+  ClientWidth = 453
+  OnCloseQuery = FormCloseQuery
   OnShow = FormShow
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   LCLVersion = '2.1.0.0'
   object lblExportField: TLabel
     AnchorSideLeft.Control = Owner
@@ -27,13 +28,14 @@ object ExpXLS: TExpXLS
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = lblExportField
     AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = ExportBtn
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
     Left = 6
     Height = 367
     Top = 23
-    Width = 243
-    Anchors = [akTop, akLeft, akBottom]
+    Width = 274
+    Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Left = 6
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
@@ -54,10 +56,10 @@ object ExpXLS: TExpXLS
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 255
+    Left = 286
     Height = 23
     Top = 231
-    Width = 201
+    Width = 161
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
@@ -79,10 +81,10 @@ object ExpXLS: TExpXLS
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 255
+    Left = 286
     Height = 20
     Top = 283
-    Width = 201
+    Width = 161
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
@@ -93,7 +95,7 @@ object ExpXLS: TExpXLS
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = cbDateF
     AnchorSideTop.Side = asrBottom
-    Left = 255
+    Left = 286
     Height = 15
     Top = 266
     Width = 45
@@ -102,13 +104,14 @@ object ExpXLS: TExpXLS
     ParentColor = False
   end
   object ExportBtn: TBitBtn
-    AnchorSideLeft.Control = ClbField
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = CloseBtn
-    Left = 255
+    AnchorSideRight.Control = CloseBtn
+    Left = 286
     Height = 26
-    Top = 351
+    Top = 364
     Width = 80
+    Anchors = [akTop, akRight]
     AutoSize = True
     BorderSpacing.Left = 6
     BorderSpacing.Right = 6
@@ -121,17 +124,19 @@ object ExpXLS: TExpXLS
     TabOrder = 7
   end
   object CloseBtn: TBitBtn
-    AnchorSideLeft.Control = ExportBtn
     AnchorSideLeft.Side = asrBottom
-    AnchorSideTop.Control = pBar
     AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 341
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 372
     Height = 26
-    Top = 351
+    Top = 364
     Width = 75
+    Anchors = [akRight, akBottom]
     AutoSize = True
-    BorderSpacing.Top = 48
+    BorderSpacing.Top = 24
     BorderSpacing.Right = 6
     BorderSpacing.Bottom = 6
     Caption = '&Close'
@@ -144,7 +149,7 @@ object ExpXLS: TExpXLS
     AnchorSideLeft.Control = ClbField
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = Owner
-    Left = 255
+    Left = 286
     Height = 15
     Top = 6
     Width = 85
@@ -159,10 +164,10 @@ object ExpXLS: TExpXLS
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 255
+    Left = 286
     Height = 23
     Top = 23
-    Width = 201
+    Width = 161
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
@@ -174,7 +179,8 @@ object ExpXLS: TExpXLS
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = StrFN
     AnchorSideTop.Side = asrBottom
-    Left = 255
+    AnchorSideRight.Side = asrBottom
+    Left = 286
     Height = 15
     Top = 58
     Width = 171
@@ -190,10 +196,10 @@ object ExpXLS: TExpXLS
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 255
+    Left = 286
     Height = 23
     Top = 75
-    Width = 201
+    Width = 161
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
@@ -206,7 +212,7 @@ object ExpXLS: TExpXLS
     AnchorSideTop.Control = StrFND
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Side = asrBottom
-    Left = 255
+    Left = 286
     Height = 15
     Top = 110
     Width = 75
@@ -222,10 +228,10 @@ object ExpXLS: TExpXLS
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 255
+    Left = 286
     Height = 23
     Top = 127
-    Width = 201
+    Width = 161
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
@@ -237,7 +243,7 @@ object ExpXLS: TExpXLS
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = StrMFN
     AnchorSideTop.Side = asrBottom
-    Left = 255
+    Left = 286
     Height = 15
     Top = 162
     Width = 161
@@ -253,10 +259,10 @@ object ExpXLS: TExpXLS
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 255
+    Left = 286
     Height = 23
     Top = 179
-    Width = 201
+    Width = 161
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
@@ -268,7 +274,7 @@ object ExpXLS: TExpXLS
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = StrMFND
     AnchorSideTop.Side = asrBottom
-    Left = 255
+    Left = 286
     Height = 15
     Top = 214
     Width = 65

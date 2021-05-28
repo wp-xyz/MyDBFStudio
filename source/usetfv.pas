@@ -34,6 +34,7 @@ type
     procedure ConfirmBtnClick(Sender: TObject);
     procedure CheckBox1Change(Sender: TObject);
     procedure FieldListClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
@@ -48,12 +49,23 @@ implementation
 
 {$R *.lfm}
 
+uses
+  uOptions;
+
 { TSetFV }
+
+procedure TSetFV.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  if CanClose then
+    Options.SetFieldValueWindow.ExtractFromForm(Self);
+end;
 
 procedure TSetFV.FormShow(Sender: TObject);
  Var Ind : Word;
 begin
  CloseBtn.Constraints.MinWidth := ConfirmBtn.Width;
+
+ Options.SetFieldValueWindow.ApplyToForm(self);
 
  CbMode.ItemIndex := 0;
  gbMath.Enabled := False;

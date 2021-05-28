@@ -4,12 +4,13 @@ object ExpDBF: TExpDBF
   Top = 224
   Width = 441
   AutoSize = True
-  BorderStyle = bsDialog
+  BorderIcons = [biSystemMenu]
   Caption = 'Export Table To DBF Table'
   ClientHeight = 372
   ClientWidth = 441
+  OnCloseQuery = FormCloseQuery
   OnShow = FormShow
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   LCLVersion = '2.1.0.0'
   object Label1: TLabel
     AnchorSideLeft.Control = Owner
@@ -27,13 +28,14 @@ object ExpDBF: TExpDBF
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Label1
     AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = ExportBtn
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
     Left = 6
     Height = 343
     Top = 23
-    Width = 240
-    Anchors = [akTop, akLeft, akBottom]
+    Width = 262
+    Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Left = 6
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
@@ -48,15 +50,16 @@ object ExpDBF: TExpDBF
     }
   end
   object TableType: TComboBox
-    AnchorSideLeft.Control = ClbField
-    AnchorSideLeft.Side = asrBottom
+    AnchorSideLeft.Control = ExportBtn
     AnchorSideTop.Control = Label2
     AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 252
+    Left = 274
     Height = 23
     Top = 23
-    Width = 184
+    Width = 161
+    Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
     ItemHeight = 15
@@ -72,10 +75,9 @@ object ExpDBF: TExpDBF
     Text = 'dBase IV'
   end
   object Label2: TLabel
-    AnchorSideLeft.Control = ClbField
-    AnchorSideLeft.Side = asrBottom
+    AnchorSideLeft.Control = TableType
     AnchorSideTop.Control = Owner
-    Left = 252
+    Left = 274
     Height = 15
     Top = 6
     Width = 54
@@ -84,11 +86,10 @@ object ExpDBF: TExpDBF
     ParentColor = False
   end
   object Label3: TLabel
-    AnchorSideLeft.Control = ClbField
-    AnchorSideLeft.Side = asrBottom
+    AnchorSideLeft.Control = pBar
     AnchorSideTop.Control = TableType
     AnchorSideTop.Side = asrBottom
-    Left = 252
+    Left = 274
     Height = 15
     Top = 78
     Width = 45
@@ -97,28 +98,30 @@ object ExpDBF: TExpDBF
     ParentColor = False
   end
   object pBar: TProgressBar
-    AnchorSideLeft.Control = ClbField
-    AnchorSideLeft.Side = asrBottom
+    AnchorSideLeft.Control = ExportBtn
     AnchorSideTop.Control = Label3
     AnchorSideTop.Side = asrBottom
-    Left = 252
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 274
     Height = 20
     Top = 95
-    Width = 184
+    Width = 161
+    Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
     Step = 1
     TabOrder = 2
   end
   object ExportBtn: TBitBtn
-    AnchorSideLeft.Control = ClbField
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = CloseBtn
     AnchorSideRight.Control = CloseBtn
-    Left = 252
+    Left = 274
     Height = 26
-    Top = 275
+    Top = 340
     Width = 80
+    Anchors = [akTop, akRight]
     AutoSize = True
     BorderSpacing.Right = 6
     Caption = '&Export'
@@ -129,17 +132,19 @@ object ExpDBF: TExpDBF
     TabOrder = 3
   end
   object CloseBtn: TBitBtn
-    AnchorSideLeft.Control = ExportBtn
     AnchorSideLeft.Side = asrBottom
-    AnchorSideTop.Control = pBar
     AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 338
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 360
     Height = 26
-    Top = 275
+    Top = 340
     Width = 75
+    Anchors = [akRight, akBottom]
     AutoSize = True
-    BorderSpacing.Top = 160
+    BorderSpacing.Top = 32
     BorderSpacing.Right = 6
     BorderSpacing.Bottom = 6
     Caption = '&Close'

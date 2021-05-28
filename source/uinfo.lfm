@@ -10,7 +10,7 @@ object Info: TInfo
   ClientHeight = 630
   ClientWidth = 457
   OnCreate = FormCreate
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   LCLVersion = '2.1.0.0'
   object Img: TImage
     AnchorSideLeft.Control = Owner

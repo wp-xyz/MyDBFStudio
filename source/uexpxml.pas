@@ -23,6 +23,7 @@ type
     Tmp: TDbf;
     procedure CloseBtnClick(Sender: TObject);
     procedure ExportBtnClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
@@ -42,13 +43,13 @@ implementation
 {$R *.lfm}
 
 uses
-  Math;
+  Math, uOptions;
 
 { TExpXML }
 
 procedure TExpXML.CloseBtnClick(Sender: TObject);
 begin
- Close;
+  Close;
 end;
 
 procedure TExpXML.ExportBtnClick(Sender: TObject);
@@ -109,20 +110,36 @@ begin
    End;
 end;
 
-procedure TExpXML.FormShow(Sender: TObject);
- Var Ind : Integer;
+procedure TExpXML.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
- ExportBtn.Constraints.MinWidth := Max(ExportBtn.Width, CloseBtn.Width);
- CloseBtn.Constraints.MinWidth := ExportBtn.Constraints.MinWidth;
+  if CanClose then
+    Options.ExportXMLWindow.ExtractFromForm(Self);
+end;
 
- ClbField.Clear;
+procedure TExpXML.FormShow(Sender: TObject);
+var
+  ind: Integer;
+begin
+  ExportBtn.Constraints.MinWidth := Max(ExportBtn.Width, CloseBtn.Width);
+  CloseBtn.Constraints.MinWidth := ExportBtn.Constraints.MinWidth;
 
- For Ind := 0 To Tmp.FieldDefs.Count - 1 Do
-  Begin
-   ClbField.Items.Add(Tmp.FieldDefs.Items[Ind].Name);
+  Constraints.MinWidth := (ExportBtn.Width + CloseBtn.Width + 4*CloseBtn.BorderSpacing.Right) * 2;
+  Constraints.MinHeight := pBar.Top + pBar.Height +
+    CloseBtn.BorderSpacing.Top + CloseBtn.Height + CloseBtn.BorderSpacing.Bottom;
 
-   ClbField.Checked[Ind] := True;
-  End;
+  if Options.RememberWindowSizePos and (Options.ExportXMLWindow.Width > 0) then
+  begin
+    AutoSize := false;
+    Options.ExportXMLWindow.ApplyToForm(Self);
+  end;
+
+  ClbField.Clear;
+
+  for Ind := 0 to Tmp.FieldDefs.Count - 1 do
+  begin
+    ClbField.Items.Add(Tmp.FieldDefs.Items[ind].Name);
+    ClbField.Checked[ind] := True;
+  end;
 end;
 
 function TExpXML.CheckSpecialChar(Val: String): String;

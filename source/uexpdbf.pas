@@ -26,6 +26,7 @@ type
     Tmp: TDbf;
     procedure CloseBtnClick(Sender: TObject);
     procedure ExportBtnClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
@@ -46,7 +47,7 @@ implementation
 {$R *.lfm}
 
 uses
-  Math;
+  Math, uOptions;
 
 { TExpDBF }
 
@@ -79,30 +80,46 @@ begin
   End;
 end;
 
-procedure TExpDBF.FormShow(Sender: TObject);
- Var Ind : Integer;
+procedure TExpDBF.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
- ExportBtn.Constraints.MinWidth := Max(ExportBtn.Width, CloseBtn.Width);
- CloseBtn.Constraints.MinWidth := ExportBtn.Constraints.MinWidth;
+  if CanClose then
+    Options.ExportDBFWindow.ExtractFromForm(Self);
+end;
 
- ClbField.Clear;
+procedure TExpDBF.FormShow(Sender: TObject);
+var
+  ind: Integer;
+begin
+  ExportBtn.Constraints.MinWidth := Max(ExportBtn.Width, CloseBtn.Width);
+  CloseBtn.Constraints.MinWidth := ExportBtn.Constraints.MinWidth;
 
- For Ind := 0 To Tmp.FieldDefs.Count - 1 Do
-  Begin
-   ClbField.Items.Add(Tmp.FieldDefs.Items[Ind].Name);
+  Constraints.MinWidth := (ExportBtn.Width + CloseBtn.Width + 4*CloseBtn.BorderSpacing.Right) * 2;
+  Constraints.MinHeight := pBar.Top + pBar.Height +
+    CloseBtn.BorderSpacing.Top + CloseBtn.Height + CloseBtn.BorderSpacing.Bottom;
 
-   ClbField.Checked[Ind] := True;
-  End;
+  if Options.RememberWindowSizePos and (Options.ExportDBFWindow.Width > 0) then
+  begin
+    AutoSize := false;
+    Options.ExportDBFWindow.ApplyToForm(Self);
+  end;
+
+  ClbField.Clear;
+
+  for ind := 0 to Tmp.FieldDefs.Count - 1 do
+  begin
+    ClbField.Items.Add(Tmp.FieldDefs.Items[ind].Name);
+    ClbField.Checked[ind] := True;
+  end;
 end;
 
 function TExpDBF.ReturnTableLevel: Word;
 const
   TABLE_LEVELS: array[0..3] of Integer = (3, 4, 7, 25);
 begin
-   if (TableType.ItemIndex >= 0) and (TableType.ItemIndex <= 3) then
-     Result := TABLE_LEVELS[TableType.ItemIndex]
-   else
-     Result := 4;
+  if (TableType.ItemIndex >= 0) and (TableType.ItemIndex <= 3) then
+    Result := TABLE_LEVELS[TableType.ItemIndex]
+  else
+    Result := 4;
 end;
 
 procedure TExpDBF.Create_Fields_List;

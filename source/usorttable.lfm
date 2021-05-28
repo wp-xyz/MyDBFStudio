@@ -9,7 +9,7 @@ object SortTable: TSortTable
   ClientHeight = 426
   ClientWidth = 518
   Constraints.MinWidth = 400
-  OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
   OnShow = FormShow
   Position = poDesktopCenter
   LCLVersion = '2.1.0.0'

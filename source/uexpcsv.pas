@@ -32,6 +32,7 @@ type
     Tmp: TDbf;
     procedure CloseBtnClick(Sender: TObject);
     procedure ExportBtnClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
@@ -52,7 +53,7 @@ implementation
 {$R *.lfm}
 
 uses
-  math;
+  math, uOptions;
 
 { TExpCSV }
 
@@ -61,6 +62,16 @@ procedure TExpCSV.FormShow(Sender: TObject);
 begin
  CloseBtn.Constraints.MinWidth := Max(ExportBtn.Width, CloseBtn.Width);
  ExportBtn.Constraints.MinWidth := CloseBtn.Constraints.MinWidth;
+
+ Constraints.MinWidth := (Width - Separator.Left) * 3 div 2;
+ Constraints.MinHeight := cbSaveHeader.Top + cbSaveHeader.Height +
+   CloseBtn.BorderSpacing.Top + CloseBtn.Height + CloseBtn.BorderSpacing.Bottom;
+
+ if Options.RememberWindowSizePos and (Options.ExportCSVWindow.Width > 0) then
+  begin
+    AutoSize := false;
+    Options.ExportCSVWindow.ApplyToForm(Self);
+  end;
 
  ClbField.Clear;
 
@@ -149,6 +160,12 @@ begin
      ShowMessage('Export completed!');
    End;
   End;
+end;
+
+procedure TExpCSV.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  if CanClose then
+    Options.ExportCSVWindow.ExtractFromForm(Self);
 end;
 
 end.

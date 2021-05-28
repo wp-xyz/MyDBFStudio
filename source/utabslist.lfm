@@ -6,15 +6,16 @@ object TabsList: TTabsList
   Caption = 'Tabs list'
   ClientHeight = 395
   ClientWidth = 664
+  OnCloseQuery = FormCloseQuery
   OnShow = FormShow
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   LCLVersion = '2.1.0.0'
   object lvTabs: TListView
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Owner
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    AnchorSideBottom.Control = BitBtn1
+    AnchorSideBottom.Control = CloseBtn
     Left = 6
     Height = 351
     Top = 6
@@ -43,7 +44,7 @@ object TabsList: TTabsList
     ViewStyle = vsReport
     OnDblClick = BitBtn4Click
   end
-  object BitBtn1: TBitBtn
+  object CloseBtn: TBitBtn
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
@@ -58,8 +59,8 @@ object TabsList: TTabsList
     Caption = '&Close'
     Images = CommonData.Images
     ImageIndex = 37
-    OnClick = BitBtn1Click
-    TabOrder = 1
+    OnClick = CloseBtnClick
+    TabOrder = 5
   end
   object BitBtn2: TBitBtn
     AnchorSideLeft.Control = Owner
@@ -76,7 +77,7 @@ object TabsList: TTabsList
     Images = CommonData.Images
     ImageIndex = 38
     OnClick = BitBtn2Click
-    TabOrder = 2
+    TabOrder = 1
   end
   object BitBtn3: TBitBtn
     AnchorSideLeft.Control = BitBtn2
@@ -94,7 +95,7 @@ object TabsList: TTabsList
     Images = CommonData.Images
     ImageIndex = 39
     OnClick = BitBtn3Click
-    TabOrder = 3
+    TabOrder = 2
   end
   object BitBtn4: TBitBtn
     AnchorSideLeft.Control = BitBtn3
@@ -112,7 +113,7 @@ object TabsList: TTabsList
     Images = CommonData.Images
     ImageIndex = 7
     OnClick = BitBtn4Click
-    TabOrder = 4
+    TabOrder = 3
   end
   object BitBtn5: TBitBtn
     AnchorSideLeft.Control = BitBtn4
@@ -130,6 +131,6 @@ object TabsList: TTabsList
     Images = CommonData.Images
     ImageIndex = 15
     OnClick = BitBtn5Click
-    TabOrder = 5
+    TabOrder = 4
   end
 end

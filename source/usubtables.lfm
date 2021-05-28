@@ -8,8 +8,9 @@ object SubTables: TSubTables
   Caption = 'Substract Two Tables'
   ClientHeight = 308
   ClientWidth = 321
+  OnCloseQuery = FormCloseQuery
   OnShow = FormShow
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   LCLVersion = '2.1.0.0'
   object GroupBox1: TGroupBox
     AnchorSideLeft.Control = Owner

@@ -25,6 +25,7 @@ type
     T1: TDbf;
     T2: TDbf;
     procedure CloseBtnClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure StartBtnClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -51,6 +52,12 @@ uses
 procedure TSubTables.CloseBtnClick(Sender: TObject);
 begin
  Close;
+end;
+
+procedure TSubTables.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  if CanClose then
+    Options.SubtractTablesWindow.ExtractFromForm(Self);
 end;
 
 procedure TSubTables.StartBtnClick(Sender: TObject);
@@ -122,10 +129,10 @@ begin
  Constraints.MinHeight := Height;
  Constraints.MaxHeight := Height;
 
- if Options.RememberWindowSizePos and (Options.SubtractTablesWidth > 0) then
+ if Options.RememberWindowSizePos and (Options.SubtractTablesWindow.Width > 0) then
  begin
    AutoSize := false;
-   Width := Min(Options.SubtractTablesWidth, Screen.WorkAreaWidth);
+   Options.SubtractTablesWindow.ApplyToForm(Self);
  end;
 
  If Main.WorkSite.PageCount > 0 Then

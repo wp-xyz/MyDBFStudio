@@ -8,9 +8,11 @@ object Restructure: TRestructure
   ClientHeight = 373
   ClientWidth = 736
   KeyPreview = True
+  OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   LCLVersion = '2.1.0.0'
   object FieldList: TStringGrid
     AnchorSideLeft.Control = Owner

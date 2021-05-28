@@ -1,14 +1,27 @@
 unit uOptions;
 
 {$mode objfpc}{$H+}
+{$modeswitch advancedrecords}
 
 interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ColorBox, ComCtrls, Buttons, ExtCtrls, Spin;
+  ColorBox, ComCtrls, Buttons, ExtCtrls, Spin, IniFiles;
 
 type
+  TWindowOptions = record
+    Left: Integer;
+    Top: Integer;
+    Width: Integer;
+    Height: Integer;
+    procedure Init;
+    procedure ApplyToForm(AForm: TForm);
+    procedure ExtractFromForm(AForm: TForm);
+    procedure ReadFromIni(AIniFile: TCustomIniFile; ASection: String);
+    procedure WriteToIni(AIniFile: TCustomIniFile; ASection: String);
+  end;
+
   TRecOptions = Record
     RememberWindowSizePos     : Boolean;
     MainWindowState           : TWindowState;
@@ -16,8 +29,20 @@ type
     MainHeight                : Integer;
     MainTop                   : Integer;
     MainLeft                  : Integer;
-    AddTablesWidth            : Integer;
-    SubtractTablesWidth       : Integer;
+    ExportCSVWindow           : TWindowOptions;
+    ExportHTMLWindow          : TWindowOptions;
+    ExportXLSWindow           : TWindowOptions;
+    ExportDBFWindow           : TWindowOptions;
+    ExportXMLWindow           : TWindowOptions;
+    ExportSQLScriptWindow     : TWindowOptions;
+    AddTablesWindow           : TWindowOptions;
+    SubtractTablesWindow      : TWindowOptions;
+    SortTableWindow           : TWindowOptions;
+    TabsListWindow            : TWindowOptions;
+    RestructureWindow         : TWindowOptions;
+    SetFieldValueWindow       : TWindowOptions;
+    IndexTableWindow          : TWindowOptions;
+    OptionsWindow             : TWindowOptions;
     StartWithOBA              : Boolean;
     GotoLastRecord            : Boolean;
     EnableToolBar             : Boolean;
@@ -35,8 +60,20 @@ var
     MainHeight: 0;
     MainTop: 0;
     MainLeft: 0;
-    AddTablesWidth: 0;
-    SubtractTablesWidth: 0;
+    ExportCSVWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
+    ExportHTMLWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
+    ExportXLSWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
+    ExportDBFWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
+    ExportXMLWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
+    ExportSQLScriptWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
+    AddTablesWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
+    SubtractTablesWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
+    SortTableWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
+    TabsListWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
+    RestructureWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
+    SetFieldValueWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
+    IndexTableWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
+    OptionsWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
     StartWithOBA: false;
     GotoLastRecord: false;
     EnableToolBar: true;
@@ -67,6 +104,7 @@ type
     procedure CloseBtnClick(Sender: TObject);
     procedure ConfirmBtnClick(Sender: TObject);
     procedure ClearRecentBtnClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
@@ -86,9 +124,91 @@ procedure SaveOptions;
 
 implementation
 
-Uses Math, IniFiles, uMain;
+uses
+  Math, uMain;
 
 {$R *.lfm}
+
+procedure TWindowOptions.Init;
+begin
+  Left := -1;
+  Top := -1;
+  Width := -1;
+  Height := -1;
+end;
+
+procedure TWindowOptions.ApplyToForm(AForm: TForm);
+var
+  R: TRect;
+  W, H: Integer;
+begin
+  if not Options.RememberWindowSizePos then
+    exit;
+
+  R := Screen.WorkAreaRect;
+
+  if AForm.AutoSize then
+  begin
+    W := AForm.Width;
+    H := AForm.Height;
+  end else
+  begin
+    if Width = -1 then
+      W := AForm.Width
+    else
+      W := Width;
+    if W > R.Width then
+      W := R.Width;
+    if Height = -1 then
+      H := AForm.Height
+    else
+      H := Height;
+    if Height > R.Height then
+      H := R.Height;
+  end;
+
+  if (Left <> -1) then
+  begin
+    if (Left < R.Left) then Left := R.Left;
+    if Left + W > R.Right then Left := R.Right - W;
+  end else
+    Left := AForm.Left;
+
+  if (Top <> -1) then
+  begin
+    if Top < R.Top then Top := R.Top;
+    if Top + H > R.Bottom then Top := R.Bottom - H;
+  end else
+    Top := AForm.Top;
+
+  AForm.Position := poDesigned;
+  AForm.SetBounds(Left, Top, W, H);
+end;
+
+procedure TWindowOptions.ExtractFromForm(AForm: TForm);
+begin
+  Left := AForm.Left;
+  Top := AForm.Top;
+  Width := AForm.Width;
+  Height := AForm.Height;
+end;
+
+procedure TWindowOptions.ReadFromIni(AIniFile: TCustomIniFile; ASection: String);
+begin
+  Left := AIniFile.ReadInteger(ASection, 'Left', Left);
+  Top := AIniFile.ReadInteger(ASection, 'Top', Top);
+  Width := AIniFile.ReadInteger(ASection, 'Width', Width);
+  Height := AIniFile.ReadInteger(ASection, 'Height', Height);
+end;
+
+procedure TWindowOptions.WriteToIni(AIniFile: TCustomIniFile; ASection: String);
+begin
+  AIniFile.WriteInteger(ASection, 'Left', Left);
+  AIniFile.WriteInteger(ASection, 'Top', Top);
+  AIniFile.WriteInteger(ASection, 'Width', Width);
+  AIniFile.WriteInteger(ASection, 'Height', Height);
+end;
+
 
 { TOptionsForm }
 
@@ -113,13 +233,19 @@ begin
     Main.FileHistory.Clear;
 end;
 
+procedure TOptionsForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  if CanClose then
+    Options.OptionsWindow.ExtractFromForm(Self);
+end;
+
 procedure TOptionsForm.FormShow(Sender: TObject);
 begin
   ConfirmBtn.Constraints.MinWidth := Max(ConfirmBtn.Width, CloseBtn.Width);
   CloseBtn.Constraints.MinWidth := ConfirmBtn.Constraints.MinWidth;
 
-  LoadOptions;
   OptionsToControls;
+  Options.OptionsWindow.ApplyToForm(Self);
 end;
 
 procedure TOptionsForm.ControlsToOptions;
@@ -164,18 +290,32 @@ begin
       Options.RememberWindowSizePos);
     if Options.RememberWindowSizePos then
     begin
-      Options.MainWindowState := TWindowState(ini.ReadInteger('Options', 'MainWindowState',
+      Options.MainWindowState := TWindowState(ini.ReadInteger('MainForm', 'WindowState',
         Integer(Options.MainWindowState)));
       if Options.MainWindowState = wsNormal then
       begin
-        Options.MainWidth := ini.ReadInteger('Options', 'MainWidth', Options.MainWidth);
-        Options.MainHeight := ini.ReadInteger('Options', 'MainHeight', Options.MainHeight);
-        Options.MainLeft := ini.ReadInteger('Options', 'MainLeft', Options.MainLeft);
-        Options.MainTop := ini.ReadInteger('Options', 'MainTop', Options.MainTop);
+        Options.MainWidth := ini.ReadInteger('MainForm', 'Width', Options.MainWidth);
+        Options.MainHeight := ini.ReadInteger('MainForm', 'Height', Options.MainHeight);
+        Options.MainLeft := ini.ReadInteger('MainForm', 'Left', Options.MainLeft);
+        Options.MainTop := ini.ReadInteger('MainForm', 'Top', Options.MainTop);
       end;
-      Options.AddTablesWidth := ini.ReadInteger('Options', 'AddTablesWidth', Options.AddTablesWidth);
-      Options.SubtractTablesWidth := ini.ReadInteger('Options', 'SubtractTablesWidth', Options.SubtractTablesWidth);
+
+      Options.ExportCSVWindow.ReadFromIni(ini, 'ExportCSVForm');
+      Options.ExportHTMLWindow.ReadFromIni(ini, 'ExportHTMLForm');
+      Options.ExportXLSWindow.ReadFromIni(ini, 'ExportXLSForm');
+      Options.ExportDBFWindow.ReadFromIni(ini, 'ExportDBFForm');
+      Options.ExportXMLWindow.ReadFromIni(ini, 'ExportXMLForm');
+      Options.ExportSQLScriptWindow.ReadFromIni(ini, 'ExportSQLScriptForm');
+      Options.AddTablesWindow.ReadFromIni(ini, 'AddTablesForm');
+      Options.SubtractTablesWindow.ReadFromIni(ini, 'SubtractTablesForm');
+      Options.SortTableWindow.ReadFromIni(ini, 'SortTableForm');
+      Options.TabsListWindow.ReadFromIni(ini, 'TabsListForm');
+      Options.RestructureWindow.ReadFromIni(ini, 'RestructureForm');
+      Options.SetFieldValueWindow.ReadFromIni(ini, 'SetFieldValueForm');
+      Options.IndexTableWindow.ReadFromIni(ini, 'IndexTableForm');
+      Options.OptionsWindow.ReadFromIni(ini, 'OptionsForm');
     end;
+
     Options.StartWithOBA := ini.ReadBool('Options', 'StartWithOBA', Options.StartWithOBA);
     Options.GotoLastRecord := ini.ReadBool('Options', 'GotoLastRecord', Options.GotoLastRecord);
     Options.EnableToolbar := ini.ReadBool('Options', 'EnableToolbar', Options.EnableToolbar);
@@ -195,16 +335,6 @@ begin
   ini := TIniFile.Create(IniFileName);
   try
     ini.WriteBool('Options', 'RememberWindowSizePos', Options.RememberWindowSizePos);
-    ini.WriteInteger('Options', 'MainWindowState', ord(Options.MainWindowState));
-    if Options.MainWindowState = wsNormal then
-    begin
-      ini.WriteInteger('Options', 'MainWidth', Options.MainWidth);
-      ini.WriteInteger('Options', 'MainHeight', Options.MainHeight);
-      ini.WriteInteger('Options', 'MainLeft', Options.MainLeft);
-      ini.WriteInteger('Options', 'MainTop', Options.MainTop);
-    end;
-    ini.WriteInteger('Options', 'AddTablesWidth', Options.AddTablesWidth);
-    ini.WriteInteger('Options', 'SubtractTablesWidth', Options.SubtractTablesWidth);
     ini.WriteBool('Options', 'StartWithOBA', Options.StartWithOBA);
     ini.WriteBool('Options', 'GotoLastRecord', Options.GotoLastRecord);
     ini.WriteBool('Options', 'EnableToolbar', Options.EnableToolbar);
@@ -212,6 +342,30 @@ begin
     ini.WriteInteger('Options', 'AlternateColor', integer(Options.AlternateColor));
     ini.WriteInteger('Options', 'MaxHistoryRecords', Options.MaxHistoryRecords);
     ini.WriteBool('Options', 'ShowSplashScreen', Options.ShowSplashScreen);
+
+    ini.WriteInteger('MainForm', 'WindowState', ord(Options.MainWindowState));
+    if Options.MainWindowState = wsNormal then
+    begin
+      ini.WriteInteger('MainForm', 'Width', Options.MainWidth);
+      ini.WriteInteger('MainForm', 'Height', Options.MainHeight);
+      ini.WriteInteger('MainForm', 'Left', Options.MainLeft);
+      ini.WriteInteger('MainForm', 'Top', Options.MainTop);
+    end;
+
+    Options.ExportCSVWindow.WriteToIni(ini, 'ExportCSVForm');
+    Options.ExportHTMLWindow.WriteToIni(ini, 'ExportHTMLForm');
+    Options.ExportXLSWindow.WriteToIni(ini, 'ExportXLSForm');
+    Options.ExportDBFWindow.WriteToIni(ini, 'ExportDBFForm');
+    Options.ExportXMLWindow.WriteToIni(ini, 'ExportXMLForm');
+    Options.ExportSQLScriptWindow.WriteToIni(ini, 'ExportSQLScriptForm');
+    Options.AddTablesWindow.WriteToIni(ini, 'AddTablesForm');
+    Options.SubtractTablesWindow.WriteToIni(ini, 'SubtractTablesForm');
+    Options.SortTableWindow.WriteToIni(ini, 'SortTableForm');
+    Options.TabsListWindow.WriteToIni(ini, 'TabListForm');
+    Options.RestructureWindow.WriteToIni(ini, 'RestructureForm');
+    Options.SetFieldValueWindow.WriteToIni(ini, 'SetFieldValueForm');
+    Options.IndexTableWindow.WriteToIni(ini, 'IndexTableForm');
+    Options.OptionsWindow.WriteToIni(ini, 'OptionsForm');
   finally
     ini.Free;
   end;
