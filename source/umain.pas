@@ -271,11 +271,36 @@ begin
 end;
 
 procedure TMain.FormDropFiles(Sender: TObject; const FileNames: array of string);
+const
+  MAX_LOG = 10;
 var
   fn: String;
+  L: TStrings;
 begin
-  for fn in FileNames do
-    Open_Table(fn);
+  L := TStringList.Create;
+  try
+    for fn in FileNames do
+      if Lowercase(ExtractFileExt(fn)) = '.dbf' then
+        Open_Table(fn)
+      else
+        L.Add(fn);
+    if L.Count > 0 then
+    begin
+      if L.Count > MAX_LOG then
+      begin
+        while L.Count > MAX_LOG do
+          L.Delete(L.Count-1);
+        L.Add('(more...)');
+      end;
+      MessageDlg(
+        'The following files could not be loaded due to incorrect extension: ' +
+          LineEnding + L.Text,
+        mtError, [mbOK], 0
+      );
+    end;
+  finally
+    L.Free;
+  end;
 end;
 
 procedure TMain.FormShow(Sender: TObject);
