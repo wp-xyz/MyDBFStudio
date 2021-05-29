@@ -22,4 +22,5 @@ I decided to put them onto my github and to refactor some places. Later Enzo pub
 * Display memo fields
 * Display ansi characters from the table's code page correctly as utf-8.
 * Store user settings and the names of recently loaded files in an ini file in the the user's home directory.
-* Layout of the controls is determined by anchoring and autosizing and thus should work out in all operating systems supported.
+* Layout of the controls is determined by anchoring and autosizing and thus should work out in all operating systems supported. Form positions are stored in the ini file.
+* Support drag and drop of dbf files from the operating system.
