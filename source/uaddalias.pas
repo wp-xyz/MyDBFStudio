@@ -23,6 +23,7 @@ type
     Path: TEdit;
     SelDir: TSelectDirectoryDialog;
     procedure CancelBtnClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure OKBtnClick(Sender: TObject);
     procedure BrowseBtnClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -43,6 +44,9 @@ implementation
 
 {$R *.lfm}
 
+uses
+  uOptions;
+
 { TAddAlias }
 
 procedure TAddAlias.BrowseBtnClick(Sender: TObject);
@@ -54,6 +58,7 @@ end;
 procedure TAddAlias.FormShow(Sender: TObject);
 begin
   OKBtn.Constraints.MinWidth := CancelBtn.Width;
+  Options.AddAliasWindow.ApplyToForm(Self);
 end;
 
 function TAddAlias.CheckAliasName(Val: String): Boolean;
@@ -95,6 +100,12 @@ end;
 procedure TAddAlias.CancelBtnClick(Sender: TObject);
 begin
  Close;
+end;
+
+procedure TAddAlias.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  if CanClose then
+     Options.AddAliasWindow.ExtractFromForm(Self);
 end;
 
 procedure TAddAlias.OKBtnClick(Sender: TObject);

@@ -9,8 +9,9 @@ object AddAlias: TAddAlias
   ClientHeight = 147
   ClientWidth = 383
   Constraints.MinWidth = 360
+  OnCloseQuery = FormCloseQuery
   OnShow = FormShow
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   LCLVersion = '2.1.0.0'
   object BrowseBtn: TButton
     AnchorSideTop.Control = Path

@@ -36,6 +36,7 @@ type
     ExportXMLWindow           : TWindowOptions;
     ExportSQLScriptWindow     : TWindowOptions;
     AddTablesWindow           : TWindowOptions;
+    AddAliasWindow            : TWindowOptions;
     SubtractTablesWindow      : TWindowOptions;
     SortTableWindow           : TWindowOptions;
     TabsListWindow            : TWindowOptions;
@@ -67,6 +68,7 @@ var
     ExportXMLWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
     ExportSQLScriptWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
     AddTablesWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
+    AddAliasWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
     SubtractTablesWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
     SortTableWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
     TabsListWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
@@ -307,6 +309,7 @@ begin
       Options.ExportXMLWindow.ReadFromIni(ini, 'ExportXMLForm');
       Options.ExportSQLScriptWindow.ReadFromIni(ini, 'ExportSQLScriptForm');
       Options.AddTablesWindow.ReadFromIni(ini, 'AddTablesForm');
+      Options.AddAliasWindow.ReadFromIni(ini, 'AddAliasForm');
       Options.SubtractTablesWindow.ReadFromIni(ini, 'SubtractTablesForm');
       Options.SortTableWindow.ReadFromIni(ini, 'SortTableForm');
       Options.TabsListWindow.ReadFromIni(ini, 'TabsListForm');
@@ -359,6 +362,7 @@ begin
     Options.ExportXMLWindow.WriteToIni(ini, 'ExportXMLForm');
     Options.ExportSQLScriptWindow.WriteToIni(ini, 'ExportSQLScriptForm');
     Options.AddTablesWindow.WriteToIni(ini, 'AddTablesForm');
+    Options.AddAliasWindow.WriteToIni(ini, 'AddAliasForm');
     Options.SubtractTablesWindow.WriteToIni(ini, 'SubtractTablesForm');
     Options.SortTableWindow.WriteToIni(ini, 'SortTableForm');
     Options.TabsListWindow.WriteToIni(ini, 'TabListForm');
