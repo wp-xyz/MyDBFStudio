@@ -7,7 +7,7 @@
         <LRSInOutputDirectory Value="False"/>
         <CompatibilityMode Value="True"/>
       </Flags>
-      <Title Value="MyDbf Studio"/>
+      <Title Value="MyDbfStudio"/>
       <Scaled Value="True"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
@@ -23,7 +23,7 @@
       <UseVersionInfo Value="True"/>
       <MinorVersionNr Value="5"/>
       <RevisionNr Value="2"/>
-      <StringTable FileDescription="Administrative tool for Dbf and Paradox Tables." LegalCopyright="Calogiuri Enzo Antonio" ProductName="MyDbf Studio"/>
+      <StringTable FileDescription="Administrative tool for Dbf and Paradox Tables." LegalCopyright="Calogiuri Enzo Antonio" ProductName="MyDbfStudio"/>
     </VersionInfo>
     <BuildModes Count="1">
       <Item1 Name="default" Default="True"/>
@@ -49,9 +49,11 @@
     </RequiredPackages>
     <Units Count="129">
       <Unit0>
-        <Filename Value="DbfStudio.lpr"/>
+        <Filename Value="MyDbfStudio.lpr"/>
         <IsPartOfProject Value="True"/>
-        <CursorPos Y="23"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="45" Y="21"/>
         <UsageCount Value="189"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -424,10 +426,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uExpXLS"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="10"/>
         <TopLine Value="58"/>
-        <CursorPos X="17" Y="76"/>
+        <CursorPos X="54" Y="77"/>
         <UsageCount Value="137"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -980,7 +981,6 @@
         <Filename Value="historyfiles.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="HistoryFiles"/>
-        <EditorIndex Value="1"/>
         <TopLine Value="453"/>
         <CursorPos X="16" Y="468"/>
         <UsageCount Value="55"/>
@@ -1245,7 +1245,7 @@
   <CompilerOptions>
     <Version Value="11"/>
     <Target>
-      <Filename Value="../dbfstudio"/>
+      <Filename Value="../mydbfstudio"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>

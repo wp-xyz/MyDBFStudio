@@ -1,4 +1,4 @@
-program DbfStudio;
+program MyDbfStudio;
 
 {$mode objfpc}{$H+}
 
@@ -7,15 +7,12 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, uMain, uDatamodule, uTabsList, uOptions, uSetFV, HistoryFiles;
-
-//{$IFDEF WINDOWS}{$R DbfStudio.rc}{$ENDIF}
+  Forms, uMain, uDatamodule;
 
 {$R *.res}
 
 begin
   Application.Scaled:=True;
-  Application.Title:='MyDbf Studio';
   Application.Initialize;
   Application.CreateForm(TCommonData, CommonData);
   Application.CreateForm(TMain, Main);
