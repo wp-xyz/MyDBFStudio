@@ -113,19 +113,17 @@ type
     { private declarations }
     WorkSpace : TTabForm;
     FirstShow : Boolean;
-
     Procedure CreateAliasDB;
-
     Procedure ClickOnHistoryFile(Sender : TObject; {%H-}Item : TMenuItem; Const FileName : String);
     procedure TabChildCloseHandler(Sender: TObject; var CloseAction: TCloseAction);
     procedure HistoryPopupClick(Sender: TObject);
     Function TableIsAlreadyOpen(TblName : String): Integer;
     Function OBAIsAlreadyOpen: Integer;
     procedure ReadCmdLine;
+
   public
     { public declarations }
     FileHistory : THistoryFiles;
-
     Procedure Open_Table(TblName : String);
   end;
 

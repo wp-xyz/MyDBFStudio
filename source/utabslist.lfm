@@ -7,43 +7,10 @@ object TabsList: TTabsList
   ClientHeight = 395
   ClientWidth = 664
   OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
   OnShow = FormShow
   Position = poMainFormCenter
   LCLVersion = '2.1.0.0'
-  object lvTabs: TListView
-    AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = Owner
-    AnchorSideRight.Control = Owner
-    AnchorSideRight.Side = asrBottom
-    AnchorSideBottom.Control = CloseBtn
-    Left = 6
-    Height = 351
-    Top = 6
-    Width = 652
-    Anchors = [akTop, akLeft, akRight, akBottom]
-    BorderSpacing.Around = 6
-    Color = clWindow
-    Columns = <    
-      item
-        Alignment = taRightJustify
-        Caption = '#'
-        Width = 40
-      end    
-      item
-        Caption = 'Caption'
-        Width = 200
-      end    
-      item
-        Caption = 'File'
-        Width = 403
-      end>
-    ReadOnly = True
-    RowSelect = True
-    ScrollBars = ssAutoBoth
-    TabOrder = 0
-    ViewStyle = vsReport
-    OnDblClick = BitBtn4Click
-  end
   object CloseBtn: TBitBtn
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
@@ -60,9 +27,9 @@ object TabsList: TTabsList
     Images = CommonData.Images
     ImageIndex = 37
     OnClick = CloseBtnClick
-    TabOrder = 5
+    TabOrder = 4
   end
-  object BitBtn2: TBitBtn
+  object MoveUpBtn: TBitBtn
     AnchorSideLeft.Control = Owner
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
@@ -76,11 +43,11 @@ object TabsList: TTabsList
     Caption = 'Move Up'
     Images = CommonData.Images
     ImageIndex = 38
-    OnClick = BitBtn2Click
-    TabOrder = 1
+    OnClick = MoveUpBtnClick
+    TabOrder = 0
   end
-  object BitBtn3: TBitBtn
-    AnchorSideLeft.Control = BitBtn2
+  object MoveDownBtn: TBitBtn
+    AnchorSideLeft.Control = MoveUpBtn
     AnchorSideLeft.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
@@ -94,11 +61,11 @@ object TabsList: TTabsList
     Caption = 'Move Down'
     Images = CommonData.Images
     ImageIndex = 39
-    OnClick = BitBtn3Click
-    TabOrder = 2
+    OnClick = MoveDownBtnClick
+    TabOrder = 1
   end
-  object BitBtn4: TBitBtn
-    AnchorSideLeft.Control = BitBtn3
+  object GoToTabBtn: TBitBtn
+    AnchorSideLeft.Control = MoveDownBtn
     AnchorSideLeft.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
@@ -112,11 +79,11 @@ object TabsList: TTabsList
     Caption = 'Go to tab'
     Images = CommonData.Images
     ImageIndex = 7
-    OnClick = BitBtn4Click
-    TabOrder = 3
+    OnClick = GoToTabBtnClick
+    TabOrder = 2
   end
-  object BitBtn5: TBitBtn
-    AnchorSideLeft.Control = BitBtn4
+  object CloseTabBtn: TBitBtn
+    AnchorSideLeft.Control = GoToTabBtn
     AnchorSideLeft.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
@@ -130,7 +97,48 @@ object TabsList: TTabsList
     Caption = 'Close tab'
     Images = CommonData.Images
     ImageIndex = 15
-    OnClick = BitBtn5Click
-    TabOrder = 4
+    OnClick = CloseTabBtnClick
+    TabOrder = 3
+  end
+  object TabsGrid: TStringGrid
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = CloseTabBtn
+    Left = 6
+    Height = 351
+    Top = 6
+    Width = 652
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    AutoFillColumns = True
+    BorderSpacing.Around = 6
+    ColCount = 3
+    Columns = <    
+      item
+        Alignment = taRightJustify
+        SizePriority = 0
+        Title.Alignment = taRightJustify
+        Title.Caption = '#'
+        Width = 40
+      end    
+      item
+        SizePriority = 0
+        Title.Caption = 'Caption'
+        Width = 200
+      end    
+      item
+        Title.Caption = 'File'
+        Width = 408
+      end>
+    FixedCols = 0
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goThumbTracking, goSmoothScroll, goCellHints, goTruncCellHints]
+    TabOrder = 5
+    ColWidths = (
+      40
+      200
+      408
+    )
   end
 end

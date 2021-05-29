@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ComCtrls,
-  Buttons;
+  Buttons, Grids;
 
 type
 
@@ -14,22 +14,23 @@ type
 
   TTabsList = class(TForm)
     CloseBtn: TBitBtn;
-    BitBtn2: TBitBtn;
-    BitBtn3: TBitBtn;
-    BitBtn4: TBitBtn;
-    BitBtn5: TBitBtn;
-    lvTabs: TListView;
+    MoveUpBtn: TBitBtn;
+    MoveDownBtn: TBitBtn;
+    GoToTabBtn: TBitBtn;
+    CloseTabBtn: TBitBtn;
+    TabsGrid: TStringGrid;
     procedure CloseBtnClick(Sender: TObject);
-    procedure BitBtn2Click(Sender: TObject);
-    procedure BitBtn3Click(Sender: TObject);
-    procedure BitBtn4Click(Sender: TObject);
-    procedure BitBtn5Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure MoveUpBtnClick(Sender: TObject);
+    procedure MoveDownBtnClick(Sender: TObject);
+    procedure GoToTabBtnClick(Sender: TObject);
+    procedure CloseTabBtnClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
-
     Procedure Load_Tabs;
+    procedure UpdateCmds;
   public
     { public declarations }
   end;
@@ -56,6 +57,7 @@ procedure TTabsList.FormShow(Sender: TObject);
 begin
   Options.TabsListWindow.ApplyToForm(self);
   Load_Tabs;
+  UpdateCmds;
 end;
 
 procedure TTabsList.CloseBtnClick(Sender: TObject);
@@ -63,9 +65,25 @@ begin
   Close;
 end;
 
-procedure TTabsList.BitBtn2Click(Sender: TObject);
- Var OldPos : Integer;
+procedure TTabsList.FormCreate(Sender: TObject);
 begin
+  TabsGrid.AlternateColor := Options.AlternateColor;
+end;
+
+procedure TTabsList.MoveUpBtnClick(Sender: TObject);
+var
+  oldPos : Integer;
+begin
+  if (TabsGrid.RowCount > TabsGrid.FixedRows + 1) and (TabsGrid.Row > TabsGrid.FixedRows) then
+  begin
+    oldPos := TabsGrid.Row - TabsGrid.FixedRows;
+    Main.WorkSite.Pages[oldPos].PageIndex := oldPos - 1;
+    Load_Tabs;
+    TabsGrid.SetFocus;
+    TabsGrid.Row := oldPos - 1 + TabsGrid.FixedRows;
+    UpdateCmds;
+  end;
+  {
  If lvTabs.Items.Count > 1 Then
   If lvTabs.Selected.Index > 0 Then
    Begin
@@ -78,80 +96,88 @@ begin
     lvTabs.SetFocus;
     lvTabs.Items[OldPos - 1].Selected := True;
    end;
+   }
 end;
 
-procedure TTabsList.BitBtn3Click(Sender: TObject);
- Var OldPos : Integer;
+procedure TTabsList.MoveDownBtnClick(Sender: TObject);
+var
+  oldPos: Integer;
 begin
- If lvTabs.Items.Count > 1 Then
-  If lvTabs.Selected.Index < lvTabs.Items.Count - 1 Then
-   Begin
-    OldPos := lvTabs.Selected.Index;
-
-    Main.WorkSite.Pages[OldPos].PageIndex := OldPos + 1;
-
+  if (TabsGrid.RowCount > TabsGrid.FixedRows + 1) and (TabsGrid.Row < TabsGrid.RowCount - 1) then
+  begin
+    oldPos := TabsGrid.Row - TabsGrid.FixedRows;
+    Main.WorkSite.Pages[oldPos].PageIndex := oldPos + 1;
     Load_Tabs;
-
-    lvTabs.SetFocus;
-    lvTabs.Items[OldPos + 1].Selected := True;
-   end;
-end;
-
-procedure TTabsList.BitBtn4Click(Sender: TObject);
-begin
- If lvTabs.Selected <> Nil Then
-  Begin
-   Main.WorkSite.TabIndex := lvTabs.Selected.Index;
-
-   Close;
+    TabsGrid.SetFocus;
+    TabsGrid.Row := oldPos + 1 + TabsGrid.FixedRows;
+    UpdateCmds;
   end;
 end;
 
-procedure TTabsList.BitBtn5Click(Sender: TObject);
+procedure TTabsList.GoToTabBtnClick(Sender: TObject);
 begin
- If lvTabs.Selected <> Nil Then
-  Begin
-   Main.WorkSite.TabIndex := lvTabs.Selected.Index;
+  if TabsGrid.Row >= TabsGrid.FixedRows then
+  begin
+    Main.WorkSite.TabIndex := TabsGrid.Row - TabsGrid.FixedRows;
+    Close;
+  end;
+end;
 
-   Main.WorkSiteCloseTabClicked(Main.WorkSite.ActivePage);
-
-   Load_Tabs;
+procedure TTabsList.CloseTabBtnClick(Sender: TObject);
+begin
+  if TabsGrid.Row >= TabsGrid.FixedRows then
+  begin
+    Main.WorkSite.TabIndex := TabsGrid.Row - TabsGrid.FixedRows;
+    Main.WorkSite.Pages[Main.WorkSite.TabIndex].Free;
+    Load_Tabs;
+    UpdateCmds;
   end;
 end;
 
 procedure TTabsList.Load_Tabs;
- Var Ind : Integer;
-     Tmp : TForm;
-     sFile : String;
+var
+  ind: Integer;
+  Frm: TForm;
+  sFile: String;
+  row: Integer;
 begin
- lvTabs.BeginUpdate;
+  TabsGrid.BeginUpdate;
+  try
+    TabsGrid.RowCount := Main.WorkSite.PageCount + TabsGrid.FixedRows;
+    if Main.Worksite.PageCount > 0 then
+    begin
+      row := TabsGrid.FixedRows;
+      for ind := 0 to Main.WorkSite.PageCount - 1 do
+      begin
+        TabsGrid.Cells[0, row] := IntToStr(row);
+        TabsGrid.Cells[1, row] := Main.WorkSite.Pages[ind].Caption;
+        sFile := '';
+        if (Main.WorkSite.Pages[ind] is TTabForm) then
+        begin
+          frm := TTabForm(Main.WorkSite.Pages[ind]).ParentForm;
+          if frm is TDbfTable then
+            with TDbfTable(frm) do
+              sFile := DBTable.FilePathFull + DBTable.TableName;
+        end;
+        TabsGrid.Cells[2, row] := sFile;
+        inc(row);
+      end;
+      TabsGrid.Row := Main.WorkSite.ActivePageIndex + TabsGrid.FixedRows;
+    end;
+  finally
+    TabsGrid.EndUpdate;
+  end;
+end;
 
- lvTabs.Clear;
-
- If Main.WorkSite.PageCount > 0 Then
-  For Ind := 0 To Main.WorkSite.PageCount - 1 Do
-   Begin
-    lvTabs.Items.Add;
-
-    lvTabs.Items.Item[Ind].Caption := IntToStr(Ind + 1);
-
-    lvTabs.Items.Item[Ind].SubItems.Add(Main.WorkSite.Pages[Ind].Caption);
-
-    sFile := '';
-
-    If (Main.WorkSite.Pages[Ind] Is TTabForm) Then
-     Begin
-      Tmp := (Main.WorkSite.Pages[Ind] As TTabForm).ParentForm;
-
-      If (Tmp Is TDbfTable) Then
-       With (Tmp As TDbfTable) Do
-        sFile := DBTable.FilePathFull + DBTable.TableName;
-     end;
-
-    lvTabs.Items.Item[Ind].SubItems.Add(sFile);
-   end;
-
- lvTabs.EndUpdate;
+procedure TTabsList.UpdateCmds;
+var
+  hasData: Boolean;
+begin
+  hasData := TabsGrid.RowCount > TabsGrid.FixedRows;
+  MoveUpBtn.Enabled := hasData and (TabsGrid.Row > TabsGrid.FixedRows);
+  MoveDownBtn.Enabled := hasData and (TabsGrid.Row < TabsGrid.RowCount - 1);
+  GoToTabBtn.Enabled := hasData and (TabsGrid.Row >= TabsGrid.FixedRows);
+  CloseTabBtn.Enabled := hasData and (TabsGrid.Row >= TabsGrid.FixedRows);
 end;
 
 end.
