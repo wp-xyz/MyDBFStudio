@@ -80,6 +80,7 @@ type
     procedure FormCloseQuery(Sender: TObject; var CanClose: boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormDropFiles(Sender: TObject; const FileNames: array of string);
     procedure FormShow(Sender: TObject);
     procedure miHelpClick(Sender: TObject);
     procedure miAdd2TblsClick(Sender: TObject);
@@ -267,6 +268,14 @@ end;
 procedure TMain.FormDestroy(Sender: TObject);
 begin
   WorkSpace.Free;
+end;
+
+procedure TMain.FormDropFiles(Sender: TObject; const FileNames: array of string);
+var
+  fn: String;
+begin
+  for fn in FileNames do
+    Open_Table(fn);
 end;
 
 procedure TMain.FormShow(Sender: TObject);

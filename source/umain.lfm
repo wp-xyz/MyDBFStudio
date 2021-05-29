@@ -3,6 +3,7 @@ object Main: TMain
   Height = 550
   Top = 193
   Width = 750
+  AllowDropFiles = True
   Caption = 'MyDBF Studio'
   ClientHeight = 530
   ClientWidth = 750
@@ -11,6 +12,7 @@ object Main: TMain
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnDropFiles = FormDropFiles
   OnShow = FormShow
   Position = poDesktopCenter
   LCLVersion = '2.1.0.0'
