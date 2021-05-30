@@ -111,7 +111,7 @@ object DbfTable: TDbfTable
       TabOrder = 3
       Transparent = True
       object DBNavigator1: TDBNavigator
-        Left = 126
+        Left = 150
         Height = 24
         Top = 0
         Width = 263
@@ -183,7 +183,7 @@ object DbfTable: TDbfTable
         ShowHint = True
       end
       object CloseTabBtn: TToolButton
-        Left = 394
+        Left = 418
         Hint = 'Close this tab'
         Top = 0
         Caption = 'X'
@@ -193,18 +193,27 @@ object DbfTable: TDbfTable
         ShowHint = True
       end
       object ToolButton2: TToolButton
-        Left = 389
+        Left = 413
         Height = 24
         Top = 0
         Caption = 'ToolButton2'
         Style = tbsDivider
       end
       object ToolButton3: TToolButton
-        Left = 121
+        Left = 145
         Height = 24
         Top = 0
         Caption = 'ToolButton3'
         Style = tbsDivider
+      end
+      object tbAutoFillColumns: TToolButton
+        Left = 121
+        Hint = 'Auto-fill columns'
+        Top = 0
+        Caption = 'tbAutoFillColumns'
+        ImageIndex = 42
+        OnClick = tbAutoFillColumnsClick
+        Style = tbsCheck
       end
     end
   end

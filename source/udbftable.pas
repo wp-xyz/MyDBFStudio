@@ -31,6 +31,7 @@ type
     Pack: TToolButton;
     Empty: TToolButton;
     CloseTabBtn: TToolButton;
+    tbAutoFillColumns: TToolButton;
     ToolButton2: TToolButton;
     ToolButton3: TToolButton;
     ViewDel: TToolButton;
@@ -47,10 +48,14 @@ type
     Procedure ShowTableInfo(DataSet: TDataSet);
     procedure TabControlChange(Sender: TObject);
     procedure CloseTabBtnClick(Sender: TObject);
+    procedure tbAutoFillColumnsClick(Sender: TObject);
     procedure ViewDelClick(Sender: TObject);
   private
     { private declarations }
+    FColWidths: array of Integer;
     Procedure Load_Table_Indexes;
+    procedure RestoreColWidths(ATable: TDbf);
+    procedure SaveColWidths(ATable: TDbf);
     procedure ShowMemo(ATable: TDbf);
     function TranslateHandler(ATable: TDbf; Src, Dest: PChar; ToOem: Boolean): Integer;
 
@@ -193,6 +198,15 @@ begin
   Close;
 end;
 
+procedure TDbfTable.tbAutoFillColumnsClick(Sender: TObject);
+begin
+  if tbAutoFillColumns.Down then
+    SaveColWidths(DBTable);
+  DBGrid.AutoFillColumns := tbAutoFillColumns.Down;
+  if not tbAutoFillColumns.Down then
+    RestoreColWidths(DBTable);
+end;
+
 procedure TDbfTable.ViewDelClick(Sender: TObject);
 begin
   if DbTable.Active then
@@ -208,6 +222,31 @@ begin
       DbTable.Close;
       DbTable.Open;
     end;
+end;
+
+procedure TDbfTable.RestoreColWidths(ATable: TDbf);
+var
+  i: Integer;
+  col: TColumn;
+begin
+  for i := 0 to ATable.FieldCount-1 do
+  begin
+    col := DBGrid.Columns.ColumnByFieldName(ATable.Fields[i].FieldName);
+    col.Width := FColWidths[i];
+  end;
+end;
+
+procedure TDbfTable.SaveColWidths(ATable: TDbf);
+var
+  i: Integer;
+  col: TColumn;
+begin
+  SetLength(FColWidths, ATable.FieldCount);
+  for i := 0 to ATable.FieldCount-1 do
+  begin
+    col := DBGrid.Columns.ColumnByFieldName(ATable.Fields[i].FieldName);
+    FColWidths[i] := col.Width;
+  end;
 end;
 
 procedure TDbfTable.Setup;

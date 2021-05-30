@@ -16,18 +16,22 @@ object Restructure: TRestructure
   LCLVersion = '2.1.0.0'
   object FieldList: TStringGrid
     AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = Owner
+    AnchorSideTop.Control = lblFieldList
+    AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Panel1
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
     Left = 6
-    Height = 361
-    Top = 6
-    Width = 481
+    Height = 344
+    Top = 23
+    Width = 493
     AlternateColor = clMoneyGreen
     Anchors = [akTop, akLeft, akRight, akBottom]
     AutoFillColumns = True
-    BorderSpacing.Around = 6
+    BorderSpacing.Left = 6
+    BorderSpacing.Top = 2
+    BorderSpacing.Right = 6
+    BorderSpacing.Bottom = 6
     Columns = <    
       item
         Alignment = taRightJustify
@@ -39,7 +43,7 @@ object Restructure: TRestructure
       end    
       item
         Title.Caption = 'Field Name'
-        Width = 248
+        Width = 260
       end    
       item
         SizePriority = 0
@@ -67,7 +71,7 @@ object Restructure: TRestructure
     OnKeyDown = FieldListKeyDown
     ColWidths = (
       35
-      248
+      260
       100
       64
       30
@@ -115,17 +119,17 @@ object Restructure: TRestructure
     AnchorSideTop.Control = Owner
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 493
+    Left = 505
     Height = 316
     Top = 6
-    Width = 237
+    Width = 225
     Anchors = [akTop, akRight]
     AutoSize = True
     BorderSpacing.Top = 6
     BorderSpacing.Right = 6
     BevelOuter = bvNone
     ClientHeight = 316
-    ClientWidth = 237
+    ClientWidth = 225
     TabOrder = 1
     object lblIndexList: TLabel
       AnchorSideLeft.Control = Panel1
@@ -147,7 +151,7 @@ object Restructure: TRestructure
       Height = 190
       Hint = 'Double Click to edit index...'
       Top = 17
-      Width = 237
+      Width = 225
       Anchors = [akTop, akLeft, akRight]
       BorderSpacing.Top = 2
       ItemHeight = 0
@@ -164,10 +168,10 @@ object Restructure: TRestructure
       Left = 0
       Height = 26
       Top = 213
-      Width = 80
+      Width = 68
       AutoSize = True
       BorderSpacing.Top = 6
-      Caption = 'Define'
+      Caption = 'Add'
       Images = CommonData.Images
       ImageIndex = 4
       OnClick = DefineBtnlick
@@ -177,7 +181,7 @@ object Restructure: TRestructure
       AnchorSideLeft.Control = DefineBtn
       AnchorSideLeft.Side = asrBottom
       AnchorSideTop.Control = DefineBtn
-      Left = 86
+      Left = 74
       Height = 26
       Top = 213
       Width = 66
@@ -193,7 +197,7 @@ object Restructure: TRestructure
       AnchorSideLeft.Control = EditBtn
       AnchorSideLeft.Side = asrBottom
       AnchorSideTop.Control = EditBtn
-      Left = 158
+      Left = 146
       Height = 26
       Top = 213
       Width = 79
@@ -240,6 +244,18 @@ object Restructure: TRestructure
       Caption = 'Language:'
       ParentColor = False
     end
+  end
+  object lblFieldList: TLabel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Owner
+    Left = 6
+    Height = 15
+    Top = 6
+    Width = 46
+    BorderSpacing.Left = 6
+    BorderSpacing.Top = 6
+    Caption = 'Field List'
+    ParentColor = False
   end
   object Temp: TDbf
     IndexDefs = <>

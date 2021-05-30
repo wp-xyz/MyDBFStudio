@@ -21,6 +21,7 @@ type
 
   TRestructure = class(TForm)
     CloseBtn: TBitBtn;
+    lblFieldList: TLabel;
     lblLanguage: TLabel;
     lblCodePage: TLabel;
     RestructureBtn: TBitBtn;
@@ -512,7 +513,6 @@ begin
     If Not MyIndexList[Ind].Deleted Then
      Begin
       Tmp := MyIndexList[Ind].Options;
-
       Temp.AddIndex(MyIndexList[Ind].IdxName, MyIndexList[Ind].Fields, Tmp);
      End;
   End;
