@@ -92,7 +92,7 @@ begin
       FieldList.RowCount:=FieldList.RowCount + 1;
 
       FieldList.Cells[0,FieldList.RowCount - 1] := IntToStr(FieldList.RowCount - 1);
-      FieldList.Cells[5,FieldList.RowCount - 1] := 'Y';                        //New Field
+      FieldList.Cells[4,FieldList.RowCount - 1] := 'Y';                        //New Field
       FieldList.Col := 1;
       FieldList.Row := FieldList.RowCount - 1;
      End;
