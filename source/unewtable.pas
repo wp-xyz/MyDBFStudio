@@ -251,7 +251,7 @@ end;
 procedure TNewTable.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
- If Key = 40 Then     //Down Arrow
+  If Key = 40 Then     //Down Arrow
   Begin
    If FieldList.Row = FieldList.RowCount - 1 Then
     If (FieldList.Cells[1,FieldList.RowCount - 1] <> '') And
@@ -264,7 +264,7 @@ begin
       FieldList.Row:=FieldList.RowCount - 1;
      End;
   End
- Else
+  Else
   If Key = 38 Then                      //Up Arrow
    Begin
     If (FieldList.Cells[1,FieldList.RowCount - 1] = '') And
@@ -276,7 +276,7 @@ begin
      //FieldList.Row:=FieldList.RowCount + 1;
      End;
    End
-  Else
+   Else
    If Key = 46 Then                      //Del
     If FieldList.Row >= 1 Then
      If MessageDlg('Delete the field?',mtWarning,[mbYes, mbCancel],0) = mrYes Then
