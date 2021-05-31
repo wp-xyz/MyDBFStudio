@@ -108,6 +108,8 @@ object DbfTable: TDbfTable
       EdgeInner = esNone
       EdgeOuter = esNone
       Images = CommonData.Images
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 3
       Transparent = True
       object DBNavigator1: TDBNavigator
@@ -213,6 +215,8 @@ object DbfTable: TDbfTable
         Caption = 'tbAutoFillColumns'
         ImageIndex = 42
         OnClick = tbAutoFillColumnsClick
+        ParentShowHint = False
+        ShowHint = True
         Style = tbsCheck
       end
     end

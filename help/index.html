@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
   <head>
     <title>MyDBF Studio Home Page</title>
@@ -165,9 +165,17 @@
       <p>
         On the toolbar click the <i>New</i> button&nbsp;
         <img style="width: 16px; height: 16px;" alt="newbutton" src="img/icons8_new_copy_16px.png" />&nbsp;
-        or go to <i>File</i> &gt; <i>New...</i> in the menu. In the window that appears you can directly insert 
-        in the grid the field name, field type and length (if requested). You can also
-        choose the type of the table. The table types supported are:
+        or go to <i>File</i> &gt; <i>New...</i> in the menu. 
+      </p>
+      <img title="New table form" style="border: 2px solid; alt="newtableexample" src="img/newtable.png">
+      <p>
+        In the window that appears you can directly insert the field name, 
+        field type and length (if requested) in the grid. 
+        When you press the &darr; key in the last grid row an empty
+        row is added in which you can set up a new field.
+      </p>
+      <p>
+        You can also choose the type of the table. The table types supported are:
       </p>
       <ul style="font-weight: normal; text-align: justify;">
         <li style="margin-bottom:3pt">dBase III+</li>
@@ -184,7 +192,7 @@
         a name for the index and confirm by clicking the <i>OK</i> button. 
       </p>
       <p>
-        To save the new table, just click on the <i>OK</i> button and
+        To save the new table, just click on the <i>Create table</i> button and
         select the path and the name of the file.
       </p>
           
@@ -192,16 +200,16 @@
       <p>
         On the toolbar click the <i>Open</i> button&nbsp;
         <img style="width: 16px; height: 16px;" alt="openbutton" src="img/icons8_opened_folder_16px.png">&nbsp;
-        or go to <i>File</i> &gt; <i>Open...</i> in the menu. Browse the system 
+        or go to <i>File</i> &gt; <i>Open...</i> in the menu. Browse the file system 
         until you find the file you want to open and select it. 
         You can also select multiple files to open by pressing the
         CTRL key while clicking.
         Alternatively you can also drag dbf files from the operating system 
-        onto the MyDbfStudio window. Or you can specify the file names
-        as parameters on the command line:
+        onto the <i>MyDbf Studio</i> window. Or you can specify the file name(s)
+        as parameter(s) on the command line:
       </p>
       <p>
-        <pre style="margin-top:12px">mydfstudio first_file.dbf second_file.dbf</pre>
+        <pre style="margin-top:12px">mydfstudio file1.dbf file2.dbf</pre>
       </p>
           
       <h3><a name="Opening_an_existing_table_by_alias">Opening an existing table by alias</a></h3>
@@ -251,27 +259,34 @@
       <p>
         The first group of buttons invokes special functions like: 
         <ul>
-          <li style="margin-bottom:3pt">
+          <li style="margin-bottom:6pt">
             <img style="width: 16px; height: 16px; font-weight: normal;" alt="packtable" src="img/icons8_compress_16px.png">
             <i>Pack table</i> compacts the table, <i>i.e.</i> physically removes the deleted records.
           </li>
-          <li style="margin-bottom:3pt">
+          <li style="margin-bottom:6pt">
             <img style="width: 16px; height: 16px;" alt="emptybutton" src="img/icons8_delete_database_16px.png"> 
             <i>Empty table</i> deletes all records in the table.
           </li>
-          <li style="margin-bottom:3pt">
+          <li style="margin-bottom:6pt">
             <img style="width: 16px; height: 16px;" alt="cutbutton" src="img/icons8_delete_row_16px.png">
             Deletes only visible (non-filtered) records.
           </li>
-          <li style="margin-bottom:3pt">
+          <li style="margin-bottom:6pt">
             <img style="width: 16px; height: 16px;" alt="restructurebutton" src="img/icons8_tree_structure_16px.png"> 
             <i>Restructure</i> allows you to change the table structure or indexes.
           </li>
-          <li style="margin-bottom:3pt">
+          <li style="margin-bottom:6pt">
             <img style="width: 16px; height: 16px;" alt="setfieldbutton" src="img/icons8_edit_column_16px.png" /> 
             <i>Set field value</i> allows you to set a value for all table records for a specific field.
             Can either be a fixed value or the result of a 
-            mathematical operation between two fields (+,-,*,/).
+            mathematical operation between two fields (<tt>+, -, *, /</tt>).
+          </li>
+          <li style="margin-bottom:6pt">
+            <img style="width: 16px; height: 16px;" alt="autofillcolumnsbutton" src="img/icons8_resize_horizontal_16px.png" />
+            <i>Auto-fill columns</i>: If pressed, the width of the grid is
+            evenly distributed to all columns so that all of them are visible
+            without scrolling.
+            If released, the widths are reverted to the values setup in the dbf file.
           </li>
         </ul>
       </p>
@@ -290,7 +305,7 @@
         index specified.
       </p>
       <p>
-        By selecting <i>Show deleted records</i> you can activate, or not, 
+        By checking <i>Show deleted records</i> you can activate 
         the visualization of deleted records.
       </p>
           
@@ -299,15 +314,16 @@
         <i>MyDbf Studio</i> allows you to export data to various file formats.
         The following formats are currently supported:
         <ul>
-          <li style="margin-bottom:3pt">Comma Separated Value (.csv)</li>
-          <li style="margin-bottom:3pt">HTML file</li>
-          <li style="margin-bottom:3pt">Microsoft Excel© sheet (.xls)</li>
-          <li style="margin-bottom:3pt">DBF Table</li>
-          <li style="margin-bottom:3pt">XMS File</li>
+          <li style="margin-bottom:3pt">Comma Separated Values (<tt>.csv</tt>)</li>
+          <li style="margin-bottom:3pt">HTML file (<tt>.html</tt>)</li>
+          <li style="margin-bottom:3pt">Microsoft Excel© sheet (<tt>.xls</tt>)</li>
+          <li style="margin-bottom:3pt">DBF Table (<tt>.dbf</tt>)</li>
+          <li style="margin-bottom:3pt">XML File (<tt>.xml</tt>)</li>
         </ul>
       </p>
       <p>
-        In all cases, you can choose which fields to export from the active table. 
+        In all cases, you can choose which fields of the active table will be 
+        exported.
       </p>
             
       <h3><a name="Exporting_to_CSV">Exporting table to Comma Separated Value file (.csv)</a></h3>
