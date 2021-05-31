@@ -41,7 +41,8 @@ var
 
 implementation
 
-Uses Math, uNewTable, uRestructure, uOptions;
+uses
+  uNewTable, uRestructure, uOptions;
 
 {$R *.lfm}
 

@@ -10,8 +10,8 @@ uses
 Type
     TDsCSVErrorResponse          = (dscsvAbort, dscsvIgnore);
 
-    TDsCSVProgressEvent          = Procedure(Sender : TObject; AProgress: LongInt; var StopIt: Boolean) of object;
-    TDsCSVExportErrorEvent       = Procedure(Sender : TObject; Mess: string; RecNo: LongInt; var Response:TDsCSVErrorResponse) of object;
+    TDsCSVProgressEvent          = Procedure(Sender : TObject; AProgress: LongInt; out StopIt: Boolean) of object;
+    TDsCSVExportErrorEvent       = Procedure(Sender : TObject; Mess: string; RecNo: LongInt; out Response:TDsCSVErrorResponse) of object;
 
     { TDsCSV }
 
@@ -55,7 +55,7 @@ Type
       FFile                      : TextFile;
 
       Function CountMapItems() : Integer;
-      Function GetMapItem(ItemIndex:Integer; Var AField:Boolean) : String;
+      Function GetMapItem(ItemIndex:Integer; out AField:Boolean) : String;
       Function GetCSVRecordItem(ItemIndex : Integer; CSVRecord : String) : String;
       Function BuildMap() : String;
       Function ExtractWord(Item: Integer;S, WordDelim: String): String;
@@ -114,7 +114,7 @@ begin
  Result:=FMapItems;
 end;
 
-function TDsCSV.GetMapItem(ItemIndex: Integer; var AField: Boolean): String;
+function TDsCSV.GetMapItem(ItemIndex: Integer; out AField: Boolean): String;
  Var S : String;
      P : ^ShortString;
 begin
@@ -379,7 +379,7 @@ procedure TDsCSV.DatasetToCSV();
      I : Integer;
      C : LongInt;
      B : Boolean;
-     Buffer : Pointer;
+     Buffer : Pointer = nil;
 begin
  FFieldCache:=TList.Create;
 

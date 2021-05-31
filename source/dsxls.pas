@@ -11,7 +11,7 @@ Type
 
     { TDsXlsFile }
 
-    TDsXlsFile                    = Class(TComponent)
+    TDsXlsFile                    = class
      Private
       FStream                     : TFileStream;
       FStrNumber                  : String;
@@ -28,7 +28,7 @@ Type
       Procedure WriteAgPos(Row,Col,Format: Word; Ag: TAlignment);
 
      Public
-      Constructor Create;
+      constructor Create;
       Destructor Destroy; Override;
 
       Procedure PutGenStr(Row,Col,Format: Word; Fmt: Byte; S: string);

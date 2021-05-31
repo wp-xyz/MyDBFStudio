@@ -72,7 +72,7 @@ var
 implementation
 
 uses
-  Math, uMain, uIdxTable, uOptions;
+  Math, uMain, uIdxTable;
 
 {$R *.lfm}
 

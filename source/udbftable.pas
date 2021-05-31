@@ -71,7 +71,8 @@ implementation
 
 uses
   LConvEncoding,
-  uDataModule, uRestructure, uSetFV, uMain;
+  {%H-}uDataModule,  // uDatamodule needed for imagelist
+  uUtils, uRestructure, uSetFV;
 
 {$R *.lfm}
 

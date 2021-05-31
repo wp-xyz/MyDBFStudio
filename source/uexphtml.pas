@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  CheckLst, ColorBox, ExtCtrls, ComCtrls, Buttons, Spin, DsHtml, dbf;
+  CheckLst, ColorBox, ExtCtrls, ComCtrls, Buttons, DsHtml, dbf;
 
 type
 
@@ -152,7 +152,7 @@ var
   ind: Integer;
   w: Integer;
 begin
-  w := MaxValue([lblPageBackColor.Width, lblPageFontColor.Width,
+  w := {%H-}MaxValue([lblPageBackColor.Width, lblPageFontColor.Width,
                  lblHeaderBackColor.Width, lblHeaderFontColor.Width,
                  lblPageFontStyle.Width, lblHeaderFontStyle.Width,
                  lblTableWidth.Width, lblTableBorderColor.Width,

@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, dbf, FileUtil, Forms, Controls, Graphics, Dialogs, Grids,
-  StdCtrls, Buttons, ExtCtrls, db, dbf_fields, Types;
+  StdCtrls, Buttons, ExtCtrls, db, dbf_fields;
 
 type
 
@@ -289,7 +289,7 @@ end;
 procedure TRestructure.FormShow(Sender: TObject);
  Var Ind : Word;
 begin
- DefineBtn.Constraints.MinWidth := MaxValue([DefineBtn.Width, EditBtn.Width, DeleteBtn.Width]);
+ DefineBtn.Constraints.MinWidth := MaxValue([DefineBtn.Width, EditBtn.Width, DeleteBtn.Width]){%H-};
  EditBtn.Constraints.MinWidth := DefineBtn.Constraints.MinWidth;
  DeleteBtn.Constraints.MinWidth := DefineBtn.Constraints.MinWidth;
 

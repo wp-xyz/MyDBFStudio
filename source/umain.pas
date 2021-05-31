@@ -104,8 +104,8 @@ type
     procedure miSubTablesClick(Sender: TObject);
     procedure miTabsListClick(Sender: TObject);
     procedure tbQuitClick(Sender: TObject);
-    procedure tbFileOpenMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
+    procedure tbFileOpenMouseDown(Sender: TObject; {%H-}Button: TMouseButton;
+      {%H-}Shift: TShiftState; {%H-}X, {%H-}Y: Integer);
     procedure ToolButton2Click(Sender: TObject);
     procedure WorkSiteChange(Sender: TObject);
     procedure WorkSiteCloseTabClicked(Sender: TObject);
@@ -136,7 +136,6 @@ implementation
 {$R *.lfm}
 
 Uses
-  Math,
   uNewTable, uDbfTable, uOpenBA, uExpCSV, uExpHtml, uExpXLS, uExpDBF,
   uExpXML, uExpSQL, uAddTables, uSubTables, uSortTable, uTabsList,
   uOptions, uSplash, uInfo, uUtils;

@@ -12,7 +12,7 @@ object ExpHTML: TExpHTML
   OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poMainFormCenter
-  LCLVersion = '2.1.0.0'
+  LCLVersion = '2.0.12.0'
   object lblExportField: TLabel
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Owner

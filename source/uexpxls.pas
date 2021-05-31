@@ -71,7 +71,7 @@ var
   ind: Integer;
   w: Integer;
 begin
-  w := MaxValue([lblFormatNumberWidthDecimals.Width div 2,
+  w := {%H-}MaxValue([lblFormatNumberWidthDecimals.Width div 2,
                  lblMaskNumberWidthDecimals.Width div 2,
                  ExportBtn.Width,
                  CloseBtn.Width

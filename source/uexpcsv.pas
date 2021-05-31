@@ -40,7 +40,7 @@ type
 
     Function CreateCSVFieldMap : String;
 
-    Procedure StepIt(Sender : TObject; AProgress: LongInt; var StopIt: Boolean);
+    Procedure StepIt(Sender : TObject; AProgress: LongInt; out StopIt: Boolean);
   public
     { public declarations }
   end;
@@ -98,10 +98,10 @@ begin
 end;
 
 procedure TExpCSV.StepIt(Sender: TObject; AProgress: LongInt;
-  var StopIt: Boolean);
+  out StopIt: Boolean);
 begin
+ StopIt := false;
  pBar.Position := AProgress;
-
  Application.ProcessMessages;
 end;
 
@@ -142,21 +142,14 @@ begin
      ExpDs.IgnoreString := Ignore.Text;
      ExpDs.Delimiter := fDel.Text;
      ExpDs.ExportHeader := cbSaveHeader.Checked;
-
      ExpDs.CSVMap := CreateCSVFieldMap;
-
      ExpDs.Separator := Separator.Text[1];
-
      ExpDs.DateFormat := cbDateF.Text;
-
      ExpDs.ImportProgress := @StepIt;
-
      ExpDs.DatasetToCSV();
    Finally
      ExpDs.Free;
-
      pBar.Position := 0;
-
      ShowMessage('Export completed!');
    End;
   End;

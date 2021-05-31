@@ -155,7 +155,7 @@ begin
        Try
          SetTable.Edit;
 
-         SetTable.FieldByName(SelField.Text).AsVariant := sSetVal.Text;
+         SetTable.FieldByName(SelField.Text).AsVariant := sSetVal.Text{%H-};
 
          SetTable.Post;
        Except
@@ -175,19 +175,19 @@ begin
          Case cbOp.ItemIndex Of
           0                  : SetTable.FieldByName(SelField.Text).AsVariant:=
                                SetTable.FieldByName(cbFirst.Text).AsVariant +
-                               SetTable.FieldByName(cbSecond.Text).AsVariant;
+                               SetTable.FieldByName(cbSecond.Text).AsVariant{%H-};
 
           1                  : SetTable.FieldByName(SelField.Text).AsVariant:=
                                SetTable.FieldByName(cbFirst.Text).AsVariant -
-                               SetTable.FieldByName(cbSecond.Text).AsVariant;
+                               SetTable.FieldByName(cbSecond.Text).AsVariant{%H-};
 
           2                  : SetTable.FieldByName(SelField.Text).AsVariant:=
                                SetTable.FieldByName(cbFirst.Text).AsVariant *
-                               SetTable.FieldByName(cbSecond.Text).AsVariant;
+                               SetTable.FieldByName(cbSecond.Text).AsVariant{%H-};
 
           3                  : SetTable.FieldByName(SelField.Text).AsVariant:=
                                SetTable.FieldByName(cbFirst.Text).AsVariant /
-                               SetTable.FieldByName(cbSecond.Text).AsVariant;
+                               SetTable.FieldByName(cbSecond.Text).AsVariant{%H-};
          End;
 
          SetTable.Post;
