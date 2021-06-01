@@ -246,7 +246,7 @@ begin
    If (FieldList.Cells[2,Ind] = Fieldtypenames[ftString]) Or
       //(FieldList.Cells[2,Ind] = Fieldtypenames[ftFloat]) Or
       (FieldList.Cells[2,Ind] = Fieldtypenames[ftBlob]) Or
-      (FieldList.Cells[2,Ind] = Fieldtypenames[ftMemo]) Or
+      //(FieldList.Cells[2,Ind] = Fieldtypenames[ftMemo]) Or
       (FieldList.Cells[2,Ind] = Fieldtypenames[ftFixedChar]) Or
       (FieldList.Cells[2,Ind] = Fieldtypenames[ftWideString]) Or
       (FieldList.Cells[2,Ind] = Fieldtypenames[ftBCD]) Or
@@ -308,9 +308,6 @@ begin
 
  For Ind :=0 To Temp.FieldDefs.Count - 1 Do
   Begin
-
-   WriteLn(Ind, ' ', Temp.FieldDefs.Items[ind].Name, ' ', Temp.FieldDefs.Items[ind].Size);
-
    FieldList.Cells[0,Ind + 1] := IntToStr(Ind + 1);
    FieldList.Cells[1,Ind + 1] := Temp.FieldDefs.Items[Ind].Name;
    FieldList.Cells[2,Ind + 1] := Fieldtypenames[Temp.FieldDefs.Items[Ind].DataType];

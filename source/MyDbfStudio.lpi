@@ -61,6 +61,11 @@
               <TrashVariables Value="True"/>
               <StripSymbols Value="True"/>
             </Debugging>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
           </Linking>
         </CompilerOptions>
       </Item2>
@@ -207,11 +212,11 @@
         <UnitName Value="uRestructure"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="11"/>
-        <TopLine Value="522"/>
-        <CursorPos X="3" Y="532"/>
+        <TopLine Value="296"/>
+        <CursorPos Y="311"/>
         <UsageCount Value="188"/>
         <Bookmarks Count="1">
-          <Item0 X="31" Y="532" ID="1"/>
+          <Item0 X="31" Y="529" ID="1"/>
         </Bookmarks>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -251,7 +256,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uSetFV"/>
-        <EditorIndex Value="20"/>
+        <EditorIndex Value="21"/>
         <TopLine Value="160"/>
         <CursorPos X="82" Y="178"/>
         <UsageCount Value="152"/>
@@ -375,7 +380,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uSplash"/>
-        <EditorIndex Value="19"/>
+        <EditorIndex Value="20"/>
         <TopLine Value="27"/>
         <CursorPos X="22" Y="33"/>
         <UsageCount Value="132"/>
@@ -389,10 +394,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uExpXML"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="119"/>
-        <CursorPos X="15" Y="147"/>
+        <EditorIndex Value="12"/>
+        <TopLine Value="80"/>
+        <CursorPos X="13" Y="86"/>
         <UsageCount Value="128"/>
+        <Loaded Value="True"/>
       </Unit18>
       <Unit19>
         <Filename Value="uinfo.pas"/>
@@ -472,7 +478,7 @@
         <Filename Value="uutils.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uUtils"/>
-        <EditorIndex Value="22"/>
+        <EditorIndex Value="23"/>
         <TopLine Value="11"/>
         <CursorPos X="35" Y="43"/>
         <UsageCount Value="93"/>
@@ -485,7 +491,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uTabsList"/>
-        <EditorIndex Value="21"/>
+        <EditorIndex Value="22"/>
         <TopLine Value="102"/>
         <CursorPos Y="115"/>
         <UsageCount Value="75"/>
@@ -738,58 +744,58 @@
       </Unit59>
       <Unit60>
         <Filename Value="C:/Lazarus/fpc-trunk/packages/fcl-db/src/dbase/dbf_fields.pas"/>
-        <EditorIndex Value="18"/>
+        <EditorIndex Value="19"/>
         <TopLine Value="508"/>
         <CursorPos Y="524"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="11"/>
         <Loaded Value="True"/>
       </Unit60>
       <Unit61>
         <Filename Value="C:/Lazarus/fpc-trunk/packages/fcl-db/src/base/db.pas"/>
         <UnitName Value="DB"/>
-        <EditorIndex Value="17"/>
+        <EditorIndex Value="18"/>
         <TopLine Value="2268"/>
         <CursorPos X="3" Y="2273"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="11"/>
         <Loaded Value="True"/>
       </Unit61>
       <Unit62>
         <Filename Value="C:/Lazarus/fpc-trunk/packages/fcl-db/src/dbase/dbf.pas"/>
-        <EditorIndex Value="15"/>
+        <EditorIndex Value="16"/>
         <TopLine Value="1614"/>
         <CursorPos Y="1629"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="11"/>
         <Loaded Value="True"/>
       </Unit62>
       <Unit63>
         <Filename Value="C:/Lazarus/fpc-trunk/packages/fcl-db/src/dbase/dbf_dbffile.pas"/>
-        <EditorIndex Value="16"/>
+        <EditorIndex Value="17"/>
         <TopLine Value="1419"/>
         <CursorPos X="26" Y="1433"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="11"/>
         <Loaded Value="True"/>
       </Unit63>
       <Unit64>
         <Filename Value="C:/Lazarus/fpc-trunk/rtl/inc/generic.inc"/>
-        <EditorIndex Value="13"/>
+        <EditorIndex Value="14"/>
         <TopLine Value="866"/>
         <CursorPos Y="882"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="11"/>
         <Loaded Value="True"/>
       </Unit64>
       <Unit65>
         <Filename Value="C:/Lazarus/lazarus-trunk_fpc-trunk/lcl/grids.pas"/>
         <UnitName Value="Grids"/>
-        <EditorIndex Value="14"/>
+        <EditorIndex Value="15"/>
         <TopLine Value="11080"/>
         <CursorPos X="52" Y="11100"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="11"/>
         <Loaded Value="True"/>
       </Unit65>
       <Unit66>
         <Filename Value="C:/Lazarus/fpc-trunk/rtl/objpas/typinfo.pp"/>
         <UnitName Value="TypInfo"/>
-        <EditorIndex Value="12"/>
+        <EditorIndex Value="13"/>
         <TopLine Value="148"/>
         <CursorPos X="35" Y="166"/>
         <UsageCount Value="10"/>
@@ -798,124 +804,124 @@
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="C:/Lazarus/fpc-trunk/rtl/inc/generic.inc"/>
-        <Caret Line="867" TopLine="848"/>
-      </Position1>
-      <Position2>
-        <Filename Value="C:/Lazarus/fpc-trunk/rtl/inc/generic.inc"/>
-        <Caret Line="869" TopLine="848"/>
-      </Position2>
-      <Position3>
-        <Filename Value="C:/Lazarus/fpc-trunk/rtl/inc/generic.inc"/>
-        <Caret Line="870" TopLine="848"/>
-      </Position3>
-      <Position4>
-        <Filename Value="C:/Lazarus/fpc-trunk/rtl/inc/generic.inc"/>
-        <Caret Line="882" TopLine="866"/>
-      </Position4>
-      <Position5>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-trunk/lcl/grids.pas"/>
-        <Caret Line="11097" TopLine="11080"/>
-      </Position5>
-      <Position6>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-trunk/lcl/grids.pas"/>
-        <Caret Line="11098" TopLine="11080"/>
-      </Position6>
-      <Position7>
         <Filename Value="C:/Lazarus/lazarus-trunk_fpc-trunk/lcl/grids.pas"/>
         <Caret Line="11099" TopLine="11080"/>
-      </Position7>
-      <Position8>
+      </Position1>
+      <Position2>
         <Filename Value="C:/Lazarus/lazarus-trunk_fpc-trunk/lcl/grids.pas"/>
         <Caret Line="11100" Column="52" TopLine="11080"/>
+      </Position2>
+      <Position3>
+        <Filename Value="urestructure.pas"/>
+        <Caret Line="484" TopLine="467"/>
+      </Position3>
+      <Position4>
+        <Filename Value="urestructure.pas"/>
+        <Caret Line="59" Column="14" TopLine="43"/>
+      </Position4>
+      <Position5>
+        <Filename Value="urestructure.pas"/>
+        <Caret Line="526" TopLine="517"/>
+      </Position5>
+      <Position6>
+        <Filename Value="urestructure.pas"/>
+        <Caret Line="586" Column="5" TopLine="517"/>
+      </Position6>
+      <Position7>
+        <Filename Value="urestructure.pas"/>
+        <Caret Line="531" Column="20" TopLine="523"/>
+      </Position7>
+      <Position8>
+        <Filename Value="urestructure.pas"/>
+        <Caret Line="529" Column="12" TopLine="509"/>
       </Position8>
       <Position9>
         <Filename Value="urestructure.pas"/>
-        <Caret Line="484" TopLine="467"/>
+        <Caret Line="527" Column="45" TopLine="513"/>
       </Position9>
       <Position10>
         <Filename Value="urestructure.pas"/>
-        <Caret Line="59" Column="14" TopLine="43"/>
+        <Caret Line="531" TopLine="516"/>
       </Position10>
       <Position11>
         <Filename Value="urestructure.pas"/>
-        <Caret Line="526" TopLine="517"/>
+        <Caret Line="533" Column="34" TopLine="516"/>
       </Position11>
       <Position12>
         <Filename Value="urestructure.pas"/>
-        <Caret Line="586" Column="5" TopLine="517"/>
+        <Caret Line="531" Column="24" TopLine="515"/>
       </Position12>
       <Position13>
         <Filename Value="urestructure.pas"/>
-        <Caret Line="531" Column="20" TopLine="523"/>
+        <Caret Line="530" Column="12" TopLine="515"/>
       </Position13>
       <Position14>
         <Filename Value="urestructure.pas"/>
-        <Caret Line="529" Column="12" TopLine="509"/>
+        <Caret Line="541" Column="3" TopLine="515"/>
       </Position14>
       <Position15>
         <Filename Value="urestructure.pas"/>
-        <Caret Line="527" Column="45" TopLine="513"/>
+        <Caret Line="532" TopLine="516"/>
       </Position15>
       <Position16>
         <Filename Value="urestructure.pas"/>
-        <Caret Line="531" TopLine="516"/>
+        <Caret Line="484" TopLine="467"/>
       </Position16>
       <Position17>
         <Filename Value="urestructure.pas"/>
-        <Caret Line="533" Column="34" TopLine="516"/>
+        <Caret Line="532" TopLine="515"/>
       </Position17>
       <Position18>
         <Filename Value="urestructure.pas"/>
-        <Caret Line="531" Column="24" TopLine="515"/>
+        <Caret Line="533" TopLine="515"/>
       </Position18>
       <Position19>
         <Filename Value="urestructure.pas"/>
-        <Caret Line="530" Column="12" TopLine="515"/>
+        <Caret Line="531" TopLine="515"/>
       </Position19>
       <Position20>
         <Filename Value="urestructure.pas"/>
-        <Caret Line="541" Column="3" TopLine="515"/>
+        <Caret Line="594" TopLine="523"/>
       </Position20>
       <Position21>
         <Filename Value="urestructure.pas"/>
-        <Caret Line="532" TopLine="516"/>
+        <Caret Line="486" TopLine="469"/>
       </Position21>
       <Position22>
         <Filename Value="urestructure.pas"/>
-        <Caret Line="484" TopLine="467"/>
+        <Caret Line="59" Column="14" TopLine="43"/>
       </Position22>
       <Position23>
         <Filename Value="urestructure.pas"/>
-        <Caret Line="532" TopLine="515"/>
+        <Caret Line="532" Column="72" TopLine="502"/>
       </Position23>
       <Position24>
         <Filename Value="urestructure.pas"/>
-        <Caret Line="533" TopLine="515"/>
+        <Caret Line="59" Column="33" TopLine="57"/>
       </Position24>
       <Position25>
         <Filename Value="urestructure.pas"/>
-        <Caret Line="531" TopLine="515"/>
+        <Caret Line="532" Column="3" TopLine="522"/>
       </Position25>
       <Position26>
         <Filename Value="urestructure.pas"/>
-        <Caret Line="594" TopLine="523"/>
+        <Caret Line="485" Column="17" TopLine="467"/>
       </Position26>
       <Position27>
         <Filename Value="urestructure.pas"/>
-        <Caret Line="486" TopLine="469"/>
+        <Caret Line="42" Column="22" TopLine="35"/>
       </Position27>
       <Position28>
         <Filename Value="urestructure.pas"/>
-        <Caret Line="59" Column="14" TopLine="43"/>
+        <Caret Line="230" Column="55" TopLine="227"/>
       </Position28>
       <Position29>
-        <Filename Value="urestructure.pas"/>
-        <Caret Line="532" Column="72" TopLine="502"/>
+        <Filename Value="uexpxml.pas"/>
+        <Caret Line="100" Column="7" TopLine="84"/>
       </Position29>
       <Position30>
-        <Filename Value="urestructure.pas"/>
-        <Caret Line="59" Column="33" TopLine="57"/>
+        <Filename Value="uexpxml.pas"/>
+        <Caret Line="86" Column="13" TopLine="80"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
@@ -949,15 +955,6 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <BreakPoints Count="1">
-      <Item1>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="urestructure.pas"/>
-        <Line Value="484"/>
-      </Item1>
-    </BreakPoints>
     <Exceptions Count="3">
       <Item1>
         <Name Value="EAbort"/>

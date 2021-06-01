@@ -64,7 +64,7 @@ object Restructure: TRestructure
       end>
     Constraints.MinWidth = 450
     FixedCols = 0
-    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goSmoothScroll]
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goAlwaysShowEditor, goSmoothScroll]
     RowCount = 2
     TabOrder = 0
     TitleFont.Height = -12
