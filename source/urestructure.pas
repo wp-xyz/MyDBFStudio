@@ -70,7 +70,7 @@ var
 implementation
 
 Uses
-  LCLType, TypInfo, Math, uIdxTable, uOptions;
+  LCLType, TypInfo, Math, uUtils, uIdxTable, uOptions;
 
 {$R *.lfm}
 
@@ -338,23 +338,7 @@ begin
     end;
   end;
 
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftString]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftSmallInt]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftInteger]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftWord]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftBoolean]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftFloat]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftDate]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftDateTime]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftBlob]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftMemo]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftDBaseOle]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftFixedChar]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftWideString]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftLargeInt]);
-
- If Temp.TableLevel = 7 Then
-  FieldList.Columns[2].PickList.Add(Fieldtypenames[ftAutoInc]);
+ FieldTypePickList(Temp.TableLevel, FieldList.Columns[2].PickList);
 
  ShowInfo(Temp);
 end;
@@ -519,12 +503,6 @@ begin
 end;
 
 function TRestructure.RetFieldType(AValue: String): TFieldType;
-const
-  SupportedFieldTypes: set of TFieldType = [
-    ftString, ftSmallInt, ftInteger, ftWord, ftBoolean,
-    ftFloat, ftDate, ftDateTime, ftBLOB, ftDBaseOLE, ftFixedChar, ftWideString,
-    ftLargeInt, ftCurrency, ftBCD, ftBytes, ftAutoInc,
-    ftMemo];
 begin
   Result := TFieldType(GetEnumValue(TypeInfo(TFieldType), 'ft' + AValue));
   if not (Result in SupportedFieldTypes) then

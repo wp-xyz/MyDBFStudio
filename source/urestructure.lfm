@@ -46,6 +46,7 @@ object Restructure: TRestructure
         Width = 260
       end    
       item
+        DropDownRows = 24
         SizePriority = 0
         Title.Caption = 'Type'
         Width = 100

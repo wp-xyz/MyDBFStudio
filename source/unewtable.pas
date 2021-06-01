@@ -53,7 +53,7 @@ type
 
     Function Check_Value(Val : String) : Boolean;
 
-    Function RetFieldType(Val : String) : TFieldType;
+    Function RetFieldType(AValue: String) : TFieldType;
 
     Function CreateNewFieldDefs : TDbfFieldDefs;
 
@@ -72,7 +72,7 @@ var
 implementation
 
 uses
-  Math, uMain, uIdxTable;
+  Math, TypInfo, uUtils, uMain, uIdxTable;
 
 {$R *.lfm}
 
@@ -109,9 +109,9 @@ begin
     End;
 
    If (FieldList.Cells[2,Ind] = Fieldtypenames[ftString]) Or
-      (FieldList.Cells[2,Ind] = Fieldtypenames[ftFloat]) Or
+//      (FieldList.Cells[2,Ind] = Fieldtypenames[ftFloat]) Or
       (FieldList.Cells[2,Ind] = Fieldtypenames[ftBlob]) Or
-      (FieldList.Cells[2,Ind] = Fieldtypenames[ftMemo]) Or
+//      (FieldList.Cells[2,Ind] = Fieldtypenames[ftMemo]) Or
       (FieldList.Cells[2,Ind] = Fieldtypenames[ftFixedChar]) Or
       (FieldList.Cells[2,Ind] = Fieldtypenames[ftWideString]) Or
       (FieldList.Cells[2,Ind] = Fieldtypenames[ftBCD]) Or
@@ -383,41 +383,15 @@ begin
 end;
 
 procedure TNewTable.TableTypeChange(Sender: TObject);
- Var Tl : Word;
 begin
- FieldList.Columns[2].PickList.Clear;
-
- Tl := ReturnTableLevel;
-
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftString]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftSmallInt]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftInteger]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftWord]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftBoolean]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftFloat]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftDate]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftDateTime]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftBlob]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftMemo]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftDBaseOle]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftFixedChar]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftWideString]);
- FieldList.Columns[2].PickList.Add(Fieldtypenames[ftLargeInt]);
-
- If Tl = 7 Then
-  FieldList.Columns[2].PickList.Add(Fieldtypenames[ftAutoInc]);
+  FieldTypePickList(ReturnTableLevel, FieldList.Columns[2].PickList);
 end;
 
 function TNewTable.ReturnTableLevel: Word;
+const
+  TABLE_LEVELS: array[-1..3] of Integer = (3, 3, 4, 7, 25);
 begin
- Result := 3;
-
- Case TableType.ItemIndex Of
-      0                   : Result := 3;
-      1                   : Result := 4;
-      2                   : Result := 7;
-      3                   : Result := 25;
- End;
+  Result := TABLE_LEVELS[TableType.ItemIndex];
 end;
 
 procedure TNewTable.ShowIndexList;
@@ -449,59 +423,11 @@ begin
  End;
 end;
 
-function TNewTable.RetFieldType(Val: String): TFieldType;
+function TNewTable.RetFieldType(AValue: String): TFieldType;
 begin
- Result := ftUnknown;
- If Val = Fieldtypenames[ftString] Then
-  Result:=ftString
- Else
-  If Val = Fieldtypenames[ftSmallInt] Then
-   Result:=ftSmallInt
-  Else
-   If Val = Fieldtypenames[ftInteger] Then
-    Result:=ftInteger
-   Else
-    If Val = Fieldtypenames[ftWord] Then
-     Result:=ftWord
-    Else
-     If Val = Fieldtypenames[ftBoolean] Then
-      Result:=ftBoolean
-     Else
-      If Val = Fieldtypenames[ftFloat] Then
-       Result:=ftFloat
-      Else
-       If Val = Fieldtypenames[ftDate] Then
-        Result:=ftDate
-       Else
-        If Val = Fieldtypenames[ftDateTime] Then
-         Result:=ftDateTime
-        Else
-         If Val = Fieldtypenames[ftBlob] Then
-          Result:=ftBlob
-         Else
-          If Val = Fieldtypenames[ftDBaseOle] Then
-           Result:=ftDbaseOle
-          Else
-           If Val = Fieldtypenames[ftFixedChar] Then
-            Result:=ftFixedChar
-           Else
-            If Val = Fieldtypenames[ftWideString] Then
-             Result:=ftWideString
-            Else
-             If Val = Fieldtypenames[ftLargeInt] Then
-              Result:=ftLargeInt
-             Else
-              If Val = Fieldtypenames[ftCurrency] Then
-               Result:=ftCurrency
-              Else
-               If Val = Fieldtypenames[ftBCD] Then
-                Result:=ftBCD
-               Else
-                If Val = Fieldtypenames[ftBytes] Then
-                 Result:=ftBytes
-                Else
-                 If Val = Fieldtypenames[ftAutoInc] Then
-                  Result:=ftAutoInc;
+  Result := TFieldType(GetEnumValue(TypeInfo(TFieldType), 'ft' + AValue));
+  if not (Result in SupportedFieldTypes) then
+    Result := ftUnknown;
 end;
 
 function TNewTable.CreateNewFieldDefs: TDbfFieldDefs;
