@@ -63,8 +63,9 @@ begin
   AList.Add(Fieldtypenames[ftDBaseOle]);
   AList.Add(Fieldtypenames[ftFixedChar]);
 
-  If ATableLevel = 7 Then
-   AList.Add(Fieldtypenames[ftAutoInc]);
+  If ATableLevel in [7, 25, 30] Then
+    // ftAutoInc is supported by Visual dBase, FoxPro and Visual FoxPro
+    AList.Add(Fieldtypenames[ftAutoInc]);
 end;
 
 function GetVersionStr: String;

@@ -157,6 +157,7 @@ object NewTable: TNewTable
         'dBase IV'
         'Visual dBase VII'
         'FoxPro'
+        'Visual FoxPro'
       )
       OnChange = TableTypeChange
       Style = csDropDownList

@@ -389,7 +389,7 @@ end;
 
 function TNewTable.ReturnTableLevel: Word;
 const
-  TABLE_LEVELS: array[-1..3] of Integer = (3, 3, 4, 7, 25);
+  TABLE_LEVELS: array[-1..4] of Integer = (3, 3, 4, 7, 25, 30);
 begin
   Result := TABLE_LEVELS[TableType.ItemIndex];
 end;
@@ -406,21 +406,12 @@ begin
 end;
 
 function TNewTable.Check_Value(Val: String): Boolean;
+var
+  n: Integer;
 begin
- Result := True;
-
- If Trim(Val) = '' Then
-  Begin
-   Result := False;
-
-   Exit;
-  End;
-
- Try
-   StrToInt(Val);
- Except
-   Result := False;
- End;
+  Result := false;
+  if Trim(Val) <> '' Then
+    Result := TryStrToInt(Val, n);
 end;
 
 function TNewTable.RetFieldType(AValue: String): TFieldType;
