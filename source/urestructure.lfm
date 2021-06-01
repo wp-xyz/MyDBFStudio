@@ -13,7 +13,7 @@ object Restructure: TRestructure
   OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poMainFormCenter
-  LCLVersion = '2.0.12.0'
+  LCLVersion = '2.1.0.0'
   object FieldList: TStringGrid
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = lblFieldList

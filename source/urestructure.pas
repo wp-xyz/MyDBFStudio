@@ -56,7 +56,7 @@ type
 
     function CreateNewFieldDefs : TDbfFieldDefs;
     procedure RecreateMyIndex;
-    function RetFieldType(Val : String) : TFieldType;
+    function RetFieldType(AValue: String) : TFieldType;
 
     procedure ShowInfo(ATable: TDbf);
   public
@@ -70,7 +70,7 @@ var
 implementation
 
 Uses
-  LCLType, Math, uIdxTable, uOptions;
+  LCLType, TypInfo, Math, uIdxTable, uOptions;
 
 {$R *.lfm}
 
@@ -308,6 +308,9 @@ begin
 
  For Ind :=0 To Temp.FieldDefs.Count - 1 Do
   Begin
+
+   WriteLn(Ind, ' ', Temp.FieldDefs.Items[ind].Name, ' ', Temp.FieldDefs.Items[ind].Size);
+
    FieldList.Cells[0,Ind + 1] := IntToStr(Ind + 1);
    FieldList.Cells[1,Ind + 1] := Temp.FieldDefs.Items[Ind].Name;
    FieldList.Cells[2,Ind + 1] := Fieldtypenames[Temp.FieldDefs.Items[Ind].DataType];
@@ -518,59 +521,17 @@ begin
   End;
 end;
 
-function TRestructure.RetFieldType(Val: String): TFieldType;
+function TRestructure.RetFieldType(AValue: String): TFieldType;
+const
+  SupportedFieldTypes: set of TFieldType = [
+    ftString, ftSmallInt, ftInteger, ftWord, ftBoolean,
+    ftFloat, ftDate, ftDateTime, ftBLOB, ftDBaseOLE, ftFixedChar, ftWideString,
+    ftLargeInt, ftCurrency, ftBCD, ftBytes, ftAutoInc,
+    ftMemo];
 begin
- Result := ftUnknown;
- If Val = Fieldtypenames[ftString] Then
-  Result:=ftString
- Else
-  If Val = Fieldtypenames[ftSmallInt] Then
-   Result:=ftSmallInt
-  Else
-   If Val = Fieldtypenames[ftInteger] Then
-    Result:=ftInteger
-   Else
-    If Val = Fieldtypenames[ftWord] Then
-     Result:=ftWord
-    Else
-     If Val = Fieldtypenames[ftBoolean] Then
-      Result:=ftBoolean
-     Else
-      If Val = Fieldtypenames[ftFloat] Then
-       Result:=ftFloat
-      Else
-       If Val = Fieldtypenames[ftDate] Then
-        Result:=ftDate
-       Else
-        If Val = Fieldtypenames[ftDateTime] Then
-         Result:=ftDateTime
-        Else
-         If Val = Fieldtypenames[ftBlob] Then
-          Result:=ftBlob
-         Else
-          If Val = Fieldtypenames[ftDBaseOle] Then
-           Result:=ftDbaseOle
-          Else
-           If Val = Fieldtypenames[ftFixedChar] Then
-            Result:=ftFixedChar
-           Else
-            If Val = Fieldtypenames[ftWideString] Then
-             Result:=ftWideString
-            Else
-             If Val = Fieldtypenames[ftLargeInt] Then
-              Result:=ftLargeInt
-             Else
-              If Val = Fieldtypenames[ftCurrency] Then
-               Result:=ftCurrency
-              Else
-               If Val = Fieldtypenames[ftBCD] Then
-                Result:=ftBCD
-               Else
-                If Val = Fieldtypenames[ftBytes] Then
-                 Result:=ftBytes
-                Else
-                 If Val = Fieldtypenames[ftAutoInc] Then
-                  Result:=ftAutoInc;
+  Result := TFieldType(GetEnumValue(TypeInfo(TFieldType), 'ft' + AValue));
+  if not (Result in SupportedFieldTypes) then
+    Result := ftUnknown;
 end;
 
 procedure TRestructure.ShowInfo(ATable: TDbf);
