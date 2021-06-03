@@ -13,10 +13,11 @@ type
   { TDbfTable }
 
   TDbfTable = class(TForm)
-    LoadBlobFile: TButton;
-    SaveBlobFile: TButton;
-    CopyBtn: TButton;
-    PasteBtn: TButton;
+    LoadBlobBtn: TButton;
+    OpenDialog: TOpenDialog;
+    SaveBlobBtn: TButton;
+    CopyBlobBtn: TButton;
+    PasteBlobBtn: TButton;
     cbShowDel: TCheckBox;
     DBMemo: TDBMemo;
     Image: TImage;
@@ -33,6 +34,7 @@ type
     pgGraphic: TPage;
     pgMemo: TPage;
     Panel1: TPanel;
+    SaveDialog: TSaveDialog;
     sbInfo: TStatusBar;
     MemoSplitter: TSplitter;
     TabControl: TTabControl;
@@ -51,8 +53,10 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure IndexesChange(Sender: TObject);
     procedure leFilterKeyDown(Sender: TObject; var Key: Word; {%H-}Shift: TShiftState);
+    procedure LoadBlobBtnClick(Sender: TObject);
     procedure PackClick(Sender: TObject);
     procedure RestructClick(Sender: TObject);
+    procedure SaveBlobBtnClick(Sender: TObject);
     procedure SetFieldClick(Sender: TObject);
     Procedure ShowTableInfo(DataSet: TDataSet);
     procedure TabControlChange(Sender: TObject);
@@ -80,12 +84,19 @@ var
 
 implementation
 
+{$R *.lfm}
+
 uses
   LConvEncoding,
   {%H-}uDataModule,  // uDatamodule needed for imagelist
   uUtils, uRestructure, uSetFV;
 
-{$R *.lfm}
+const
+  GRAPHIC_FILTER = 'BMP files (*.bmp)|*.bmp|'+
+    'JPEG files (*.jpg;*.jpeg)|*.jpeg;*.jpg|'+
+    'PNG files (*.png)|*.png';
+  MEMO_FILTER = 'Text files (*.txt)|*.txt|'+
+    'All files (*.*)|*.*';
 
 { TDbfTable }
 
@@ -114,6 +125,25 @@ begin
 
    ShowTableInfo(DbTable);
   End;
+end;
+
+procedure TDbfTable.LoadBlobBtnClick(Sender: TObject);
+var
+  field: TField;
+begin
+  if not (DBTable.State in [dsEdit, dsInsert]) then
+    exit;
+  if TabControl.TabIndex = -1 then
+    exit;
+  field := DBTable.FieldByName(TabControl.Tabs[TabControl.TabIndex]);;
+  if not (field is TBLOBField) then
+    exit;
+  case Notebook.PageIndex of
+    0: OpenDialog.Filter := MEMO_FILTER;
+    1: OpenDialog.Filter := GRAPHIC_FILTER;
+  end;
+  if OpenDialog.Execute then
+    TBLOBField(field).LoadFromFile(OpenDialog.FileName);
 end;
 
 function TDbfTable.IsGraphicStream(AStream: TStream): boolean;
@@ -154,6 +184,76 @@ begin
   DbTable.Close;
   DbTable.Open;
   Setup;
+end;
+
+procedure TDbfTable.SaveBlobBtnClick(Sender: TObject);
+var
+  field: TField;
+  ext: String;
+  img: TCustomBitmap;
+begin
+  if TabControl.TabIndex = -1 then
+    exit;
+  field := DBTable.FieldByName(TabControl.Tabs[TabControl.TabIndex]);;
+  if not (field is TBLOBField) then
+    exit;
+  case Notebook.PageIndex of
+    0: SaveDialog.Filter := MEMO_FILTER;
+    1: SaveDialog.Filter := GRAPHIC_FILTER;
+  end;
+  if SaveDialog.Execute then
+  begin
+    ext := lowercase(ExtractFileExt(SaveDialog.FileName));
+    if (ext = '.bmp') then
+    begin
+      if Image.Picture.Bitmap <> nil then
+        Image.Picture.Bitmap.SaveToFile(SaveDialog.Filename)
+      else
+      if (Image.Picture.Graphic <> nil) and (Image.Picture.Graphic is TCustomBitmap) then
+      begin
+        img := TBitmap.Create;
+        try
+          img.Assign(TCustomBitmap(Image.Picture.Graphic));
+          img.SaveToFile(SaveDialog.FileName);
+        finally
+          img.Free;
+        end;
+      end;
+    end else
+    if (ext = '.jpg') or (ext = '.jpeg') then
+    begin
+      if Image.Picture.Jpeg <> nil then
+        Image.Picture.Jpeg.SaveToFile(Savedialog.FileName)
+      else
+      if (Image.Picture.Graphic <> nil) and (Image.Picture.Graphic is TCustomBitmap) then
+      begin
+        img := TJpegImage.Create;
+        try
+          img.Assign(TCustomBitmap(Image.Picture.Graphic));
+          img.SaveToFile(SaveDialog.FileName);
+        finally
+          img.Free;
+        end;
+      end;
+    end else
+    if (ext = '.png') then
+    begin
+      if Image.Picture.Png <> nil then
+        Image.Picture.PNG.SaveToFile(SaveDialog.FileName)
+      else
+      if (Image.Picture.Graphic <> nil) and (Image.Picture.Graphic is TPortableNetworkGraphic) then
+      begin
+        img := TPortableNetworkGraphic.Create;
+        try
+          img.Assign(TCustomBitmap(Image.Picture.Graphic));
+          img.SaveToFile(SaveDialog.FileName);
+        finally
+          img.Free;
+        end;
+      end;
+    end else
+      TBlobField(field).SaveToFile(SaveDialog.FileName);
+  end;
 end;
 
 procedure TDbfTable.SetFieldClick(Sender: TObject);

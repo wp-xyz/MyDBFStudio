@@ -326,25 +326,27 @@ object DbfTable: TDbfTable
       ClientHeight = 129
       ClientWidth = 61
       TabOrder = 2
-      object LoadBlobFile: TButton
+      object LoadBlobBtn: TButton
         Left = 0
         Height = 25
         Top = 0
         Width = 61
         AutoSize = True
         Caption = 'Load...'
+        OnClick = LoadBlobBtnClick
         TabOrder = 0
       end
-      object SaveBlobFile: TButton
+      object SaveBlobBtn: TButton
         Left = 0
         Height = 25
         Top = 27
         Width = 61
         AutoSize = True
         Caption = 'Save...'
+        OnClick = SaveBlobBtnClick
         TabOrder = 1
       end
-      object CopyBtn: TButton
+      object CopyBlobBtn: TButton
         Left = 0
         Height = 25
         Top = 54
@@ -353,7 +355,7 @@ object DbfTable: TDbfTable
         Caption = 'Copy'
         TabOrder = 2
       end
-      object PasteBtn: TButton
+      object PasteBlobBtn: TButton
         Left = 0
         Height = 25
         Top = 81
@@ -383,5 +385,13 @@ object DbfTable: TDbfTable
     AfterScroll = ShowTableInfo
     Left = 452
     Top = 148
+  end
+  object OpenDialog: TOpenDialog
+    Left = 484
+    Top = 346
+  end
+  object SaveDialog: TSaveDialog
+    Left = 484
+    Top = 400
   end
 end
