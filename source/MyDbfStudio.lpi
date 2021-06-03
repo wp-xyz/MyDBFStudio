@@ -22,8 +22,8 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <MinorVersionNr Value="5"/>
-      <RevisionNr Value="2"/>
-      <StringTable FileDescription="Administrative tool for Dbf and Paradox Tables." LegalCopyright="Calogiuri Enzo Antonio" ProductName="MyDbfStudio"/>
+      <RevisionNr Value="3"/>
+      <StringTable FileDescription="Administrative tool for DBF tables." LegalCopyright="Calogiuri Enzo Antonio" ProductName="MyDbfStudio"/>
     </VersionInfo>
     <BuildModes Count="4" Active="Debug">
       <Item1 Name="default" Default="True"/>
@@ -57,7 +57,6 @@
           </CodeGeneration>
           <Linking>
             <Debugging>
-              <DebugInfoType Value="dsDwarf2Set"/>
               <TrashVariables Value="True"/>
               <StripSymbols Value="True"/>
             </Debugging>
@@ -165,12 +164,13 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="65">
+    <Units Count="63">
       <Unit0>
         <Filename Value="MyDbfStudio.lpr"/>
         <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <CursorPos X="53" Y="21"/>
+        <CursorPos X="42" Y="13"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -239,10 +239,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uNewTable"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="12"/>
         <TopLine Value="311"/>
-        <CursorPos X="55" Y="319"/>
+        <CursorPos X="50" Y="338"/>
         <UsageCount Value="180"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -760,29 +759,13 @@
       <Unit62>
         <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/packages/fcl-base/src/fileinfo.pp"/>
         <UnitName Value="FileInfo"/>
-        <EditorIndex Value="20"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="90"/>
         <CursorPos X="10" Y="110"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit62>
-      <Unit63>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/packages/fcl-db/src/dbase/dbf.pas"/>
-        <EditorIndex Value="18"/>
-        <TopLine Value="2429"/>
-        <CursorPos X="3" Y="2433"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
-      </Unit63>
-      <Unit64>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/packages/fcl-db/src/dbase/dbf_common.pas"/>
-        <EditorIndex Value="19"/>
-        <CursorPos X="3" Y="23"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
-      </Unit64>
     </Units>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="24" HistoryIndex="23">
       <Position1>
         <Filename Value="unewtable.pas"/>
         <Caret Line="31" Column="18" TopLine="31"/>
@@ -841,64 +824,40 @@
         <Caret Line="68" Column="2" TopLine="41"/>
       </Position15>
       <Position16>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/packages/fcl-base/src/fileinfo.pp"/>
-        <Caret Line="110" Column="21" TopLine="85"/>
-      </Position16>
-      <Position17>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/packages/fcl-base/src/fileinfo.pp"/>
-        <Caret Line="429" Column="3" TopLine="427"/>
-      </Position17>
-      <Position18>
         <Filename Value="uutils.pas"/>
         <Caret Line="68" Column="2" TopLine="41"/>
-      </Position18>
-      <Position19>
+      </Position16>
+      <Position17>
         <Filename Value="uexpsql.pas"/>
         <Caret Line="123" Column="8" TopLine="95"/>
-      </Position19>
-      <Position20>
+      </Position17>
+      <Position18>
         <Filename Value="uexpsql.pas"/>
         <Caret Line="219" Column="10" TopLine="200"/>
-      </Position20>
-      <Position21>
+      </Position18>
+      <Position19>
         <Filename Value="uexpxls.pas"/>
         <Caret Line="129" Column="8" TopLine="109"/>
-      </Position21>
-      <Position22>
+      </Position19>
+      <Position20>
         <Filename Value="udbftable.pas"/>
         <Caret Line="279" Column="18" TopLine="263"/>
-      </Position22>
-      <Position23>
+      </Position20>
+      <Position21>
         <Filename Value="udbftable.pas"/>
-      </Position23>
-      <Position24>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/packages/fcl-db/src/dbase/dbf.pas"/>
-        <Caret Line="7" Column="29"/>
-      </Position24>
-      <Position25>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/packages/fcl-db/src/dbase/dbf.pas"/>
-        <Caret Line="175" Column="16" TopLine="143"/>
-      </Position25>
-      <Position26>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/packages/fcl-db/src/dbase/dbf.pas"/>
-        <Caret Line="217" Column="28" TopLine="186"/>
-      </Position26>
-      <Position27>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/packages/fcl-db/src/dbase/dbf.pas"/>
-        <Caret Line="2433" Column="3" TopLine="2429"/>
-      </Position27>
-      <Position28>
+      </Position21>
+      <Position22>
         <Filename Value="unewtable.pas"/>
         <Caret Line="45" Column="24" TopLine="10"/>
-      </Position28>
-      <Position29>
+      </Position22>
+      <Position23>
         <Filename Value="urestructure.pas"/>
         <Caret Line="59" Column="24" TopLine="29"/>
-      </Position29>
-      <Position30>
+      </Position23>
+      <Position24>
         <Filename Value="urestructure.pas"/>
         <Caret Line="507" Column="3" TopLine="499"/>
-      </Position30>
+      </Position24>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
