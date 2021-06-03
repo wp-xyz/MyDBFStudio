@@ -17,10 +17,12 @@ type
 
 const
   SupportedFieldTypes: set of TFieldType = [
-    ftString, ftSmallInt, ftInteger, ftWord, ftBoolean,
-    ftFloat, ftDate, ftDateTime, ftBLOB, ftDBaseOLE, ftFixedChar, ftWideString,
-    ftLargeInt, ftCurrency, ftBCD, ftBytes, ftAutoInc,
-    ftMemo];
+    ftString, ftSmallInt, ftInteger, ftWord, ftBoolean, ftFloat,
+    ftDate, ftDateTime, ftDBaseOLE, ftFixedChar, ftWideString, ftLargeInt,
+    ftBLOB, ftMemo, ftGraphic,   // ftGraphic not supported by wiki, but seems to be outdated.
+    ftCurrency, ftBCD, ftBytes,  // TableLevel 25 only
+    ftAutoInc  // TableLevel 7 and 30 only
+    ];
 
 procedure FieldTypePickList(ATableLevel: Integer; const AList: TStrings);
 function GetVersionStr: String;
@@ -37,7 +39,7 @@ var
 begin
   result := nil;
   for i:=0 to Count-1 do
-    if CompareText(Items[i].FieldName, aFieldname)=0 then begin
+    if CompareText(Items[i].FieldName, aFieldName)=0 then begin
       result := Items[i];
       break;
     end;
@@ -45,27 +47,24 @@ end;
 {$IFEND}
 
 procedure FieldTypePickList(ATableLevel: Integer; const AList: TStrings);
+var
+  ft: TFieldType;
 begin
   AList.Clear;
+  for ft in SupportedFieldTypes - [ftCurrency, ftBCD, ftBytes, ftAutoInc] do
+    AList.Add(FieldTypeNames[ft]);
 
-  AList.Add(Fieldtypenames[ftString]);
-  AList.Add(Fieldtypenames[ftWideString]);
-  AList.Add(Fieldtypenames[ftSmallInt]);
-  AList.Add(Fieldtypenames[ftInteger]);
-  AList.Add(Fieldtypenames[ftWord]);
-  AList.Add(Fieldtypenames[ftLargeInt]);
-  AList.Add(Fieldtypenames[ftBoolean]);
-  AList.Add(Fieldtypenames[ftFloat]);
-  AList.Add(Fieldtypenames[ftDate]);
-  AList.Add(Fieldtypenames[ftDateTime]);
-  AList.Add(Fieldtypenames[ftBlob]);
-  AList.Add(Fieldtypenames[ftMemo]);
-  AList.Add(Fieldtypenames[ftDBaseOle]);
-  AList.Add(Fieldtypenames[ftFixedChar]);
+  // These are supported by Visual dBase
+  if ATableLevel in [7] then
+  begin
+    AList.Add(FieldTypeNames[ftCurrency]);
+    AList.Add(FieldTypeNames[ftBCD]);
+    AList.Add(FieldTypeNames[ftBytes]);
+  end;
 
-  If ATableLevel in [7, 25, 30] Then
-    // ftAutoInc is supported by Visual dBase, FoxPro and Visual FoxPro
-    AList.Add(Fieldtypenames[ftAutoInc]);
+  // ftAutoInc is supported by Visual dBase, FoxPro and Visual FoxPro
+  if ATableLevel in [7, 25, 30] then
+    AList.Add(FieldTypeNames[ftAutoInc]);
 end;
 
 function GetVersionStr: String;

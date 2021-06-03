@@ -93,15 +93,17 @@ implementation
 
 uses
   LConvEncoding, LCLType, clipbrd,
-  {%H-}uUtils,  // needed by Laz 2.0.12 for DBGrid helper
+  {%H-}uUtils,       // needed by Laz 2.0.12 for DBGrid helper
   {%H-}uDataModule,  // uDatamodule needed for imagelist
   uRestructure, uSetFV;
 
 const
-  GRAPHIC_FILTER = 'BMP files (*.bmp)|*.bmp|'+
-    'JPEG files (*.jpg;*.jpeg)|*.jpeg;*.jpg|'+
+  GRAPHIC_FILTER =
+    'BMP files (*.bmp)|*.bmp|'+
+    'JPEG files (*.jpg;*.jpeg)|*.jpg;*.jpeg|'+
     'PNG files (*.png)|*.png';
-  MEMO_FILTER = 'Text files (*.txt)|*.txt|'+
+  MEMO_FILTER =
+    'Text files (*.txt)|*.txt|'+
     'All files (*.*)|*.*';
 
 var
@@ -577,15 +579,18 @@ begin
   try
     TBlobField(AField).SaveToStream(stream);
     stream.Position := 0;
-    if IsGraphicStream(stream) then
-    begin
-      Notebook.PageIndex := 1;
-      Image.Picture.LoadFromStream(stream);
-    end else
     if (AField is TMemoField) or (AField is TWideMemoField) then
     begin
       Notebook.PageIndex := 0;
       DBMemo.DataField := AField.FieldName;
+    end else
+    if (AField is TBlobField) or IsGraphicStream(stream) then
+    begin
+      Notebook.PageIndex := 1;
+      if stream.Size > 0 then
+        Image.Picture.LoadFromStream(stream)
+      else
+        Image.Picture.Clear;
     end else
       Image.Picture.Clear;
 

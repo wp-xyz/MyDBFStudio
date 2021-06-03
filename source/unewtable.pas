@@ -35,8 +35,8 @@ type
     TableType: TComboBox;
     procedure CloseBtnClick(Sender: TObject);
     procedure CreateTableBtnClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
+    procedure DefineIndexBtnClick(Sender: TObject);
+    procedure eleteIndexBtnClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; {%H-}Shift: TShiftState);
@@ -110,7 +110,7 @@ begin
 
    If (FieldList.Cells[2,Ind] = Fieldtypenames[ftString]) Or
 //      (FieldList.Cells[2,Ind] = Fieldtypenames[ftFloat]) Or
-      (FieldList.Cells[2,Ind] = Fieldtypenames[ftBlob]) Or
+//      (FieldList.Cells[2,Ind] = Fieldtypenames[ftBlob]) Or
 //      (FieldList.Cells[2,Ind] = Fieldtypenames[ftMemo]) Or
       (FieldList.Cells[2,Ind] = Fieldtypenames[ftFixedChar]) Or
       (FieldList.Cells[2,Ind] = Fieldtypenames[ftWideString]) Or
@@ -164,7 +164,7 @@ begin
   end;
 end;
 
-procedure TNewTable.Button1Click(Sender: TObject);
+procedure TNewTable.DefineIndexBtnClick(Sender: TObject);
  Var Ind : Word;
      lOpt : TIndexOptions;
      ExpField : String;
@@ -211,7 +211,7 @@ begin
   End;
 end;
 
-procedure TNewTable.Button2Click(Sender: TObject);
+procedure TNewTable.eleteIndexBtnClick(Sender: TObject);
  Var dName : String;
      Ind : Word;
 begin

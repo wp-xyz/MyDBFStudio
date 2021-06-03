@@ -193,7 +193,7 @@ object NewTable: TNewTable
       Caption = 'Delete Index'
       Images = CommonData.Images
       ImageIndex = 5
-      OnClick = Button2Click
+      OnClick = eleteIndexBtnClick
       TabOrder = 3
     end
     object DefineIndexBtn: TBitBtn
@@ -210,7 +210,7 @@ object NewTable: TNewTable
       Caption = 'Add Index'
       Images = CommonData.Images
       ImageIndex = 4
-      OnClick = Button1Click
+      OnClick = DefineIndexBtnClick
       TabOrder = 4
     end
   end
