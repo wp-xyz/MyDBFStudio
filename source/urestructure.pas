@@ -245,7 +245,7 @@ begin
 
    If (FieldList.Cells[2,Ind] = Fieldtypenames[ftString]) Or
       //(FieldList.Cells[2,Ind] = Fieldtypenames[ftFloat]) Or
-      (FieldList.Cells[2,Ind] = Fieldtypenames[ftBlob]) Or
+      //(FieldList.Cells[2,Ind] = Fieldtypenames[ftBlob]) Or
       //(FieldList.Cells[2,Ind] = Fieldtypenames[ftMemo]) Or
       (FieldList.Cells[2,Ind] = Fieldtypenames[ftFixedChar]) Or
       (FieldList.Cells[2,Ind] = Fieldtypenames[ftWideString]) Or
