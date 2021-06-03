@@ -13,8 +13,13 @@ type
   { TDbfTable }
 
   TDbfTable = class(TForm)
+    LoadBlobFile: TButton;
+    SaveBlobFile: TButton;
+    CopyBtn: TButton;
+    PasteBtn: TButton;
     cbShowDel: TCheckBox;
     DBMemo: TDBMemo;
+    Image: TImage;
     Indexes: TComboBox;
     DBGrid: TDBGrid;
     DBNavigator1: TDBNavigator;
@@ -23,6 +28,10 @@ type
     Label1: TLabel;
     Label2: TLabel;
     leFilter: TEdit;
+    Notebook: TNotebook;
+    Panel2: TPanel;
+    pgGraphic: TPage;
+    pgMemo: TPage;
     Panel1: TPanel;
     sbInfo: TStatusBar;
     MemoSplitter: TSplitter;
@@ -53,10 +62,12 @@ type
   private
     { private declarations }
     FColWidths: array of Integer;
+    function IsGraphicStream(AStream: TStream): Boolean;
     Procedure Load_Table_Indexes;
     procedure RestoreColWidths(ATable: TDbf);
     procedure SaveColWidths(ATable: TDbf);
-    procedure ShowMemo(ATable: TDbf);
+    procedure ShowBlob(ATable: TDbf);
+    procedure ShowBlobField(AField: TField);
     function TranslateHandler(ATable: TDbf; Src, Dest: PChar; ToOem: Boolean): Integer;
 
   public
@@ -103,6 +114,25 @@ begin
 
    ShowTableInfo(DbTable);
   End;
+end;
+
+function TDbfTable.IsGraphicStream(AStream: TStream): boolean;
+begin
+  Result := false;
+
+  AStream.Position := 0;
+
+  Result := TBitmap.IsStreamFormatSupported(AStream);
+  if Result then exit;
+
+  Result := TPortableNetworkGraphic.IsStreamFormatSupported(AStream);
+  if Result then exit;
+
+  Result := TJpegImage.IsStreamFormatSupported(AStream);
+  if Result then exit;
+
+  Result := TIcon.IsStreamFormatSupported(AStream);
+  if Result then exit;
 end;
 
 procedure TDbfTable.PackClick(Sender: TObject);
@@ -179,6 +209,8 @@ begin
 end;
 
 procedure TDbfTable.ShowTableInfo(DataSet: TDataSet);
+var
+  field: TField;
 begin
   Assert(Dataset is TDbf, 'Dataset must be a TDbf');
 
@@ -187,12 +219,21 @@ begin
     SbInfo.Panels[1].Text := 'Record Number: (none)'
   else
     SbInfo.Panels[1].Text := Format('Record Number: %d', [Dataset.RecNo]);
+
+  if TabControl.Tabs.Count > 0 then
+  begin
+    field := (Dataset as TDbf).FieldByName(TabControl.Tabs[TabControl.TabIndex]);
+    ShowBlobField(field);
+  end;
 end;
 
 procedure TDbfTable.TabControlChange(Sender: TObject);
-begin
-  DBMemo.DataField := TabControl.Tabs[TabControl.TabIndex];
-end;
+ var
+   field: TField;
+ begin
+   field := DBTable.FieldByName(TabControl.Tabs[TabControl.TabIndex]);
+   ShowBLOBField(field);
+ end;
 
 procedure TDbfTable.CloseTabBtnClick(Sender: TObject);
 begin
@@ -255,7 +296,7 @@ var
   field: TField;
 begin
   Load_Table_Indexes();
-  ShowMemo(DbTable);
+  ShowBlob(DbTable);
   ShowTableInfo(DbTable);
 
   // Make sure that strings are converted to UTF-8.
@@ -265,28 +306,29 @@ begin
       TStringField(field).Transliterate := true;
 end;
 
-procedure TDbfTable.ShowMemo(ATable: TDbf);
+procedure TDbfTable.ShowBlob(ATable: TDbf);
 var
   field: TField;
 begin
   TabControl.BeginUpdate;
   try
     TabControl.Tabs.Clear;
-//    TabControl.Pages.Clear;
+
+    // For each BLOB field, add a tab to the tabcontrol
     for field in ATable.Fields do
-      if (field is TMemoField) or (field is TWideMemoField) then
-//        TabControl.Pages.Add(field.FieldName);
+      if (field is TBlobField) then
         TabControl.Tabs.Add(field.FieldName);
 
+    // No BLOBs --> hide tabcontrol
     if TabControl.Tabs.Count = 0 then
-//    if Tabcontrol.PageCount = 0 then
     begin
       TabControl.Hide;
       MemoSplitter.Hide;
     end else
     begin
-//      DBMemo.DataField := TabControl.Pages[0];
-      DBMemo.DataField := TabControl.Tabs[0];
+      // BLOBs found --> Display first BLOB field in tab control.
+      field := ATable.FieldByName(TabControl.Tabs[0]);
+      ShowBLOBField(field);
       TabControl.Show;
       TabControl.PageIndex := 0;
       MemoSplitter.Show;
@@ -294,6 +336,31 @@ begin
     end;
   finally
     TabControl.EndUpdate;
+  end;
+end;
+
+procedure TDbfTable.ShowBlobField(AField: TField);
+var
+  stream: TStream;
+begin
+  Assert(AField is TBlobField, 'Field must be a TBlobField');
+
+  stream := TMemoryStream.Create;
+  try
+    TBlobField(AField).SaveToStream(stream);
+    stream.Position := 0;
+    if IsGraphicStream(stream) then
+    begin
+      Notebook.PageIndex := 1;
+      Image.Picture.LoadFromStream(stream);
+    end else
+    if (AField is TMemoField) or (AField is TWideMemoField) then
+    begin
+      Notebook.PageIndex := 0;
+      DBMemo.DataField := AField.FieldName;
+    end;
+  finally
+    stream.Free;
   end;
 end;
 

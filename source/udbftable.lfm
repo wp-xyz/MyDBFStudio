@@ -8,7 +8,7 @@ object DbfTable: TDbfTable
   ClientWidth = 708
   KeyPreview = True
   OnDestroy = FormDestroy
-  LCLVersion = '2.0.12.0'
+  LCLVersion = '2.1.0.0'
   object Panel1: TPanel
     Left = 0
     Height = 72
@@ -278,17 +278,90 @@ object DbfTable: TDbfTable
     BorderSpacing.Bottom = 6
     TabOrder = 4
     Visible = False
-    object DBMemo: TDBMemo
-      Left = 8
-      Height = 117
-      Top = 9
-      Width = 680
+    object Notebook: TNotebook
+      Left = 2
+      Height = 129
+      Top = 3
+      Width = 631
+      PageIndex = 1
       Align = alClient
-      BorderSpacing.Around = 6
-      BorderStyle = bsNone
-      DataSource = Ds
-      ScrollBars = ssAutoBoth
       TabOrder = 1
+      object pgMemo: TPage
+        object DBMemo: TDBMemo
+          Left = 6
+          Height = 117
+          Top = 6
+          Width = 619
+          Align = alClient
+          BorderSpacing.Around = 6
+          BorderStyle = bsNone
+          DataSource = Ds
+          ScrollBars = ssAutoBoth
+          TabOrder = 0
+        end
+      end
+      object pgGraphic: TPage
+        object Image: TImage
+          Left = 0
+          Height = 129
+          Top = 0
+          Width = 631
+          Align = alClient
+          Proportional = True
+          StretchOutEnabled = False
+        end
+      end
+    end
+    object Panel2: TPanel
+      Left = 633
+      Height = 129
+      Top = 3
+      Width = 61
+      Align = alRight
+      AutoSize = True
+      BevelOuter = bvNone
+      ChildSizing.VerticalSpacing = 2
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 1
+      ClientHeight = 129
+      ClientWidth = 61
+      TabOrder = 2
+      object LoadBlobFile: TButton
+        Left = 0
+        Height = 25
+        Top = 0
+        Width = 61
+        AutoSize = True
+        Caption = 'Load...'
+        TabOrder = 0
+      end
+      object SaveBlobFile: TButton
+        Left = 0
+        Height = 25
+        Top = 27
+        Width = 61
+        AutoSize = True
+        Caption = 'Save...'
+        TabOrder = 1
+      end
+      object CopyBtn: TButton
+        Left = 0
+        Height = 25
+        Top = 54
+        Width = 61
+        AutoSize = True
+        Caption = 'Copy'
+        TabOrder = 2
+      end
+      object PasteBtn: TButton
+        Left = 0
+        Height = 25
+        Top = 81
+        Width = 61
+        AutoSize = True
+        Caption = 'Paste'
+        TabOrder = 3
+      end
     end
   end
   object Ds: TDataSource
