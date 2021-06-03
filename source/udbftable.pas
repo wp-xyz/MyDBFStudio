@@ -49,12 +49,14 @@ type
     Restruct: TToolButton;
     SetField: TToolButton;
     procedure cbShowDelChange(Sender: TObject);
+    procedure CopyBlobBtnClick(Sender: TObject);
     procedure EmptyClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure IndexesChange(Sender: TObject);
     procedure leFilterKeyDown(Sender: TObject; var Key: Word; {%H-}Shift: TShiftState);
     procedure LoadBlobBtnClick(Sender: TObject);
     procedure PackClick(Sender: TObject);
+    procedure PasteBlobBtnClick(Sender: TObject);
     procedure RestructClick(Sender: TObject);
     procedure SaveBlobBtnClick(Sender: TObject);
     procedure SetFieldClick(Sender: TObject);
@@ -87,9 +89,9 @@ implementation
 {$R *.lfm}
 
 uses
-  LConvEncoding,
+  LConvEncoding, LCLType, clipbrd,
   {%H-}uDataModule,  // uDatamodule needed for imagelist
-  uUtils, uRestructure, uSetFV;
+  uRestructure, uSetFV;
 
 const
   GRAPHIC_FILTER = 'BMP files (*.bmp)|*.bmp|'+
@@ -97,6 +99,11 @@ const
     'PNG files (*.png)|*.png';
   MEMO_FILTER = 'Text files (*.txt)|*.txt|'+
     'All files (*.*)|*.*';
+
+var
+  cfJpeg: TClipboardFormat = 0;
+  cfPng: TClipboardFormat = 0;
+
 
 { TDbfTable }
 
@@ -170,6 +177,44 @@ begin
  If DbTable.Active Then
   If MessageDlg('Pack the table?', mtWarning, [mbOk, mbCancel],0) = mrOk Then
    DbTable.PackTable;
+end;
+
+procedure TDbfTable.PasteBlobBtnClick(Sender: TObject);
+var
+  field: TField;
+  stream: TStream;
+begin
+  if not (DBTable.State in [dsEdit, dsInsert]) then
+    exit;
+  if TabControl.TabIndex = -1 then
+    exit;
+  field := DBTable.FieldByName(TabControl.Tabs[TabControl.TabIndex]);;
+  if not (field is TBLOBField) then
+    exit;
+  case Notebook.PageIndex of
+    0: if Clipboard.HasFormat(CF_TEXT) then
+         TBLOBField(field).AsString := Clipboard.AsText;
+    1: if Clipboard.HasPictureFormat then
+       begin
+         stream := TMemoryStream.Create;
+         try
+           if Clipboard.HasFormat(CF_BITMAP) or Clipboard.HasFormatName('image/bitmap') then
+             Clipboard.GetFormat(CF_BITMAP, stream)
+           else if Clipboard.HasFormat(cfJpeg) then
+             Clipboard.GetFormat(cfJpeg, stream)
+           else if Clipboard.HasFormat(cfPng) then
+             Clipboard.GetFormat(cfPng, stream)
+           else
+             exit;
+           stream.Position := 0;
+           TBLOBField(field).LoadFromStream(stream);
+           stream.Position := 0;
+           Image.Picture.LoadfromStream(stream);
+         finally
+           stream.Free;
+         end;
+       end;
+  end;
 end;
 
 procedure TDbfTable.RestructClick(Sender: TObject);
@@ -272,6 +317,62 @@ end;
 procedure TDbfTable.cbShowDelChange(Sender: TObject);
 begin
  DBTable.ShowDeleted := cbShowDel.Checked;
+end;
+
+procedure TDbfTable.CopyBlobBtnClick(Sender: TObject);
+var
+  field: TField;
+  stream: TMemoryStream;
+begin
+  if TabControl.TabIndex = -1 then
+    exit;
+  field := DBTable.FieldByName(TabControl.Tabs[TabControl.TabIndex]);
+  if field = nil then
+    exit;
+
+  case Notebook.PageIndex of
+    0: DBMemo.CopyToClipboard;
+    1: begin
+         Clipboard.Open;
+         try
+           Clipboard.Clear;
+           stream := TMemoryStream.Create;
+           try
+             if Image.Picture.Bitmap <> nil then
+             begin
+               stream.Clear;
+               Image.Picture.Bitmap.SaveToStream(stream);
+               stream.Position := 0;
+               Clipboard.AddFormat(CF_Bitmap, stream);
+             end;
+             if Image.Picture.Jpeg <> nil then
+             begin
+               stream.Clear;
+               Image.Picture.Jpeg.SaveToStream(stream);
+               stream.Position := 0;
+               Clipboard.AddFormat(cfJpeg, stream);
+             end;
+             if Image.Picture.Png <> nil then
+             begin
+               stream.Clear;
+               Image.Picture.Png.SaveToStream(stream);
+               stream.Position := 0;
+               Clipboard.AddFormat(cfPNG, stream);
+             end;
+           finally
+             stream.Free;
+           end;
+         finally
+           Clipboard.Close;
+         end;
+         {
+         if Image.Picture.Bitmap <> nil then
+           Image.Picture.Bitmap.SaveToClipboardFormat(CF_Bitmap)
+         else
+           Image.Picture.SaveToClipboardFormat(CF_Picture);
+           }
+       end;
+  end;
 end;
 
 procedure TDbfTable.EmptyClick(Sender: TObject);
@@ -477,6 +578,11 @@ begin
   StrCopy(Dest, PChar(s));
   Result := StrLen(Dest);
 end;
+
+
+initialization
+  cfJPEG := RegisterClipboardFormat('image/jpeg');
+  cfPNG := RegisterClipboardFormat('image/png');
 
 end.
 

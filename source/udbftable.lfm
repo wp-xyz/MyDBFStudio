@@ -353,6 +353,7 @@ object DbfTable: TDbfTable
         Width = 61
         AutoSize = True
         Caption = 'Copy'
+        OnClick = CopyBlobBtnClick
         TabOrder = 2
       end
       object PasteBlobBtn: TButton
@@ -362,6 +363,7 @@ object DbfTable: TDbfTable
         Width = 61
         AutoSize = True
         Caption = 'Paste'
+        OnClick = PasteBlobBtnClick
         TabOrder = 3
       end
     end
