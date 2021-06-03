@@ -132,55 +132,55 @@ object DbfTable: TDbfTable
         TabOrder = 0
         Images = CommonData.Images
       end
-      object Pack: TToolButton
+      object tbPack: TToolButton
         Left = 97
         Hint = 'Pack table (reduce size)'
         Top = 0
-        Caption = 'Pack'
+        Caption = 'tbPack'
         ImageIndex = 36
-        OnClick = PackClick
+        OnClick = tbPackClick
         ParentShowHint = False
         ShowHint = True
         Wrap = True
       end
-      object Empty: TToolButton
+      object tbEmpty: TToolButton
         Left = 73
         Hint = 'Delete all record in table'
         Top = 0
-        Caption = 'Empty'
+        Caption = 'tbEmpty'
         ImageIndex = 35
-        OnClick = EmptyClick
+        OnClick = tbEmptyClick
         ParentShowHint = False
         ShowHint = True
       end
-      object ViewDel: TToolButton
+      object tbViewDel: TToolButton
         Left = 49
         Hint = 'Delete only visible records'
         Top = 0
-        Caption = 'ViewDel'
+        Caption = 'tbViewDel'
         ImageIndex = 34
-        OnClick = ViewDelClick
+        OnClick = tbViewDelClick
         ParentShowHint = False
         ShowHint = True
       end
-      object Restruct: TToolButton
+      object tbRestruct: TToolButton
         Left = 1
         Hint = 'Restructure the table'
         Top = 0
-        Caption = 'Restruct'
+        Caption = 'tbRestruct'
         ImageIndex = 32
-        OnClick = RestructClick
+        OnClick = tbRestructClick
         ParentShowHint = False
         ShowCaption = False
         ShowHint = True
       end
-      object SetField: TToolButton
+      object tbSetField: TToolButton
         Left = 25
         Hint = 'Set field value'
         Top = 0
-        Caption = 'SetField'
+        Caption = 'tbSetField'
         ImageIndex = 33
-        OnClick = SetFieldClick
+        OnClick = tbSetFieldClick
         ParentShowHint = False
         ShowHint = True
       end
@@ -325,6 +325,8 @@ object DbfTable: TDbfTable
       ChildSizing.ControlsPerLine = 1
       ClientHeight = 129
       ClientWidth = 61
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 2
       object LoadBlobBtn: TButton
         Left = 0
@@ -385,7 +387,7 @@ object DbfTable: TDbfTable
     AfterDelete = ShowTableInfo
     AfterRefresh = ShowTableInfo
     AfterScroll = ShowTableInfo
-    Left = 452
+    Left = 456
     Top = 148
   end
   object OpenDialog: TOpenDialog

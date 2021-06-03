@@ -39,32 +39,32 @@ type
     MemoSplitter: TSplitter;
     TabControl: TTabControl;
     ToolBar1: TToolBar;
-    Pack: TToolButton;
-    Empty: TToolButton;
+    tbPack: TToolButton;
+    tbEmpty: TToolButton;
     CloseTabBtn: TToolButton;
     tbAutoFillColumns: TToolButton;
     ToolButton2: TToolButton;
     ToolButton3: TToolButton;
-    ViewDel: TToolButton;
-    Restruct: TToolButton;
-    SetField: TToolButton;
+    tbViewDel: TToolButton;
+    tbRestruct: TToolButton;
+    tbSetField: TToolButton;
     procedure cbShowDelChange(Sender: TObject);
     procedure CopyBlobBtnClick(Sender: TObject);
-    procedure EmptyClick(Sender: TObject);
+    procedure tbEmptyClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure IndexesChange(Sender: TObject);
     procedure leFilterKeyDown(Sender: TObject; var Key: Word; {%H-}Shift: TShiftState);
     procedure LoadBlobBtnClick(Sender: TObject);
-    procedure PackClick(Sender: TObject);
+    procedure tbPackClick(Sender: TObject);
     procedure PasteBlobBtnClick(Sender: TObject);
-    procedure RestructClick(Sender: TObject);
+    procedure tbRestructClick(Sender: TObject);
     procedure SaveBlobBtnClick(Sender: TObject);
-    procedure SetFieldClick(Sender: TObject);
+    procedure tbSetFieldClick(Sender: TObject);
     Procedure ShowTableInfo(DataSet: TDataSet);
     procedure TabControlChange(Sender: TObject);
     procedure CloseTabBtnClick(Sender: TObject);
     procedure tbAutoFillColumnsClick(Sender: TObject);
-    procedure ViewDelClick(Sender: TObject);
+    procedure tbViewDelClick(Sender: TObject);
   private
     { private declarations }
     FColWidths: array of Integer;
@@ -75,6 +75,7 @@ type
     procedure ShowBlob(ATable: TDbf);
     procedure ShowBlobField(AField: TField);
     function TranslateHandler(ATable: TDbf; Src, Dest: PChar; ToOem: Boolean): Integer;
+    procedure UpdateCmds;
 
   public
     { public declarations }
@@ -172,7 +173,7 @@ begin
   if Result then exit;
 end;
 
-procedure TDbfTable.PackClick(Sender: TObject);
+procedure TDbfTable.tbPackClick(Sender: TObject);
 begin
  If DbTable.Active Then
   If MessageDlg('Pack the table?', mtWarning, [mbOk, mbCancel],0) = mrOk Then
@@ -217,7 +218,7 @@ begin
   end;
 end;
 
-procedure TDbfTable.RestructClick(Sender: TObject);
+procedure TDbfTable.tbRestructClick(Sender: TObject);
 begin
   Restructure := TRestructure.Create(Self);
   try
@@ -301,7 +302,7 @@ begin
   end;
 end;
 
-procedure TDbfTable.SetFieldClick(Sender: TObject);
+procedure TDbfTable.tbSetFieldClick(Sender: TObject);
 begin
  SetFV := TSetFV.Create(Self);
  SetFV.SetTable := DbTable;
@@ -375,7 +376,7 @@ begin
   end;
 end;
 
-procedure TDbfTable.EmptyClick(Sender: TObject);
+procedure TDbfTable.tbEmptyClick(Sender: TObject);
 begin
  If DbTable.Active Then
   If MessageDlg('Delete all records in the table?', mtWarning, [mbOk, mbCancel],0) = mrOk Then
@@ -426,6 +427,8 @@ begin
     field := (Dataset as TDbf).FieldByName(TabControl.Tabs[TabControl.TabIndex]);
     ShowBlobField(field);
   end;
+
+  UpdateCmds;
 end;
 
 procedure TDbfTable.TabControlChange(Sender: TObject);
@@ -450,7 +453,7 @@ begin
     RestoreColWidths(DBTable);
 end;
 
-procedure TDbfTable.ViewDelClick(Sender: TObject);
+procedure TDbfTable.tbViewDelClick(Sender: TObject);
 begin
   if DbTable.Active then
     if MessageDlg('Delete all records in grid?', mtWarning, [mbOk, mbCancel],0) = mrOk then
@@ -559,7 +562,24 @@ begin
     begin
       Notebook.PageIndex := 0;
       DBMemo.DataField := AField.FieldName;
+    end else
+      Image.Picture.Clear;
+
+    case Notebook.PageIndex of
+      0: begin
+           LoadBlobBtn.Hint := 'Load memo text from a file';
+           SaveBlobBtn.Hint := 'Save memo text to a file';
+           CopyBlobBtn.Hint := 'Copy memo text to the clipboard';
+           PasteBlobBtn.Hint := 'Paste memo text from the clipboard';
+         end;
+      1: begin
+           LoadBlobBtn.Hint := 'Load picture from a file';
+           SaveBlobBtn.Hint := 'Save picture to a file';
+           CopyBlobBtn.Hint := 'Copy picture to the clipboard';
+           PasteBlobBtn.Hint := 'Paste picture from the clipboard';
+         end;
     end;
+
   finally
     stream.Free;
   end;
@@ -577,6 +597,26 @@ begin
     s := ConvertEncoding(Src, cp, 'utf8');
   StrCopy(Dest, PChar(s));
   Result := StrLen(Dest);
+end;
+
+procedure TDbfTable.UpdateCmds;
+var
+  hasData: Boolean;
+  isEditing: Boolean;
+begin
+  hasData := DBTable.PhysicalRecordCount > 0;
+  isEditing := DBTable.State in [dsEdit, dsInsert];
+
+  tbRestruct.Enabled := hasData and (not isEditing);
+  tbSetField.Enabled := hasData and (not isEditing);
+  tbViewDel.Enabled := hasData and (not isEditing);
+  tbEmpty.Enabled := hasData and (not isEditing);
+  tbPack.Enabled := hasData and (not isEditing);
+
+  LoadBlobBtn.Enabled := isEditing;
+  SaveBlobBtn.Enabled := hasData;
+  CopyBlobBtn.Enabled := hasData;
+  PasteBlobBtn.Enabled := isEditing;
 end;
 
 
