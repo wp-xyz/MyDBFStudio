@@ -50,6 +50,8 @@ type
     tbSetField: TToolButton;
     procedure cbShowDelChange(Sender: TObject);
     procedure CopyBlobBtnClick(Sender: TObject);
+    procedure DBGridColEnter(Sender: TObject);
+    procedure DBTableAfterEdit(DataSet: TDataSet);
     procedure tbEmptyClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure IndexesChange(Sender: TObject);
@@ -91,6 +93,7 @@ implementation
 
 uses
   LConvEncoding, LCLType, clipbrd,
+  {%H-}uUtils,  // needed by Laz 2.0.12 for DBGrid helper
   {%H-}uDataModule,  // uDatamodule needed for imagelist
   uRestructure, uSetFV;
 
@@ -376,20 +379,41 @@ begin
   end;
 end;
 
+procedure TDbfTable.DBGridColEnter(Sender: TObject);
+var
+  idx: Integer;
+begin
+  if not TabControl.Visible then
+    exit;
+
+  for idx := 0 to TabControl.Tabs.Count-1 do
+    if TabControl.Tabs[idx] = DBGrid.SelectedField.FieldName then
+    begin
+      TabControl.TabIndex := idx;
+      ShowBlobField(DBGrid.SelectedField);
+      exit;
+    end;
+end;
+
+procedure TDbfTable.DBTableAfterEdit(DataSet: TDataSet);
+begin
+  UpdateCmds;
+end;
+
 procedure TDbfTable.tbEmptyClick(Sender: TObject);
 begin
- If DbTable.Active Then
-  If MessageDlg('Delete all records in the table?', mtWarning, [mbOk, mbCancel],0) = mrOk Then
-   Begin
-    DBGrid.BeginUpdate;
-
-    DbTable.EmptyTable;
-
-    DBGrid.EndUpdate(False);
-
-    DbTable.Close;
-    DbTable.Open;
-   End;
+  if DbTable.Active then
+    if MessageDlg('Delete all records in the table?', mtWarning, [mbOk, mbCancel],0) = mrOk Then
+    begin
+      DBGrid.BeginUpdate;
+      try
+        DbTable.EmptyTable;
+      finally
+        DBGrid.EndUpdate(False);
+      end;
+      DbTable.Close;
+      DbTable.Open;
+     end;
 end;
 
 procedure TDbfTable.FormDestroy(Sender: TObject);

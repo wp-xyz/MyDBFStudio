@@ -8,7 +8,7 @@ object DbfTable: TDbfTable
   ClientWidth = 708
   KeyPreview = True
   OnDestroy = FormDestroy
-  LCLVersion = '2.1.0.0'
+  LCLVersion = '2.0.12.0'
   object Panel1: TPanel
     Left = 0
     Height = 72
@@ -254,6 +254,7 @@ object DbfTable: TDbfTable
     ShowHint = True
     TabOrder = 2
     TitleFont.Height = -12
+    OnColEnter = DBGridColEnter
   end
   object MemoSplitter: TSplitter
     Cursor = crVSplit
@@ -283,7 +284,7 @@ object DbfTable: TDbfTable
       Height = 129
       Top = 3
       Width = 631
-      PageIndex = 1
+      PageIndex = 0
       Align = alClient
       TabOrder = 1
       object pgMemo: TPage
@@ -382,6 +383,7 @@ object DbfTable: TDbfTable
     Filtered = True
     FilterOptions = []
     AfterInsert = ShowTableInfo
+    AfterEdit = DBTableAfterEdit
     AfterPost = ShowTableInfo
     AfterCancel = ShowTableInfo
     AfterDelete = ShowTableInfo
