@@ -13,8 +13,10 @@ type
   { TDbfTable }
 
   TDbfTable = class(TForm)
+    RecordInfo: TLabel;
     LoadBlobBtn: TButton;
     OpenDialog: TOpenDialog;
+    InfoPanel: TPanel;
     SaveBlobBtn: TButton;
     CopyBlobBtn: TButton;
     PasteBlobBtn: TButton;
@@ -35,7 +37,6 @@ type
     pgMemo: TPage;
     Panel1: TPanel;
     SaveDialog: TSaveDialog;
-    sbInfo: TStatusBar;
     MemoSplitter: TSplitter;
     TabControl: TTabControl;
     ToolBar1: TToolBar;
@@ -43,6 +44,7 @@ type
     tbEmpty: TToolButton;
     CloseTabBtn: TToolButton;
     tbAutoFillColumns: TToolButton;
+    ToolButton1: TToolButton;
     ToolButton2: TToolButton;
     ToolButton3: TToolButton;
     tbViewDel: TToolButton;
@@ -440,13 +442,13 @@ procedure TDbfTable.ShowTableInfo(DataSet: TDataSet);
 var
   field: TField;
 begin
-  Assert(Dataset is TDbf, 'Dataset must be a TDbf');
+  Assert(Dataset is TDbf, '[ShowTableInfo] Dataset must be a TDbf.');
 
-  SbInfo.Panels[0].Text := Format('Record Count: %d', [TDbf(DataSet).ExactRecordCount]);
-  if DbTable.IsEmpty then
-    SbInfo.Panels[1].Text := 'Record Number: (none)'
+  if Dataset.IsEmpty then
+    RecordInfo.Caption := 'Record (none) of 0   '
   else
-    SbInfo.Panels[1].Text := Format('Record Number: %d', [Dataset.RecNo]);
+    RecordInfo.Caption := Format('Record %d of %d   ', [Dataset.RecNo, TDbf(Dataset).ExactRecordCount]);
+  InfoPanel.Width := RecordInfo.Width;
 
   if TabControl.Tabs.Count > 0 then
   begin
@@ -633,7 +635,7 @@ var
   hasData: Boolean;
   isEditing: Boolean;
 begin
-  hasData := DBTable.PhysicalRecordCount > 0;
+  hasData := not DBTable.IsEmpty;
   isEditing := DBTable.State in [dsEdit, dsInsert];
 
   tbRestruct.Enabled := hasData and (not isEditing);

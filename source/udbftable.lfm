@@ -113,7 +113,7 @@ object DbfTable: TDbfTable
       TabOrder = 3
       Transparent = True
       object DBNavigator1: TDBNavigator
-        Left = 150
+        Left = 82
         Height = 24
         Top = 0
         Width = 263
@@ -133,7 +133,7 @@ object DbfTable: TDbfTable
         Images = CommonData.Images
       end
       object tbPack: TToolButton
-        Left = 97
+        Left = 446
         Hint = 'Pack table (reduce size)'
         Top = 0
         Caption = 'tbPack'
@@ -144,7 +144,7 @@ object DbfTable: TDbfTable
         Wrap = True
       end
       object tbEmpty: TToolButton
-        Left = 73
+        Left = 422
         Hint = 'Delete all record in table'
         Top = 0
         Caption = 'tbEmpty'
@@ -154,7 +154,7 @@ object DbfTable: TDbfTable
         ShowHint = True
       end
       object tbViewDel: TToolButton
-        Left = 49
+        Left = 398
         Hint = 'Delete only visible records'
         Top = 0
         Caption = 'tbViewDel'
@@ -164,7 +164,7 @@ object DbfTable: TDbfTable
         ShowHint = True
       end
       object tbRestruct: TToolButton
-        Left = 1
+        Left = 350
         Hint = 'Restructure the table'
         Top = 0
         Caption = 'tbRestruct'
@@ -175,7 +175,7 @@ object DbfTable: TDbfTable
         ShowHint = True
       end
       object tbSetField: TToolButton
-        Left = 25
+        Left = 374
         Hint = 'Set field value'
         Top = 0
         Caption = 'tbSetField'
@@ -185,7 +185,7 @@ object DbfTable: TDbfTable
         ShowHint = True
       end
       object CloseTabBtn: TToolButton
-        Left = 418
+        Left = 499
         Hint = 'Close this tab'
         Top = 0
         Caption = 'X'
@@ -195,21 +195,21 @@ object DbfTable: TDbfTable
         ShowHint = True
       end
       object ToolButton2: TToolButton
-        Left = 413
+        Left = 494
         Height = 24
         Top = 0
         Caption = 'ToolButton2'
         Style = tbsDivider
       end
       object ToolButton3: TToolButton
-        Left = 145
+        Left = 345
         Height = 24
         Top = 0
         Caption = 'ToolButton3'
         Style = tbsDivider
       end
       object tbAutoFillColumns: TToolButton
-        Left = 121
+        Left = 470
         Hint = 'Auto-fill columns'
         Top = 0
         Caption = 'tbAutoFillColumns'
@@ -219,25 +219,39 @@ object DbfTable: TDbfTable
         ShowHint = True
         Style = tbsCheck
       end
+      object ToolButton1: TToolButton
+        Left = 77
+        Height = 24
+        Top = 0
+        Caption = 'ToolButton1'
+        Style = tbsDivider
+      end
+      object InfoPanel: TPanel
+        Left = 1
+        Height = 24
+        Top = 0
+        Width = 76
+        BevelOuter = bvNone
+        ClientHeight = 24
+        ClientWidth = 76
+        TabOrder = 1
+        object RecordInfo: TLabel
+          AnchorSideTop.Control = InfoPanel
+          AnchorSideTop.Side = asrCenter
+          AnchorSideBottom.Side = asrBottom
+          Left = 0
+          Height = 15
+          Top = 5
+          Width = 69
+          Caption = 'Record 1 of 5'
+          ParentColor = False
+        end
+      end
     end
-  end
-  object sbInfo: TStatusBar
-    Left = 0
-    Height = 23
-    Top = 472
-    Width = 708
-    Panels = <    
-      item
-        Width = 300
-      end    
-      item
-        Width = 300
-      end>
-    SimplePanel = False
   end
   object DBGrid: TDBGrid
     Left = 6
-    Height = 247
+    Height = 270
     Top = 78
     Width = 696
     Align = alClient
@@ -252,7 +266,7 @@ object DbfTable: TDbfTable
     Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgTruncCellHints, dgCellEllipsis]
     Scrollbars = ssAutoBoth
     ShowHint = True
-    TabOrder = 2
+    TabOrder = 1
     TitleFont.Height = -12
     OnColEnter = DBGridColEnter
   end
@@ -260,7 +274,7 @@ object DbfTable: TDbfTable
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 326
+    Top = 349
     Width = 708
     Align = alBottom
     ResizeAnchor = akBottom
@@ -269,7 +283,7 @@ object DbfTable: TDbfTable
   object TabControl: TTabControl
     Left = 6
     Height = 134
-    Top = 332
+    Top = 355
     Width = 696
     OnChange = TabControlChange
     Align = alBottom
@@ -277,7 +291,7 @@ object DbfTable: TDbfTable
     BorderSpacing.Top = 1
     BorderSpacing.Right = 6
     BorderSpacing.Bottom = 6
-    TabOrder = 4
+    TabOrder = 3
     Visible = False
     object Notebook: TNotebook
       Left = 2
