@@ -176,7 +176,7 @@ object ExpXLS: TExpXLS
     TabOrder = 1
     Text = '0'
   end
-  object lblFormatNumberWidthDecimals: TLabel
+  object lblFormatNumberWithDecimals: TLabel
     AnchorSideLeft.Control = ClbField
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = StrFN
@@ -185,16 +185,16 @@ object ExpXLS: TExpXLS
     Left = 286
     Height = 15
     Top = 58
-    Width = 171
+    Width = 162
     BorderSpacing.Top = 12
     BorderSpacing.Right = 6
-    Caption = 'Format Number Width Decimals'
+    Caption = 'Format Number with Decimals'
     ParentColor = False
   end
   object StrFND: TEdit
     AnchorSideLeft.Control = ClbField
     AnchorSideLeft.Side = asrBottom
-    AnchorSideTop.Control = lblFormatNumberWidthDecimals
+    AnchorSideTop.Control = lblFormatNumberWithDecimals
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
@@ -240,7 +240,7 @@ object ExpXLS: TExpXLS
     TabOrder = 3
     Text = '# ### ##0'
   end
-  object lblMaskNumberWidthDecimals: TLabel
+  object lblMaskNumberWithDecimals: TLabel
     AnchorSideLeft.Control = ClbField
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = StrMFN
@@ -248,16 +248,16 @@ object ExpXLS: TExpXLS
     Left = 286
     Height = 15
     Top = 162
-    Width = 161
+    Width = 152
     BorderSpacing.Top = 12
     BorderSpacing.Right = 6
-    Caption = 'Mask Number Width Decimals'
+    Caption = 'Mask Number with Decimals'
     ParentColor = False
   end
   object StrMFND: TEdit
     AnchorSideLeft.Control = ClbField
     AnchorSideLeft.Side = asrBottom
-    AnchorSideTop.Control = lblMaskNumberWidthDecimals
+    AnchorSideTop.Control = lblMaskNumberWithDecimals
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom

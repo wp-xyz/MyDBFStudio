@@ -288,36 +288,37 @@ end;
 
 function THTMLBand.GetCode(AInside: String): String;
 begin
- Result:=FFont.GetCode(AInside);
+  Result:=FFont.GetCode(AInside);
 
- If FBackColor <> clNone Then
-  Result:=HTMLTag('span',HTMLProperty('style',HTMLQuotedProperty('background-color',ColorValue())),Result);
+  if FBackColor <> clNone then
+    Result:=HTMLTag('span',HTMLProperty('style',HTMLQuotedProperty('background-color',ColorValue())),Result);
 end;
 
 function THTMLBand.ColorValue(): String;
 begin
- Result:=ColorToHtml(FBackColor);
+  Result:=ColorToHtml(FBackColor);
 end;
 
 function THTMLBand.PropertyCode(): String;
 begin
- If FBackColor <> clNone Then
-  Result:=' ' + HTMLProperty('bgcolor',ColorValue());
+  if FBackColor <> clNone then
+   Result := ' ' + HTMLProperty('bgcolor',ColorValue())
+  else
+   Result := '';
 end;
 
 constructor THTMLBand.Create();
 begin
- Inherited;
+  inherited;
 
- FFont:=THTMLFont.Create;
- FBackColor:=clNone;
+  FFont := THTMLFont.Create;
+  FBackColor := clNone;
 end;
 
 destructor THTMLBand.Destroy;
 begin
  FFont.Free;
-
- Inherited Destroy;
+ inherited Destroy;
 end;
 
 { THTMLPage }
@@ -361,27 +362,26 @@ end;
 constructor THTMLHeader.Create();
 begin
  Inherited;
-
- FVisible:=True;
+ FVisible := true;
 end;
 
 { THTMLDetail }
 
 function THTMLDetail.PropertyCode: String;
 begin
- Result:=inherited PropertyCode;
+  Result := inherited PropertyCode;
 
- If FBorderWidth <> 0 Then
-  Result:=Result + ' ' + HTMLIntProperty('border',FBorderWidth);
+  if FBorderWidth <> 0 then
+    Result := Result + ' ' + HTMLIntProperty('border',FBorderWidth);
 
- If FBorderColor <> clNone Then
-  Result:=Result + ' ' + HTMLProperty('bordercolor',ColorToHtml(FBorderColor));
+  if FBorderColor <> clNone Then
+    Result := Result + ' ' + HTMLProperty('bordercolor',ColorToHtml(FBorderColor));
 
- If FCellSpacing <> 2 Then
-  Result:=Result + ' ' + HTMLIntProperty('cellspacing',FCellSpacing);
+  if FCellSpacing <> 2 then
+    Result := Result + ' ' + HTMLIntProperty('cellspacing',FCellSpacing);
 
- If FCellPadding <> 1 Then
-  Result:=Result + ' ' + HTMLIntProperty('cellpadding',FCellPadding);
+  if FCellPadding <> 1 then
+    Result := Result + ' ' + HTMLIntProperty('cellpadding',FCellPadding);
 end;
 
 constructor THTMLDetail.Create();
@@ -462,7 +462,7 @@ begin
 
  WriteString('<html>'#13#10'<head>'#13#10'<title>' + FPageOptions.Title + '</title>'#13#10'</head>'#13#10,0);
  WriteString('<body' + FPageOptions.GetCode + '>'#13#10,0);
- WriteString('<!-- Created by Dbf Studio -->'#13#10,0);
+ WriteString('<!-- Created by MyDbf Studio -->'#13#10,0);
 
  If FTitle.Text <> '' Then
   WriteLine(FTitle.GetCode);

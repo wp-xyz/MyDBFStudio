@@ -9,10 +9,11 @@ object ExpHTML: TExpHTML
   ClientHeight = 461
   ClientWidth = 499
   OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poMainFormCenter
-  LCLVersion = '2.0.12.0'
+  LCLVersion = '2.1.0.0'
   object lblExportField: TLabel
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Owner
@@ -45,6 +46,7 @@ object ExpHTML: TExpHTML
       ''
     )
     ItemHeight = 17
+    OnItemClick = ClbFieldItemClick
     TabOrder = 0
     Data = {
       0100000000
@@ -609,17 +611,10 @@ object ExpHTML: TExpHTML
     Width = 6
     Shape = bsSpacer
   end
-  object Tmp: TDbf
-    IndexDefs = <>
-    TableLevel = 4
-    FilterOptions = []
-    Left = 76
-    Top = 228
-  end
   object SaveExp: TSaveDialog
     Title = 'Save as...'
     DefaultExt = '.html'
-    Filter = 'File .HTML|*.Html|File .Htm|*.Htm|All Files|*.*'
+    Filter = 'HTML files (*.html; *.htm)|*.html;*.htm|All Files (*.*)|*.*'
     Options = [ofOverwritePrompt, ofPathMustExist, ofEnableSizing, ofViewDetail]
     Left = 124
     Top = 228

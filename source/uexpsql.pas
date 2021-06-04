@@ -1,5 +1,8 @@
 unit uExpSQL;
 
+{todo: Export MEMO and BLOB fields }
+{todo: Allow selection of code page }
+
 {$mode objfpc}{$H+}
 
 interface
@@ -18,8 +21,8 @@ type
     ClbField: TCheckListBox;
     CrTab: TCheckBox;
     ExpRec: TCheckBox;
-    Label1: TLabel;
-    Label11: TLabel;
+    lblExportFields: TLabel;
+    lblProgress: TLabel;
     pBar: TProgressBar;
     SaveExp: TSaveDialog;
     procedure CloseBtnClick(Sender: TObject);
@@ -29,14 +32,14 @@ type
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
-    FDbf: TDbf;
+    FDbfTable: TDbf;
     Procedure GenCreateTableScript;
     Function Remove_FileExtension(Val : String) : String;
     Function ConvertFloat(Val : String) : String;
     Procedure CreateSQLScript;
   public
     { public declarations }
-    property Dbf: TDbf read FDbf write FDbf;
+    property DbfTable: TDbf read FDbfTable write FDbfTable;
   end;
 
 var
@@ -59,7 +62,7 @@ end;
 
 procedure TExpSQL.FormCreate(Sender: TObject);
 begin
-  FDbf := TDbf.Create(self);
+  FDbfTable := TDbf.Create(self);
 end;
 
 procedure TExpSQL.FormShow(Sender: TObject);
@@ -84,9 +87,9 @@ begin
 
   ClbField.Clear;
 
-  for ind := 0 to FDbf.FieldDefs.Count - 1 do
+  for ind := 0 to DbfTable.FieldDefs.Count - 1 do
   begin
-    ClbField.Items.Add(FDbf.FieldDefs.Items[ind].Name);
+    ClbField.Items.Add(DbfTable.FieldDefs.Items[ind].Name);
     ClbField.Checked[ind] := True;
   end;
 end;
@@ -111,7 +114,7 @@ begin
     for Ind := 0 To ClbField.Items.Count - 1 do
       if ClbField.Checked[Ind] then
       begin
-        field := FDbf.FieldByName(ClbField.Items[Ind]);
+        field := DbfTable.FieldByName(ClbField.Items[Ind]);
         case field.DataType Of
           ftString,
           ftFixedChar,
@@ -151,7 +154,7 @@ begin
 
     if Str.Count > 0 then
     begin
-      Writeln(F, Format('CREATE TABLE %s (', [UpperCase(Remove_FileExtension(FDbf.TableName))]));
+      Writeln(F, Format('CREATE TABLE %s (', [UpperCase(Remove_FileExtension(DbfTable.TableName))]));
 
       for Ind := 0 To Str.Count - 1 do
         if Ind < Str.Count - 1 then
@@ -204,9 +207,9 @@ var
   F : TextFile;
   field: TField;
 begin
-  FDbf.First;
+  DbfTable.First;
   pBar.Min := 0;
-  pBar.Max := FDbf.ExactRecordCount;
+  pBar.Max := DbfTable.ExactRecordCount;
   pBar.Position := 0;
 
   Str := TStringList.Create;
@@ -214,14 +217,14 @@ begin
     AssignFile(F, SaveExp.FileName);
     ReWrite(F);
 
-    while Not FDbf.EOF do
+    while not DbfTable.EOF do
     begin
       Str.Clear;
 
       for Ind := 0 To ClbField.Items.Count - 1 do
         if ClbField.Checked[Ind] then
         begin
-          field := FDbf.FieldByName(ClbField.Items[Ind]);
+          field := DbfTable.FieldByName(ClbField.Items[Ind]);
           case field.DataType of
             ftString,
             ftFixedChar,
@@ -278,11 +281,11 @@ begin
           end;
         end;
 
-      FDbf.Next;
+      DbfTable.Next;
 
       if Str.Count > 0 then
       begin
-        Writeln(F, Format('INSERT INTO %s VALUES(', [UpperCase(Remove_FileExtension(FDbf.TableName))]));
+        Writeln(F, Format('INSERT INTO %s VALUES(', [UpperCase(Remove_FileExtension(DbfTable.TableName))]));
 
         for Ind := 0 To Str.Count - 1 do
           if Ind < Str.Count - 1 then
@@ -310,21 +313,22 @@ end;
 
 procedure TExpSQL.ExportBtnClick(Sender: TObject);
 begin
- If SaveExp.Execute Then
-  If MessageDlg('Do you want to attempt to export data?',mtWarning,[mbOk, mbCancel],0) = mrOk Then
-   Begin
-    Try
-      If CrTab.Checked Then
-       GenCreateTableScript;
+  lblProgress.Caption := 'Progress';
 
-      If ExpRec.Checked Then
-       CreateSQLScript;
+  if SaveExp.Execute then
+    try
+      if CrTab.Checked then
+        GenCreateTableScript;
 
-      ShowMessage('Export completed!');
-    Except
-      ShowMessage('Error writing file');
-    End;
-   End;
+      if ExpRec.Checked then
+        CreateSQLScript;
+
+      lblProgress.Caption := 'Progress (completed)';
+      pBar.Position := 0;
+    except
+      on E: Exception do
+        MessageDlg('Error writing file:' + LineEnding + E.Message, mtError, [mbOK], 0);
+    end;
 end;
 
 end.

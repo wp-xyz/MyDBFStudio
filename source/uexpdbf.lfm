@@ -9,10 +9,11 @@ object ExpDBF: TExpDBF
   ClientHeight = 372
   ClientWidth = 441
   OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
   OnShow = FormShow
   Position = poMainFormCenter
   LCLVersion = '2.1.0.0'
-  object Label1: TLabel
+  object lblExportField: TLabel
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Owner
     Left = 6
@@ -26,7 +27,7 @@ object ExpDBF: TExpDBF
   end
   object ClbField: TCheckListBox
     AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = Label1
+    AnchorSideTop.Control = lblExportField
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = ExportBtn
     AnchorSideBottom.Control = Owner
@@ -51,7 +52,7 @@ object ExpDBF: TExpDBF
   end
   object TableType: TComboBox
     AnchorSideLeft.Control = ExportBtn
-    AnchorSideTop.Control = Label2
+    AnchorSideTop.Control = lblTableType
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
@@ -74,7 +75,7 @@ object ExpDBF: TExpDBF
     TabOrder = 1
     Text = 'dBase IV'
   end
-  object Label2: TLabel
+  object lblTableType: TLabel
     AnchorSideLeft.Control = TableType
     AnchorSideTop.Control = Owner
     Left = 274
@@ -85,7 +86,7 @@ object ExpDBF: TExpDBF
     Caption = 'Table Type'
     ParentColor = False
   end
-  object Label3: TLabel
+  object lblProgress: TLabel
     AnchorSideLeft.Control = pBar
     AnchorSideTop.Control = TableType
     AnchorSideTop.Side = asrBottom
@@ -99,7 +100,7 @@ object ExpDBF: TExpDBF
   end
   object pBar: TProgressBar
     AnchorSideLeft.Control = ExportBtn
-    AnchorSideTop.Control = Label3
+    AnchorSideTop.Control = lblProgress
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
@@ -159,20 +160,6 @@ object ExpDBF: TExpDBF
     Filter = 'DBF File|*.dbf|All Files|*.*'
     Options = [ofOverwritePrompt, ofPathMustExist, ofEnableSizing, ofViewDetail]
     Left = 60
-    Top = 268
-  end
-  object Tmp: TDbf
-    IndexDefs = <>
-    TableLevel = 4
-    FilterOptions = []
-    Left = 108
-    Top = 268
-  end
-  object Exp: TDbf
-    IndexDefs = <>
-    TableLevel = 4
-    FilterOptions = []
-    Left = 164
     Top = 268
   end
 end

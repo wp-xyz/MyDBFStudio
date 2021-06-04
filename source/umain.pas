@@ -365,12 +365,12 @@ end;
 
 procedure TMain.miAdd2TblsClick(Sender: TObject);
 begin
- AddTables := TAddTables.Create(Self);
- try
-   AddTables.ShowModal;
- finally
-   FreeAndNil(AddTables);
- end;
+  AddTables := TAddTables.Create(nil);
+  try
+    AddTables.ShowModal;
+  finally
+    FreeAndNil(AddTables);
+  end;
 end;
 
 procedure TMain.miCloseAllClick(Sender: TObject);
@@ -429,83 +429,58 @@ begin
 end;
 
 procedure TMain.miExpCSVClick(Sender: TObject);
- Var Tmp : TForm;
+var
+  F: TForm;
 begin
- If (WorkSite.ActivePage Is TTabForm) Then
-  If (WorkSite.ActivePage As TTabForm).ParentForm Is TDbfTable Then
-  Begin
-    Tmp := (WorkSite.ActivePage As TTabForm).ParentForm;
+  if (WorkSite.ActivePage is TTabForm) then
+    if TTabForm(WorkSite.ActivePage).ParentForm is TDbfTable then
+    begin
+      F := TTabForm(WorkSite.ActivePage).ParentForm;
 
-    ExpCSV := TExpCSV.Create(nil);
-    try
-      ExpCSV.Tmp := (Tmp As TDbfTable).DBTable;
+      ExpCSV := TExpCSV.Create(nil);
+      try
+        ExpCSV.DbfTable := TDbfTable(F).DBTable;
 
-      (Tmp As TDbfTable).Ds.Enabled := False;
-      (Tmp As TDbfTable).Ds.DataSet := Nil;
+        TDbfTable(F).Ds.Enabled := false;
+        TDbfTable(F).Ds.DataSet := nil;
 
-      ExpCSV.ShowModal;
+        ExpCSV.ShowModal;
 
-      (Tmp As TDbfTable).Ds.DataSet := (Tmp As TDbfTable).DBTable;
-      (Tmp As TDbfTable).Ds.Enabled := True;
-    finally
-      FreeAndNil(ExpCSV);
+        TDbfTable(F).Ds.DataSet := TDbfTable(F).DBTable;
+        TDbfTable(F).Ds.Enabled := True;
+      finally
+        FreeAndNil(ExpCSV);
+      end;
     end;
-  end;
 end;
 
 procedure TMain.miExpDbfClick(Sender: TObject);
- Var Tmp : TForm;
+var
+  F: TForm;
 begin
- If (WorkSite.ActivePage Is TTabForm) Then
-  If (WorkSite.ActivePage As TTabForm).ParentForm Is TDbfTable Then
-   Begin
-    Tmp := (WorkSite.ActivePage As TTabForm).ParentForm;
+  if (WorkSite.ActivePage is TTabForm) then
+    if (TTabForm(WorkSite.ActivePage).ParentForm is TDbfTable) then
+    begin
+      F := TTabForm(WorkSite.ActivePage).ParentForm;
 
-    ExpDBF := TExpDBF.Create(nil);
-    try
-      ExpDBF.Tmp := (Tmp As TDbfTable).DBTable;
+      ExpDBF := TExpDBF.Create(nil);
+      try
+        ExpDBF.DbfTable := TDbfTable(F).DBTable;
 
-      (Tmp As TDbfTable).Ds.Enabled := False;
-      (Tmp As TDbfTable).Ds.DataSet := Nil;
+        TDbfTable(F).Ds.Enabled := False;
+        TDbfTable(F).Ds.DataSet := nil;
 
-      ExpDBF.ShowModal;
+        ExpDBF.ShowModal;
 
-      (Tmp As TDbfTable).Ds.DataSet := (Tmp As TDbfTable).DBTable;
-      (Tmp As TDbfTable).Ds.Enabled := True;
-
-    finally
-      FreeAndNil(ExpDBF);
+        TDbfTable(F).Ds.DataSet := TDbfTable(F).DBTable;
+        TDbfTable(F).Ds.Enabled := True;
+      finally
+        FreeAndNil(ExpDBF);
+      end;
     end;
-   end;
 end;
 
 procedure TMain.miExpHtmlClick(Sender: TObject);
- Var Tmp : TForm;
-begin
- If (WorkSite.ActivePage Is TTabForm) Then
-  If (WorkSite.ActivePage As TTabForm).ParentForm Is TDbfTable Then
-   Begin
-    Tmp := (WorkSite.ActivePage As TTabForm).ParentForm;
-
-    ExpHTML := TExpHTML.Create(nil);
-    try
-      ExpHTML.Tmp := (Tmp As TDbfTable).DBTable;
-
-      (Tmp As TDbfTable).Ds.Enabled := False;
-      (Tmp As TDbfTable).Ds.DataSet := Nil;
-
-      ExpHTML.ShowModal;
-
-      (Tmp As TDbfTable).Ds.DataSet := (Tmp As TDbfTable).DBTable;
-      (Tmp As TDbfTable).Ds.Enabled := True;
-
-    finally
-      FreeAndNil(ExpHTML);
-    end;
-   end;
-end;
-
-procedure TMain.miExpSQLClick(Sender: TObject);
 var
   F: TForm;
 begin
@@ -514,17 +489,42 @@ begin
     begin
       F := (WorkSite.ActivePage As TTabForm).ParentForm;
 
-      ExpSQL := TExpSQL.Create(nil);
+      ExpHTML := TExpHTML.Create(nil);
       try
-        ExpSQL.Dbf := (F As TDbfTable).DBTable;
+        ExpHTML.DbfTable := (F As TDbfTable).DBTable;
 
         (F As TDbfTable).Ds.Enabled := False;
         (F As TDbfTable).Ds.DataSet := Nil;
+        ExpHTML.ShowModal;
+        (F As TDbfTable).Ds.DataSet := (F As TDbfTable).DBTable;
+        (F As TDbfTable).Ds.Enabled := True;
+
+      finally
+        FreeAndNil(ExpHTML);
+      end;
+    end;
+end;
+
+procedure TMain.miExpSQLClick(Sender: TObject);
+var
+  F: TForm;
+begin
+  if (WorkSite.ActivePage is TTabForm) then
+    if TTabForm(WorkSite.ActivePage).ParentForm is TDbfTable then
+    begin
+      F := TTabForm(WorkSite.ActivePage).ParentForm;
+
+      ExpSQL := TExpSQL.Create(nil);
+      try
+        ExpSQL.DbfTable := TDbfTable(F).DBTable;
+
+        TDbfTable(F).Ds.Enabled := false;
+        TDbfTable(F).Ds.DataSet := nil;
 
         ExpSQL.ShowModal;
 
-        (F As TDbfTable).Ds.DataSet := (F As TDbfTable).DBTable;
-        (F As TDbfTable).Ds.Enabled := True;
+        TDbfTable(F).Ds.DataSet := TDbfTable(F).DBTable;
+        TDbfTable(F).Ds.Enabled := True;
       finally
         FreeAndNil(ExpSQL);
       end;
@@ -536,21 +536,21 @@ var
   F: TForm;
 begin
   if (WorkSite.ActivePage is TTabForm) then
-    if (WorkSite.ActivePage as TTabForm).ParentForm Is TDbfTable then
+    if TTabForm(WorkSite.ActivePage).ParentForm is TDbfTable then
     begin
-      F := (WorkSite.ActivePage as TTabForm).ParentForm;
+      F := TTabForm(WorkSite.ActivePage).ParentForm;
 
       ExpXLS := TExpXLS.Create(nil);
       try
-        ExpXLS.Dbf := (F as TDbfTable).DBTable;
+        ExpXLS.DbfTable := TDbfTable(F).DBTable;
 
-        (F As TDbfTable).Ds.Enabled := false;
-        (F As TDbfTable).Ds.DataSet := nil;
+        TDbfTable(F).Ds.Enabled := false;
+        TDbfTable(F).Ds.DataSet := nil;
 
         ExpXLS.ShowModal;
 
-        (F As TDbfTable).Ds.DataSet := (F As TDbfTable).DBTable;
-        (F As TDbfTable).Ds.Enabled := true;
+        TDbfTable(F).Ds.DataSet := TDbfTable(F).DBTable;
+        TDbfTable(F).Ds.Enabled := true;
       finally
         FreeAndNil(ExpXLS);
       end;
@@ -561,22 +561,22 @@ procedure TMain.miExpXMLClick(Sender: TObject);
 var
   F: TForm;
 begin
-  if (WorkSite.ActivePage Is TTabForm) then
-    if (WorkSite.ActivePage As TTabForm).ParentForm Is TDbfTable then
+  if (WorkSite.ActivePage is TTabForm) then
+    if TTabForm(WorkSite.ActivePage).ParentForm is TDbfTable then
     begin
-      F := (WorkSite.ActivePage As TTabForm).ParentForm;
+      F := TTabForm(WorkSite.ActivePage).ParentForm;
 
       ExpXML := TExpXML.Create(nil);
       try
-        ExpXML.Dbf := (F As TDbfTable).DBTable;
+        ExpXML.DbfTable := TDbfTable(F).DBTable;
 
-        (F As TDbfTable).Ds.Enabled := False;
-        (F As TDbfTable).Ds.DataSet := Nil;
+        TDbfTable(F).Ds.Enabled := false;
+        TDbfTable(F As TDbfTable).Ds.DataSet := nil;
 
         ExpXML.ShowModal;
 
-        (F As TDbfTable).Ds.DataSet := (F As TDbfTable).DBTable;
-        (F As TDbfTable).Ds.Enabled := True;
+        TDbfTable(F).Ds.DataSet := TDbfTable(F).DBTable;
+        TDbfTable(F).Ds.Enabled := True;
       finally
         FreeAndNil(ExpXML);
       end;
@@ -585,7 +585,7 @@ end;
 
 procedure TMain.miInfoClick(Sender: TObject);
 begin
-  Info := TInfo.Create(Self);
+  Info := TInfo.Create(nil);
   try
     Info.ShowModal;
   finally

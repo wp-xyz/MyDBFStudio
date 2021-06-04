@@ -36,7 +36,7 @@ type
     procedure CloseBtnClick(Sender: TObject);
     procedure CreateTableBtnClick(Sender: TObject);
     procedure DefineIndexBtnClick(Sender: TObject);
-    procedure eleteIndexBtnClick(Sender: TObject);
+    procedure DeleteIndexBtnClick(Sender: TObject);
     procedure FieldListSelectEditor(Sender: TObject; aCol, aRow: Integer;
       var Editor: TWinControl);
     procedure FormCreate(Sender: TObject);
@@ -213,12 +213,12 @@ begin
   End;
 end;
 
-procedure TNewTable.eleteIndexBtnClick(Sender: TObject);
+procedure TNewTable.DeleteIndexBtnClick(Sender: TObject);
  Var dName : String;
      Ind : Word;
 begin
- If IndexList.ItemIndex < 0 Then
-  Exit;
+  If IndexList.ItemIndex < 0 Then
+    Exit;
 
  If MessageDlg('Delete the selected index?', mtWarning ,[mbOk, mbCancel],0) = mrOk Then
   Begin

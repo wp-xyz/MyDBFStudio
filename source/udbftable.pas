@@ -26,7 +26,6 @@ type
     Indexes: TComboBox;
     DBGrid: TDBGrid;
     DBNavigator1: TDBNavigator;
-    DBTable: TDbf;
     Ds: TDataSource;
     Label1: TLabel;
     Label2: TLabel;
@@ -54,6 +53,7 @@ type
     procedure CopyBlobBtnClick(Sender: TObject);
     procedure DBGridColEnter(Sender: TObject);
     procedure DBTableAfterEdit(DataSet: TDataSet);
+    procedure FormCreate(Sender: TObject);
     procedure tbEmptyClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure IndexesChange(Sender: TObject);
@@ -71,6 +71,7 @@ type
     procedure tbViewDelClick(Sender: TObject);
   private
     { private declarations }
+    FDBTable: TDbf;
     FColWidths: array of Integer;
     function IsGraphicStream(AStream: TStream): Boolean;
     Procedure Load_Table_Indexes;
@@ -84,6 +85,7 @@ type
   public
     { public declarations }
     procedure Setup;
+    property DBTable: TDbf read FDBTable;
   end;
 
 var
@@ -391,7 +393,7 @@ begin
     exit;
 
   for idx := 0 to TabControl.Tabs.Count-1 do
-    if TabControl.Tabs[idx] = DBGrid.SelectedField.FieldName then
+    if (DBGrid.SelectedField <> nil) and (TabControl.Tabs[idx] = DBGrid.SelectedField.FieldName) then
     begin
       TabControl.TabIndex := idx;
       ShowBlobField(DBGrid.SelectedField);
@@ -402,6 +404,22 @@ end;
 procedure TDbfTable.DBTableAfterEdit(DataSet: TDataSet);
 begin
   UpdateCmds;
+end;
+
+procedure TDbfTable.FormCreate(Sender: TObject);
+begin
+  FDBTable := TDbf.Create(Self);
+  FDBTable.Exclusive := true;
+  FDBTable.Filtered := true;
+  FDBTable.AfterInsert := @ShowTableInfo;
+  FDBTable.AfterEdit := @DBTableAfterEdit;
+  FDBTable.AfterPost := @ShowTableInfo;
+  FDBTable.AfterCancel := @ShowTableInfo;
+  FDBTable.AfterDelete := @ShowTableInfo;
+  FDBTable.AfterRefresh := @ShowTableInfo;
+  FDBTable.AfterScroll := @ShowTableInfo;
+
+  Ds.Dataset := FDBTable;
 end;
 
 procedure TDbfTable.tbEmptyClick(Sender: TObject);

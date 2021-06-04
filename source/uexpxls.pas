@@ -1,5 +1,7 @@
 unit uExpXLS;
 
+{ todo: Allow selection of code page }
+
 {$mode objfpc}{$H+}
 
 interface
@@ -18,9 +20,9 @@ type
     cbDateF: TComboBox;
     ClbField: TCheckListBox;
     lblDateFormat: TLabel;
-    lblMaskNumberWidthDecimals: TLabel;
+    lblMaskNumberWithDecimals: TLabel;
     lblMaskNumber: TLabel;
-    lblFormatNumberWidthDecimals: TLabel;
+    lblFormatNumberWithDecimals: TLabel;
     lblFormatNumber: TLabel;
     lblExportField: TLabel;
     lblProgress: TLabel;
@@ -40,13 +42,13 @@ type
     { private declarations }
     ExpObj : TDsXlsFile;
     XlsRow : Word;
-    FDbf: TDbf;
+    FDbfTable: TDbf;
     Procedure CreateFieldTitle;
     Procedure WriteRecordValue(T : TDbf);
     Function CreateSplitFileName(Orig : String; Ind : Word) : String;
   public
     { public declarations }
-    property Dbf: TDbf read FDbf write FDbf;
+    property DbfTable: TDbf read FDbfTable write FDbfTable;
   end;
 
 var
@@ -57,7 +59,7 @@ implementation
 {$R *.lfm}
 
 uses
-  Math, uOptions;
+  Math, LConvEncoding, uOptions;
 
 { TExpXLS }
 
@@ -69,7 +71,7 @@ end;
 
 procedure TExpXLS.FormCreate(Sender: TObject);
 begin
-  FDbf := TDbf.Create(self);
+  FDbfTable := TDbf.Create(self);
 end;
 
 procedure TExpXLS.FormShow(Sender: TObject);
@@ -77,8 +79,8 @@ var
   ind: Integer;
   w: Integer;
 begin
-  w := {%H-}MaxValue([lblFormatNumberWidthDecimals.Width div 2,
-                 lblMaskNumberWidthDecimals.Width div 2,
+  w := {%H-}MaxValue([lblFormatNumberWithDecimals.Width div 2,
+                 lblMaskNumberWithDecimals.Width div 2,
                  ExportBtn.Width,
                  CloseBtn.Width
                 ]);
@@ -99,8 +101,8 @@ begin
 
   ClbField.Clear;
 
-  for ind := 0 to FDbf.FieldDefs.Count - 1 do
-    with FDbf.FieldDefs.Items[Ind] do
+  for ind := 0 to DbfTable.FieldDefs.Count - 1 do
+    with DbfTable.FieldDefs.Items[Ind] do
     begin
       ClbField.Items.Add(Name);
       // Do not allow exporting graphic fields to Excel
@@ -115,7 +117,7 @@ procedure TExpXLS.CreateFieldTitle;
 var
   Ind: Word;
 begin
-  for Ind := 0 To ClbField.Items.Count - 1 do
+  for Ind := 0 to ClbField.Items.Count - 1 do
     if ClbField.Checked[Ind] then
       ExpObj.PutStr(1, Ind + 1, ClbField.Items.Strings[Ind]);
 end;
@@ -124,6 +126,7 @@ procedure TExpXLS.WriteRecordValue(T: TDbf);
 var
   Ind: Word;
   field: TField;
+  s: String;
 begin
   for Ind := 0 To ClbField.Items.Count - 1 do
     if ClbField.Checked[Ind] then
@@ -134,7 +137,11 @@ begin
         ftFixedChar,
         ftWideString,
         ftMemo:
-          ExpObj.PutStr(XlsRow, Ind + 1, field.AsString);
+          begin
+            // field.AsString is utf8. Excel2 is ANSI
+            s := ConvertEncoding(field.AsString, 'utf8', 'cp1252');
+            ExpObj.PutStr(XlsRow, Ind + 1, s);
+          end;
 
         ftFloat,
         ftLargeInt,
@@ -158,9 +165,6 @@ begin
             ExpObj.PutInt(XlsRow, Ind + 1, 1)
           else
             ExpObj.PutInt(XlsRow, Ind + 1, 0);
-
-        ftBlob:
-          ;  // Do not write a picture
       end;
     end;
 end;
@@ -195,7 +199,7 @@ procedure TExpXLS.ClbFieldClickCheck(Sender: TObject);
 var
   fd: TFieldDef;
 begin
-  fd := FDbf.FieldDefs.Items[ClbField.ItemIndex];
+  fd := DbfTable.FieldDefs.Items[ClbField.ItemIndex];
   if (fd.DataType = ftBlob) and (fd.DataType <> ftMemo) then
   begin
     ClbField.Checked[ClbField.ItemIndex] := false;
@@ -208,20 +212,20 @@ procedure TExpXLS.ExportBtnClick(Sender: TObject);
      IntBlc,Ind,Ind2 : LongInt;
      FileName : String;
 begin
-  If SaveExp.Execute Then
-  Begin
-   NumBlocchi65K:= FDbf.ExactRecordCount / $FFFF;
+  lblProgress.Caption := 'Progress';
+  if SaveExp.Execute then
+  begin
+    NumBlocchi65K:= DbfTable.ExactRecordCount / $FFFF;
 
-   pBar.Min:=0;
-   pBar.Max := FDbf.ExactRecordCount;
-   pBar.Position := 0;
+    pBar.Min:=0;
+    pBar.Max := DbfTable.ExactRecordCount;
+    pBar.Position := 0;
 
-   If NumBlocchi65K > 1 Then
-    If MessageDlg('Table records is more then 65.535 and must split the export file, continue?',mtWarning,[mbYes, mbCancel],0) = mrCancel Then
-     Exit;
+    if NumBlocchi65K > 1 then
+      if MessageDlg('Table records is more then 65.535 and must split the export file. Continue?', mtWarning, [mbYes, mbCancel], 0) = mrCancel Then
+        Exit;
 
    ExpObj:=TDsXlsFile.Create;
-
    ExpObj.StrFormatNumber:=StrFN.Text;
    ExpObj.StrFormatNumberDec:=StrFND.Text;
    ExpObj.StrFormatMaskNumber:=StrMFN.Text;
@@ -230,101 +234,89 @@ begin
 
    IntBlc:=Trunc(NumBlocchi65K);
 
-   Dbf.First;
-   XlsRow:=2;
+   DbfTable.First;
+   XlsRow := 2;
 
-   If NumBlocchi65K < 1.0 Then
-    Begin
-     Try
-     ExpObj.Open(SaveExp.FileName);
-
-     CreateFieldTitle();
-
-     While Not Dbf.EOF Do
-      Begin
-       WriteRecordValue(Dbf);
-       Dbf.Next;
-       pBar.Position:=pBar.Position + 1;
-
-       Inc(XlsRow);
-      End;
-
-     ExpObj.Close;
-
-     ShowMessage('Export completed!');
-     Except
-      ShowMessage('Error on writing file...');
-     End;
-    End
-   Else
-    Begin
-     For Ind:=1 To IntBlc Do
-      Begin
-       XlsRow:=2;
-
-       If Ind = 1 Then
-        FileName:=SaveExp.FileName
-       Else
-        FileName:=CreateSplitFileName(SaveExp.FileName,Ind);
-
-       Try
-       ExpObj.Open(FileName);
-
+   if NumBlocchi65K < 1.0 then
+   begin
+     try
+       ExpObj.Open(SaveExp.FileName);
        CreateFieldTitle();
-
-       For Ind2:=1 To $FFFF Do
-        Begin
-         WriteRecordValue(Dbf);
-
-         Dbf.Next;
-         pBar.Position:=pBar.Position + 1;
-
+       while not DbfTable.EOF Do
+       begin
+         WriteRecordValue(DbfTable);
+         DbfTable.Next;
+         pBar.Position := pBar.Position + 1;
          Inc(XlsRow);
-        End;
-
-       ExpObj.Close;
-       Except
-        ShowMessage('Error on writing file...');
-
-        Exit;
-       End;
-      End;
-
-     If Not Dbf.EOF Then
-      Begin
-       XlsRow:=2;
-       FileName:=CreateSplitFileName(SaveExp.FileName,Ind + 1);
-
-       Try
-       ExpObj.Open(FileName);
-
-       CreateFieldTitle();
-
-       While Not Dbf.EOF Do
-        Begin
-         WriteRecordValue(Dbf);
-
-         Dbf.Next;
-         pBar.Position:=pBar.Position + 1;
-
-         Inc(XlsRow);
-        End;
+       end;
 
        ExpObj.Close;
 
-       ShowMessage('Export completed!');
-       Except
-         ShowMessage('Error on writing file...');
-       End;
-      End
-     Else
-      ShowMessage('Export completed!');
-    End;
+       lblProgress.Caption := 'Progress (completed)';
+       pBar.Position := 0;
+     except
+       on E:Exception do
+         MessageDlg('Error writing file:' + LineEnding + E.Message, mtError, [mbOK], 0);
+     end;
+   end else
+   begin
+     for Ind:=1 To IntBlc do
+     begin
+       XlsRow := 2;
 
-   pBar.Position:=0;
+       if Ind = 1 then
+         FileName := SaveExp.FileName
+       else
+         FileName := CreateSplitFileName(SaveExp.FileName, Ind);
 
-   ExpObj.Free;
-  End;
+       try
+         ExpObj.Open(FileName);
+         CreateFieldTitle();
+         for ind2 := 1 To $FFFF do
+         begin
+           WriteRecordValue(DbfTable);
+           DbfTable.Next;
+           pBar.Position := pBar.Position + 1;
+           Inc(XlsRow);
+         end;
+         ExpObj.Close;
+       except
+         on E:Exception do
+         begin
+           MessageDlg('Error on writing file:' + LineEnding + E.Message, mtError, [mbOK], 0);
+           exit;
+         end;
+       end;
+     end;
+
+     if not DbfTable.EOF then
+     begin
+       XlsRow := 2;
+       FileName := CreateSplitFileName(SaveExp.FileName, Ind + 1);
+
+       try
+         ExpObj.Open(FileName);
+         CreateFieldTitle();
+         while not DbfTable.EOF do
+         begin
+           WriteRecordValue(DbfTable);
+           DbfTable.Next;
+           pBar.Position := pBar.Position + 1;
+           Inc(XlsRow);
+         end;
+         ExpObj.Close;
+
+         pBar.Position := 0;
+         lblProgress.Caption := 'Progress (completed)';
+       except
+         on E:Exception do
+           MessageDlg('Error writing file:' + LineEnding + E.Message, mtError, [mbOK], 0);
+       end;
+     end;
+    end;
+
+    ExpObj.Free;
+  end;
 end;
 
 end.

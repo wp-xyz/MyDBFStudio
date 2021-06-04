@@ -15,7 +15,7 @@ object ExpSQL: TExpSQL
   LCLVersion = '2.1.0.0'
   object ClbField: TCheckListBox
     AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = Label1
+    AnchorSideTop.Control = lblExportFields
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = ExportBtn
     AnchorSideBottom.Control = Owner
@@ -38,16 +38,16 @@ object ExpSQL: TExpSQL
       0100000000
     }
   end
-  object Label1: TLabel
+  object lblExportFields: TLabel
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Owner
     Left = 6
     Height = 15
     Top = 6
-    Width = 62
+    Width = 67
     BorderSpacing.Left = 6
     BorderSpacing.Top = 6
-    Caption = 'Export Field'
+    Caption = 'Export Fields'
     ParentColor = False
   end
   object CrTab: TCheckBox
@@ -77,7 +77,7 @@ object ExpSQL: TExpSQL
     State = cbChecked
     TabOrder = 2
   end
-  object Label11: TLabel
+  object lblProgress: TLabel
     AnchorSideLeft.Control = ClbField
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = ExpRec
@@ -93,7 +93,7 @@ object ExpSQL: TExpSQL
   object pBar: TProgressBar
     AnchorSideLeft.Control = ClbField
     AnchorSideLeft.Side = asrBottom
-    AnchorSideTop.Control = Label11
+    AnchorSideTop.Control = lblProgress
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom

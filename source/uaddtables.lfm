@@ -10,6 +10,7 @@ object AddTables: TAddTables
   ClientHeight = 327
   ClientWidth = 399
   OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
   OnShow = FormShow
   Position = poMainFormCenter
   LCLVersion = '2.1.0.0'
@@ -31,7 +32,7 @@ object AddTables: TAddTables
     ClientHeight = 31
     ClientWidth = 383
     TabOrder = 0
-    object cbFT: TComboBox
+    object cbTable1: TComboBox
       AnchorSideLeft.Control = GroupBox1
       AnchorSideTop.Control = GroupBox1
       AnchorSideRight.Control = GroupBox1
@@ -69,7 +70,7 @@ object AddTables: TAddTables
     ClientHeight = 31
     ClientWidth = 383
     TabOrder = 1
-    object cbST: TComboBox
+    object cbTable2: TComboBox
       AnchorSideLeft.Control = GroupBox2
       AnchorSideTop.Control = GroupBox2
       AnchorSideRight.Control = GroupBox2
@@ -190,19 +191,5 @@ object AddTables: TAddTables
     ImageIndex = 37
     OnClick = CloseBtnClick
     TabOrder = 5
-  end
-  object T1: TDbf
-    IndexDefs = <>
-    TableLevel = 4
-    FilterOptions = []
-    Left = 160
-    Top = 8
-  end
-  object T2: TDbf
-    IndexDefs = <>
-    TableLevel = 4
-    FilterOptions = []
-    Left = 232
-    Top = 80
   end
 end

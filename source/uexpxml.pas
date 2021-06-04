@@ -16,8 +16,8 @@ type
     CloseBtn: TBitBtn;
     ExportBtn: TBitBtn;
     ClbField: TCheckListBox;
-    Label1: TLabel;
-    Label11: TLabel;
+    lblExportFields: TLabel;
+    lblProgress: TLabel;
     pBar: TProgressBar;
     SaveExp: TSaveDialog;
     procedure CloseBtnClick(Sender: TObject);
@@ -27,11 +27,11 @@ type
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
-    FDbf: TDbf;
+    FDbfTable: TDbf;
     Function CheckSpecialChar(Val : String) : String;
   public
     { public declarations }
-    property Dbf: TDbf read FDbf write FDbf;
+    property DbfTable: TDbf read FDbfTable write FDbfTable;
   end;
 
 var
@@ -57,79 +57,71 @@ var
   Ind: Word;
   field: TField;
   stream: TStream;
-  s: String;
   rs: RawByteString = '';
 begin
+  lblProgress.Caption := 'Progress';
+
   if SaveExp.Execute then
-    if MessageDlg('Do you want to attempt to export data?',mtWarning,[mbOk, mbCancel],0) = mrOk then
-    begin
-      try
-        AssignFile(F, SaveExp.FileName);
-        ReWrite(F);
+    try
+      AssignFile(F, SaveExp.FileName);
+      ReWrite(F);
 
-        FDbf.First;
-        pBar.Min := 0;
-        pBar.Max := FDbf.ExactRecordCount;
-        pBar.Position:=0;
+      DbfTable.First;
+      pBar.Min := 0;
+      pBar.Max := DbfTable.ExactRecordCount;
+      pBar.Position := 0;
 
-        Writeln(F, '<?xml version="1.0" encoding="UTF-8"?>');
-        Writeln(F, '<' + FDbf.TableName + '>');
+      Writeln(F, '<?xml version="1.0" encoding="UTF-8"?>');
+      Writeln(F, '<' + DbfTable.TableName + '>');
 
-        while not FDbf.EOF Do
+      while not DbfTable.EOF Do
+      begin
+        Writeln(F, '  <record>');
+
+        for Ind := 0 To ClbField.Items.Count - 1 Do
+        if ClbField.Checked[Ind] then
         begin
-          Writeln(F, '  <record>');
-
-          for Ind := 0 To ClbField.Items.Count - 1 Do
-          if ClbField.Checked[Ind] then
+          field := DbfTable.FieldByName(ClbField.Items[Ind]);
+          if field.IsNull then
+            WriteLn(F, Format('    <%0:s> </%0:s>', [ClbField.Items[Ind]]))
+          else
+          if (field is TMemoField) then
+            WriteLn(F, Format('    <%0:s>%1:s</%0:s>', [ClbField.Items[Ind], field.AsString]))
+          else
+          if (field is TBlobField) then
           begin
-            field := FDbf.FieldByName(ClbField.Items[Ind]);
-            if field.IsNull then
-              WriteLn(F, Format('  <%0:s> </%0:s>', [
-                ClbField.Items[Ind]]))
-            else
-            if (field is TMemoField) then
-            begin
-              s := ConvertEncoding(field.AsString, Format('cp%d', [FDbf.CodePage]), 'utf8');
-              WriteLn(F, Format('  <%0:s>%1:s</%0:s>', [ClbField.Items[Ind], s]));
-            end
-            else
-            if (field is TBlobField) then
-            begin
-              // Picture field --> encode with Base64
-              stream := TMemoryStream.Create;
-              try
-                TBlobField(field).SaveToStream(stream);
-                SetLength(rs, stream.Size);
-                stream.Position := 0;
-                stream.Write(rs[1], Length(rs));
-                rs := EncodeStringBase64(rs);
-                WriteLn(F, Format('  <%0:s>%1:s</%0:s>', [ClbField.Items[Ind], rs]));
-              finally
-                stream.Free;
-              end;
-            end else
-            begin
-              s := ConvertEncoding(field.AsString, Format('cp%d', [FDbf.CodePage]), 'utf8');
-              WriteLn(F, Format('  <%0:s>%1:s</%0:s>', [ClbField.Items[Ind], s]));
+            // Picture field --> encode with Base64
+            stream := TMemoryStream.Create;
+            try
+              TBlobField(field).SaveToStream(stream);
+              SetLength(rs, stream.Size);
+              stream.Position := 0;
+              stream.Write(rs[1], Length(rs));
+              rs := EncodeStringBase64(rs);
+              WriteLn(F, Format('    <%0:s>%1:s</%0:s>', [ClbField.Items[Ind], rs]));
+            finally
+              stream.Free;
             end;
-          end;
-
-          Writeln(F, '  </record>');
-
-          FDbf.Next;
-
-          pBar.Position := pBar.Position + 1;
+          end else
+            WriteLn(F, Format('    <%0:s>%1:s</%0:s>', [ClbField.Items[Ind], field.AsString]));
         end;
 
-        Writeln(F, '</' + FDbf.TableName + '>');
+        Writeln(F, '  </record>');
 
-        pBar.Position:=0;
-        System.Close(F);
-        ShowMessage('Export completed!');
-      except
-        ShowMessage('Error writing file');
+        DbfTable.Next;
+
+        pBar.Position := pBar.Position + 1;
       end;
-   End;
+
+      Writeln(F, '</' + DbfTable.TableName + '>');
+      System.Close(F);
+
+      pBar.Position := 0;
+      lblProgress.Caption := 'Progress (completed)';
+    except
+      on E: Exception do
+        MessageDlg('Error writing file:' + LineEnding + E.Message, mtError, [mbOK], 0);
+    end;
 end;
 
 procedure TExpXML.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -140,7 +132,7 @@ end;
 
 procedure TExpXML.FormCreate(Sender: TObject);
 begin
-  FDbf := TDbf.Create(self);
+  FDbfTable := TDbf.Create(self);
 end;
 
 procedure TExpXML.FormShow(Sender: TObject);
@@ -162,9 +154,9 @@ begin
 
   ClbField.Clear;
 
-  for Ind := 0 to FDbf.FieldDefs.Count - 1 do
+  for Ind := 0 to DbfTable.FieldDefs.Count - 1 do
   begin
-    ClbField.Items.Add(FDbf.FieldDefs.Items[ind].Name);
+    ClbField.Items.Add(Dbftable.FieldDefs.Items[ind].Name);
     ClbField.Checked[ind] := True;
   end;
 end;

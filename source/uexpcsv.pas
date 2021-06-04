@@ -29,20 +29,21 @@ type
     pBar: TProgressBar;
     SaveExp: TSaveDialog;
     Separator: TEdit;
-    Tmp: TDbf;
+    procedure ClbFieldItemClick(Sender: TObject; Index: integer);
     procedure CloseBtnClick(Sender: TObject);
     procedure ExportBtnClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
     ExpDs : TDsCSV;
-
+    FDbfTable: TDbf;
     Function CreateCSVFieldMap : String;
-
     Procedure StepIt(Sender : TObject; AProgress: LongInt; out StopIt: Boolean);
   public
     { public declarations }
+    property DbfTable: TDbf read FDbfTable write FDbfTable;
   end;
 
 var
@@ -53,38 +54,44 @@ implementation
 {$R *.lfm}
 
 uses
-  math, uOptions;
+  DB, Math, uOptions;
 
 { TExpCSV }
 
 procedure TExpCSV.FormShow(Sender: TObject);
- Var Ind : Integer;
+var
+  Ind: Integer;
 begin
- CloseBtn.Constraints.MinWidth := Max(ExportBtn.Width, CloseBtn.Width);
- ExportBtn.Constraints.MinWidth := CloseBtn.Constraints.MinWidth;
+  CloseBtn.Constraints.MinWidth := Max(ExportBtn.Width, CloseBtn.Width);
+  ExportBtn.Constraints.MinWidth := CloseBtn.Constraints.MinWidth;
 
- Constraints.MinWidth := (Width - Separator.Left) * 3 div 2;
- Constraints.MinHeight := cbSaveHeader.Top + cbSaveHeader.Height +
-   CloseBtn.BorderSpacing.Top + CloseBtn.Height + CloseBtn.BorderSpacing.Bottom;
+  Constraints.MinWidth :=
+    (Width - Separator.Left) * 3 div 2;
+  Constraints.MinHeight :=
+    cbSaveHeader.Top + cbSaveHeader.Height +
+    CloseBtn.BorderSpacing.Top + CloseBtn.Height + CloseBtn.BorderSpacing.Bottom;
 
- if Options.RememberWindowSizePos and (Options.ExportCSVWindow.Width > 0) then
+  if Options.RememberWindowSizePos and (Options.ExportCSVWindow.Width > 0) then
   begin
     AutoSize := false;
     Options.ExportCSVWindow.ApplyToForm(Self);
   end;
 
- ClbField.Clear;
+  Separator.Height := cbDateF.Height;
+  fDel.Height := Separator.Height;
+  Ignore.Height := Separator.Height;
 
- Separator.Height := cbDateF.Height;
- fDel.Height := Separator.Height;
- Ignore.Height := Separator.Height;
-
- For Ind := 0 To Tmp.FieldDefs.Count - 1 Do
-  Begin
-   ClbField.Items.Add(Tmp.FieldDefs.Items[Ind].Name);
-
-   ClbField.Checked[Ind] := True;
-  End;
+  ClbField.Clear;
+  for Ind := 0 To DbfTable.FieldDefs.Count - 1 do
+    with DbfTable.FieldDefs.Items[Ind] do
+    begin
+      ClbField.Items.Add(Name);
+      // Do not allow exporting graphic fields to csv
+      if (DataType = ftBlob) and (DataType <> ftMemo) then
+        ClbField.Checked[ind] := false
+      else
+        ClbField.Checked[ind] := True;
+    end;
 end;
 
 function TExpCSV.CreateCSVFieldMap: String;
@@ -110,55 +117,74 @@ begin
  Close;
 end;
 
+// Do not allow to export to csv format.
+procedure TExpCSV.ClbFieldItemClick(Sender: TObject; Index: integer);
+var
+  fieldDef: TFieldDef;
+begin
+  fieldDef := DbfTable.FieldDefs.Items[ClbField.ItemIndex];
+  if (fieldDef.DataType = ftBlob) and (fieldDef.DataType <> ftMemo) then
+  begin
+    ClbField.Checked[ClbField.ItemIndex] := false;
+    MessageDlg('Exporting a BLOB field to CSV is not supported.', mtError, [mbOK], 0);
+  end;
+end;
+
 procedure TExpCSV.ExportBtnClick(Sender: TObject);
 begin
- If Trim(Separator.Text) = '' Then
-  Begin
-   ShowMessage('You MUST insert a record separator...');
+  lblProgress.Caption := 'Progress';
 
-   Separator.SetFocus;
+  if Trim(Separator.Text) = '' then
+  begin
+    MessageDlg('You MUST insert a record separator...', mtError, [mbOK], 0);
+    Separator.SetFocus;
+    Exit;
+  end;
 
-   Exit;
-  End;
-
- If MessageDlg('Do you want to attempt to export data?',mtWarning,[mbOk, mbCancel],0) = mrOk Then
-  Begin
-   If Not SaveExp.Execute Then
+  if not SaveExp.Execute then
     Exit;
 
-   Tmp.First;
+  DbfTable.First;
 
-   ExpDs := TDsCSV.Create(Self);
+  pBar.Min := 0;
+  pBar.Max := DbfTable.ExactRecordCount - 1;
+  pBar.Position:=0;
 
-   pBar.Min := 0;
-   pBar.Max := Tmp.ExactRecordCount - 1;
-   pBar.Position:=0;
-
-   Try
-     ExpDs.Dataset := Tmp;
-     ExpDs.CSVFile := SaveExp.FileName;
-     ExpDs.EmptyTable := True;
-     ExpDs.AutoOpen := False;
-     ExpDs.IgnoreString := Ignore.Text;
-     ExpDs.Delimiter := fDel.Text;
-     ExpDs.ExportHeader := cbSaveHeader.Checked;
-     ExpDs.CSVMap := CreateCSVFieldMap;
-     ExpDs.Separator := Separator.Text[1];
-     ExpDs.DateFormat := cbDateF.Text;
-     ExpDs.ImportProgress := @StepIt;
-     ExpDs.DatasetToCSV();
-   Finally
-     ExpDs.Free;
-     pBar.Position := 0;
-     ShowMessage('Export completed!');
-   End;
-  End;
+  ExpDs := TDsCSV.Create(Self);
+  try
+    try
+      ExpDs.Dataset := DbfTable;
+      ExpDs.CSVFile := SaveExp.FileName;
+      ExpDs.EmptyTable := True;
+      ExpDs.AutoOpen := False;
+      ExpDs.IgnoreString := Ignore.Text;
+      ExpDs.Delimiter := fDel.Text;
+      ExpDs.ExportHeader := cbSaveHeader.Checked;
+      ExpDs.CSVMap := CreateCSVFieldMap;
+      ExpDs.Separator := Separator.Text[1];
+      ExpDs.DateFormat := cbDateF.Text;
+      ExpDs.ImportProgress := @StepIt;
+      ExpDs.DatasetToCSV();
+      lblProgress.Caption := 'Progress (completed)';
+    except
+      on E:Exception do
+        MessageDlg('Error writing file:' + Lineending +  E.Message, mtError, [mbOK], 0);
+    end;
+  finally
+    ExpDs.Free;
+    pBar.Position := 0;
+  end;
 end;
 
 procedure TExpCSV.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   if CanClose then
     Options.ExportCSVWindow.ExtractFromForm(Self);
+end;
+
+procedure TExpCSV.FormCreate(Sender: TObject);
+begin
+  FDbfTable := TDbf.Create(self);
 end;
 
 end.

@@ -24,13 +24,14 @@ const
     ftAutoInc  // TableLevel 7 and 30 only
     ];
 
+function FieldTypeAsString(AFieldType: TFieldType; Nice: Boolean): String;
 procedure FieldTypePickList(ATableLevel: Integer; const AList: TStrings);
 function GetVersionStr: String;
 
 implementation
 
 uses
-  FileInfo;
+  TypInfo, FileInfo;
 
 {$IF LCL_FullVersion < 2010000}
 function TDBGridColumnsHelper.ColumnByFieldname(const aFieldname: string): TColumn;
@@ -65,6 +66,12 @@ begin
   // ftAutoInc is supported by Visual dBase, FoxPro and Visual FoxPro
   if ATableLevel in [7, 25, 30] then
     AList.Add(FieldTypeNames[ftAutoInc]);
+end;
+
+function FieldTypeAsString(AFieldType: TFieldType; Nice: Boolean): String;
+begin
+  Result := GetEnumName(TypeInfo(TFieldType), integer(AFieldType));
+  if Nice then Delete(Result, 1, 2);
 end;
 
 function GetVersionStr: String;

@@ -1,5 +1,7 @@
 unit uExpHTML;
 
+// Todo: Fix BLOB fields being exported as MEMO fields.
+
 {$mode objfpc}{$H+}
 
 interface
@@ -47,27 +49,27 @@ type
     SaveExp: TSaveDialog;
     TableBC: TColorBox;
     TableW: TEdit;
-    Tmp: TDbf;
     UpDown1: TUpDown;
     UpDown2: TUpDown;
     UpDown3: TUpDown;
+    procedure ClbFieldItemClick(Sender: TObject; Index: integer);
     procedure CloseBtnClick(Sender: TObject);
     procedure ExportBtnClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
     ExpObj : TDsDataToHTML;
-
+    FDbfTable: TDbf;
     Procedure IncrementPBar(Sender: TObject);
-
     Function Return_Font_Size(cb : TComboBox) : THTMLFontSize;
     Function Return_Font_Style(cb : TComboBox) : THTMLFontStyles;
-
     Procedure Generate_Field_List;
   public
     { public declarations }
+    property DbfTable: TDbf read FDbfTable write FDbfTable;
   end;
 
 var
@@ -78,7 +80,7 @@ implementation
 {$R *.lfm}
 
 uses
-  Math, uOptions;
+  DB, Math, uOptions;
 
 { TExpHTML }
 
@@ -89,62 +91,73 @@ end;
 
 procedure TExpHTML.CloseBtnClick(Sender: TObject);
 begin
- Close;
+  Close;
+end;
+
+// Do not allow to export and embed a picture in html.
+procedure TExpHTML.ClbFieldItemClick(Sender: TObject; Index: integer);
+var
+  fieldDef: TFieldDef;
+begin
+  fieldDef := FDbfTable.FieldDefs.Items[ClbField.ItemIndex];
+  if (fieldDef.DataType = ftBlob) and (fieldDef.DataType <> ftMemo) then
+  begin
+    ClbField.Checked[ClbField.ItemIndex] := false;
+    MessageDlg('Exporting a BLOB field to HTML is not supported.', mtError, [mbOK], 0);
+  end;
 end;
 
 procedure TExpHTML.ExportBtnClick(Sender: TObject);
 begin
- If MessageDlg('Do you want to attempt to export data?',mtWarning,[mbOk, mbCancel],0) <> mrOk Then
-  Exit;
+  lblProgress.Caption := 'Progress';
 
- If SaveExp.Execute Then
-  Begin
-   pBar.Min := 0;
-   pBar.Max := Tmp.ExactRecordCount;
-   pBar.Position := 0;
+  if SaveExp.Execute then
+  begin
+    pBar.Min := 0;
+    pBar.Max := DbfTable.ExactRecordCount;
+    pBar.Position := 0;
 
-   Tmp.First;
+    DbfTable.First;
 
-   ExpObj := TDsDataToHTML.Create(Self);
-   ExpObj.AfterWriteRecord := @IncrementPBar;
-   ExpObj.DataSet := Tmp;
+    ExpObj := TDsDataToHTML.Create(Self);
+    ExpObj.AfterWriteRecord := @IncrementPBar;
+    ExpObj.DataSet := DbfTable;
+    ExpObj.PageOptions.Title := PageTLT.Text;
+    ExpObj.PageOptions.BackColor := PageBC.Colors[PageBC.ItemIndex];
+    ExpObj.PageOptions.Font.Color := PageFC.Colors[PageFC.ItemIndex];
+    ExpObj.PageOptions.Font.Size := Return_Font_Size(PageFS);
+    ExpObj.PageOptions.Font.Style := Return_Font_Style(PageFT);
+    ExpObj.Detail.Headers.BackColor := HeaderBC.Colors[HeaderBC.ItemIndex];
+    ExpObj.Detail.Headers.Font.Color := HeaderFC.Colors[HeaderFC.ItemIndex];
+    ExpObj.Detail.Headers.Font.Size := Return_Font_Size(HeaderFS);
+    ExpObj.Detail.Headers.Font.Style := Return_Font_Style(HeaderST);
+    ExpObj.Detail.BorderWidth := StrToInt(TableW.Text);
+    ExpObj.Detail.BorderColor := TableBC.Colors[TableBC.ItemIndex];
+    ExpObj.Detail.CellPadding := StrToInt(CellP.Text);
+    ExpObj.Detail.CellSpacing := StrToInt(CellS.Text);
 
-   ExpObj.PageOptions.BackColor := PageBC.Colors[PageBC.ItemIndex];
-   ExpObj.PageOptions.Font.Color := PageFC.Colors[PageFC.ItemIndex];
-   ExpObj.Detail.Headers.BackColor := HeaderBC.Colors[HeaderBC.ItemIndex];
-   ExpObj.Detail.Headers.Font.Color := HeaderFC.Colors[HeaderFC.ItemIndex];
+    Generate_Field_List;
 
-   ExpObj.PageOptions.Font.Size := Return_Font_Size(PageFS);
-   ExpObj.Detail.Headers.Font.Size := Return_Font_Size(HeaderFS);
-
-   ExpObj.PageOptions.Font.Style := Return_Font_Style(PageFT);
-   ExpObj.Detail.Headers.Font.Style := Return_Font_Style(HeaderST);
-
-   ExpObj.Detail.BorderWidth := StrToInt(TableW.Text);
-   ExpObj.Detail.BorderColor := TableBC.Colors[TableBC.ItemIndex];
-   ExpObj.Detail.CellPadding := StrToInt(CellP.Text);
-   ExpObj.Detail.CellSpacing := StrToInt(CellS.Text);
-
-   ExpObj.PageOptions.Title := PageTLT.Text;
-
-   Generate_Field_List;
-
-   Try
-     ExpObj.SaveToFile(SaveExp.FileName);
-
-     //pBar.Position:=0;
-
-     ShowMessage('Export completed!');
-   Except
-     ShowMessage('Error on writing file...');
-   End;
-  End;
+    try
+      ExpObj.SaveToFile(SaveExp.FileName);
+      lblProgress.Caption := 'Progress (completed)';
+      pBar.Position := 0;
+    except
+      on E:Exception do
+        MessageDlg('Error on writing file:' + LineEnding + E.Message, mtError, [mbOK], 0);
+    end;
+  end;
 end;
 
 procedure TExpHTML.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   if CanClose then
     Options.ExportHTMLWindow.ExtractFromForm(Self);
+end;
+
+procedure TExpHTML.FormCreate(Sender: TObject);
+begin
+  FDbfTable := TDbf.Create(self);
 end;
 
 procedure TExpHTML.FormShow(Sender: TObject);
@@ -160,8 +173,10 @@ begin
   ExportBtn.Constraints.MinWidth := w;
   CloseBtn.Constraints.MinWidth := w;
 
-  Constraints.MinWidth := (ExportBtn.Width + CloseBtn.Width + 4*CloseBtn.BorderSpacing.Right) * 2;
-  Constraints.MinHeight := pBar.Top + pBar.Height +
+  Constraints.MinWidth :=
+    (ExportBtn.Width + CloseBtn.Width + 4*CloseBtn.BorderSpacing.Right) * 2;
+  Constraints.MinHeight :=
+    pBar.Top + pBar.Height +
     CloseBtn.BorderSpacing.Top + CloseBtn.Height + CloseBtn.BorderSpacing.Bottom;
 
   if Options.RememberWindowSizePos and (Options.ExportHTMLWindow.Width > 0) then
@@ -171,70 +186,49 @@ begin
   end;
 
   ClbField.Clear;
+  for ind := 0 to DbfTable.FieldDefs.Count - 1 do
+    with FDbftable.FieldDefs.Items[Ind] do
+    begin
+      ClbField.Items.Add(Name);
+      // Do not allow exporting graphic fields, it will be embedded in the html which is not valid
+      if (DataType = ftBlob) and (DataType <> ftMemo) then
+        ClbField.Checked[ind] := false
+      else
+        ClbField.Checked[ind] := True;
+    end;
 
-  for ind := 0 to Tmp.FieldDefs.Count - 1 do
-  begin
-    ClbField.Items.Add(Tmp.FieldDefs.Items[ind].Name);
-    ClbField.Checked[ind] := True;
-  end;
-
-  PageTLT.Text := Tmp.TableName;
+  PageTLT.Text := DbfTable.TableName;
 end;
 
 procedure TExpHTML.IncrementPBar(Sender: TObject);
 begin
- pBar.StepIt;
-
- Application.ProcessMessages;
+  pBar.StepIt;
+  Application.ProcessMessages;
 end;
 
 function TExpHTML.Return_Font_Size(cb: TComboBox): THTMLFontSize;
 begin
- Result := fsNormal;
-
- Case cb.ItemIndex Of
-  0                : Result:=fsNormal;
-  1                : Result:=fs8;
-  2                : Result:=fs10;
-  3                : Result:=fs12;
-  4                : Result:=fs14;
-  5                : Result:=fs18;
-  6                : Result:=fs24;
-  7                : Result:=fs36;
- End;
+  if (cb.ItemIndex >= 0) and (cb.ItemIndex <= ord(High(THtmlFontSize))) then
+    Result := THtmlFontSize(cb.ItemIndex)
+  else
+    Result := fsNormal;
 end;
 
 function TExpHTML.Return_Font_Style(cb: TComboBox): THTMLFontStyles;
 begin
- Result:=[];
-
- Case cb.ItemIndex Of
-  0                : Result:=[];
-  1                : Result:=[hfBold];
-  2                : Result:=[hfItalic];
-  3                : Result:=[hfUnderline];
-  4                : Result:=[hfStrikeOut];
-  5                : Result:=[hfBlink];
-  6                : Result:=[hfSup];
-  7                : Result:=[hfSub];
-  8                : Result:=[hfDfn];
-  9                : Result:=[hfStrong];
-  10               : Result:=[hfEm];
-  11               : Result:=[hfCite];
-  12               : Result:=[hfVariable];
-  13               : Result:=[hfKeyboard];
-  14               : Result:=[hfCode];
- End;
+  Result := [];
+  if (cb.ItemIndex >= 0) and (cb.ItemIndex <= ord(High(THtmlFontStyle))) then
+    Include(Result, THtmlFontStyle(cb.ItemIndex));
 end;
 
 procedure TExpHTML.Generate_Field_List;
- Var Ind : Integer;
+var
+  Ind: Integer;
 begin
- ExpObj.GetFields.Clear;
-
- For Ind := 0 To ClbField.Items.Count - 1 Do
-  If ClbField.Checked[Ind] Then
-   ExpObj.Fields.Add().Assign(Tmp.Fields[Ind]);
+  ExpObj.GetFields.Clear;
+  for Ind := 0 To ClbField.Items.Count - 1 do
+    if ClbField.Checked[Ind] then
+      ExpObj.Fields.Add().Assign(DbfTable.Fields[Ind]);
 end;
 
 end.

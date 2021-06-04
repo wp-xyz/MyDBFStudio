@@ -7,6 +7,7 @@ object DbfTable: TDbfTable
   ClientHeight = 495
   ClientWidth = 708
   KeyPreview = True
+  OnCreate = FormCreate
   OnDestroy = FormDestroy
   LCLVersion = '2.1.0.0'
   object Panel1: TPanel
@@ -386,25 +387,8 @@ object DbfTable: TDbfTable
     end
   end
   object Ds: TDataSource
-    DataSet = DBTable
-    Left = 364
-    Top = 148
-  end
-  object DBTable: TDbf
-    Exclusive = True
-    IndexDefs = <>
-    TableLevel = 4
-    Filtered = True
-    FilterOptions = []
-    AfterInsert = ShowTableInfo
-    AfterEdit = DBTableAfterEdit
-    AfterPost = ShowTableInfo
-    AfterCancel = ShowTableInfo
-    AfterDelete = ShowTableInfo
-    AfterRefresh = ShowTableInfo
-    AfterScroll = ShowTableInfo
-    Left = 456
-    Top = 148
+    Left = 256
+    Top = 152
   end
   object OpenDialog: TOpenDialog
     Left = 484

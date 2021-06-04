@@ -194,7 +194,7 @@ object NewTable: TNewTable
       Caption = 'Delete Index'
       Images = CommonData.Images
       ImageIndex = 5
-      OnClick = eleteIndexBtnClick
+      OnClick = DeleteIndexBtnClick
       TabOrder = 3
     end
     object DefineIndexBtn: TBitBtn

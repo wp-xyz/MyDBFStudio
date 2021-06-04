@@ -9,6 +9,7 @@ object ExpCSV: TExpCSV
   ClientHeight = 375
   ClientWidth = 508
   OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
   OnShow = FormShow
   Position = poMainFormCenter
   LCLVersion = '2.1.0.0'
@@ -45,6 +46,7 @@ object ExpCSV: TExpCSV
       ''
     )
     ItemHeight = 17
+    OnItemClick = ClbFieldItemClick
     TabOrder = 0
     Data = {
       0100000000
@@ -254,13 +256,6 @@ object ExpCSV: TExpCSV
     Filter = 'Comma Separated Value|*.csv|All Files|*.*'
     Options = [ofOverwritePrompt, ofPathMustExist, ofEnableSizing, ofViewDetail]
     Left = 384
-    Top = 208
-  end
-  object Tmp: TDbf
-    IndexDefs = <>
-    TableLevel = 4
-    FilterOptions = []
-    Left = 432
     Top = 208
   end
 end
