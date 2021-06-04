@@ -35,6 +35,8 @@ type
     Panel1: TPanel;
     Temp: TDbf;
     procedure CloseBtnClick(Sender: TObject);
+    procedure FieldListSelectEditor(Sender: TObject; aCol, aRow: Integer;
+      var Editor: TWinControl);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -205,6 +207,13 @@ end;
 procedure TRestructure.CloseBtnClick(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TRestructure.FieldListSelectEditor(Sender: TObject; aCol,
+  aRow: Integer; var Editor: TWinControl);
+begin
+ if (aCol = 2) and (Editor is TPickListcellEditor) then
+   TPickListCellEditor(Editor).AutoComplete := true;
 end;
 
 procedure TRestructure.FormCloseQuery(Sender: TObject; var CanClose: Boolean);

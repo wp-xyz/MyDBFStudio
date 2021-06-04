@@ -61,6 +61,7 @@ object NewTable: TNewTable
     RowCount = 2
     TabOrder = 0
     TitleFont.Height = -12
+    OnSelectEditor = FieldListSelectEditor
     ColWidths = (
       35
       249
@@ -227,7 +228,6 @@ object NewTable: TNewTable
     BorderSpacing.Right = 6
     BorderSpacing.Bottom = 6
     Caption = '&Create table'
-    Default = True
     Images = CommonData.Images
     ImageIndex = 7
     OnClick = CreateTableBtnClick

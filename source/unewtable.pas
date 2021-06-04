@@ -37,6 +37,8 @@ type
     procedure CreateTableBtnClick(Sender: TObject);
     procedure DefineIndexBtnClick(Sender: TObject);
     procedure eleteIndexBtnClick(Sender: TObject);
+    procedure FieldListSelectEditor(Sender: TObject; aCol, aRow: Integer;
+      var Editor: TWinControl);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; {%H-}Shift: TShiftState);
@@ -228,6 +230,13 @@ begin
 
    ShowIndexList();
   End;
+end;
+
+procedure TNewTable.FieldListSelectEditor(Sender: TObject; aCol, aRow: Integer;
+  var Editor: TWinControl);
+begin
+  if (aCol = 2) and (Editor is TPickListCellEditor) then
+    TPickListCellEditor(Editor).AutoComplete := true;
 end;
 
 procedure TNewTable.FormCreate(Sender: TObject);

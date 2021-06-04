@@ -70,6 +70,7 @@ object Restructure: TRestructure
     TabOrder = 0
     TitleFont.Height = -12
     OnKeyDown = FieldListKeyDown
+    OnSelectEditor = FieldListSelectEditor
     ColWidths = (
       35
       260
@@ -89,7 +90,6 @@ object Restructure: TRestructure
     AutoSize = True
     BorderSpacing.Right = 6
     Caption = '&Restructure table'
-    Default = True
     Images = CommonData.Images
     ImageIndex = 7
     OnClick = RestructureBtnClick
