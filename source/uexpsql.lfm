@@ -9,6 +9,7 @@ object ExpSQL: TExpSQL
   ClientHeight = 349
   ClientWidth = 464
   OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
   OnShow = FormShow
   Position = poMainFormCenter
   LCLVersion = '2.1.0.0'
@@ -155,13 +156,6 @@ object ExpSQL: TExpSQL
     Filter = 'SQL File|*.sql|All Files|*.*'
     Options = [ofOverwritePrompt, ofPathMustExist, ofEnableSizing, ofViewDetail]
     Left = 124
-    Top = 132
-  end
-  object Tmp: TDbf
-    IndexDefs = <>
-    TableLevel = 4
-    FilterOptions = []
-    Left = 76
     Top = 132
   end
 end

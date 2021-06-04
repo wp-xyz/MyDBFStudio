@@ -22,23 +22,21 @@ type
     Label11: TLabel;
     pBar: TProgressBar;
     SaveExp: TSaveDialog;
-    Tmp: TDbf;
     procedure CloseBtnClick(Sender: TObject);
     procedure ExportBtnClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
-
+    FDbf: TDbf;
     Procedure GenCreateTableScript;
-
     Function Remove_FileExtension(Val : String) : String;
-
     Function ConvertFloat(Val : String) : String;
-
     Procedure CreateSQLScript;
   public
     { public declarations }
+    property Dbf: TDbf read FDbf write FDbf;
   end;
 
 var
@@ -57,6 +55,11 @@ procedure TExpSQL.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   if CanClose then
     Options.ExportSQLScriptWindow.ExtractFromForm(Self);
+end;
+
+procedure TExpSQL.FormCreate(Sender: TObject);
+begin
+  FDbf := TDbf.Create(self);
 end;
 
 procedure TExpSQL.FormShow(Sender: TObject);
@@ -81,79 +84,88 @@ begin
 
   ClbField.Clear;
 
-  for ind := 0 to Tmp.FieldDefs.Count - 1 do
+  for ind := 0 to FDbf.FieldDefs.Count - 1 do
   begin
-    ClbField.Items.Add(Tmp.FieldDefs.Items[ind].Name);
+    ClbField.Items.Add(FDbf.FieldDefs.Items[ind].Name);
     ClbField.Checked[ind] := True;
   end;
 end;
 
 procedure TExpSQL.GenCreateTableScript;
- Var App : String;
-     F : TextFile;
-     Ind : Word;
-     Str : TStringList;
+var
+  App: String;
+  F: TextFile;
+  Ind: Word;
+  Str: TStringList;
+  field: TField;
 begin
- App := Remove_FileExtension(ExtractFileName(SaveExp.FileName));
- App := App + '-crt.sql';
- App := ExtractFilePath(SaveExp.FileName) + App;
+  App := Remove_FileExtension(ExtractFileName(SaveExp.FileName));
+  App := App + '-crt.sql';
+  App := ExtractFilePath(SaveExp.FileName) + App;
 
- AssignFile(F,App);
- ReWrite(F);
+  AssignFile(F,App);
+  ReWrite(F);
 
- Str := TStringList.Create;
+  Str := TStringList.Create;
+  try
+    for Ind := 0 To ClbField.Items.Count - 1 do
+      if ClbField.Checked[Ind] then
+      begin
+        field := FDbf.FieldByName(ClbField.Items[Ind]);
+        case field.DataType Of
+          ftString,
+          ftFixedChar,
+          ftWideString,
+          ftFixedWideChar:
+            Str.Add(Format('      %s VARCHAR(%d) CHARACTER SET WIN1252',
+              [ClbField.Items[Ind], field.DataSize]));
 
- For Ind := 0 To ClbField.Items.Count - 1 Do
-  If ClbField.Checked[Ind] Then
-   Begin
-    Case Tmp.FieldByName(ClbField.Items[Ind]).DataType Of
-     ftString,
-     ftFixedChar,
-     ftWideString,
-     ftFixedWideChar       : Str.Add('      ' + ClbField.Items[Ind] + ' VARCHAR(' +
-                                     IntToStr(Tmp.FieldByName(ClbField.Items[Ind]).DataSize) +
-                                     ') CHARACTER SET WIN1252');
+          ftSmallint,
+          ftInteger,
+          ftWord,
+          ftBytes,
+          ftVarBytes:
+            Str.Add(Format('      %s INTEGER', [ClbField.Items[Ind]]));
 
-     ftSmallint,
-     ftInteger,
-     ftWord,
-     ftBytes,
-     ftVarBytes            : Str.Add('      ' + ClbField.Items[Ind] + ' INTEGER');
+          ftAutoInc,
+          ftLargeint:
+            Str.Add(Format('      %s DOUBLE PRECISION', [ClbField.ITems[ind]]));
 
-     ftAutoInc,
-     ftLargeint            : Str.Add('      ' + ClbField.Items[Ind] + ' DOUBLE PRECISION');
+          ftFloat,
+          ftCurrency,
+          ftBCD:
+            Str.Add(Format('      %s NUMERIC (%d,%d)',
+              [ClbField.Items[Ind], field.DataSize, Field.DataSize]));
 
-     ftFloat,
-     ftCurrency,
-     ftBCD                 : Str.Add('      ' + ClbField.Items[Ind] + ' NUMERIC(' +
-                             IntToStr(Tmp.FieldByName(ClbField.Items[Ind]).DataSize) + ',' +
-                             IntToStr(Tmp.FieldByName(ClbField.Items[Ind]).DataSize) + ')');
+          ftBoolean:
+            Str.Add(Format('      %s CHAR(1) CHARACTER SET WIN1252', [ClbField.Items[ind]]));
 
-     ftBoolean             : Str.Add('      ' + ClbField.Items[Ind] + ' CHAR(1) CHARACTER SET WIN1252');
+          ftDate,
+          ftDateTime:
+            Str.Add(Format('      %s DATE', [ClbField.Items[ind]]));
 
-     ftDate,
-     ftDateTime            : Str.Add('      ' + ClbField.Items[Ind] + ' DATE');
+          ftTime:
+            Str.Add(Format('      %s TIME', [ClbField.Items[ind]]));
+        end;
+      end;
 
-     ftTime                : Str.Add('      ' + ClbField.Items[Ind] + ' TIME');
-    End;
-   End;
+    if Str.Count > 0 then
+    begin
+      Writeln(F, Format('CREATE TABLE %s (', [UpperCase(Remove_FileExtension(FDbf.TableName))]));
 
- If Str.Count > 0 Then
-  Begin
-   Writeln(F,'CREATE TABLE ' + UpperCase(Remove_FileExtension(Tmp.TableName)) + ' (');
+      for Ind := 0 To Str.Count - 1 do
+        if Ind < Str.Count - 1 then
+          Writeln(F, Str.Strings[Ind] + ',')
+        else
+          Writeln(F, Str.Strings[Ind]);
 
-   For Ind := 0 To Str.Count - 1 Do
-    If Ind < Str.Count - 1 Then
-     Writeln(F,Str.Strings[Ind] + ',')
-    Else
-     Writeln(F,Str.Strings[Ind]);
+      Writeln(F, ');');
+    end;
 
-   Writeln(F,');');
-  End;
-
- System.Close(F);
-
- Str.Free;
+  finally
+    System.Close(F);
+    Str.Free;
+  end;
 end;
 
 function TExpSQL.Remove_FileExtension(Val: String): String;
@@ -186,104 +198,114 @@ begin
 end;
 
 procedure TExpSQL.CreateSQLScript;
- Var Ind : Word;
-     Str : TStringList;
-     F : TextFile;
+var
+  Ind : Word;
+  Str : TStringList;
+  F : TextFile;
+  field: TField;
 begin
- Tmp.First;
- pBar.Min := 0;
- pBar.Max := Tmp.ExactRecordCount;
- pBar.Position := 0;
+  FDbf.First;
+  pBar.Min := 0;
+  pBar.Max := FDbf.ExactRecordCount;
+  pBar.Position := 0;
 
- Str := TStringList.Create;
+  Str := TStringList.Create;
+  try
+    AssignFile(F, SaveExp.FileName);
+    ReWrite(F);
 
- AssignFile(F,SaveExp.FileName);
- ReWrite(F);
+    while Not FDbf.EOF do
+    begin
+      Str.Clear;
 
- While Not Tmp.EOF Do
-  Begin
-   Str.Clear;
+      for Ind := 0 To ClbField.Items.Count - 1 do
+        if ClbField.Checked[Ind] then
+        begin
+          field := FDbf.FieldByName(ClbField.Items[Ind]);
+          case field.DataType of
+            ftString,
+            ftFixedChar,
+            ftWideString,
+            ftFixedWideChar:
+              if field.AsString <> '' then
+                Str.Add(Format('      %s', [QuotedStr(field.AsString)]))
+              else
+                Str.Add(Format('      %s', [QuotedStr('')]));
 
-   For Ind := 0 To ClbField.Items.Count - 1 Do
-    If ClbField.Checked[Ind] Then
-     Begin
-      Case Tmp.FieldByName(ClbField.Items[Ind]).DataType Of
-       ftString,
-       ftFixedChar,
-       ftWideString,
-       ftFixedWideChar       : If Tmp.FieldByName(ClbField.Items[Ind]).AsString <> '' Then
-                                Str.Add('      ' + QuotedStr(Tmp.FieldByName(ClbField.Items[Ind]).AsString))
-                               Else
-                                Str.Add('      ' + QuotedStr(''));
+            ftAutoInc,
+            ftLargeint,
+            ftSmallint,
+            ftInteger,
+            ftWord,
+            ftBytes,
+            ftVarBytes:
+              if field.AsString <> '' then
+                Str.Add(Format('      %s', [field.AsString]))
+              else
+                Str.Add(       '      NULL');
 
-       ftAutoInc,
-       ftLargeint,
-       ftSmallint,
-       ftInteger,
-       ftWord,
-       ftBytes,
-       ftVarBytes            : If Tmp.FieldByName(ClbField.Items[Ind]).AsString <> '' Then
-                                Str.Add('      ' + Tmp.FieldByName(ClbField.Items[Ind]).AsString)
-                               Else
-                                Str.Add('      NULL');
+            ftFloat,
+            ftCurrency,
+            ftBCD:
+              if field.AsString <> '' then
+                Str.Add(Format('      %s', [ConvertFloat(field.AsString)]))
+              else
+                Str.Add(       '      NULL');
 
-       ftFloat,
-       ftCurrency,
-       ftBCD                 : If Tmp.FieldByName(ClbField.Items[Ind]).AsString <> '' Then
-                                Str.Add('      ' + ConvertFloat(Tmp.FieldByName(ClbField.Items[Ind]).AsString))
-                               Else
-                                Str.Add('      NULL');
+            ftBoolean:
+              if field.AsBoolean then
+                Str.Add(       '      1')
+              else
+                Str.Add(       '      0');
 
-       ftBoolean             : If Tmp.FieldByName(ClbField.Items[Ind]).AsBoolean Then
-                                Str.Add('      ' + '1')
-                               Else
-                                Str.Add('      ' + '0');
+            ftDate:
+              if field.AsString <> '' then
+                Str.Add(Format('      %s', [DateToStr(field.AsDateTime)]))   // todo: Is this the right format???
+              else
+                Str.Add(       '      NULL');
 
-       ftDate                : If Tmp.FieldByName(ClbField.Items[Ind]).AsString <> '' Then
-                                Str.Add('      ' + DateToStr(Tmp.FieldByName(ClbField.Items[Ind]).AsDateTime))
-                               Else
-                                Str.Add('      NULL');
+            ftDateTime:
+              if field.AsString <> '' then
+                Str.Add(Format('      %s', [DateTimeToStr(field.AsDateTime)]))  // todo: Is this the right format ???
+              else
+                Str.Add(       '      NULL');
 
-       ftDateTime            : If Tmp.FieldByName(ClbField.Items[Ind]).AsString <> '' Then
-                                Str.Add('      ' + DateTimeToStr(Tmp.FieldByName(ClbField.Items[Ind]).AsDateTime))
-                               Else
-                                Str.Add('      NULL');
+            ftTime:
+              if field.AsString <> '' then
+                Str.Add(Format('      %s', [TimeToStr(field.AsDateTime)]))   // todo: Is this format correct?
+              else
+                Str.Add(       '      NULL');
+          end;
+        end;
 
-       ftTime                : If Tmp.FieldByName(ClbField.Items[Ind]).AsString <> '' Then
-                                Str.Add('      ' + TimeToStr(Tmp.FieldByName(ClbField.Items[Ind]).AsDateTime))
-                               Else
-                                Str.Add('      NULL');
-      End;
-     End;
+      FDbf.Next;
 
-   Tmp.Next;
+      if Str.Count > 0 then
+      begin
+        Writeln(F, Format('INSERT INTO %s VALUES(', [UpperCase(Remove_FileExtension(FDbf.TableName))]));
 
-   If Str.Count > 0 Then
-    Begin
-     Writeln(F,'INSERT INTO ' + UpperCase(Remove_FileExtension(Tmp.TableName)) + ' VALUES(');
+        for Ind := 0 To Str.Count - 1 do
+          if Ind < Str.Count - 1 then
+            Writeln(F, Str.Strings[Ind] + ',')
+          else
+            Writeln(F, Str.Strings[Ind]);
 
-     For Ind := 0 To Str.Count - 1 Do
-      If Ind < Str.Count - 1 Then
-       Writeln(F,Str.Strings[Ind] + ',')
-      Else
-       Writeln(F,Str.Strings[Ind]);
+        Writeln(F, ');');
+      end;
 
-     Writeln(F,');');
-    End;
+      pBar.Position := pBar.Position + 1;
+    end;
 
-   pBar.Position := pBar.Position + 1;
-  End;
-
- pBar.Position := 0;
-
- System.Close(F);
-
- Str.Free;
+  finally
+    pBar.Position := 0;
+    System.Close(F);
+    Str.Free;
+  end;
 end;
 
 procedure TExpSQL.CloseBtnClick(Sender: TObject);
 begin
- Close;
+  Close;
 end;
 
 procedure TExpSQL.ExportBtnClick(Sender: TObject);

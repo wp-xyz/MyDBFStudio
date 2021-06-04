@@ -164,7 +164,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="74">
+    <Units Count="73">
       <Unit0>
         <Filename Value="MyDbfStudio.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -195,8 +195,8 @@
         <UnitName Value="uDbfTable"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
-        <TopLine Value="620"/>
-        <CursorPos X="34" Y="638"/>
+        <TopLine Value="619"/>
+        <CursorPos X="32" Y="627"/>
         <UsageCount Value="201"/>
         <Bookmarks Count="1">
           <Item0 Y="386" ID="1"/>
@@ -832,17 +832,8 @@
         <TopLine Value="25"/>
         <UsageCount Value="9"/>
       </Unit72>
-      <Unit73>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/grids.pas"/>
-        <UnitName Value="Grids"/>
-        <EditorIndex Value="18"/>
-        <TopLine Value="6630"/>
-        <CursorPos X="32" Y="6662"/>
-        <UsageCount Value="14"/>
-        <Loaded Value="True"/>
-      </Unit73>
     </Units>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="16" HistoryIndex="15">
       <Position1>
         <Filename Value="unewtable.pas"/>
         <Caret Line="238" TopLine="230"/>
@@ -853,114 +844,59 @@
       </Position2>
       <Position3>
         <Filename Value="unewtable.pas"/>
-        <Caret TopLine="4"/>
+        <Caret Line="40" Column="22" TopLine="16"/>
       </Position3>
       <Position4>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/grids.pas"/>
-        <Caret Line="1798" Column="3" TopLine="1778"/>
-      </Position4>
-      <Position5>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/grids.pas"/>
-        <Caret Line="1718" Column="48" TopLine="1704"/>
-      </Position5>
-      <Position6>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/grids.pas"/>
-        <Caret Line="6654" Column="30" TopLine="6628"/>
-      </Position6>
-      <Position7>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/grids.pas"/>
-        <Caret Line="800" Column="5" TopLine="782"/>
-      </Position7>
-      <Position8>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/grids.pas"/>
-        <Caret Line="251" Column="35" TopLine="251"/>
-      </Position8>
-      <Position9>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/grids.pas"/>
-      </Position9>
-      <Position10>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/grids.pas"/>
-        <Caret Line="800" Column="20" TopLine="769"/>
-      </Position10>
-      <Position11>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/grids.pas"/>
-        <Caret Line="3894" Column="77" TopLine="3863"/>
-      </Position11>
-      <Position12>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/grids.pas"/>
-        <Caret Line="5545" Column="36" TopLine="5513"/>
-      </Position12>
-      <Position13>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/grids.pas"/>
-        <Caret Line="5546" Column="30" TopLine="5514"/>
-      </Position13>
-      <Position14>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/grids.pas"/>
-        <Caret Line="5734" Column="21" TopLine="5702"/>
-      </Position14>
-      <Position15>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/grids.pas"/>
-        <Caret Line="5735" Column="20" TopLine="5703"/>
-      </Position15>
-      <Position16>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/grids.pas"/>
-        <Caret Line="5736" Column="34" TopLine="5704"/>
-      </Position16>
-      <Position17>
-        <Filename Value="unewtable.pas"/>
-        <Caret Line="40" Column="22" TopLine="16"/>
-      </Position17>
-      <Position18>
         <Filename Value="unewtable.pas"/>
         <Caret Line="235" Column="15" TopLine="235"/>
-      </Position18>
-      <Position19>
+      </Position4>
+      <Position5>
         <Filename Value="unewtable.pas"/>
-      </Position19>
-      <Position20>
+      </Position5>
+      <Position6>
         <Filename Value="urestructure.pas"/>
         <Caret Line="25" Column="18"/>
-      </Position20>
-      <Position21>
+      </Position6>
+      <Position7>
         <Filename Value="udbftable.pas"/>
         <Caret Line="572" Column="26" TopLine="568"/>
-      </Position21>
-      <Position22>
+      </Position7>
+      <Position8>
         <Filename Value="udbftable.pas"/>
         <Caret Line="573" Column="26" TopLine="569"/>
-      </Position22>
-      <Position23>
+      </Position8>
+      <Position9>
         <Filename Value="udbftable.pas"/>
         <Caret Line="574" Column="26" TopLine="570"/>
-      </Position23>
-      <Position24>
+      </Position9>
+      <Position10>
         <Filename Value="udbftable.pas"/>
         <Caret Line="581" Column="23" TopLine="571"/>
-      </Position24>
-      <Position25>
+      </Position10>
+      <Position11>
         <Filename Value="udbftable.pas"/>
         <Caret Line="68" Column="15" TopLine="62"/>
-      </Position25>
-      <Position26>
+      </Position11>
+      <Position12>
         <Filename Value="udbftable.pas"/>
         <Caret Line="449" Column="49" TopLine="441"/>
-      </Position26>
-      <Position27>
+      </Position12>
+      <Position13>
         <Filename Value="udbftable.pas"/>
         <Caret Line="456" Column="28" TopLine="429"/>
-      </Position27>
-      <Position28>
+      </Position13>
+      <Position14>
         <Filename Value="udbftable.pas"/>
         <Caret Line="455" Column="28" TopLine="428"/>
-      </Position28>
-      <Position29>
+      </Position14>
+      <Position15>
         <Filename Value="udbftable.pas"/>
         <Caret Line="431" Column="23" TopLine="428"/>
-      </Position29>
-      <Position30>
+      </Position15>
+      <Position16>
         <Filename Value="udbftable.pas"/>
         <Caret Line="460" Column="32" TopLine="448"/>
-      </Position30>
+      </Position16>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
