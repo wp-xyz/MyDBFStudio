@@ -23,6 +23,7 @@ type
     procedure CloseBtnClick(Sender: TObject);
     procedure ExportBtnClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
@@ -57,7 +58,7 @@ var
   field: TField;
   stream: TStream;
   s: String;
-  rs: RawByteString;
+  rs: RawByteString = '';
 begin
   if SaveExp.Execute then
     if MessageDlg('Do you want to attempt to export data?',mtWarning,[mbOk, mbCancel],0) = mrOk then
@@ -135,6 +136,11 @@ procedure TExpXML.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   if CanClose then
     Options.ExportXMLWindow.ExtractFromForm(Self);
+end;
+
+procedure TExpXML.FormCreate(Sender: TObject);
+begin
+  FDbf := TDbf.Create(self);
 end;
 
 procedure TExpXML.FormShow(Sender: TObject);

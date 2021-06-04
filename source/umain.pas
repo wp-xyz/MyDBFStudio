@@ -532,28 +532,29 @@ begin
 end;
 
 procedure TMain.miExpXLSClick(Sender: TObject);
- Var Tmp : TForm;
+var
+  F: TForm;
 begin
- If (WorkSite.ActivePage Is TTabForm) Then
-  If (WorkSite.ActivePage As TTabForm).ParentForm Is TDbfTable Then
-   Begin
-    Tmp := (WorkSite.ActivePage As TTabForm).ParentForm;
+  if (WorkSite.ActivePage is TTabForm) then
+    if (WorkSite.ActivePage as TTabForm).ParentForm Is TDbfTable then
+    begin
+      F := (WorkSite.ActivePage as TTabForm).ParentForm;
 
-    ExpXLS := TExpXLS.Create(nil);
-    try
-      ExpXLS.Tmp := (Tmp As TDbfTable).DBTable;
+      ExpXLS := TExpXLS.Create(nil);
+      try
+        ExpXLS.Dbf := (F as TDbfTable).DBTable;
 
-      (Tmp As TDbfTable).Ds.Enabled := False;
-      (Tmp As TDbfTable).Ds.DataSet := Nil;
+        (F As TDbfTable).Ds.Enabled := false;
+        (F As TDbfTable).Ds.DataSet := nil;
 
-      ExpXLS.ShowModal;
+        ExpXLS.ShowModal;
 
-      (Tmp As TDbfTable).Ds.DataSet := (Tmp As TDbfTable).DBTable;
-      (Tmp As TDbfTable).Ds.Enabled := True;
-    finally
-      FreeAndNil(ExpXLS);
+        (F As TDbfTable).Ds.DataSet := (F As TDbfTable).DBTable;
+        (F As TDbfTable).Ds.Enabled := true;
+      finally
+        FreeAndNil(ExpXLS);
+      end;
     end;
-   end;
 end;
 
 procedure TMain.miExpXMLClick(Sender: TObject);

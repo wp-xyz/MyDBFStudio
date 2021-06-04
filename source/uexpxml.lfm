@@ -9,6 +9,7 @@ object ExpXML: TExpXML
   ClientHeight = 322
   ClientWidth = 439
   OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
   OnShow = FormShow
   Position = poMainFormCenter
   LCLVersion = '2.1.0.0'

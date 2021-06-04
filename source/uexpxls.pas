@@ -30,22 +30,23 @@ type
     StrFND: TEdit;
     StrMFN: TEdit;
     StrMFND: TEdit;
-    Tmp: TDbf;
+    procedure ClbFieldClickCheck(Sender: TObject);
     procedure CloseBtnClick(Sender: TObject);
     procedure ExportBtnClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
     ExpObj : TDsXlsFile;
     XlsRow : Word;
-
+    FDbf: TDbf;
     Procedure CreateFieldTitle;
     Procedure WriteRecordValue(T : TDbf);
-
     Function CreateSplitFileName(Orig : String; Ind : Word) : String;
   public
     { public declarations }
+    property Dbf: TDbf read FDbf write FDbf;
   end;
 
 var
@@ -66,6 +67,11 @@ begin
     Options.ExportXLSWindow.ExtractFromForm(Self);
 end;
 
+procedure TExpXLS.FormCreate(Sender: TObject);
+begin
+  FDbf := TDbf.Create(self);
+end;
+
 procedure TExpXLS.FormShow(Sender: TObject);
 var
   ind: Integer;
@@ -79,8 +85,10 @@ begin
   ExportBtn.Constraints.MinWidth := w;
   CloseBtn.Constraints.MinWidth := w;
 
-  Constraints.MinWidth := (ExportBtn.Width + CloseBtn.Width + 4*CloseBtn.BorderSpacing.Right) * 2;
-  Constraints.MinHeight := pBar.Top + pBar.Height +
+  Constraints.MinWidth :=
+    (ExportBtn.Width + CloseBtn.Width + 4*CloseBtn.BorderSpacing.Right) * 2;
+  Constraints.MinHeight :=
+    pBar.Top + pBar.Height +
     CloseBtn.BorderSpacing.Top + CloseBtn.Height + CloseBtn.BorderSpacing.Bottom;
 
   if Options.RememberWindowSizePos and (Options.ExportXLSWindow.Width > 0) then
@@ -91,53 +99,70 @@ begin
 
   ClbField.Clear;
 
-  for ind := 0 to Tmp.FieldDefs.Count - 1 do
-  begin
-    ClbField.Items.Add(Tmp.FieldDefs.Items[ind].Name);
-    ClbField.Checked[ind] := True;
-  end;
+  for ind := 0 to FDbf.FieldDefs.Count - 1 do
+    with FDbf.FieldDefs.Items[Ind] do
+    begin
+      ClbField.Items.Add(Name);
+      // Do not allow exporting graphic fields to Excel
+      if (DataType = ftBlob) and (DataType <> ftMemo) then
+        ClbField.Checked[ind] := false
+      else
+        ClbField.Checked[ind] := True;
+    end;
 end;
 
 procedure TExpXLS.CreateFieldTitle;
- Var Ind : Word;
+var
+  Ind: Word;
 begin
- For Ind := 0 To ClbField.Items.Count - 1 Do
-  If ClbField.Checked[Ind] Then
-   ExpObj.PutStr(1, Ind + 1, ClbField.Items.Strings[Ind]);
+  for Ind := 0 To ClbField.Items.Count - 1 do
+    if ClbField.Checked[Ind] then
+      ExpObj.PutStr(1, Ind + 1, ClbField.Items.Strings[Ind]);
 end;
 
 procedure TExpXLS.WriteRecordValue(T: TDbf);
- Var Ind : Word;
+var
+  Ind: Word;
+  field: TField;
 begin
- For Ind := 0 To ClbField.Items.Count - 1 Do
-  If ClbField.Checked[Ind] Then
-   Begin
-    Case T.FieldByName(ClbField.Items.Strings[Ind]).DataType Of
-     ftString,
-     ftFixedChar,
-     ftWideString,
-     ftMemo                      : ExpObj.PutStr(XlsRow,Ind + 1,T.FieldByName(ClbField.Items.Strings[Ind]).AsString);
+  for Ind := 0 To ClbField.Items.Count - 1 do
+    if ClbField.Checked[Ind] then
+    begin
+      field := T.FieldByName(ClbField.Items.Strings[Ind]);
+      case field.DataType Of
+        ftString,
+        ftFixedChar,
+        ftWideString,
+        ftMemo:
+          ExpObj.PutStr(XlsRow, Ind + 1, field.AsString);
 
-     ftFloat,
-     ftLargeInt,
-     ftCurrency,
-     ftBCD                       : ExpObj.PutExt(XlsRow,Ind + 1,T.FieldByName(ClbField.Items.Strings[Ind]).AsFloat);
+        ftFloat,
+        ftLargeInt,
+        ftCurrency,
+        ftBCD:
+          ExpObj.PutExt(XlsRow, Ind + 1, field.AsFloat);
 
-     ftBytes,
-     ftSmallInt,
-     ftWord,
-     ftAutoInc,
-     ftInteger                   : ExpObj.PutInt(XlsRow,Ind + 1,T.FieldByName(ClbField.Items.Strings[Ind]).AsInteger);
+        ftBytes,
+        ftSmallInt,
+        ftWord,
+        ftAutoInc,
+        ftInteger:
+          ExpObj.PutInt(XlsRow, Ind + 1, field.AsInteger);
 
-     ftDate,
-     ftDateTime                  : ExpObj.PutDay(XlsRow,Ind + 1,T.FieldByName(ClbField.Items.Strings[Ind]).AsDateTime);
+        ftDate,
+        ftDateTime:
+          ExpObj.PutDay(XlsRow, Ind + 1, field.AsDateTime);
 
-     ftBoolean                   : If T.FieldByName(ClbField.Items.Strings[Ind]).AsBoolean Then
-                                    ExpObj.PutInt(XlsRow,Ind + 1,1)
-                                   Else
-                                    ExpObj.PutInt(XlsRow,Ind + 1,0);
-    End;
-   End;
+        ftBoolean:
+          if field.AsBoolean then
+            ExpObj.PutInt(XlsRow, Ind + 1, 1)
+          else
+            ExpObj.PutInt(XlsRow, Ind + 1, 0);
+
+        ftBlob:
+          ;  // Do not write a picture
+      end;
+    end;
 end;
 
 function TExpXLS.CreateSplitFileName(Orig: String; Ind: Word): String;
@@ -162,7 +187,20 @@ end;
 
 procedure TExpXLS.CloseBtnClick(Sender: TObject);
 begin
- Close;
+  Close;
+end;
+
+// Do not allow to export a picture to Excel, this will damage the file.
+procedure TExpXLS.ClbFieldClickCheck(Sender: TObject);
+var
+  fd: TFieldDef;
+begin
+  fd := FDbf.FieldDefs.Items[ClbField.ItemIndex];
+  if (fd.DataType = ftBlob) and (fd.DataType <> ftMemo) then
+  begin
+    ClbField.Checked[ClbField.ItemIndex] := false;
+    MessageDlg('Exporting a BLOB field to Excel is not possible.', mtError, [mbOK], 0);
+  end;
 end;
 
 procedure TExpXLS.ExportBtnClick(Sender: TObject);
@@ -170,13 +208,13 @@ procedure TExpXLS.ExportBtnClick(Sender: TObject);
      IntBlc,Ind,Ind2 : LongInt;
      FileName : String;
 begin
- If SaveExp.Execute Then
+  If SaveExp.Execute Then
   Begin
-   NumBlocchi65K:=Tmp.ExactRecordCount / $FFFF;
+   NumBlocchi65K:= FDbf.ExactRecordCount / $FFFF;
 
    pBar.Min:=0;
-   pBar.Max:=Tmp.ExactRecordCount;
-   pBar.Position:=0;
+   pBar.Max := FDbf.ExactRecordCount;
+   pBar.Position := 0;
 
    If NumBlocchi65K > 1 Then
     If MessageDlg('Table records is more then 65.535 and must split the export file, continue?',mtWarning,[mbYes, mbCancel],0) = mrCancel Then
@@ -192,7 +230,7 @@ begin
 
    IntBlc:=Trunc(NumBlocchi65K);
 
-   Tmp.First;
+   Dbf.First;
    XlsRow:=2;
 
    If NumBlocchi65K < 1.0 Then
@@ -202,11 +240,10 @@ begin
 
      CreateFieldTitle();
 
-     While Not Tmp.EOF Do
+     While Not Dbf.EOF Do
       Begin
-       WriteRecordValue(Tmp);
-
-       Tmp.Next;
+       WriteRecordValue(Dbf);
+       Dbf.Next;
        pBar.Position:=pBar.Position + 1;
 
        Inc(XlsRow);
@@ -237,9 +274,9 @@ begin
 
        For Ind2:=1 To $FFFF Do
         Begin
-         WriteRecordValue(Tmp);
+         WriteRecordValue(Dbf);
 
-         Tmp.Next;
+         Dbf.Next;
          pBar.Position:=pBar.Position + 1;
 
          Inc(XlsRow);
@@ -253,7 +290,7 @@ begin
        End;
       End;
 
-     If Not Tmp.EOF Then
+     If Not Dbf.EOF Then
       Begin
        XlsRow:=2;
        FileName:=CreateSplitFileName(SaveExp.FileName,Ind + 1);
@@ -263,11 +300,11 @@ begin
 
        CreateFieldTitle();
 
-       While Not Tmp.EOF Do
+       While Not Dbf.EOF Do
         Begin
-         WriteRecordValue(Tmp);
+         WriteRecordValue(Dbf);
 
-         Tmp.Next;
+         Dbf.Next;
          pBar.Position:=pBar.Position + 1;
 
          Inc(XlsRow);

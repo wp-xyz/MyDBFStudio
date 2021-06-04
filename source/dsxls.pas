@@ -142,17 +142,24 @@ begin
 end;
 
 procedure TDsXlsFile.PutAgStr(Row, Col: Word; Ag: TAlignment; S: string);
- Var Len : Byte;
+var
+  Len: Integer;
 begin
- Len:=Length(S);
+  Len := Length(S);
 
- WriteWord(4);                // String code
- WriteWord(8 + Len);          // Length
+  // Excel 2 (used by this export) does not support strings longer than 255.
+  if Len > 255 then begin
+    SetLength(S, 255);
+    Len := 255;
+  end;
 
- WriteAgPos(Row,Col,0,Ag);
- WriteByte(Len);
+  WriteWord(4);                // String code
+  WriteWord(8 + Len);          // Length
 
- FStream.Write(S[1],Len);
+  WriteAgPos(Row, Col, 0, Ag);
+  WriteByte(Len);
+
+  FStream.Write(S[1], Len);
 end;
 
 procedure TDsXlsFile.PutAgExt(Row, Col: Word; Ag: TAlignment; E: Extended);
