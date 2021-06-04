@@ -263,10 +263,10 @@ object Main: TMain
           ImageIndex = 21
           OnClick = miExpDbfClick
         end
-        object miexpXML: TMenuItem
+        object miExpXML: TMenuItem
           Caption = 'XML File'
           ImageIndex = 22
-          OnClick = miexpXMLClick
+          OnClick = miExpXMLClick
         end
         object miExpSQL: TMenuItem
           Caption = 'SQL Script'

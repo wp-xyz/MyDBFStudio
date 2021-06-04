@@ -20,19 +20,17 @@ type
     Label11: TLabel;
     pBar: TProgressBar;
     SaveExp: TSaveDialog;
-    Tmp: TDbf;
     procedure CloseBtnClick(Sender: TObject);
     procedure ExportBtnClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
-
+    FDbf: TDbf;
     Function CheckSpecialChar(Val : String) : String;
-
-    Procedure ReplaceString(Var OrigStr : String; SubStr,Val : String);
   public
     { public declarations }
+    property Dbf: TDbf read FDbf write FDbf;
   end;
 
 var
@@ -43,7 +41,7 @@ implementation
 {$R *.lfm}
 
 uses
-  Math, uOptions;
+  DB, Base64, LConvEncoding, Math, uOptions;
 
 { TExpXML }
 
@@ -53,60 +51,83 @@ begin
 end;
 
 procedure TExpXML.ExportBtnClick(Sender: TObject);
- Var F : TextFile;
-     Ind : Word;
+var
+  F: TextFile;
+  Ind: Word;
+  field: TField;
+  stream: TStream;
+  s: String;
+  rs: RawByteString;
 begin
- If SaveExp.Execute Then
-  If MessageDlg('Do you want to attempt to export data?',mtWarning,[mbOk, mbCancel],0) = mrOk Then
-   Begin
-    Try
-      AssignFile(F,SaveExp.FileName);
-      ReWrite(F);
+  if SaveExp.Execute then
+    if MessageDlg('Do you want to attempt to export data?',mtWarning,[mbOk, mbCancel],0) = mrOk then
+    begin
+      try
+        AssignFile(F, SaveExp.FileName);
+        ReWrite(F);
 
-      Tmp.First;
-      pBar.Min := 0;
-      pBar.Max := Tmp.ExactRecordCount;
-      pBar.Position:=0;
+        FDbf.First;
+        pBar.Min := 0;
+        pBar.Max := FDbf.ExactRecordCount;
+        pBar.Position:=0;
 
-      Writeln(F,'<?xml version="1.0" encoding="UTF-8"?>');
-      Writeln(F,'<' + Tmp.TableName + '>');
+        Writeln(F, '<?xml version="1.0" encoding="UTF-8"?>');
+        Writeln(F, '<' + FDbf.TableName + '>');
 
-      While Not Tmp.EOF Do
-       Begin
-        Writeln(F,'     <record>');
+        while not FDbf.EOF Do
+        begin
+          Writeln(F, '  <record>');
 
-        For Ind := 0 To ClbField.Items.Count - 1 Do
-         If ClbField.Checked[Ind] Then
-          Begin
-           If Tmp.FieldByName(ClbField.Items[Ind]).AsString <> '' Then
-            Writeln(F,'          <' + ClbField.Items[Ind] + '>' +
-                    CheckSpecialChar(Tmp.FieldByName(ClbField.Items[Ind]).AsString) +
-                    '</' + ClbField.Items[Ind] + '>')
-           Else
-            Writeln(F,'          <' + ClbField.Items[Ind] + '> ' +
-                      '</' + ClbField.Items[Ind] + '>');
+          for Ind := 0 To ClbField.Items.Count - 1 Do
+          if ClbField.Checked[Ind] then
+          begin
+            field := FDbf.FieldByName(ClbField.Items[Ind]);
+            if field.IsNull then
+              WriteLn(F, Format('  <%0:s> </%0:s>', [
+                ClbField.Items[Ind]]))
+            else
+            if (field is TMemoField) then
+            begin
+              s := ConvertEncoding(field.AsString, Format('cp%d', [FDbf.CodePage]), 'utf8');
+              WriteLn(F, Format('  <%0:s>%1:s</%0:s>', [ClbField.Items[Ind], s]));
+            end
+            else
+            if (field is TBlobField) then
+            begin
+              // Picture field --> encode with Base64
+              stream := TMemoryStream.Create;
+              try
+                TBlobField(field).SaveToStream(stream);
+                SetLength(rs, stream.Size);
+                stream.Position := 0;
+                stream.Write(rs[1], Length(rs));
+                rs := EncodeStringBase64(rs);
+                WriteLn(F, Format('  <%0:s>%1:s</%0:s>', [ClbField.Items[Ind], rs]));
+              finally
+                stream.Free;
+              end;
+            end else
+            begin
+              s := ConvertEncoding(field.AsString, Format('cp%d', [FDbf.CodePage]), 'utf8');
+              WriteLn(F, Format('  <%0:s>%1:s</%0:s>', [ClbField.Items[Ind], s]));
+            end;
+          end;
 
-          End;
+          Writeln(F, '  </record>');
 
-        Writeln(F,'     </record>');
+          FDbf.Next;
 
-        Tmp.Next;
+          pBar.Position := pBar.Position + 1;
+        end;
 
-        pBar.Position := pBar.Position + 1;
+        Writeln(F, '</' + FDbf.TableName + '>');
 
-        //Application.ProcessMessages;
-       End;
-
-      Writeln(F,'</' + Tmp.TableName + '>');
-
-      pBar.Position:=0;
-
-      System.Close(F);
-
-      ShowMessage('Export completed!');
-    Except
-      ShowMessage('Error writing file');
-    End;
+        pBar.Position:=0;
+        System.Close(F);
+        ShowMessage('Export completed!');
+      except
+        ShowMessage('Error writing file');
+      end;
    End;
 end;
 
@@ -135,54 +156,22 @@ begin
 
   ClbField.Clear;
 
-  for Ind := 0 to Tmp.FieldDefs.Count - 1 do
+  for Ind := 0 to FDbf.FieldDefs.Count - 1 do
   begin
-    ClbField.Items.Add(Tmp.FieldDefs.Items[ind].Name);
+    ClbField.Items.Add(FDbf.FieldDefs.Items[ind].Name);
     ClbField.Checked[ind] := True;
   end;
 end;
 
 function TExpXML.CheckSpecialChar(Val: String): String;
 begin
- Result := Val;
-
- While Pos('&',Val) > 0 Do
-  ReplaceString(Val,'&','☼');
-
- While Pos('☼',Val) > 0 Do
-  ReplaceString(Val,'☼','&amp;');
-
- While Pos('<',Val) > 0 Do
-  ReplaceString(Val,'<','&lt;');
-
- While Pos('>',Val) > 0 Do
-  ReplaceString(Val,'>','&gt;');
-
- While Pos('"',Val) > 0 Do
-  ReplaceString(Val,'"','&quot;');
-
- While Pos('''',Val) > 0 Do
-  ReplaceString(Val,'''','&apos;');
-
- Result := Val;
-end;
-
-procedure TExpXML.ReplaceString(var OrigStr: String; SubStr, Val: String);
- Var App : String;
-     Ind : Word;
-begin
- App := '';
-
- If Pos(SubStr,OrigStr) > 0 Then
-  For Ind := 1 To Pos(SubStr,OrigStr) - 1 Do
-   App := App + OrigStr[Ind];
-
- App := App + Val;
-
- For Ind:=Pos(SubStr,OrigStr) + 1 To Length(OrigStr) Do
-  App := App + OrigStr[Ind];
-
- OrigStr := App;
+  Result := Val;
+  Result := StringReplace(Result, '&', '☼', [rfReplaceAll]);
+  Result := StringReplace(Result, '☼', '&amp;', [rfReplaceAll]);
+  Result := StringReplace(Result, '<', '&lt;', [rfReplaceAll]);
+  Result := StringReplace(Result, '>', '&gt;', [rfReplaceAll]);
+  Result := StringReplace(Result, '"', '&quot;', [rfReplaceAll]);
+  Result := StringReplace(Result, '''', '&apos:', [rfReplaceAll]);
 end;
 
 end.

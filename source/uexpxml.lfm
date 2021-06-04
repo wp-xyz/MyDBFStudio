@@ -121,13 +121,6 @@ object ExpXML: TExpXML
     OnClick = CloseBtnClick
     TabOrder = 3
   end
-  object Tmp: TDbf
-    IndexDefs = <>
-    TableLevel = 4
-    FilterOptions = []
-    Left = 64
-    Top = 120
-  end
   object SaveExp: TSaveDialog
     Title = 'Save as...'
     DefaultExt = '.xml'

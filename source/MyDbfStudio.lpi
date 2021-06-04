@@ -182,6 +182,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
         <EditorIndex Value="11"/>
+        <TopLine Value="549"/>
+        <CursorPos X="13" Y="573"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -193,7 +195,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uDbfTable"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
         <TopLine Value="619"/>
         <CursorPos X="32" Y="627"/>
@@ -255,7 +256,7 @@
         <EditorIndex Value="14"/>
         <TopLine Value="160"/>
         <CursorPos X="82" Y="178"/>
-        <UsageCount Value="179"/>
+        <UsageCount Value="180"/>
         <Loaded Value="True"/>
       </Unit6>
       <Unit7>
@@ -264,7 +265,7 @@
         <UnitName Value="DsCsv"/>
         <TopLine Value="418"/>
         <CursorPos X="41" Y="428"/>
-        <UsageCount Value="198"/>
+        <UsageCount Value="199"/>
         <Loaded Value="True"/>
       </Unit7>
       <Unit8>
@@ -275,7 +276,7 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uExpCSV"/>
         <EditorIndex Value="5"/>
-        <UsageCount Value="196"/>
+        <UsageCount Value="197"/>
         <Loaded Value="True"/>
       </Unit8>
       <Unit9>
@@ -285,7 +286,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="264"/>
         <CursorPos X="11" Y="271"/>
-        <UsageCount Value="188"/>
+        <UsageCount Value="189"/>
       </Unit9>
       <Unit10>
         <Filename Value="dshtml.pas"/>
@@ -294,7 +295,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="178"/>
         <CursorPos Y="172"/>
-        <UsageCount Value="187"/>
+        <UsageCount Value="188"/>
       </Unit10>
       <Unit11>
         <Filename Value="uexphtml.pas"/>
@@ -306,7 +307,7 @@
         <EditorIndex Value="6"/>
         <TopLine Value="136"/>
         <CursorPos X="13" Y="155"/>
-        <UsageCount Value="184"/>
+        <UsageCount Value="185"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit11>
@@ -317,7 +318,7 @@
         <EditorIndex Value="1"/>
         <TopLine Value="12"/>
         <CursorPos X="35" Y="16"/>
-        <UsageCount Value="127"/>
+        <UsageCount Value="128"/>
         <Loaded Value="True"/>
       </Unit12>
       <Unit13>
@@ -330,7 +331,7 @@
         <EditorIndex Value="8"/>
         <TopLine Value="109"/>
         <CursorPos X="8" Y="129"/>
-        <UsageCount Value="173"/>
+        <UsageCount Value="174"/>
         <Loaded Value="True"/>
       </Unit13>
       <Unit14>
@@ -343,7 +344,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="126"/>
         <CursorPos Y="142"/>
-        <UsageCount Value="169"/>
+        <UsageCount Value="170"/>
       </Unit14>
       <Unit15>
         <Filename Value="usubtables.pas"/>
@@ -355,7 +356,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="121"/>
         <CursorPos Y="137"/>
-        <UsageCount Value="167"/>
+        <UsageCount Value="168"/>
       </Unit15>
       <Unit16>
         <Filename Value="uexpdbf.pas"/>
@@ -367,7 +368,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="77"/>
         <CursorPos X="29" Y="101"/>
-        <UsageCount Value="163"/>
+        <UsageCount Value="164"/>
       </Unit16>
       <Unit17>
         <Filename Value="usplash.pas"/>
@@ -379,7 +380,7 @@
         <EditorIndex Value="15"/>
         <TopLine Value="27"/>
         <CursorPos X="22" Y="33"/>
-        <UsageCount Value="159"/>
+        <UsageCount Value="160"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit17>
@@ -390,11 +391,13 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uExpXML"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="9"/>
-        <TopLine Value="80"/>
-        <CursorPos X="13" Y="86"/>
-        <UsageCount Value="155"/>
+        <TopLine Value="78"/>
+        <CursorPos X="17" Y="113"/>
+        <UsageCount Value="156"/>
         <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit18>
       <Unit19>
         <Filename Value="uinfo.pas"/>
@@ -406,7 +409,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="34"/>
         <CursorPos X="63" Y="51"/>
-        <UsageCount Value="152"/>
+        <UsageCount Value="153"/>
       </Unit19>
       <Unit20>
         <Filename Value="uinfo.lfm"/>
@@ -432,7 +435,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="45"/>
         <CursorPos X="57" Y="67"/>
-        <UsageCount Value="145"/>
+        <UsageCount Value="146"/>
       </Unit22>
       <Unit23>
         <Filename Value="uaddalias.pas"/>
@@ -444,7 +447,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="88"/>
         <CursorPos X="42" Y="108"/>
-        <UsageCount Value="144"/>
+        <UsageCount Value="145"/>
       </Unit23>
       <Unit24>
         <Filename Value="usorttable.pas"/>
@@ -456,7 +459,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="97"/>
         <CursorPos Y="106"/>
-        <UsageCount Value="141"/>
+        <UsageCount Value="142"/>
       </Unit24>
       <Unit25>
         <Filename Value="uexpsql.pas"/>
@@ -468,7 +471,7 @@
         <EditorIndex Value="7"/>
         <TopLine Value="200"/>
         <CursorPos X="10" Y="219"/>
-        <UsageCount Value="133"/>
+        <UsageCount Value="134"/>
         <Loaded Value="True"/>
       </Unit25>
       <Unit26>
@@ -478,7 +481,7 @@
         <EditorIndex Value="17"/>
         <TopLine Value="41"/>
         <CursorPos X="44" Y="43"/>
-        <UsageCount Value="120"/>
+        <UsageCount Value="121"/>
         <Loaded Value="True"/>
       </Unit26>
       <Unit27>
@@ -491,7 +494,7 @@
         <EditorIndex Value="16"/>
         <TopLine Value="102"/>
         <CursorPos Y="115"/>
-        <UsageCount Value="102"/>
+        <UsageCount Value="103"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit27>
@@ -511,7 +514,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="16"/>
         <CursorPos X="19" Y="51"/>
-        <UsageCount Value="101"/>
+        <UsageCount Value="102"/>
       </Unit29>
       <Unit30>
         <Filename Value="t_mainform - Kopie.pas"/>
@@ -529,7 +532,7 @@
         <UnitName Value="uDatamodule"/>
         <EditorIndex Value="3"/>
         <CursorPos X="29" Y="5"/>
-        <UsageCount Value="109"/>
+        <UsageCount Value="110"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit31>
@@ -562,7 +565,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="453"/>
         <CursorPos X="16" Y="468"/>
-        <UsageCount Value="91"/>
+        <UsageCount Value="92"/>
       </Unit35>
       <Unit36>
         <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/comctrls.pp"/>
@@ -833,70 +836,126 @@
         <UsageCount Value="9"/>
       </Unit72>
     </Units>
-    <JumpHistory Count="16" HistoryIndex="15">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="unewtable.pas"/>
-        <Caret Line="238" TopLine="230"/>
+        <Caret Line="235" Column="15" TopLine="235"/>
       </Position1>
       <Position2>
         <Filename Value="unewtable.pas"/>
-        <Caret Line="237" Column="21" TopLine="230"/>
       </Position2>
       <Position3>
-        <Filename Value="unewtable.pas"/>
-        <Caret Line="40" Column="22" TopLine="16"/>
-      </Position3>
-      <Position4>
-        <Filename Value="unewtable.pas"/>
-        <Caret Line="235" Column="15" TopLine="235"/>
-      </Position4>
-      <Position5>
-        <Filename Value="unewtable.pas"/>
-      </Position5>
-      <Position6>
         <Filename Value="urestructure.pas"/>
         <Caret Line="25" Column="18"/>
+      </Position3>
+      <Position4>
+        <Filename Value="udbftable.pas"/>
+        <Caret Line="572" Column="26" TopLine="568"/>
+      </Position4>
+      <Position5>
+        <Filename Value="udbftable.pas"/>
+        <Caret Line="573" Column="26" TopLine="569"/>
+      </Position5>
+      <Position6>
+        <Filename Value="udbftable.pas"/>
+        <Caret Line="574" Column="26" TopLine="570"/>
       </Position6>
       <Position7>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="572" Column="26" TopLine="568"/>
+        <Caret Line="581" Column="23" TopLine="571"/>
       </Position7>
       <Position8>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="573" Column="26" TopLine="569"/>
+        <Caret Line="68" Column="15" TopLine="62"/>
       </Position8>
       <Position9>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="574" Column="26" TopLine="570"/>
+        <Caret Line="449" Column="49" TopLine="441"/>
       </Position9>
       <Position10>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="581" Column="23" TopLine="571"/>
+        <Caret Line="456" Column="28" TopLine="429"/>
       </Position10>
       <Position11>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="68" Column="15" TopLine="62"/>
+        <Caret Line="455" Column="28" TopLine="428"/>
       </Position11>
       <Position12>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="449" Column="49" TopLine="441"/>
+        <Caret Line="431" Column="23" TopLine="428"/>
       </Position12>
       <Position13>
         <Filename Value="udbftable.pas"/>
-        <Caret Line="456" Column="28" TopLine="429"/>
+        <Caret Line="460" Column="32" TopLine="448"/>
       </Position13>
       <Position14>
-        <Filename Value="udbftable.pas"/>
-        <Caret Line="455" Column="28" TopLine="428"/>
+        <Filename Value="uexpxml.pas"/>
+        <Caret Line="80" Column="36" TopLine="80"/>
       </Position14>
       <Position15>
-        <Filename Value="udbftable.pas"/>
-        <Caret Line="431" Column="23" TopLine="428"/>
+        <Filename Value="uexpxml.pas"/>
+        <Caret Line="150" TopLine="114"/>
       </Position15>
       <Position16>
-        <Filename Value="udbftable.pas"/>
-        <Caret Line="460" Column="32" TopLine="448"/>
+        <Filename Value="uexpxml.pas"/>
+        <Caret Line="31" TopLine="10"/>
       </Position16>
+      <Position17>
+        <Filename Value="uexpxml.pas"/>
+        <Caret Line="57" Column="10" TopLine="37"/>
+      </Position17>
+      <Position18>
+        <Filename Value="uexpxml.pas"/>
+        <Caret Line="44" Column="7" TopLine="21"/>
+      </Position18>
+      <Position19>
+        <Filename Value="uexpxml.pas"/>
+        <Caret Line="97" Column="31" TopLine="67"/>
+      </Position19>
+      <Position20>
+        <Filename Value="uexpxml.pas"/>
+        <Caret Line="81" Column="59" TopLine="62"/>
+      </Position20>
+      <Position21>
+        <Filename Value="uexpxml.pas"/>
+        <Caret Line="144" Column="35" TopLine="113"/>
+      </Position21>
+      <Position22>
+        <Filename Value="uexpxml.pas"/>
+        <Caret Line="148" Column="50" TopLine="113"/>
+      </Position22>
+      <Position23>
+        <Filename Value="uexpxml.pas"/>
+        <Caret Line="126" Column="44" TopLine="113"/>
+      </Position23>
+      <Position24>
+        <Filename Value="uexpxml.pas"/>
+        <Caret Line="24" Column="15" TopLine="6"/>
+      </Position24>
+      <Position25>
+        <Filename Value="uexpxml.pas"/>
+        <Caret Line="108" Column="48" TopLine="83"/>
+      </Position25>
+      <Position26>
+        <Filename Value="uexpxml.pas"/>
+        <Caret Line="44" Column="15" TopLine="20"/>
+      </Position26>
+      <Position27>
+        <Filename Value="uexpxml.pas"/>
+        <Caret Line="92" Column="60" TopLine="78"/>
+      </Position27>
+      <Position28>
+        <Filename Value="uexpxml.pas"/>
+        <Caret Line="91" Column="20" TopLine="72"/>
+      </Position28>
+      <Position29>
+        <Filename Value="uexpxml.pas"/>
+        <Caret Line="128" Column="7" TopLine="109"/>
+      </Position29>
+      <Position30>
+        <Filename Value="uexpxml.pas"/>
+        <Caret Line="44" Column="30" TopLine="20"/>
+      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

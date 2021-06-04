@@ -44,7 +44,7 @@ type
     miSubTables: TMenuItem;
     miAdd2Tbls: TMenuItem;
     miExpSQL: TMenuItem;
-    miexpXML: TMenuItem;
+    miExpXML: TMenuItem;
     miExpDbf: TMenuItem;
     miExpXLS: TMenuItem;
     miExpHtml: TMenuItem;
@@ -93,7 +93,7 @@ type
     procedure miExpHtmlClick(Sender: TObject);
     procedure miExpSQLClick(Sender: TObject);
     procedure miExpXLSClick(Sender: TObject);
-    procedure miexpXMLClick(Sender: TObject);
+    procedure miExpXMLClick(Sender: TObject);
     procedure miInfoClick(Sender: TObject);
     procedure miNewClick(Sender: TObject);
     procedure miOpenAliasClick(Sender: TObject);
@@ -556,29 +556,30 @@ begin
    end;
 end;
 
-procedure TMain.miexpXMLClick(Sender: TObject);
- Var Tmp : TForm;
+procedure TMain.miExpXMLClick(Sender: TObject);
+var
+  F: TForm;
 begin
- If (WorkSite.ActivePage Is TTabForm) Then
-  If (WorkSite.ActivePage As TTabForm).ParentForm Is TDbfTable Then
-   Begin
-    Tmp := (WorkSite.ActivePage As TTabForm).ParentForm;
+  if (WorkSite.ActivePage Is TTabForm) then
+    if (WorkSite.ActivePage As TTabForm).ParentForm Is TDbfTable then
+    begin
+      F := (WorkSite.ActivePage As TTabForm).ParentForm;
 
-    ExpXML := TExpXML.Create(nil);
-    try
-      ExpXML.Tmp := (Tmp As TDbfTable).DBTable;
+      ExpXML := TExpXML.Create(nil);
+      try
+        ExpXML.Dbf := (F As TDbfTable).DBTable;
 
-      (Tmp As TDbfTable).Ds.Enabled := False;
-      (Tmp As TDbfTable).Ds.DataSet := Nil;
+        (F As TDbfTable).Ds.Enabled := False;
+        (F As TDbfTable).Ds.DataSet := Nil;
 
-      ExpXML.ShowModal;
+        ExpXML.ShowModal;
 
-      (Tmp As TDbfTable).Ds.DataSet := (Tmp As TDbfTable).DBTable;
-      (Tmp As TDbfTable).Ds.Enabled := True;
-    finally
-      FreeAndNil(ExpXML);
+        (F As TDbfTable).Ds.DataSet := (F As TDbfTable).DBTable;
+        (F As TDbfTable).Ds.Enabled := True;
+      finally
+        FreeAndNil(ExpXML);
+      end;
     end;
-   end;
 end;
 
 procedure TMain.miInfoClick(Sender: TObject);
