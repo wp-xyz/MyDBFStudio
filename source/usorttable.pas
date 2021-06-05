@@ -1,5 +1,7 @@
 unit uSortTable;
 
+// To do: Sorting not correct (test with industry.dbf)
+
 {$mode objfpc}{$H+}
 
 interface
@@ -13,34 +15,32 @@ type
   { TSortTable }
 
   TSortTable = class(TForm)
-    BitBtn1: TBitBtn;
-    BitBtn2: TBitBtn;
-    DesTask: TLabel;
+    CloseBtn: TBitBtn;
+    StartBtn: TBitBtn;
+    lblProgress: TLabel;
     GroupBox1: TGroupBox;
     GroupBox2: TGroupBox;
     OptSort: TRadioGroup;
-    Orig: TDbf;
     OrigFields: TListBox;
-    Pb1: TProgressBar;
+    pBar: TProgressBar;
     SortFields: TListBox;
     SpeedButton1: TSpeedButton;
     SpeedButton2: TSpeedButton;
-    Tmp: TDbf;
-    procedure BitBtn1Click(Sender: TObject);
-    procedure BitBtn2Click(Sender: TObject);
+    procedure CloseBtnClick(Sender: TObject);
+    procedure StartBtnClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormShow(Sender: TObject);
     procedure OrigFieldsDblClick(Sender: TObject);
     procedure SortFieldsDblClick(Sender: TObject);
   private
     { private declarations }
-
-    Function CreateTmpTable : Boolean;
-    Function CreateSortIndex : Boolean;
-
+    FOrigTable: TDbf;
+    Function CreateTempTable: Boolean;
+    Function CreateSortIndex: Boolean;
     Procedure MoveRecord;
   public
     { public declarations }
+    property OrigTable: TDbf read FOrigTable write FOrigTable;
   end;
 
 var
@@ -53,6 +53,10 @@ implementation
 uses
   uOptions;
 
+const
+  TMP_DBF_NAME = '_sort_tmp_.dbf';
+  TMP_MDX_NAME = '_sort_tmp_.mdx';
+
 { TSortTable }
 
 procedure TSortTable.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -60,38 +64,39 @@ begin
   if CanClose then
   begin
     Options.SubtractTablesWindow.ExtractFromForm(Self);
-    Orig.Open;
+    FOrigTable.Open;
   end;
 end;
 
-procedure TSortTable.BitBtn1Click(Sender: TObject);
+procedure TSortTable.CloseBtnClick(Sender: TObject);
 begin
- Close;
+  Close;
 end;
 
-procedure TSortTable.BitBtn2Click(Sender: TObject);
+procedure TSortTable.StartBtnClick(Sender: TObject);
 begin
- If MessageDlg('The sorting can be very slow for big table, continue?',mtWarning,[mbOk, mbCancel],0) <> mrOk Then
-  Exit;
+  if MessageDlg('The sorting can be very slow for a big table. Continue?',
+    mtWarning, [mbYes, mbNo], 0) <> mrYes
+  then
+    exit;
 
- If (SortFields.Items.Count - 1) > -1 Then
-  Begin
-   If CreateTmpTable Then
-    Begin
-     If CreateSortIndex Then
-      Begin
-       MoveRecord;
+  if SortFields.Items.Count = 0 then
+  begin
+    MessageDlg('You must select at least one field to sort on.', mtError, [mbOK], 0);
+    exit;
+  end;
 
-       Orig.Open;
-
-       ShowMessage('Process completed!');
-      End;
-    End
-   Else
-    ShowMessage('Error while creating tmp table...');
-  End
- Else
-  ShowMessage('You must select at least one field to sort on.');
+  if CreateTempTable then
+  begin
+    if CreateSortIndex then
+    begin
+      MoveRecord;
+      FOrigTable.Open;
+      MessageDlg('Process completed.', mtInformation, [mbOK], 0);
+      pBar.Position := 0;
+    end;
+  end else
+    MessageDlg('Error while creating temporary table...', mtError, [mbOK], 0);
 end;
 
 procedure TSortTable.FormShow(Sender: TObject);
@@ -99,175 +104,171 @@ var
   Ind : Word;
 begin
   OrigFields.Clear;
-
-  for Ind := 0 To Orig.FieldDefs.Count - 1 do
-    OrigFields.Items.Add(Orig.FieldDefs.Items[Ind].Name);
-
+  for Ind := 0 To FOrigTable.FieldDefs.Count - 1 do
+    OrigFields.Items.Add(FOrigTable.FieldDefs.Items[Ind].Name);
   Options.SortTableWindow.ApplyToForm(self);
 end;
 
 procedure TSortTable.OrigFieldsDblClick(Sender: TObject);
 begin
- If OrigFields.ItemIndex > -1 Then
-  Begin
-   SortFields.Items.Add(OrigFields.Items[OrigFields.ItemIndex]);
-
-   OrigFields.Items.Delete(OrigFields.ItemIndex);
-  End;
+  If OrigFields.ItemIndex > -1 then
+  begin
+    SortFields.Items.Add(OrigFields.Items[OrigFields.ItemIndex]);
+    OrigFields.Items.Delete(OrigFields.ItemIndex);
+  end;
 end;
 
 procedure TSortTable.SortFieldsDblClick(Sender: TObject);
 begin
- If SortFields.ItemIndex > -1 Then
-  Begin
-   OrigFields.Items.Add(SortFields.Items[SortFields.ItemIndex]);
-
-   SortFields.Items.Delete(SortFields.ItemIndex);
-  End;
+  if SortFields.ItemIndex > -1 then
+  begin
+    OrigFields.Items.Add(SortFields.Items[SortFields.ItemIndex]);
+    SortFields.Items.Delete(SortFields.ItemIndex);
+  end;
 end;
 
-function TSortTable.CreateTmpTable: Boolean;
+// Creates a work file as copy of the original file.
+function TSortTable.CreateTempTable: Boolean;
 begin
- Orig.Close;
-
- ChDir(Orig.FilePathFull);
-
- DesTask.Caption := 'Create tmp table...';
-
- Application.ProcessMessages;
-
- Result := CopyFile(Orig.FilePathFull + Orig.TableName, 'sorttmp.dbf');
-
- DesTask.Caption := 'Progress';
+  FOrigTable.Close;
+  lblProgress.Caption := 'Create work table...';
+  Application.ProcessMessages;
+  Result := CopyFile(
+    FOrigTable.FilePath + FOrigTable.TableName,
+    FOrigTable.FilePath + TMP_DBF_NAME
+  );
+  lblProgress.Caption := 'Progress';
 end;
 
+// Creates an index for sorting the work file based on the sort fields specified.
 function TSortTable.CreateSortIndex: Boolean;
- Var T : TDbf;
-     Ind : Word;
-     Exp : String;
-     iOpt : TIndexOptions;
+var
+  T: TDbf;
+  Ind: Word;
+  Exp: String;
+  iOpt: TIndexOptions;
+  fieldName: String;
 begin
- ChDir(Orig.FilePathFull);
+  T := TDbf.Create(nil);
+  try
+    T.FilePath := FOrigTable.FilePath;
+    T.TableName := TMP_DBF_NAME;
+    T.TableLevel := FOrigTable.TableLevel;
+    T.Exclusive := True;
 
- T := TDbf.Create(Self);
- T.FilePathFull := Orig.FilePathFull;
- T.TableName := 'sorttmp.dbf';
- T.TableLevel := Orig.TableLevel;
- T.Exclusive := True;
+    Result := True;
+    try
+      T.Open;
+      Exp := '';
+      for Ind:=0 to SortFields.Items.Count - 1 do
+      begin
+        fieldName := SortFields.Items[Ind];
+        case T.FieldDefs.Find(fieldName).DataType of
+          ftString,
+          ftFixedChar,
+          ftWideString,
+          ftFixedWideChar:
+            if Exp = '' then
+              Exp := fieldName
+            else
+              Exp := Exp + ' + ' + fieldName;     // wp: why '+' ?
 
- Result := True;
+          ftSmallint,
+          ftInteger,
+          ftWord,
+          ftLargeint,
+          ftFloat,
+          ftBytes,
+          ftCurrency,
+          ftAutoInc:
+            if Exp = '' then
+              Exp := 'STR(' + fieldName + ')'
+            else
+              Exp := Exp + ' + STR(' + fieldName + ')';
 
- Try
-   T.Open;
-   Exp:='';
+          ftDate,
+          ftTime,
+          ftDateTime,
+          ftTimeStamp:
+            if Exp = '' then
+              Exp := 'DTOS(' + fieldName + ')'
+            else
+              Exp := Exp + ' + DTOS(' + fieldName + ')';
+        end;
+      end;
 
-   For Ind:=0 To SortFields.Items.Count - 1 Do
-    Begin
-     Case T.FieldDefs.Find(SortFields.Items[Ind]).DataType Of
-      ftString,
-      ftFixedChar,
-      ftWideString,
-      ftFixedWideChar                            : If Exp = '' Then
-                                                    Exp:=SortFields.Items[Ind]
-                                                   Else
-                                                    Exp:=Exp + ' + ' + SortFields.Items[Ind];
+      case OptSort.ItemIndex of
+        0: iOpt := [];
+        1: iOpt := [ixDescending];
+      end;
 
-      ftSmallint,
-      ftInteger,
-      ftWord,
-      ftLargeint,
-      ftFloat,
-      ftBytes,
-      ftCurrency,
-      ftAutoInc                                  : If Exp = '' Then
-                                                    Exp:='STR(' + SortFields.Items[Ind] + ')'
-                                                   Else
-                                                    Exp:=Exp + ' + STR(' + SortFields.Items[Ind] + ')';
+      lblProgress.Caption := 'Create sort index on work table...';
+      Application.ProcessMessages;
+      T.AddIndex('TMP', Exp, iOpt);
+      lblProgress.Caption := 'Progress';
+    except
+      on E:Exception do
+      begin
+        Result := false;
+        ShowMessage(E.Message);
+      end;
+    end;
 
-      ftDate,
-      ftTime,
-      ftDateTime,
-      ftTimeStamp                                : If Exp = '' Then
-                                                    Exp:='DTOS(' + SortFields.Items[Ind] + ')'
-                                                   Else
-                                                    Exp:=Exp + ' + DTOS(' + SortFields.Items[Ind] + ')';
-     End;
-    End;
-
-   iOpt := [];
-
-   If OptSort.ItemIndex > 0 Then
-    iOpt := iOpt + [ixDescending];
-
-   DesTask.Caption := 'Create sort index on tmp table...';
-
-   Application.ProcessMessages;
-
-   T.AddIndex('TMP',Exp,iOpt);
-
-   DesTask.Caption := 'Progress';
- Except
-   On E:Exception Do
-    Begin
-     Result:=False;
-
-     ShowMessage(E.Message);
-    End;
- End;
-
- T.Close;
- T.Free;
+  finally
+    T.Close;
+    T.Free;
+  end;
 end;
 
+// Copies the records from the sorted work table to the original table.
+// Because of the established sorting index the records are sorted in
+// the requested order.
 procedure TSortTable.MoveRecord;
- Var T : TDbf;
-     Ind : Word;
+var
+  T: TDbf;
+  Ind: Word;
+  fieldName: String;
 begin
- ChDir(Orig.FilePathFull);
+  T := TDbf.Create(nil);
+  try
+    T.FilePath := FOrigTable.FilePath;
+    T.TableName := TMP_DBF_NAME;
+    T.TableLevel := FOrigTable.TableLevel;
+    T.IndexName := 'TMP';
+    T.Open;
 
- T := TDbf.Create(Self);
- T.FilePathFull := Orig.FilePathFull;
- T.TableName := 'sorttmp.dbf';
- T.TableLevel := Orig.TableLevel;
- T.IndexName := 'TMP';
+    FOrigTable.Open;
+    FOrigTable.Zap;   // Erases the original table
 
- T.Open;
+    pBar.Min := 1;
+    pBar.Max := T.ExactRecordCount;
+    pBar.Position := 0;
 
- Orig.Open;
- Orig.Zap;
+    lblProgress.Caption := 'Moving records...';
+    Application.ProcessMessages;
+    while not T.EOF do
+    begin
+      FOrigTable.Append;
+      for Ind := 0 to T.FieldDefs.Count - 1 do
+      begin
+        fieldName := T.FieldDefs.Items[ind].Name;
+        FOrigTable.FieldByName(fieldName).AsVariant := T.FieldByName(fieldName).AsVariant;
+      end;
+      FOrigTable.Post;
+      T.Next;
+      pBar.Position := pBar.Position + 1;
+    end;
 
- Pb1.Min := 1;
- Pb1.Max := T.ExactRecordCount;
- Pb1.Position := 0;
+    FOrigTable.Close;
+    T.Close;
 
- DesTask.Caption := 'Move records...';
+    lblProgress.Caption := 'Progress';
 
- Application.ProcessMessages;
-
- While Not T.EOF Do
-  Begin
-   Orig.Append;
-
-   For Ind := 0 To T.FieldDefs.Count - 1 Do
-    Orig.FieldByName(T.FieldDefs.Items[Ind].Name).AsVariant:=T.FieldByName(T.FieldDefs.Items[Ind].Name).AsVariant;
-
-   Orig.Post;
-   T.Next;
-
-   Pb1.Position := Pb1.Position + 1;
-  End;
-
- Pb1.Position := 0;
-
- Orig.Close;
- T.Close;
-
- DesTask.Caption := 'Progress';
-
- DeleteFile(T.FilePathFull + 'sorttmp.dbf');
- DeleteFile(T.FilePathFull + 'sorttmp.mdx');
-
- T.Free;
+    DeleteFile(T.FilePath + TMP_DBF_NAME);
+    DeleteFile(T.FilePath + TMP_MDX_NAME);
+  finally
+    T.Free;
+  end;
 end;
 
 end.

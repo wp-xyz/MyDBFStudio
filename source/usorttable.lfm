@@ -139,7 +139,7 @@ object SortTable: TSortTable
       TabOrder = 0
     end
   end
-  object DesTask: TLabel
+  object lblProgress: TLabel
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = GroupBox1
     AnchorSideTop.Side = asrBottom
@@ -152,9 +152,9 @@ object SortTable: TSortTable
     Caption = 'Progress'
     ParentColor = False
   end
-  object Pb1: TProgressBar
+  object pBar: TProgressBar
     AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = DesTask
+    AnchorSideTop.Control = lblProgress
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
@@ -168,9 +168,9 @@ object SortTable: TSortTable
     BorderSpacing.Right = 6
     TabOrder = 3
   end
-  object BitBtn2: TBitBtn
-    AnchorSideTop.Control = BitBtn1
-    AnchorSideRight.Control = BitBtn1
+  object StartBtn: TBitBtn
+    AnchorSideTop.Control = CloseBtn
+    AnchorSideRight.Control = CloseBtn
     Left = 361
     Height = 26
     Top = 386
@@ -182,11 +182,11 @@ object SortTable: TSortTable
     Default = True
     Images = CommonData.Images
     ImageIndex = 7
-    OnClick = BitBtn2Click
+    OnClick = StartBtnClick
     TabOrder = 4
   end
-  object BitBtn1: TBitBtn
-    AnchorSideTop.Control = Pb1
+  object CloseBtn: TBitBtn
+    AnchorSideTop.Control = pBar
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
@@ -202,21 +202,7 @@ object SortTable: TSortTable
     Caption = '&Close'
     Images = CommonData.Images
     ImageIndex = 37
-    OnClick = BitBtn1Click
+    OnClick = CloseBtnClick
     TabOrder = 5
-  end
-  object Orig: TDbf
-    IndexDefs = <>
-    TableLevel = 4
-    FilterOptions = []
-    Left = 116
-    Top = 204
-  end
-  object Tmp: TDbf
-    IndexDefs = <>
-    TableLevel = 4
-    FilterOptions = []
-    Left = 412
-    Top = 204
   end
 end

@@ -672,32 +672,27 @@ begin
 end;
 
 procedure TMain.miSortTableClick(Sender: TObject);
- Var Tmp : TForm;
+var
+  F: TDbfTable;
+  tmp: TForm;
 begin
- If (WorkSite.ActivePage Is TTabForm) Then
-  If (WorkSite.ActivePage As TTabForm).ParentForm Is TDbfTable Then
-   Begin
-    Tmp := (WorkSite.ActivePage As TTabForm).ParentForm;
-
-    With (Tmp As TDbfTable) Do
-     Begin
+  if (WorkSite.ActivePage is TTabForm) then
+    if TTabForm(WorkSite.ActivePage).ParentForm is TDbfTable then
+    begin
+      F := TDbfTable(TTabForm(WorkSite.ActivePage).ParentForm);
       SortTable := TSortTable.Create(nil);
       try
-        SortTable.Orig := DBTable;
-
-        Ds.Enabled := False;
-        Ds.DataSet := Nil;
-
+        SortTable.OrigTable := F.DBTable;
+        F.DS.Enabled := false;
+        F.DS.Dataset := nil;
         SortTable.ShowModal;
         Options.SortTableWindow.ExtractFromForm(SortTable);
       finally
         FreeAndNil(SortTable);
+        F.Ds.Dataset := F.DBTable;
+        F.Ds.Enabled := true;
       end;
-
-      Ds.DataSet := DBTable;
-      Ds.Enabled := True;
-     end;
-   end;
+    end;
 end;
 
 procedure TMain.miSubTablesClick(Sender: TObject);
