@@ -251,9 +251,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uSetFV"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="18"/>
-        <TopLine Value="162"/>
+        <TopLine Value="161"/>
         <CursorPos X="34" Y="153"/>
         <UsageCount Value="195"/>
         <Loaded Value="True"/>
@@ -388,6 +387,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uSplash"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="19"/>
         <TopLine Value="27"/>
         <CursorPos X="22" Y="33"/>
@@ -890,14 +890,13 @@
       </Unit78>
       <Unit79>
         <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/include/control.inc"/>
-        <EditorIndex Value="23"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="3593"/>
         <CursorPos Y="3612"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit79>
     </Units>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="24" HistoryIndex="23">
       <Position1>
         <Filename Value="usetfv.pas"/>
         <Caret Line="190" Column="40" TopLine="158"/>
@@ -971,53 +970,29 @@
         <Caret Line="159" TopLine="141"/>
       </Position18>
       <Position19>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/include/control.inc"/>
-        <Caret Line="3591" TopLine="3571"/>
-      </Position19>
-      <Position20>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/include/control.inc"/>
-        <Caret Line="3594" TopLine="3571"/>
-      </Position20>
-      <Position21>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/include/control.inc"/>
-        <Caret Line="3595" TopLine="3571"/>
-      </Position21>
-      <Position22>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/include/control.inc"/>
-        <Caret Line="3596" TopLine="3571"/>
-      </Position22>
-      <Position23>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/include/control.inc"/>
-        <Caret Line="3591" TopLine="3571"/>
-      </Position23>
-      <Position24>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/include/control.inc"/>
-        <Caret Line="3612" TopLine="3593"/>
-      </Position24>
-      <Position25>
         <Filename Value="usetfv.pas"/>
         <Caret Line="160" TopLine="141"/>
-      </Position25>
-      <Position26>
+      </Position19>
+      <Position20>
         <Filename Value="usetfv.pas"/>
         <Caret Line="157" TopLine="141"/>
-      </Position26>
-      <Position27>
+      </Position20>
+      <Position21>
         <Filename Value="usetfv.pas"/>
         <Caret Line="188" TopLine="163"/>
-      </Position27>
-      <Position28>
+      </Position21>
+      <Position22>
         <Filename Value="usetfv.pas"/>
         <Caret Line="153" TopLine="134"/>
-      </Position28>
-      <Position29>
+      </Position22>
+      <Position23>
         <Filename Value="usetfv.pas"/>
         <Caret Line="155" TopLine="134"/>
-      </Position29>
-      <Position30>
+      </Position23>
+      <Position24>
         <Filename Value="usetfv.pas"/>
         <Caret Line="157" TopLine="134"/>
-      </Position30>
+      </Position24>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
