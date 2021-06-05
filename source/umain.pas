@@ -141,7 +141,7 @@ Uses
   uOptions, uSplash, uInfo, uUtils;
 
 const
-  KEYWORD_PREFIX = 'help';
+  HELP_KEYWORD_PREFIX = 'help';
 
 Procedure FuncStrD_StrEq(Param: PExpressionRec);
 Begin
@@ -220,7 +220,7 @@ begin
 
  WorkSpace := TTabForm.Create(WorkSite);
 
- dbf_prscore.DbfWordsGeneralList.Add(TFunction.Create('STR',       '',      'LII', 1, etString, @FuncFloatToStr, ''));
+ dbf_prscore.DbfWordsGeneralList.Add(TFunction.Create('STR', '', 'LII', 1, etString, @FuncFloatToStr, ''));
 
  dbf_prscore.DbfWordsSensPartialList.Add(TFunction.CreateOper('=', 'DS', etBoolean, @FuncStrD_StrEq, 80));
  dbf_prscore.DbfWordsSensPartialList.Add(TFunction.CreateOper('<>', 'DS', etBoolean, @FuncStrD_StrDif, 80));
@@ -232,8 +232,8 @@ begin
 
  Caption := Caption + ' ' + GetVersionStr;
 
- HtmlHD.KeywordPrefix := KEYWORD_PREFIX + '/';
- HtmlHD.BaseURL := 'file://' + Application.Location + KEYWORD_PREFIX;
+ HtmlHD.KeywordPrefix := HELP_KEYWORD_PREFIX + '/';
+ HtmlHD.BaseURL := 'file://' + Application.Location + HELP_KEYWORD_PREFIX;
 
  If ParamStr(1) <> '' Then
   Open_Table(ParamStr(1));
@@ -360,7 +360,7 @@ end;
 
 procedure TMain.miHelpClick(Sender: TObject);
 begin
-  ShowHelpOrErrorForKeyword('', KEYWORD_PREFIX + '/index.html');
+  ShowHelpOrErrorForKeyword('', HELP_KEYWORD_PREFIX + '/index.html');
 end;
 
 procedure TMain.miAdd2TblsClick(Sender: TObject);

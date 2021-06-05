@@ -313,7 +313,10 @@ begin
     row := i + 1;
     FieldList.Cells[0, row] := IntToStr(row);
     FieldList.Cells[1, row] := fieldDef.Name;
-    FieldList.Cells[2, row] := Fieldtypenames[fieldDef.DataType];
+    if fieldDef.DataType = ftBLOB then       // Hack to allow graphic fields
+      FieldList.Cells[2, row] := FieldTypeNames[ftGraphic]
+    else
+      FieldList.Cells[2, row] := Fieldtypenames[fieldDef.DataType];
     FieldList.Cells[3, row] := '';
     if fieldDef.Size > 0 then
       FieldList.Cells[3, row] := IntToStr(fieldDef.Size);
