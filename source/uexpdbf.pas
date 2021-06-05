@@ -1,5 +1,7 @@
 unit uExpDBF;
 
+// Todo: Copy CodePage from source table to destination table
+
 {$mode objfpc}{$H+}
 
 interface

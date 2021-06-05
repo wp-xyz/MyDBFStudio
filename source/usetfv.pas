@@ -16,10 +16,10 @@ type
     CloseBtn: TBitBtn;
     ConfirmBtn: TBitBtn;
     cbFirst: TComboBox;
-    CbMode: TRadioGroup;
+    rgMode: TRadioGroup;
     cbOp: TComboBox;
     cbSecond: TComboBox;
-    CheckBox1: TCheckBox;
+    cbUseMathOperations: TCheckBox;
     FieldList: TListBox;
     gbMath: TGroupBox;
     gbSelField: TGroupBox;
@@ -29,17 +29,18 @@ type
     Label3: TLabel;
     SelField: TEdit;
     sSetVal: TEdit;
-    SetTable: TDbf;
+    procedure cbUseMathOperationsChange(Sender: TObject);
     procedure CloseBtnClick(Sender: TObject);
     procedure ConfirmBtnClick(Sender: TObject);
-    procedure CheckBox1Change(Sender: TObject);
     procedure FieldListClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
+    FSetTable: TDbf;
   public
     { public declarations }
+    property SetTable: TDbf read FSetTable write FSetTable;
   end;
 
 var
@@ -50,7 +51,7 @@ implementation
 {$R *.lfm}
 
 uses
-  uOptions;
+  DB, uOptions;
 
 { TSetFV }
 
@@ -61,157 +62,139 @@ begin
 end;
 
 procedure TSetFV.FormShow(Sender: TObject);
- Var Ind : Word;
+var
+  Ind: Word;
+  fieldName: STring;
 begin
- CloseBtn.Constraints.MinWidth := ConfirmBtn.Width;
+  CloseBtn.Constraints.MinWidth := ConfirmBtn.Width;
 
- Options.SetFieldValueWindow.ApplyToForm(self);
+  Options.SetFieldValueWindow.ApplyToForm(self);
 
- CbMode.ItemIndex := 0;
- gbMath.Enabled := False;
+  rgMode.ItemIndex := 0;
+  gbMath.Enabled := False;
 
- FieldList.Clear;
- cbFirst.Clear;
- cbSecond.Clear;
+  FieldList.Clear;
+  cbFirst.Clear;
+  cbSecond.Clear;
 
- For Ind := 0 To SetTable.FieldDefs.Count - 1 Do
-  Begin
-   FieldList.Items.Add(SetTable.FieldDefs.Items[Ind].Name);
-
-   cbFirst.Items.Add(SetTable.FieldDefs.Items[Ind].Name);
-   cbSecond.Items.Add(SetTable.FieldDefs.Items[Ind].Name);
-  End;
+  for Ind := 0 To SetTable.FieldDefs.Count - 1 do
+  begin
+    fieldName := SetTable.FieldDefs.Items[ind].Name;
+    FieldList.Items.Add(fieldName);
+    cbFirst.Items.Add(fieldName);
+    cbSecond.Items.Add(fieldName);
+  end;
 end;
 
-procedure TSetFV.CheckBox1Change(Sender: TObject);
+procedure TSetFV.cbUseMathOperationsChange(Sender: TObject);
 begin
- gbMath.Enabled := CheckBox1.Checked;
-
- sSetVal.Enabled := Not CheckBox1.Checked;
+  gbMath.Enabled := cbUseMathOperations.Checked;
+  sSetVal.Enabled := Not cbUseMathOperations.Checked;
 end;
 
 procedure TSetFV.CloseBtnClick(Sender: TObject);
 begin
- Close;
+  Close;
 end;
 
 procedure TSetFV.ConfirmBtnClick(Sender: TObject);
- Var Error : Boolean;
+var
+  Error: Boolean;
+  lSelField: TField;
+  lFirstField: TField;
+  lSecondField: TField;
 begin
- If Trim(SelField.Text) = '' Then
-  Begin
-   ShowMessage('You must select a destination field...');
+  if Trim(SelField.Text) = '' then
+  begin
+    MessageDlg('You must select a destination field...', mtError, [mbOK], 0);
+    FieldList.SetFocus;
+    exit;
+  end;
 
-   FieldList.SetFocus;
+  if not cbUseMathOperations.Checked then
+  begin
+    if Trim(sSetVal.Text) = '' then
+    begin
+      MessageDlg('You must insert a value to set...', mtError,[mbOK], 0);
+      sSetVal.SetFocus;
+      exit;
+    end;
+  end else
+  begin
+    if cbFirst.Text = '' then
+    begin
+      MessageDlg('You must select a first field in matemathical operation...', mtError, [mbOK], 0);
+      cbFirst.SetFocus;
+      exit;
+    end;
 
-   Exit;
-  End;
+    if cbSecond.Text = '' then
+    begin
+      MessageDlg('You must select a second field in matemathical operation...', mtError, [mbOK], 0);
+      cbSecond.SetFocus;
+      exit;
+    end;
+  end;
 
- If Not CheckBox1.Checked Then
-  Begin
-   If Trim(sSetVal.Text) = '' Then
-    Begin
-     ShowMessage('You must insert a value to set...');
+  if MessageDlg('Do you really want to set field values?',mtWarning,[mbok, mbCancel],0) <> mrOk then
+    exit;
 
-     sSetVal.SetFocus;
-
-     Exit;
-    End;
-  End
- Else
-  Begin
-   If cbFirst.Text = '' Then
-    Begin
-     ShowMessage('You must select a first field in matemathical operation...');
-
-     cbFirst.SetFocus;
-
-     Exit;
-    End;
-
-   If cbSecond.Text = '' Then
-    Begin
-     ShowMessage('You must select a second field in matemathical operation...');
-
-     cbSecond.SetFocus;
-
-     Exit;
-    End;
-  End;
-
- If MessageDlg('Do you want to attempt to set field?',mtWarning,[mbok, mbCancel],0) = mrOk Then
-  Begin
-   Error := False;
-
-   If CbMode.ItemIndex = 1 Then
+  Error := False;
+  if rgMode.ItemIndex = 1 Then
     SetTable.Filter := '';
 
-   SetTable.First;
+  SetTable.First;
+  lSelField := SetTable.FieldByName(SelField.Text);
+  if cbUseMathOperations.Checked then
+  begin
+    lFirstField := SetTable.FieldByName(cbFirst.Text);
+    lSecondField := SetTable.FieldByName(cbSecond.Text);
+  end;
+  while not SetTable.EOF do
+  begin
+    if not cbUseMathOperations.Checked then
+    begin
+      try
+        SetTable.Edit;
+        lSelField.AsVariant := sSetVal.Text{%H-};
+        SetTable.Post;
+      except
+        MessageDlg(
+          'Error while set value in table. Check if the value match width field type or size.',
+          mtError, [mbOK], 0
+        );
+        Error := True;
+        Break;
+      end;
+    end else
+    begin
+      try
+        SetTable.Edit;
+        case cbOp.ItemIndex of
+          0: lSelField.AsVariant := lFirstField.AsVariant + lSecondField.AsVariant;
+          1: lSelField.AsVariant := lFirstField.AsVariant - lSecondField.AsVariant;
+          2: lSelField.AsVariant := lFirstField.AsVariant * lSecondField.AsVariant;
+          3: lSelField.AsVariant := lfirstField.AsVariant / lSecondField.AsVariant;
+        end;
+        SetTable.Post;
+      except
+        MessageDlg(
+          'Error while set value in table. Check if the value match width field type or operation.',
+          mtError, [mbOK], 0);
+        Error := True;
+        Break;
+      end;
+    end;
+    SetTable.Next;
+  end;
 
-   While Not SetTable.EOF Do
-    Begin
-     If Not CheckBox1.Checked Then
-      Begin
-       Try
-         SetTable.Edit;
-
-         SetTable.FieldByName(SelField.Text).AsVariant := sSetVal.Text{%H-};
-
-         SetTable.Post;
-       Except
-         ShowMessage('Error while set value in table. Check if the value match width field type or size.');
-         Error := True;
-
-         Break;
-
-         Exit;
-       End;
-      End
-     Else
-      Begin
-       Try
-         SetTable.Edit;
-
-         Case cbOp.ItemIndex Of
-          0                  : SetTable.FieldByName(SelField.Text).AsVariant:=
-                               SetTable.FieldByName(cbFirst.Text).AsVariant +
-                               SetTable.FieldByName(cbSecond.Text).AsVariant{%H-};
-
-          1                  : SetTable.FieldByName(SelField.Text).AsVariant:=
-                               SetTable.FieldByName(cbFirst.Text).AsVariant -
-                               SetTable.FieldByName(cbSecond.Text).AsVariant{%H-};
-
-          2                  : SetTable.FieldByName(SelField.Text).AsVariant:=
-                               SetTable.FieldByName(cbFirst.Text).AsVariant *
-                               SetTable.FieldByName(cbSecond.Text).AsVariant{%H-};
-
-          3                  : SetTable.FieldByName(SelField.Text).AsVariant:=
-                               SetTable.FieldByName(cbFirst.Text).AsVariant /
-                               SetTable.FieldByName(cbSecond.Text).AsVariant{%H-};
-         End;
-
-         SetTable.Post;
-       Except
-         ShowMessage('Error while set value in table. Check if the value match width field type or operation.');
-         Error:=True;
-
-         Break;
-
-         Exit;
-       End;
-      End;
-
-     SetTable.Next;
-    End;
-
-   If Not Error Then
+  if not Error then
     Close;
-  End;
 end;
 
 procedure TSetFV.FieldListClick(Sender: TObject);
 begin
- SelField.Text := FieldList.Items[FieldList.ItemIndex];
+  SelField.Text := FieldList.Items[FieldList.ItemIndex];
 end;
 
 end.

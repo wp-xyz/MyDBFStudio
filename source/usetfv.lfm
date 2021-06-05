@@ -42,7 +42,7 @@ object SetFV: TSetFV
     OnClick = FieldListClick
     TabOrder = 0
   end
-  object CbMode: TRadioGroup
+  object rgMode: TRadioGroup
     AnchorSideLeft.Control = FieldList
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = Owner
@@ -213,7 +213,7 @@ object SetFV: TSetFV
     OnClick = CloseBtnClick
     TabOrder = 7
   end
-  object CheckBox1: TCheckBox
+  object cbUseMathOperations: TCheckBox
     AnchorSideLeft.Control = gbMath
     AnchorSideTop.Control = gbMath
     Left = 236
@@ -222,14 +222,14 @@ object SetFV: TSetFV
     Width = 171
     BorderSpacing.Left = 8
     Caption = 'Use Mathematical Operation'
-    OnChange = CheckBox1Change
+    OnChange = cbUseMathOperationsChange
     TabOrder = 5
   end
   object gbSelField: TGroupBox
-    AnchorSideLeft.Control = CbMode
-    AnchorSideTop.Control = CbMode
+    AnchorSideLeft.Control = rgMode
+    AnchorSideTop.Control = rgMode
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = CbMode
+    AnchorSideRight.Control = rgMode
     AnchorSideRight.Side = asrBottom
     Left = 228
     Height = 53
@@ -262,10 +262,10 @@ object SetFV: TSetFV
     end
   end
   object gbSetVal: TGroupBox
-    AnchorSideLeft.Control = CbMode
+    AnchorSideLeft.Control = rgMode
     AnchorSideTop.Control = gbSelField
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = CbMode
+    AnchorSideRight.Control = rgMode
     AnchorSideRight.Side = asrBottom
     Left = 228
     Height = 53
@@ -295,12 +295,5 @@ object SetFV: TSetFV
       BorderSpacing.Bottom = 6
       TabOrder = 0
     end
-  end
-  object SetTable: TDbf
-    IndexDefs = <>
-    TableLevel = 4
-    FilterOptions = []
-    Left = 112
-    Top = 192
   end
 end

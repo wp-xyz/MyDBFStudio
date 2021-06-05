@@ -656,8 +656,8 @@ begin
   hasData := not DBTable.IsEmpty;
   isEditing := DBTable.State in [dsEdit, dsInsert];
 
-  tbRestruct.Enabled := hasData and (not isEditing);
-  tbSetField.Enabled := hasData and (not isEditing);
+  tbRestruct.Enabled := (not isEditing);
+  tbSetField.Enabled := (not isEditing);
   tbViewDel.Enabled := hasData and (not isEditing);
   tbEmpty.Enabled := hasData and (not isEditing);
   tbPack.Enabled := hasData and (not isEditing);
