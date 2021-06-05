@@ -1,7 +1,7 @@
 object DbfTable: TDbfTable
-  Left = 517
+  Left = 470
   Height = 495
-  Top = 296
+  Top = 276
   Width = 708
   Caption = 'DbfTable'
   ClientHeight = 495

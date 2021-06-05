@@ -172,11 +172,11 @@ object NewTable: TNewTable
       Left = 8
       Height = 19
       Top = 351
-      Width = 173
+      Width = 184
       Anchors = [akLeft, akBottom]
       BorderSpacing.Left = 8
       BorderSpacing.Bottom = 8
-      Caption = 'After create the table, open it'
+      Caption = 'After creating the table, open it'
       TabOrder = 2
     end
     object DeleteIndexBtn: TBitBtn
@@ -252,18 +252,10 @@ object NewTable: TNewTable
     OnClick = CloseBtnClick
     TabOrder = 3
   end
-  object DbTable: TDbf
-    Exclusive = True
-    IndexDefs = <>
-    TableLevel = 4
-    FilterOptions = []
-    Left = 176
-    Top = 152
-  end
-  object SaveTable: TSaveDialog
+  object SaveTableDlg: TSaveDialog
     Title = 'Save Table As...'
     DefaultExt = '.dbf'
-    Filter = 'dBase Table|*.dbf|All Files|*.*'
+    Filter = 'dBase Tables (*.dbf)|*.dbf|All Files (*.*; *)|*.*;*'
     Options = [ofPathMustExist, ofEnableSizing, ofViewDetail]
     Left = 250
     Top = 152

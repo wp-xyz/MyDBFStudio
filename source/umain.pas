@@ -599,8 +599,8 @@ var
 begin
   NT := TNewTable.Create(WorkSite);
   NT.FieldList.AlternateColor := Options.AlternateColor;
+  NT.OnClose := @TabChildCloseHandler;
   WorkSpace.AddFormToPageControl(NT);
-  NT.PageIdx := WorkSite.ActivePage.PageIndex;
 end;
 
 procedure TMain.miOpenAliasClick(Sender: TObject);
@@ -816,7 +816,7 @@ begin
   CloseAction := caFree;
 
   // Remove the tabsheet
-  if (Sender is TDBFTable) or (Sender is TOpenBA) then
+  if (Sender is TDBFTable) or (Sender is TNewTable) or (Sender is TOpenBA) then
     TControl(Sender).Parent.Free;
 end;
 

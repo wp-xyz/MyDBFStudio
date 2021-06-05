@@ -25,13 +25,12 @@ type
     DeleteIndexBtn: TBitBtn;
     DefineIndexBtn: TBitBtn;
     cbOpenTB: TCheckBox;
-    DbTable: TDbf;
     FieldList: TStringGrid;
     GroupBox1: TGroupBox;
     IndexList: TListBox;
     lblIndexList: TLabel;
     lblTableType: TLabel;
-    SaveTable: TSaveDialog;
+    SaveTableDlg: TSaveDialog;
     TableType: TComboBox;
     procedure CloseBtnClick(Sender: TObject);
     procedure CreateTableBtnClick(Sender: TObject);
@@ -47,25 +46,20 @@ type
     procedure TableTypeChange(Sender: TObject);
   private
     { private declarations }
-    MyIndexList : Array Of MyIndex;
-
+    FDBTable: TDbf;
+    MyIndexList : array of MyIndex;
     Function ReturnTableLevel : Word;
-
     Procedure ShowIndexList;
-
     Function Check_Value(Val : String) : Boolean;
-
     Function RetFieldType(AValue: String) : TFieldType;
-
     Function CreateNewFieldDefs : TDbfFieldDefs;
-
     Procedure CreateMyIndex;
   public
     { public declarations }
     Ret : Boolean;
     PageIdx : Integer;
-
     Function TestIndexName(Val : String) : Boolean;
+    property DBTable: TDbf read FDBTable;
   end;
 
 var
@@ -82,51 +76,47 @@ uses
 
 procedure TNewTable.CloseBtnClick(Sender: TObject);
 begin
- Main.WorkSiteCloseTabClicked(Main.WorkSite.Pages[Self.PageIdx]);
+  Close;
 end;
 
 procedure TNewTable.CreateTableBtnClick(Sender: TObject);
- Var Ind : Word;
+Var
+  Ind: Word;
 begin
- For Ind := 1 To FieldList.RowCount - 1 Do
-  Begin
-   If Trim(FieldList.Cells[1,Ind]) = '' Then
-    Begin
-     ShowMessage('Row: ' + IntToStr(Ind) + '. Missing field name!');
-
-     FieldList.Row := Ind;
-     FieldList.Col := 1;
-
-     Exit;
-    End;
-
-   If FieldList.Cells[2,Ind] = '' Then
-    Begin
-     ShowMessage('Row: ' + IntToStr(Ind) + '. Missing field type!');
-
-     FieldList.Row := Ind;
-     FieldList.Col := 2;
-
-     Exit;
-    End;
-
-   If (FieldList.Cells[2,Ind] = Fieldtypenames[ftString]) Or
-//      (FieldList.Cells[2,Ind] = Fieldtypenames[ftFloat]) Or
-//      (FieldList.Cells[2,Ind] = Fieldtypenames[ftBlob]) Or
-//      (FieldList.Cells[2,Ind] = Fieldtypenames[ftMemo]) Or
-      (FieldList.Cells[2,Ind] = Fieldtypenames[ftFixedChar]) Or
-      (FieldList.Cells[2,Ind] = Fieldtypenames[ftWideString]) Or
-      (FieldList.Cells[2,Ind] = Fieldtypenames[ftBCD]) Or
-      (FieldList.Cells[2,Ind] = Fieldtypenames[ftBytes]) Then
-    If Not Check_Value(FieldList.Cells[3,Ind]) Then
-     Begin
-      ShowMessage('Row: ' + IntToStr(Ind) + '. Field length error!');
-
+  for Ind := 1 to FieldList.RowCount - 1 do
+  begin
+    if Trim(FieldList.Cells[1,Ind]) = '' then
+    begin
+      MessageDlg('Row ' + IntToStr(Ind) + ': Missing field name', mtError, [mbOK], 0);
       FieldList.Row := Ind;
-      FieldList.Col := 3;
+      FieldList.Col := 1;
+      exit;
+    end;
 
-      Exit;
-     End;
+    if FieldList.Cells[2,Ind] = '' then
+    begin
+      MessageDlg('Row ' + IntToStr(Ind) + ': Missing field type', mtError, [mbOK], 0);
+      FieldList.Row := Ind;
+      FieldList.Col := 2;
+      exit;
+    end;
+
+    if (FieldList.Cells[2,Ind] = Fieldtypenames[ftString]) or
+//      (FieldList.Cells[2,Ind] = Fieldtypenames[ftFloat]) or
+//      (FieldList.Cells[2,Ind] = Fieldtypenames[ftBlob]) or
+//      (FieldList.Cells[2,Ind] = Fieldtypenames[ftMemo]) or
+       (FieldList.Cells[2,Ind] = Fieldtypenames[ftFixedChar]) or
+       (FieldList.Cells[2,Ind] = Fieldtypenames[ftWideString]) or
+       (FieldList.Cells[2,Ind] = Fieldtypenames[ftBCD]) or
+       (FieldList.Cells[2,Ind] = Fieldtypenames[ftBytes])
+    then
+      if Not Check_Value(FieldList.Cells[3,Ind]) then
+      begin
+        MessageDlg('Row ' + IntToStr(Ind) + ': Field length error', mtError, [mbOK], 0);
+        FieldList.Row := Ind;
+        FieldList.Col := 3;
+        Exit;
+      end;
 
 {   If (FieldList.Cells[2,Ind] = Fieldtypenames[ftFloat]) Or
       (FieldList.Cells[2,Ind] = Fieldtypenames[ftBCD]) Then
@@ -139,30 +129,25 @@ begin
 
       Exit;
      End;}
-  End;
+  end;
 
- If SaveTable.Execute Then
-  Begin
-   Try
-     DbTable.TableLevel := ReturnTableLevel();
-     DbTable.TableName := SaveTable.FileName;
+  if SaveTableDlg.Execute then
+  begin
+    try
+      FDBTable.TableLevel := ReturnTableLevel();
+      FDBTable.TableName := SaveTableDlg.FileName;
+      FDBTable.CreateTableEx(CreateNewFieldDefs());
+      FDBTable.Open;
+      CreateMyIndex();
+      FDBTable.Close;
+      Ret := True;
 
-     DbTable.CreateTableEx(CreateNewFieldDefs());
+      if cbOpenTB.Checked Then
+        Main.Open_Table(SaveTableDlg.FileName);
 
-     DbTable.Open;
-
-     CreateMyIndex();
-
-     DbTable.Close;
-
-     Ret := True;
-
-     CloseBtnClick(Sender);
-
-     If cbOpenTB.Checked Then
-      Main.Open_Table(SaveTable.FileName);
-   Except
-   end;
+      Close;
+    except
+    end;
   end;
 end;
 
@@ -241,20 +226,23 @@ end;
 
 procedure TNewTable.FormCreate(Sender: TObject);
 begin
- TableTypeChange(Sender);
+  FDBTable := TDbf.Create(self);
+  FDBTable.Exclusive := true;
 
- FieldList.RowCount := 2;
+  TableTypeChange(Sender);
 
- FieldList.Cells[0,FieldList.RowCount - 1] := IntToStr(FieldList.RowCount - 1);
- FieldList.Col := 1;
- FieldList.Row := FieldList.RowCount - 1;
+  FieldList.RowCount := 2;
 
- Ret := False;
+  FieldList.Cells[0,FieldList.RowCount - 1] := IntToStr(FieldList.RowCount - 1);
+  FieldList.Col := 1;
+  FieldList.Row := FieldList.RowCount - 1;
+
+  Ret := False;
 end;
 
 procedure TNewTable.FormDestroy(Sender: TObject);
 begin
- SetLength(MyIndexList, 0);
+  SetLength(MyIndexList, 0);
 end;
 
 procedure TNewTable.FormKeyDown(Sender: TObject; var Key: Word;
