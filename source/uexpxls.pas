@@ -208,113 +208,124 @@ begin
 end;
 
 procedure TExpXLS.ExportBtnClick(Sender: TObject);
- Var NumBlocchi65K : Extended;
-     IntBlc,Ind,Ind2 : LongInt;
-     FileName : String;
+var
+  NumBlocks65K: Extended;
+  IntBlc, Ind, Ind2: LongInt;
+  FileName: String;
 begin
-  lblProgress.Caption := 'Progress';
-  if SaveExp.Execute then
-  begin
-    NumBlocchi65K:= DbfTable.ExactRecordCount / $FFFF;
+  if not SaveExp.Execute then
+    exit;
 
-    pBar.Min:=0;
-    pBar.Max := DbfTable.ExactRecordCount;
-    pBar.Position := 0;
+  NumBlocks65k := DbfTable.ExactRecordCount / $FFFF;
 
-    if NumBlocchi65K > 1 then
-      if MessageDlg('Table records is more then 65.535 and must split the export file. Continue?', mtWarning, [mbYes, mbCancel], 0) = mrCancel Then
-        Exit;
+  pBar.Min:=0;
+  pBar.Max := DbfTable.ExactRecordCount;
+  pBar.Position := 0;
 
-   ExpObj:=TDsXlsFile.Create;
-   ExpObj.StrFormatNumber:=StrFN.Text;
-   ExpObj.StrFormatNumberDec:=StrFND.Text;
-   ExpObj.StrFormatMaskNumber:=StrMFN.Text;
-   ExpObj.StrFormatMaskNumberDec:=StrMFND.Text;
-   ExpObj.StrFormatDate:=cbDateF.Text;
+  if NumBlocks65K > 1 then
+    if MessageDlg('Table records is more then 65.535 and must split the export file. Continue?', mtWarning, [mbYes, mbCancel], 0) = mrCancel then
+      Exit;
 
-   IntBlc:=Trunc(NumBlocchi65K);
+  ExpObj:=TDsXlsFile.Create;
+  try
+    ExpObj.StrFormatNumber:=StrFN.Text;
+    ExpObj.StrFormatNumberDec:=StrFND.Text;
+    ExpObj.StrFormatMaskNumber:=StrMFN.Text;
+    ExpObj.StrFormatMaskNumberDec:=StrMFND.Text;
+    ExpObj.StrFormatDate:=cbDateF.Text;
 
-   DbfTable.First;
-   XlsRow := 2;
+    IntBlc:=Trunc(NumBlocks65K);
 
-   if NumBlocchi65K < 1.0 then
-   begin
-     try
-       ExpObj.Open(SaveExp.FileName);
-       CreateFieldTitle();
-       while not DbfTable.EOF Do
-       begin
-         WriteRecordValue(DbfTable);
-         DbfTable.Next;
-         pBar.Position := pBar.Position + 1;
-         Inc(XlsRow);
-       end;
+    DbfTable.First;
+    XlsRow := 2;
 
-       ExpObj.Close;
+    if NumBlocks65K < 1.0 then
+    begin
+      try
+        FileName := SaveExp.FileName;
+        ExpObj.Open(FileName);
+        CreateFieldTitle();
+        while not DbfTable.EOF Do
+        begin
+          WriteRecordValue(DbfTable);
+          DbfTable.Next;
+          pBar.Position := pBar.Position + 1;
+          Inc(XlsRow);
+        end;
 
-       lblProgress.Caption := 'Progress (completed)';
-       pBar.Position := 0;
-     except
-       on E:Exception do
-         MessageDlg('Error writing file:' + LineEnding + E.Message, mtError, [mbOK], 0);
-     end;
-   end else
-   begin
-     for Ind:=1 To IntBlc do
-     begin
-       XlsRow := 2;
+        ExpObj.Close;
 
-       if Ind = 1 then
-         FileName := SaveExp.FileName
-       else
-         FileName := CreateSplitFileName(SaveExp.FileName, Ind);
+        pBar.Position := 0;
+      except
+        on E:Exception do
+        begin
+          MessageDlg('Error writing file:' + LineEnding + E.Message, mtError, [mbOK], 0);
+          exit;
+        end;
+      end;
+    end else
+    begin
+      for Ind:=1 To IntBlc do
+      begin
+        XlsRow := 2;
 
-       try
-         ExpObj.Open(FileName);
-         CreateFieldTitle();
-         for ind2 := 1 To $FFFF do
-         begin
-           WriteRecordValue(DbfTable);
-           DbfTable.Next;
-           pBar.Position := pBar.Position + 1;
-           Inc(XlsRow);
-         end;
-         ExpObj.Close;
-       except
-         on E:Exception do
-         begin
-           MessageDlg('Error on writing file:' + LineEnding + E.Message, mtError, [mbOK], 0);
-           exit;
-         end;
-       end;
-     end;
+        if Ind = 1 then
+          FileName := SaveExp.FileName
+        else
+          FileName := CreateSplitFileName(SaveExp.FileName, Ind);
 
-     if not DbfTable.EOF then
-     begin
-       XlsRow := 2;
-       FileName := CreateSplitFileName(SaveExp.FileName, Ind + 1);
+        try
+          ExpObj.Open(FileName);
+          CreateFieldTitle();
+          for ind2 := 1 To $FFFF do
+          begin
+            WriteRecordValue(DbfTable);
+            DbfTable.Next;
+            pBar.Position := pBar.Position + 1;
+            Inc(XlsRow);
+          end;
+          ExpObj.Close;
+        except
+          on E:Exception do
+            begin
+              MessageDlg('Error on writing file:' + LineEnding + E.Message, mtError, [mbOK], 0);
+              exit;
+            end;
+        end;
+      end;
 
-       try
-         ExpObj.Open(FileName);
-         CreateFieldTitle();
-         while not DbfTable.EOF do
-         begin
-           WriteRecordValue(DbfTable);
-           DbfTable.Next;
-           pBar.Position := pBar.Position + 1;
-           Inc(XlsRow);
-         end;
-         ExpObj.Close;
+      if not DbfTable.EOF then
+      begin
+        XlsRow := 2;
+        FileName := CreateSplitFileName(SaveExp.FileName, Ind + 1);     // todo: is Ind defined here?
 
-         pBar.Position := 0;
-         lblProgress.Caption := 'Progress (completed)';
-       except
-         on E:Exception do
-           MessageDlg('Error writing file:' + LineEnding + E.Message, mtError, [mbOK], 0);
-       end;
-     end;
+        try
+          ExpObj.Open(FileName);
+          CreateFieldTitle();
+          while not DbfTable.EOF do
+          begin
+            WriteRecordValue(DbfTable);
+            DbfTable.Next;
+            pBar.Position := pBar.Position + 1;
+            Inc(XlsRow);
+          end;
+          ExpObj.Close;
+
+          pBar.Position := 0;
+        except
+          on E:Exception do
+            begin
+              MessageDlg('Error writing file:' + LineEnding + E.Message, mtError, [mbOK], 0);
+              exit;
+            end;
+        end;
+      end;
     end;
 
+    Close;
+    MessageDlg('Table successfully exported to ' + FileName, mtInformation, [mbOK], 0);
+
+  finally
     ExpObj.Free;
   end;
 end;

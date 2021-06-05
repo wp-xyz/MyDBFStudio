@@ -103,7 +103,7 @@ object DbfTable: TDbfTable
       Width = 708
       AutoSize = True
       ButtonHeight = 24
-      ButtonWidth = 24
+      ButtonWidth = 28
       Caption = 'ToolBar1'
       EdgeBorders = []
       EdgeInner = esNone
@@ -134,7 +134,7 @@ object DbfTable: TDbfTable
         Images = CommonData.Images
       end
       object tbPack: TToolButton
-        Left = 446
+        Left = 462
         Hint = 'Pack table (reduce size)'
         Top = 0
         Caption = 'tbPack'
@@ -145,7 +145,7 @@ object DbfTable: TDbfTable
         Wrap = True
       end
       object tbEmpty: TToolButton
-        Left = 422
+        Left = 434
         Hint = 'Delete all record in table'
         Top = 0
         Caption = 'tbEmpty'
@@ -155,7 +155,7 @@ object DbfTable: TDbfTable
         ShowHint = True
       end
       object tbViewDel: TToolButton
-        Left = 398
+        Left = 406
         Hint = 'Delete only visible records'
         Top = 0
         Caption = 'tbViewDel'
@@ -176,7 +176,7 @@ object DbfTable: TDbfTable
         ShowHint = True
       end
       object tbSetField: TToolButton
-        Left = 374
+        Left = 378
         Hint = 'Set field value'
         Top = 0
         Caption = 'tbSetField'
@@ -186,7 +186,7 @@ object DbfTable: TDbfTable
         ShowHint = True
       end
       object CloseTabBtn: TToolButton
-        Left = 499
+        Left = 523
         Hint = 'Close this tab'
         Top = 0
         Caption = 'X'
@@ -196,7 +196,7 @@ object DbfTable: TDbfTable
         ShowHint = True
       end
       object ToolButton2: TToolButton
-        Left = 494
+        Left = 518
         Height = 24
         Top = 0
         Caption = 'ToolButton2'
@@ -210,7 +210,7 @@ object DbfTable: TDbfTable
         Style = tbsDivider
       end
       object tbAutoFillColumns: TToolButton
-        Left = 470
+        Left = 490
         Hint = 'Auto-fill columns'
         Top = 0
         Caption = 'tbAutoFillColumns'

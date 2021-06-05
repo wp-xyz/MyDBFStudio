@@ -59,69 +59,70 @@ var
   stream: TStream;
   rs: RawByteString = '';
 begin
-  lblProgress.Caption := 'Progress';
+  if not SaveExp.Execute then
+    exit;
 
-  if SaveExp.Execute then
-    try
-      AssignFile(F, SaveExp.FileName);
-      ReWrite(F);
+  try
+    AssignFile(F, SaveExp.FileName);
+    ReWrite(F);
 
-      DbfTable.First;
-      pBar.Min := 0;
-      pBar.Max := DbfTable.ExactRecordCount;
-      pBar.Position := 0;
+    DbfTable.First;
+    pBar.Min := 0;
+    pBar.Max := DbfTable.ExactRecordCount;
+    pBar.Position := 0;
 
-      Writeln(F, '<?xml version="1.0" encoding="UTF-8"?>');
-      Writeln(F, '<' + DbfTable.TableName + '>');
+    Writeln(F, '<?xml version="1.0" encoding="UTF-8"?>');
+    Writeln(F, '<' + DbfTable.TableName + '>');
 
-      while not DbfTable.EOF Do
+    while not DbfTable.EOF Do
+    begin
+      Writeln(F, '  <record>');
+
+      for Ind := 0 To ClbField.Items.Count - 1 Do
+      if ClbField.Checked[Ind] then
       begin
-        Writeln(F, '  <record>');
-
-        for Ind := 0 To ClbField.Items.Count - 1 Do
-        if ClbField.Checked[Ind] then
+        field := DbfTable.FieldByName(ClbField.Items[Ind]);
+        if field.IsNull then
+          WriteLn(F, Format('    <%0:s> </%0:s>', [ClbField.Items[Ind]]))
+        else
+        if (field is TMemoField) then
+          WriteLn(F, Format('    <%0:s>%1:s</%0:s>', [ClbField.Items[Ind], field.AsString]))
+        else
+        if (field is TBlobField) then
         begin
-          field := DbfTable.FieldByName(ClbField.Items[Ind]);
-          if field.IsNull then
-            WriteLn(F, Format('    <%0:s> </%0:s>', [ClbField.Items[Ind]]))
-          else
-          if (field is TMemoField) then
-            WriteLn(F, Format('    <%0:s>%1:s</%0:s>', [ClbField.Items[Ind], field.AsString]))
-          else
-          if (field is TBlobField) then
-          begin
-            // Picture field --> encode with Base64
-            stream := TMemoryStream.Create;
-            try
-              TBlobField(field).SaveToStream(stream);
-              SetLength(rs, stream.Size);
-              stream.Position := 0;
-              stream.Write(rs[1], Length(rs));
-              rs := EncodeStringBase64(rs);
-              WriteLn(F, Format('    <%0:s>%1:s</%0:s>', [ClbField.Items[Ind], rs]));
-            finally
-              stream.Free;
-            end;
-          end else
-            WriteLn(F, Format('    <%0:s>%1:s</%0:s>', [ClbField.Items[Ind], field.AsString]));
-        end;
-
-        Writeln(F, '  </record>');
-
-        DbfTable.Next;
-
-        pBar.Position := pBar.Position + 1;
+          // Picture field --> encode with Base64
+          stream := TMemoryStream.Create;
+          try
+            TBlobField(field).SaveToStream(stream);
+            SetLength(rs, stream.Size);
+            stream.Position := 0;
+            stream.Write(rs[1], Length(rs));
+            rs := EncodeStringBase64(rs);
+            WriteLn(F, Format('    <%0:s>%1:s</%0:s>', [ClbField.Items[Ind], rs]));
+          finally
+            stream.Free;
+          end;
+        end else
+          WriteLn(F, Format('    <%0:s>%1:s</%0:s>', [ClbField.Items[Ind], field.AsString]));
       end;
 
-      Writeln(F, '</' + DbfTable.TableName + '>');
-      System.Close(F);
+      Writeln(F, '  </record>');
 
-      pBar.Position := 0;
-      lblProgress.Caption := 'Progress (completed)';
-    except
-      on E: Exception do
-        MessageDlg('Error writing file:' + LineEnding + E.Message, mtError, [mbOK], 0);
+      DbfTable.Next;
+
+      pBar.Position := pBar.Position + 1;
     end;
+
+    Writeln(F, '</' + DbfTable.TableName + '>');
+    System.Close(F);
+
+    Close;
+    MessageDlg('File successfully exported to ' + SaveExp.FileName, mtInformation, [mbOK], 0);
+
+  except
+    on E: Exception do
+      MessageDlg('Error writing file:' + LineEnding + E.Message, mtError, [mbOK], 0);
+  end;
 end;
 
 procedure TExpXML.FormCloseQuery(Sender: TObject; var CanClose: Boolean);

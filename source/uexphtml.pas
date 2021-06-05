@@ -109,43 +109,41 @@ end;
 
 procedure TExpHTML.ExportBtnClick(Sender: TObject);
 begin
-  lblProgress.Caption := 'Progress';
+  if not SaveExp.Execute then
+    exit;
 
-  if SaveExp.Execute then
-  begin
-    pBar.Min := 0;
-    pBar.Max := DbfTable.ExactRecordCount;
-    pBar.Position := 0;
+  pBar.Min := 0;
+  pBar.Max := DbfTable.ExactRecordCount;
+  pBar.Position := 0;
 
-    DbfTable.First;
+  DbfTable.First;
 
-    ExpObj := TDsDataToHTML.Create(Self);
-    ExpObj.AfterWriteRecord := @IncrementPBar;
-    ExpObj.DataSet := DbfTable;
-    ExpObj.PageOptions.Title := PageTLT.Text;
-    ExpObj.PageOptions.BackColor := PageBC.Colors[PageBC.ItemIndex];
-    ExpObj.PageOptions.Font.Color := PageFC.Colors[PageFC.ItemIndex];
-    ExpObj.PageOptions.Font.Size := Return_Font_Size(PageFS);
-    ExpObj.PageOptions.Font.Style := Return_Font_Style(PageFT);
-    ExpObj.Detail.Headers.BackColor := HeaderBC.Colors[HeaderBC.ItemIndex];
-    ExpObj.Detail.Headers.Font.Color := HeaderFC.Colors[HeaderFC.ItemIndex];
-    ExpObj.Detail.Headers.Font.Size := Return_Font_Size(HeaderFS);
-    ExpObj.Detail.Headers.Font.Style := Return_Font_Style(HeaderST);
-    ExpObj.Detail.BorderWidth := StrToInt(TableW.Text);
-    ExpObj.Detail.BorderColor := TableBC.Colors[TableBC.ItemIndex];
-    ExpObj.Detail.CellPadding := StrToInt(CellP.Text);
-    ExpObj.Detail.CellSpacing := StrToInt(CellS.Text);
+  ExpObj := TDsDataToHTML.Create(self);     // Must be destroyed by self, crashes otherwise!
+  ExpObj.AfterWriteRecord := @IncrementPBar;
+  ExpObj.DataSet := DbfTable;
+  ExpObj.PageOptions.Title := PageTLT.Text;
+  ExpObj.PageOptions.BackColor := PageBC.Colors[PageBC.ItemIndex];
+  ExpObj.PageOptions.Font.Color := PageFC.Colors[PageFC.ItemIndex];
+  ExpObj.PageOptions.Font.Size := Return_Font_Size(PageFS);
+  ExpObj.PageOptions.Font.Style := Return_Font_Style(PageFT);
+  ExpObj.Detail.Headers.BackColor := HeaderBC.Colors[HeaderBC.ItemIndex];
+  ExpObj.Detail.Headers.Font.Color := HeaderFC.Colors[HeaderFC.ItemIndex];
+  ExpObj.Detail.Headers.Font.Size := Return_Font_Size(HeaderFS);
+  ExpObj.Detail.Headers.Font.Style := Return_Font_Style(HeaderST);
+  ExpObj.Detail.BorderWidth := StrToInt(TableW.Text);
+  ExpObj.Detail.BorderColor := TableBC.Colors[TableBC.ItemIndex];
+  ExpObj.Detail.CellPadding := StrToInt(CellP.Text);
+  ExpObj.Detail.CellSpacing := StrToInt(CellS.Text);
 
-    Generate_Field_List;
+  Generate_Field_List;
 
-    try
-      ExpObj.SaveToFile(SaveExp.FileName);
-      lblProgress.Caption := 'Progress (completed)';
-      pBar.Position := 0;
-    except
-      on E:Exception do
-        MessageDlg('Error on writing file:' + LineEnding + E.Message, mtError, [mbOK], 0);
-    end;
+  try
+    ExpObj.SaveToFile(SaveExp.FileName);
+    Close;
+    MessageDlg('Table successfully exported to ' + SaveExp.FileName, mtInformation, [mbOK], 0);
+  except
+    on E:Exception do
+      MessageDlg('Error on writing file:' + LineEnding + E.Message, mtError, [mbOK], 0);
   end;
 end;
 

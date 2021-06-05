@@ -61,8 +61,6 @@ end;
 
 procedure TExpDBF.ExportBtnClick(Sender: TObject);
 begin
-  lblProgress.Caption := 'Progress';
-
   if not SaveExp.Execute then
     Exit;
 
@@ -73,8 +71,8 @@ begin
     Create_Fields_List();
     Move_Records();
     ExpTable.Close;
-    lblProgress.Caption := 'Progress (completed)';
-    pBar.Position := 0;
+    Close;
+    MessageDlg('Table successfully exported to ' + SaveExp.FileName, mtInformation, [mbOK], 0);
   except
     on E: Exception do
       MessageDlg('Error writing file.' + LineEnding + E.Message, mtError, [mbOK], 0);

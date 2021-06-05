@@ -132,8 +132,6 @@ end;
 
 procedure TExpCSV.ExportBtnClick(Sender: TObject);
 begin
-  lblProgress.Caption := 'Progress';
-
   if Trim(Separator.Text) = '' then
   begin
     MessageDlg('You MUST insert a record separator...', mtError, [mbOK], 0);
@@ -165,14 +163,14 @@ begin
       ExpDs.DateFormat := cbDateF.Text;
       ExpDs.ImportProgress := @StepIt;
       ExpDs.DatasetToCSV();
-      lblProgress.Caption := 'Progress (completed)';
+      Close;
+      MessageDlg('Table successfully exported to ' + SaveExp.FileName, mtInformation, [mbOK], 0);
     except
       on E:Exception do
         MessageDlg('Error writing file:' + Lineending +  E.Message, mtError, [mbOK], 0);
     end;
   finally
     ExpDs.Free;
-    pBar.Position := 0;
   end;
 end;
 
