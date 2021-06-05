@@ -10,7 +10,6 @@ object AddTables: TAddTables
   ClientHeight = 327
   ClientWidth = 399
   OnCloseQuery = FormCloseQuery
-  OnCreate = FormCreate
   OnShow = FormShow
   Position = poMainFormCenter
   LCLVersion = '2.1.0.0'

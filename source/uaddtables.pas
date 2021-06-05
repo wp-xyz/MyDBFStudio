@@ -24,7 +24,6 @@ type
     rgTPri: TRadioGroup;
     procedure CloseBtnClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-    procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure StartBtnClick(Sender: TObject);
   private
@@ -32,7 +31,7 @@ type
     FDbfTable1: TDbf;
     FDbfTable2: TDbf;
     Function Check_Table_Structures: Boolean;
-    Procedure AddTable(D1,D2 : TDbf);
+    Procedure AddTable(D1, D2: TDbf);
   public
     { public declarations }
   end;
@@ -61,12 +60,6 @@ begin
     Options.AddTablesWindow.ExtractFromForm(Self);
 end;
 
-procedure TAddTables.FormCreate(Sender: TObject);
-begin
-  //FDbfTable1 := TDbf.Create(self);
-  //FDbfTable2 := TDbf.Create(self);
-end;
-
 procedure TAddTables.StartBtnClick(Sender: TObject);
 var
   FT1, FT2 : TForm;
@@ -74,21 +67,21 @@ var
 begin
   if cbTable1.Text = '' then
   begin
-    ShowMessage('You MUST select a first table...');
+    MessageDlg('You MUST select a first table...', mtError, [mbOK], 0);
     cbTable1.SetFocus;
     Exit;
   end;
 
   if cbTable2.Text = '' then
   begin
-    ShowMessage('You MUST select a second table...');
+    MessageDlg('You MUST select a second table...', mtError, [mbOK], 0);
     cbTable2.SetFocus;
     Exit;
   end;
 
   if cbTable1.Text = cbTable2.Text then
   begin
-    ShowMessage('The tables must be different.');
+    MessageDlg('The tables must be different.', mtError, [mbOK], 0);
     Exit;
   end;
 
@@ -111,8 +104,8 @@ begin
       else
         AddTable(FDbfTable2, FDbfTable1);
     finally
-      TDbfTable(fT1).DBGrid.EndUpdate(False);
-      TDbfTable(fT2).DBGrid.EndUpdate(False);
+      TDbfTable(fT1).DBGrid.EndUpdate(true);
+      TDbfTable(fT2).DBGrid.EndUpdate(true);
     end;
   end;
 end;
@@ -202,7 +195,7 @@ begin
       D1.Next;
     end;
 
-    ShowMessage('Process completed!');
+    MessageDlg('Process completed!', mtInformation, [mbOK], 0);
   except
     on E:Exception do
       MessageDlg('Error while inserting fields:' + LineEnding + E.Message, mtError, [mbOK], 0);
