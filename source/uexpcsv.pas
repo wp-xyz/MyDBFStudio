@@ -117,15 +117,15 @@ begin
  Close;
 end;
 
-// Do not allow to export to csv format.
+// Do not allow to check a BLOB item: cannot export to csv format.
 procedure TExpCSV.ClbFieldItemClick(Sender: TObject; Index: integer);
 var
   fieldDef: TFieldDef;
 begin
-  fieldDef := DbfTable.FieldDefs.Items[ClbField.ItemIndex];
+  fieldDef := DbfTable.FieldDefs.Items[Index];
   if (fieldDef.DataType = ftBlob) and (fieldDef.DataType <> ftMemo) then
   begin
-    ClbField.Checked[ClbField.ItemIndex] := false;
+    ClbField.Checked[Index] := false;
     MessageDlg('Exporting a BLOB field to CSV is not supported.', mtError, [mbOK], 0);
   end;
 end;

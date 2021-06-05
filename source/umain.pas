@@ -674,7 +674,6 @@ end;
 procedure TMain.miSortTableClick(Sender: TObject);
 var
   F: TDbfTable;
-  tmp: TForm;
 begin
   if (WorkSite.ActivePage is TTabForm) then
     if TTabForm(WorkSite.ActivePage).ParentForm is TDbfTable then

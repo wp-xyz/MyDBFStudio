@@ -258,11 +258,4 @@ object Restructure: TRestructure
     Caption = 'Field List'
     ParentColor = False
   end
-  object Temp: TDbf
-    IndexDefs = <>
-    TableLevel = 4
-    FilterOptions = []
-    Left = 240
-    Top = 152
-  end
 end

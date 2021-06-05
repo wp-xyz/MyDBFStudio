@@ -10,11 +10,11 @@ uses
 
 type
 
-  MyIndex         = Packed Record
-   IdxName        : String;
-   Fields         : String;
-   Options        : TIndexOptions;
-   Deleted        : Boolean;
+  MyIndex = record
+    IdxName : String;
+    Fields  : String;
+    Options : TIndexOptions;
+    Deleted : Boolean;
   End;
 
   { TRestructure }
@@ -33,9 +33,8 @@ type
     IndexList: TListBox;
     lblIndexList: TLabel;
     Panel1: TPanel;
-    Temp: TDbf;
     procedure CloseBtnClick(Sender: TObject);
-    procedure FieldListSelectEditor(Sender: TObject; aCol, aRow: Integer;
+    procedure FieldListSelectEditor(Sender: TObject; aCol, {%H-}aRow: Integer;
       var Editor: TWinControl);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
@@ -50,20 +49,19 @@ type
     procedure IndexListDblClick(Sender: TObject);
   private
     { private declarations }
-    MyIndexList : Array Of MyIndex;
-
-    Procedure ShowIndexList;
-
-    Function Check_Value(Val : String) : Boolean;
-
-    function CreateNewFieldDefs : TDbfFieldDefs;
+    FDbf: TDbf;
+    MyIndexList: array of MyIndex;
+    function Check_Value(Val: String): Boolean;
+    function CreateNewFieldDefs: TDbfFieldDefs;
+    procedure EditSelectedIndex;
     procedure RecreateMyIndex;
-    function RetFieldType(AValue: String) : TFieldType;
-
+    function RetFieldType(AValue: String): TFieldType;
+    procedure ShowIndexList;
     procedure ShowInfo(ATable: TDbf);
   public
     { public declarations }
-    Function TestIndexName(Val : String) : Boolean;
+    function TestIndexName(Val: String): Boolean;
+    property Dbf: TDbf read FDbf write FDbf;
   end;
 
 var
@@ -71,8 +69,9 @@ var
 
 implementation
 
-Uses
-  LCLType, TypInfo, Math, uUtils, uIdxTable, uOptions;
+uses
+  LCLType, TypInfo, Math,
+  uUtils, uIdxTable, uOptions;
 
 {$R *.lfm}
 
@@ -80,128 +79,124 @@ Uses
 
 procedure TRestructure.FormDestroy(Sender: TObject);
 begin
- SetLength(MyIndexList, 0);
+  SetLength(MyIndexList, 0);
 end;
 
 procedure TRestructure.FieldListKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
+var
+  n: Integer;
 begin
- If Key = 40 Then     //Down Arrow
-  Begin
-   If FieldList.Row = FieldList.RowCount - 1 Then
-    If (FieldList.Cells[1,FieldList.RowCount - 1] <> '') And
-       (FieldList.Cells[2,FieldList.RowCount - 1] <> '') Then
-     Begin
-      FieldList.RowCount:=FieldList.RowCount + 1;
-
-      FieldList.Cells[0,FieldList.RowCount - 1] := IntToStr(FieldList.RowCount - 1);
-      FieldList.Cells[4,FieldList.RowCount - 1] := 'Y';                        //New Field
-      FieldList.Col := 1;
-      FieldList.Row := FieldList.RowCount - 1;
-     End;
-  End
- Else
-  If Key = 38 Then                      //Up Arrow
-   Begin
-    If (FieldList.Cells[1,FieldList.RowCount - 1] = '') And
-       (FieldList.Cells[2,FieldList.RowCount - 1] = '') Then
-     Begin
-      FieldList.RowCount:=FieldList.RowCount - 1;
-
-     //FieldList.Col:=1;
-     //FieldList.Row:=FieldList.RowCount + 1;
-     End;
-   End
-  Else
-   If Key = 46 Then                      //Del
-    If FieldList.Row >= 1 Then
-     If MessageDlg('Delete the field?', mtWarning, [mbOk, mbCancel],0) = mrOk Then
-      Begin
-       FieldList.DeleteColRow(False, FieldList.Row);
-
-       If FieldList.Row = 0 Then
-        Begin
-         FieldList.RowCount := FieldList.RowCount + 1;
-
-         FieldList.Cells[0,FieldList.RowCount - 1] := IntToStr(FieldList.RowCount - 1);
-         FieldList.Col := 1;
-         FieldList.Row := FieldList.RowCount - 1;
-        End;
-      End;
+  n := FieldList.RowCount;
+  if Key = 40 then     //Down Arrow
+  begin
+    if FieldList.Row = n - 1 then
+      if (FieldList.Cells[1, n - 1] <> '') and (FieldList.Cells[2, n - 1] <> '') then
+      begin
+        FieldList.RowCount := n + 1;
+        FieldList.Cells[0, n] := IntToStr(n);
+        FieldList.Cells[4, n] := 'Y';     //New Field
+        FieldList.Col := 1;
+        FieldList.Row := n;
+      end;
+  end else
+  if Key = 38 then                      //Up Arrow
+  begin
+    if (FieldList.Cells[1, n - 1] = '') and (FieldList.Cells[2, n - 1] = '') then
+    begin
+      FieldList.RowCount := n - 1;
+    end;
+  end else
+  if Key = 46 then                     //Del
+    if FieldList.Row >= 1 then
+      if MessageDlg('Delete the field?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+      begin
+        FieldList.DeleteColRow(false, FieldList.Row);
+        if FieldList.Row = 0 then
+        begin
+          FieldList.RowCount := n + 1;
+          FieldList.Cells[0, n] := IntToStr(n);
+          FieldList.Col := 1;
+          FieldList.Row := n;
+        end;
+      end;
 end;
 
 procedure TRestructure.DeleteBtnClick(Sender: TObject);
- Var dName : String;
-     Ind : Word;
+var
+  indexName: String;
+  i: Integer;
 begin
- If IndexList.ItemIndex < 0 Then
-  Exit;
+  if IndexList.ItemIndex < 0 then
+    exit;
 
- If MessageDlg('Delete the selected index?', mtWarning, [mbOk, mbCancel],0) = mrOk Then
-  Begin
-   dName := IndexList.Items[IndexList.ItemIndex];
+  if MessageDlg('Delete the selected index?', mtConfirmation, [mbYes, mbNo], 0) <> mrYes then
+    exit;
 
-   For Ind := 0 To Length(MyIndexList) - 1 Do
-    If MyIndexList[Ind].IdxName = dName Then
-     MyIndexList[Ind].Deleted := True;
+  indexName := IndexList.Items[IndexList.ItemIndex];
+  for i := 0 to High(MyIndexList) do
+    if MyIndexList[i].IdxName = indexName then
+      MyIndexList[i].Deleted := true;
 
-   ShowIndexList;
-  End;
+  ShowIndexList;
 end;
 
 procedure TRestructure.EditBtnlick(Sender: TObject);
 begin
- If IndexList.ItemIndex < 0 Then
-  Exit;
-
- IndexListDblClick(Sender);
+  if IndexList.ItemIndex > -1 then
+    EditSelectedIndex;
 end;
 
 procedure TRestructure.DefineBtnlick(Sender: TObject);
- Var Ind : Word;
-     lOpt : TIndexOptions;
-     ExpField : String;
+var
+  row, n: Integer;
+  lOpt: TIndexOptions;
+  ExpField: String;
 begin
- If FieldList.RowCount > 1 Then
-  Begin
-   IdxTable := TIdxTable.Create(Self);
-   IdxTable.New := True;
-   IdxTable.Calling := Restructure;
-   lOpt := [];
+  if FieldList.RowCount = 0 then
+    exit;
 
-   For Ind := 1 To FieldList.RowCount - 1 Do
-    IdxTable.IdxList.Items.Add(FieldList.Cells[1,Ind]);
+  IdxTable := TIdxTable.Create(nil);
+  try
+    IdxTable.New := True;
+    IdxTable.Calling := Restructure;
+    lOpt := [];
 
-   IdxTable.ShowModal;
+    for row := 1 to FieldList.RowCount - 1 do
+      IdxTable.IdxList.Items.Add(FieldList.Cells[1, row]);
 
-   If IdxTable.Ret Then
-    Begin
-     ExpField := IdxTable.SelField.Text;
+    IdxTable.ShowModal;
 
-     If IdxTable.cbOpt.Checked[0] Then
-      lOpt := lOpt + [ixPrimary];
+    if IdxTable.Ret then
+    begin
+      ExpField := IdxTable.SelField.Text;
 
-     If IdxTable.cbOpt.Checked[1] Then
-      lOpt := lOpt + [ixUnique];
+      if IdxTable.cbOpt.Checked[0] then
+        lOpt := lOpt + [ixPrimary];
 
-     If IdxTable.cbOpt.Checked[2] Then
-      lOpt := lOpt + [ixDescending];
+      if IdxTable.cbOpt.Checked[1] then
+        lOpt := lOpt + [ixUnique];
 
-     If IdxTable.cbOpt.Checked[3] Then
-      lOpt := lOpt + [ixCaseInsensitive];
+      if IdxTable.cbOpt.Checked[2] then
+        lOpt := lOpt + [ixDescending];
 
-     SetLength(MyIndexList, Length(MyIndexList) + 1);
+      if IdxTable.cbOpt.Checked[3] then
+        lOpt := lOpt + [ixCaseInsensitive];
 
-     MyIndexList[Length(MyIndexList) - 1].Options := lOpt;
-     MyIndexList[Length(MyIndexList) - 1].IdxName := IdxTable.IdxName.Text;
-     MyIndexList[Length(MyIndexList) - 1].Fields := ExpField;
-     MyIndexList[Length(MyIndexList) - 1].Deleted := False;
+      n := Length(MyIndexList);
+      SetLength(MyIndexList, n + 1);
 
-     ShowIndexList();
-    End;
+      MyIndexList[n].Options := lOpt;
+      MyIndexList[n].IdxName := IdxTable.IdxName.Text;
+      MyIndexList[n].Fields := ExpField;
+      MyIndexList[n].Deleted := False;
 
-   IdxTable.Free;
-  End;
+      ShowIndexList();
+    end;
+
+  finally
+    IdxTable.Free;
+  end;
 end;
 
 procedure TRestructure.CloseBtnClick(Sender: TObject);
@@ -228,287 +223,258 @@ begin
 end;
 
 procedure TRestructure.RestructureBtnClick(Sender: TObject);
- Var Ind : Word;
+var
+  row: Integer;
 begin
- For Ind := 1 To FieldList.RowCount - 1 Do
-  Begin
-   If Trim(FieldList.Cells[1,Ind]) = '' Then
-    Begin
-     ShowMessage('Row: ' + IntToStr(Ind) + '. Missing field name!');
+  for row := 1 To FieldList.RowCount - 1 do
+  begin
+    if Trim(FieldList.Cells[1, row]) = '' then
+    begin
+      MessageDlg('Row ' + IntToStr(row) + ': Missing field name.', mtError, [mbOK], 0);
+      FieldList.Row := row;
+      FieldList.Col := 1;
+      exit;
+    end;
 
-     FieldList.Row := Ind;
-     FieldList.Col := 1;
+    if FieldList.Cells[2, row] = '' then
+    begin
+      MessageDlg('Row ' + IntToStr(row) + ': Missing field type.', mtError, [mbOK], 0);
+      FieldList.Row := row;
+      FieldList.Col := 2;
+      exit;
+    end;
 
-     Exit;
-    End;
+    if (FieldList.Cells[2, row] = FieldTypenames[ftString]) or
+       //(FieldList.Cells[2, row] = Fieldtypenames[ftFloat]) or
+       //(FieldList.Cells[2, row] = Fieldtypenames[ftBlob]) or
+       //(FieldList.Cells[2, row] = Fieldtypenames[ftMemo]) or
+       (FieldList.Cells[2, row] = FieldTypenames[ftFixedChar]) or
+       (FieldList.Cells[2, row] = FieldTypenames[ftWideString]) or
+       (FieldList.Cells[2, row] = FieldTypenames[ftBCD]) or
+       (FieldList.Cells[2, row] = FieldTypenames[ftBytes])
+    then
+      if not Check_Value(FieldList.Cells[3, row]) then
+      begin
+        MessageDlg('Row ' + IntToStr(row) + ': Field length error', mtError, [mbOK], 0);
+       FieldList.Row := row;
+       FieldList.Col := 3;
+       exit;
+     end;
 
-   If FieldList.Cells[2,Ind] = '' Then
-    Begin
-     ShowMessage('Row: ' + IntToStr(Ind) + '. Missing field type!');
-
-     FieldList.Row := Ind;
-     FieldList.Col := 2;
-
-     Exit;
-    End;
-
-   If (FieldList.Cells[2,Ind] = Fieldtypenames[ftString]) Or
-      //(FieldList.Cells[2,Ind] = Fieldtypenames[ftFloat]) Or
-      //(FieldList.Cells[2,Ind] = Fieldtypenames[ftBlob]) Or
-      //(FieldList.Cells[2,Ind] = Fieldtypenames[ftMemo]) Or
-      (FieldList.Cells[2,Ind] = Fieldtypenames[ftFixedChar]) Or
-      (FieldList.Cells[2,Ind] = Fieldtypenames[ftWideString]) Or
-      (FieldList.Cells[2,Ind] = Fieldtypenames[ftBCD]) Or
-      (FieldList.Cells[2,Ind] = Fieldtypenames[ftBytes]) Then
-    If Not Check_Value(FieldList.Cells[3,Ind]) Then
+{   If (FieldList.Cells[2, row] = Fieldtypenames[ftFloat]) Or
+      (FieldList.Cells[2, row] = Fieldtypenames[ftBCD]) Then
+    If Not Check_Value(FieldList.Cells[4, row]) Then
      Begin
-      ShowMessage('Row: ' + IntToStr(Ind) + '. Field length error!');
+      ShowMessage('Row ' + IntToStr(row) + ': Decimals length error.');
 
-      FieldList.Row := Ind;
-      FieldList.Col := 3;
-
-      Exit;
-     End;
-
-{   If (FieldList.Cells[2,Ind] = Fieldtypenames[ftFloat]) Or
-      (FieldList.Cells[2,Ind] = Fieldtypenames[ftBCD]) Then
-    If Not Check_Value(FieldList.Cells[4,Ind]) Then
-     Begin
-      ShowMessage('Row: ' + IntToStr(Ind) + '. Decimals length error!');
-
-      FieldList.Row:=Ind;
-      FieldList.Col:=4;
+      FieldList.Row := row;
+      FieldList.Col := 4;
 
       Exit;
      End;}
-  End;
+   end;
 
- Temp.Close;
-
- Temp.RestructureTable(CreateNewFieldDefs(), cbPack.Checked);
-
- Temp.Open;
+  FDbf.Close;
+  FDbf.RestructureTable(CreateNewFieldDefs(), cbPack.Checked);
+  FDbf.Open;
  //Temp.RegenerateIndexes;
+  RecreateMyIndex();
 
- RecreateMyIndex();
-
- Close;
+  Close;
 end;
 
 procedure TRestructure.FormShow(Sender: TObject);
- Var Ind : Word;
+var
+  i, row: Integer;
+  fieldDef: TFieldDef;
 begin
- DefineBtn.Constraints.MinWidth := MaxValue([DefineBtn.Width, EditBtn.Width, DeleteBtn.Width]){%H-};
- EditBtn.Constraints.MinWidth := DefineBtn.Constraints.MinWidth;
- DeleteBtn.Constraints.MinWidth := DefineBtn.Constraints.MinWidth;
+  DefineBtn.Constraints.MinWidth := MaxValue([DefineBtn.Width, EditBtn.Width, DeleteBtn.Width]){%H-};
+  EditBtn.Constraints.MinWidth := DefineBtn.Constraints.MinWidth;
+  DeleteBtn.Constraints.MinWidth := DefineBtn.Constraints.MinWidth;
 
- Constraints.MinHeight := Panel1.Top + Panel1.Height + CloseBtn.Height + CloseBtn.BorderSpacing.Top*2;
- Constraints.MinWidth := FieldList.Left + FieldList.Constraints.MinWidth +
-   FieldList.BorderSpacing.Around + Panel1.Width + Panel1.Borderspacing.Right;
+  Constraints.MinHeight :=
+    Panel1.Top + Panel1.Height + CloseBtn.Height + CloseBtn.BorderSpacing.Top*2;
+  Constraints.MinWidth :=
+    FieldList.Left + FieldList.Constraints.MinWidth +
+    FieldList.BorderSpacing.Around + Panel1.Width + Panel1.Borderspacing.Right;
 
- if Options.RememberWindowSizePos then
- begin
-   AutoSize := false;
-   Options.RestructureWindow.ApplyToForm(self);
- end;
-
- FieldList.RowCount := Temp.FieldDefs.Count + 1;
- IndexList.Clear;
-
- For Ind :=0 To Temp.FieldDefs.Count - 1 Do
-  Begin
-   FieldList.Cells[0,Ind + 1] := IntToStr(Ind + 1);
-   FieldList.Cells[1,Ind + 1] := Temp.FieldDefs.Items[Ind].Name;
-   FieldList.Cells[2,Ind + 1] := Fieldtypenames[Temp.FieldDefs.Items[Ind].DataType];
-
-   FieldList.Cells[3,Ind + 1] := '';
-
-   If Temp.FieldDefs.Items[Ind].Size > 0 Then
-    FieldList.Cells[3,Ind + 1] := IntToStr(Temp.FieldDefs.Items[Ind].Size);
-
-   If Temp.FieldDefs.Items[Ind].Precision > 0 Then
-    FieldList.Cells[3,Ind + 1] := IntToStr(Temp.FieldDefs.Items[Ind].Precision);
-
-   FieldList.Cells[4,Ind + 1] := 'N';
+  if Options.RememberWindowSizePos then
+  begin
+    AutoSize := false;
+    Options.RestructureWindow.ApplyToForm(self);
   end;
 
- If Temp.Indexes.Count > 0 Then
-  Begin
-   SetLength(MyIndexList, Temp.Indexes.Count);
+  FieldList.RowCount := FDbf.FieldDefs.Count + 1;
+  IndexList.Clear;
 
-   For Ind := 0 To Temp.Indexes.Count - 1 Do
-    Begin
-     MyIndexList[Ind].IdxName := Temp.Indexes.Items[Ind].Name;
-     MyIndexList[Ind].Fields := Temp.Indexes.Items[Ind].Expression;
-     MyIndexList[Ind].Options := Temp.Indexes.Items[Ind].Options;
-     MyIndexList[Ind].Deleted := False;
-
-     ShowIndexList();
-    end;
+  for i := 0 to FDbf.FieldDefs.Count - 1 do
+  begin
+    fieldDef := FDbf.FieldDefs.Items[i];
+    row := i + 1;
+    FieldList.Cells[0, row] := IntToStr(row);
+    FieldList.Cells[1, row] := fieldDef.Name;
+    FieldList.Cells[2, row] := Fieldtypenames[fieldDef.DataType];
+    FieldList.Cells[3, row] := '';
+    if fieldDef.Size > 0 then
+      FieldList.Cells[3, row] := IntToStr(fieldDef.Size);
+    if fieldDef.Precision > 0 then
+      FieldList.Cells[3, row] := IntToStr(fieldDef.Precision);
+    FieldList.Cells[4, row] := 'N';
   end;
 
- FieldTypePickList(Temp.TableLevel, FieldList.Columns[2].PickList);
+  SetLength(MyIndexList, FDbf.Indexes.Count);
+  for i := 0 to FDbf.Indexes.Count - 1 do
+  begin
+    MyIndexList[i].IdxName := FDbf.Indexes.Items[i].Name;
+    MyIndexList[i].Fields := FDbf.Indexes.Items[i].Expression;
+    MyIndexList[i].Options := FDbf.Indexes.Items[i].Options;
+    MyIndexList[i].Deleted := False;
 
- ShowInfo(Temp);
+    ShowIndexList();
+  end;
+
+  FieldTypePickList(FDbf.TableLevel, FieldList.Columns[2].PickList);
+
+  ShowInfo(FDbf);
 end;
 
 procedure TRestructure.IndexListDblClick(Sender: TObject);
- Var OldIdxName : String;
-     Ind : Word;
-     lOpt : TIndexOptions;
 begin
- If IndexList.Items.Count > 0 Then
-  Begin
-   OldIdxName:=IndexList.Items[IndexList.ItemIndex];
+  EditSelectedIndex;
+end;
 
-   IdxTable:=TIdxTable.Create(Self);
-   IdxTable.New:=False;
-   IdxTable.Calling:=Restructure;
-   lOpt:=[];
+procedure TRestructure.EditSelectedIndex;
+var
+  oldIdxName: String;
+  row, i: Integer;
+  n: Integer;
+  lOpt: TIndexOptions;
+begin
+  if IndexList.Items.Count = 0 then
+    exit;
 
-   For Ind:=1 To FieldList.RowCount - 1 Do
-    IdxTable.IdxList.Items.Add(FieldList.Cells[1,Ind]);
+  oldIdxName := IndexList.Items[IndexList.ItemIndex];
 
-   For Ind:=0 To Length(MyIndexList) - 1 Do
-    If Not MyIndexList[Ind].Deleted Then
-     If MyIndexList[Ind].IdxName = OldIdxName Then
-      Begin
-       lOpt:=MyIndexList[Ind].Options;
+  IdxTable := TIdxTable.Create(nil);
+  try
+    IdxTable.New := False;
+    IdxTable.Calling := Restructure;
+    lOpt := [];
+    for row := 1 to FieldList.RowCount - 1 do
+      IdxTable.IdxList.Items.Add(FieldList.Cells[1, row]);
 
-       Break;
-      End;
+    for i := 0 to High(MyIndexList) do
+      if not MyIndexList[i].Deleted then
+        if MyIndexList[i].IdxName = oldIdxName then
+        begin
+          lOpt := MyIndexList[i].Options;
+          IdxTable.SelField.Text := MyIndexList[i].Fields;
+          Break;
+        end;
+    IdxTable.IdxName.Text := OldIdxName;
 
-   IdxTable.IdxName.Text:=OldIdxName;
+    IdxTable.cbOpt.Checked[0] := ixPrimary in lOpt;
+    IdxTable.cbOpt.Checked[1] := ixUnique in lOpt;
+    IdxTable.cbOpt.Checked[2] := ixDescending in lOpt;
+    IdxTable.cbOpt.Checked[3] := ixCaseInsensitive in lOpt;
 
-   IdxTable.SelField.Text:=MyIndexList[Ind].Fields;
+    IdxTable.ShowModal;
 
-   If ixPrimary In lOpt Then
-    IdxTable.cbOpt.Checked[0]:=True;
+    if IdxTable.Ret then
+    begin
+      for i := 0 to High(MyIndexList) do
+        if not MyIndexList[i].Deleted then
+          if MyIndexList[i].IdxName = oldIdxName then
+            MyIndexList[i].Deleted := True;         //Delete old index...
 
-   If ixUnique In lOpt Then
-    IdxTable.cbOpt.Checked[1]:=True;
+      lOpt := [];
+      if IdxTable.cbOpt.Checked[0] then
+        lOpt := lOpt + [ixPrimary];
+      if IdxTable.cbOpt.Checked[1] then
+        lOpt := lOpt + [ixUnique];
+      if IdxTable.cbOpt.Checked[2] then
+        lOpt := lOpt + [ixDescending];
+      if IdxTable.cbOpt.Checked[3] then
+        lOpt := lOpt + [ixCaseInsensitive];
 
-   If ixDescending In lOpt Then
-    IdxTable.cbOpt.Checked[2]:=True;
+      n := Length(MyIndexList);
+      SetLength(MyIndexList, n + 1);     //Insert New Index
 
-   If ixCaseInsensitive In lOpt Then
-    IdxTable.cbOpt.Checked[3]:=True;
+      MyIndexList[n].Options := lOpt;
+      MyIndexList[n].IdxName := IdxTable.IdxName.Text;
+      MyIndexList[n].Fields := IdxTable.SelField.Text;
+      MyIndexList[n].Deleted := False;
 
-   IdxTable.ShowModal;
+      ShowIndexList();
+    end;
 
-   If IdxTable.Ret Then
-    Begin
-     For Ind:=0 To Length(MyIndexList) - 1 Do
-      If Not MyIndexList[Ind].Deleted Then
-       If MyIndexList[Ind].IdxName = OldIdxName Then
-        MyIndexList[Ind].Deleted:=True;         //Delete old index...
-
-     lOpt:=[];
-
-     If IdxTable.cbOpt.Checked[0] Then
-      lOpt:=lOpt + [ixPrimary];
-
-     If IdxTable.cbOpt.Checked[1] Then
-      lOpt:=lOpt + [ixUnique];
-
-     If IdxTable.cbOpt.Checked[2] Then
-      lOpt:=lOpt + [ixDescending];
-
-     If IdxTable.cbOpt.Checked[3] Then
-      lOpt:=lOpt + [ixCaseInsensitive];
-
-     SetLength(MyIndexList,Length(MyIndexList) + 1);     //Insert New Index
-
-     MyIndexList[Length(MyIndexList) - 1].Options:=lOpt;
-     MyIndexList[Length(MyIndexList) - 1].IdxName:=IdxTable.IdxName.Text;
-     MyIndexList[Length(MyIndexList) - 1].Fields:=IdxTable.SelField.Text;
-     MyIndexList[Length(MyIndexList) - 1].Deleted:=False;
-
-     ShowIndexList();
-    End;
-
-   IdxTable.Free;
-  End;
+  finally
+    FreeAndNil(IdxTable);
+  end;
 end;
 
 procedure TRestructure.ShowIndexList;
- Var Ind : Word;
+var
+  i: Integer;
 begin
- IndexList.Clear;
-
- If Length(MyIndexList) > 0 Then
-  For Ind := 0 To Length(MyIndexList) - 1 Do
-   If Not MyIndexList[Ind].Deleted Then
-    IndexList.Items.Add(MyIndexList[Ind].IdxName);
+  IndexList.Clear;
+  for i := 0 to High(MyIndexList) do
+    if not MyIndexList[i].Deleted then
+      IndexList.Items.Add(MyIndexList[i].IdxName);
 end;
 
 function TRestructure.Check_Value(Val: String): Boolean;
+var
+  n: Integer;
 begin
- Result := True;
-
- If Trim(Val) = '' Then
-  Begin
-   Result := False;
-
-   Exit;
-  End;
-
- Try
-   StrToInt(Val);
- Except
-   Result := False;
- End;
+  Result := false;
+  if Trim(Val) = '' then
+    exit;
+  Result := TryStrToInt(val, n);
 end;
 
 function TRestructure.CreateNewFieldDefs: TDbfFieldDefs;
- Var Ind : Word;
-     App : TDbfFieldDefs;
-     TmpF : TDbfFieldDef;
+var
+  row: Integer;
+  fieldDef: TDbfFieldDef;
 begin
- App := TDbfFieldDefs.Create(Self);
+  Result := TDbfFieldDefs.Create(self);
 
- For Ind := 1 To FieldList.RowCount - 1 Do
-  Begin
-   TmpF := App.AddFieldDef;
-   TmpF.FieldName := FieldList.Cells[1,Ind];
-   TmpF.FieldType := RetFieldType(FieldList.Cells[2,Ind]);
+  for row := 1 to FieldList.RowCount - 1 do
+  begin
+    fieldDef := Result.AddFieldDef;
+    fieldDef.FieldName := FieldList.Cells[1, row];
+    fieldDef.FieldType := RetFieldType(FieldList.Cells[2, row]);
 
-   If FieldList.Cells[4,Ind] = 'N' Then
-    TmpF.CopyFrom := StrToInt(FieldList.Cells[0,Ind]) - 1;
+    if FieldList.Cells[4, row] = 'N' then
+     fieldDef.CopyFrom := StrToInt(FieldList.Cells[0, row]) - 1;
 
-   If TmpF.FieldType <> ftFloat Then
-    Begin
-     If FieldList.Cells[3,Ind] <> '' Then
-      TmpF.Size := StrToInt(FieldList.Cells[3,Ind]);
-    End
-   Else
-    TmpF.Precision := StrToInt(FieldList.Cells[3,Ind]);
-  End;
-
- Result := App;
+    if fieldDef.FieldType <> ftFloat then
+    begin
+      if FieldList.Cells[3, row] <> '' then
+        fieldDef.Size := StrToInt(FieldList.Cells[3, row]);
+    end else
+      fieldDef.Precision := StrToInt(FieldList.Cells[3, row]);   // todo: crashes for float fields when cell is empty
+  end;
 end;
 
 procedure TRestructure.RecreateMyIndex;
- Var Ind : Word;
-     Tmp : TIndexOptions;
+var
+  i: Integer;
+  iOpt: TIndexOptions;
 begin
- If Length(MyIndexList) > 0 Then
-  Begin
-   //First delete the index
+  //First delete the index
+  for i := 0 To High(MyIndexList) do
+    if MyIndexList[i].Deleted then
+     FDbf.DeleteIndex(MyIndexList[i].IdxName);
 
-   For Ind := 0 To Length(MyIndexList) - 1 Do
-    If MyIndexList[Ind].Deleted Then
-     Temp.DeleteIndex(MyIndexList[Ind].IdxName);
-
-   //Next Create indexes...
-
-   For Ind := 0 To Length(MyIndexList) - 1 Do
-    If Not MyIndexList[Ind].Deleted Then
-     Begin
-      Tmp := MyIndexList[Ind].Options;
-      Temp.AddIndex(MyIndexList[Ind].IdxName, MyIndexList[Ind].Fields, Tmp);
-     End;
-  End;
+  //Next create indexes...
+  for i := 0 to High(MyIndexList) do
+    if not MyIndexList[i].Deleted then
+    begin
+      iOpt:= MyIndexList[i].Options;
+      FDbf.AddIndex(MyIndexList[i].IdxName, MyIndexList[i].Fields, iOpt);
+    end;
 end;
 
 function TRestructure.RetFieldType(AValue: String): TFieldType;
@@ -528,19 +494,14 @@ begin
 end;
 
 function TRestructure.TestIndexName(Val: String): Boolean;
- Var Ind : Word;
+var
+  i: Integer;
 begin
- Result := True;
-
- If Length(MyIndexList) > 0 Then
-  For Ind := 0 To Length(MyIndexList) - 1 Do
-   If Not MyIndexList[Ind].Deleted Then
-    If MyIndexList[Ind].IdxName = Val Then
-     Begin
-      Result := False;
-
-      Break;
-     End;
+  Result := false;
+  for i := 0 to High(MyIndexList) do
+    if MyIndexList[i].IdxName = Val then
+      exit;
+  Result := true;
 end;
 
 end.

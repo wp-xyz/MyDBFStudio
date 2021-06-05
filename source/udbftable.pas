@@ -52,7 +52,7 @@ type
     procedure cbShowDelChange(Sender: TObject);
     procedure CopyBlobBtnClick(Sender: TObject);
     procedure DBGridColEnter(Sender: TObject);
-    procedure DBTableAfterEdit(DataSet: TDataSet);
+    procedure DBTableAfterEdit({%H-}DataSet: TDataSet);
     procedure FormCreate(Sender: TObject);
     procedure tbEmptyClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -229,9 +229,9 @@ end;
 
 procedure TDbfTable.tbRestructClick(Sender: TObject);
 begin
-  Restructure := TRestructure.Create(Self);
+  Restructure := TRestructure.Create(nil);
   try
-    Restructure.Temp := DbTable;
+    Restructure.Dbf := DbTable;
     Restructure.ShowModal;
   finally
     Restructure.Free;

@@ -36,7 +36,7 @@ type
     procedure CreateTableBtnClick(Sender: TObject);
     procedure DefineIndexBtnClick(Sender: TObject);
     procedure DeleteIndexBtnClick(Sender: TObject);
-    procedure FieldListSelectEditor(Sender: TObject; aCol, aRow: Integer;
+    procedure FieldListSelectEditor(Sender: TObject; aCol, {%H-}aRow: Integer;
       var Editor: TWinControl);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);

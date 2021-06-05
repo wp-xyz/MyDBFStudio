@@ -94,15 +94,15 @@ begin
   Close;
 end;
 
-// Do not allow to export and embed a picture in html.
+// Do not allow check a BLOB item: cannot export a picture to html this way.
 procedure TExpHTML.ClbFieldItemClick(Sender: TObject; Index: integer);
 var
   fieldDef: TFieldDef;
 begin
-  fieldDef := FDbfTable.FieldDefs.Items[ClbField.ItemIndex];
+  fieldDef := FDbfTable.FieldDefs.Items[Index];
   if (fieldDef.DataType = ftBlob) and (fieldDef.DataType <> ftMemo) then
   begin
-    ClbField.Checked[ClbField.ItemIndex] := false;
+    ClbField.Checked[Index] := false;
     MessageDlg('Exporting a BLOB field to HTML is not supported.', mtError, [mbOK], 0);
   end;
 end;
