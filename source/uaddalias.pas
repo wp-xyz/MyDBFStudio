@@ -13,7 +13,6 @@ type
   { TAddAlias }
 
   TAddAlias = class(TForm)
-    AliasDB: TDbf;
     AName: TEdit;
     CancelBtn: TBitBtn;
     lblAliasName: TLabel;
@@ -24,17 +23,18 @@ type
     SelDir: TSelectDirectoryDialog;
     procedure CancelBtnClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure FormCreate(Sender: TObject);
     procedure OKBtnClick(Sender: TObject);
     procedure BrowseBtnClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
-
+    FAliasDB: TDbf;
     Function CheckAliasName(Val : String) : Boolean;
-
     Procedure InsertAlias;
   public
     { public declarations }
+    property AliasDB: TDbf read FAliasDB;
   end;
 
 var
@@ -45,14 +45,59 @@ implementation
 {$R *.lfm}
 
 uses
-  uOptions;
+  uUtils, uOptions;
 
 { TAddAlias }
 
 procedure TAddAlias.BrowseBtnClick(Sender: TObject);
 begin
- If SelDir.Execute Then
-  Path.Text := SelDir.FileName;
+  if SelDir.Execute then
+    Path.Text := SelDir.FileName;
+end;
+
+function TAddAlias.CheckAliasName(Val: String): Boolean;
+begin
+  Result := true;
+
+  ChDir(ExtractFilePath(Application.ExeName));
+
+  AliasDB.TableName := 'alias.dbf';
+  AliasDB.FilePath := GetAliasDir;
+  AliasDB.Open;
+  AliasDB.Filter := 'ALIAS = ''' + Val + '''';
+  if not AliasDB.IsEmpty then
+    Result := false;
+
+  AliasDB.Close;
+end;
+
+procedure TAddAlias.InsertAlias;
+begin
+  FAliasDB.TableName := 'alias.dbf';
+  FAliasDB.FilePath := GetAliasDir;
+  FAliasDB.Open;
+  FAliasDB.Insert;
+  FAliasDB.FieldByName('ALIAS').AsString := AName.Text;
+  FAliasDb.FieldByName('PATH').AsString := Path.Text;
+  FAliasDb.Post;
+  FAliasDB.Close;
+end;
+
+procedure TAddAlias.CancelBtnClick(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TAddAlias.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  if CanClose then
+    Options.AddAliasWindow.ExtractFromForm(Self);
+end;
+
+procedure TAddAlias.FormCreate(Sender: TObject);
+begin
+  FAliasDB := TDbf.Create(self);
+  FAliasDB.Filtered := true;
 end;
 
 procedure TAddAlias.FormShow(Sender: TObject);
@@ -61,98 +106,43 @@ begin
   Options.AddAliasWindow.ApplyToForm(Self);
 end;
 
-function TAddAlias.CheckAliasName(Val: String): Boolean;
-begin
- Result := True;
-
- ChDir(ExtractFilePath(Application.ExeName));
-
- AliasDB.TableName := 'alias.dbf';
- AliasDB.FilePath := ExtractFilePath(Application.ExeName);
-
- AliasDB.Open;
-
- AliasDB.Filter := 'ALIAS = ''' + Val + '''';
-
- If Not AliasDB.IsEmpty Then
-  Result := False;
-
- AliasDB.Close;
-end;
-
-procedure TAddAlias.InsertAlias;
-begin
- ChDir(ExtractFilePath(Application.ExeName));
-
- AliasDB.TableName := 'alias.dbf';
- AliasDB.FilePath := ExtractFilePath(Application.ExeName);
-
- AliasDB.Open;
-
- AliasDB.Insert;
- AliasDB.FieldByName('ALIAS').AsString := AName.Text;
- AliasDb.FieldByName('PATH').AsString := Path.Text;
- AliasDb.Post;
-
- AliasDB.Close;
-end;
-
-procedure TAddAlias.CancelBtnClick(Sender: TObject);
-begin
- Close;
-end;
-
-procedure TAddAlias.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-begin
-  if CanClose then
-     Options.AddAliasWindow.ExtractFromForm(Self);
-end;
-
 procedure TAddAlias.OKBtnClick(Sender: TObject);
 begin
- If Trim(AName.Text) = '' Then
-  Begin
-   ShowMessage('You must insert an alias name.');
+  if Trim(AName.Text) = '' then
+  begin
+    MessageDlg('You must provide an alias name.', mtError, [mbOK], 0);
+    AName.SetFocus;
+    exit;
+  end;
 
-   AName.SetFocus;
+  if Trim(Path.Text) = '' then
+  begin
+    MessageDlg('You must insert the tables path.', mtError, [mbOK], 0);
+    Path.SetFocus;
+    exit;
+  end;
 
-   Exit;
-  End;
+  if not DirectoryExists(Path.Text) then
+  begin
+    MessageDlg('The directory does not exist.', mtError, [mbOK], 0);
+    Path.SetFocus;
+    exit;
+  end;
 
- If Trim(Path.Text) = '' Then
-  Begin
-   ShowMessage('You must insert the tables path.');
+  if not CheckAliasName(AName.Text) then
+  begin
+    MessageDlg('The alias name alredy exists.', mtError, [mbOK], 0);
+    AName.SetFocus;
+    exit;
+  end;
 
-   Path.SetFocus;
-
-   Exit;
-  End;
-
- If Not DirectoryExists(Path.Text) Then
-  Begin
-   ShowMessage('The directory dont''t exists.');
-
-   Path.SetFocus;
-
-   Exit;
-  End;
-
- If Not CheckAliasName(AName.Text) Then
-  Begin
-   ShowMessage('The alias name alredy exists.');
-
-   AName.SetFocus;
-
-   Exit;
-  End;
-
- Try
-   InsertAlias;
-
-   Close;
- Except
-   ShowMessage('Error while writing alias data.');
- End;
+  try
+    InsertAlias;
+    Close;
+  except
+    on E: Exception do
+      MessageDlg('Error while writing alias data:' + LineEnding + E.Message, mtError, [mbOK], 0);
+  end;
 end;
 
 end.

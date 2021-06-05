@@ -13,29 +13,32 @@ type
   { TOpenBA }
 
   TOpenBA = class(TForm)
-    AliasDB: TDbf;
     CloseBtn: TBitBtn;
     OpenTableBtn: TBitBtn;
     DeleteAliasBtn: TBitBtn;
     AddAliasBtn: TBitBtn;
     DBGrid1: TDBGrid;
     Ds1: TDataSource;
-    Elenco: TFileListBox;
+    FileListbox: TFileListBox;
     GroupBox1: TGroupBox;
     GroupBox2: TGroupBox;
     Splitter1: TSplitter;
     procedure CloseBtnClick(Sender: TObject);
+    procedure FileListboxResize(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
     procedure OpenTableBtnClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
+    procedure AddAliasClick(Sender: TObject);
+    procedure DeleteAliasClick(Sender: TObject);
     procedure DBGrid1CellClick({%H-}Column: TColumn);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
+    FAliasDB: TDbf;
   public
     { public declarations }
-    PageIdx : Integer;
+//    PageIdx : Integer;
+    property AliasDB: TDbf read FAliasDB;
   end;
 
 var
@@ -43,7 +46,9 @@ var
 
 implementation
 
-Uses uMain, uAddAlias;
+uses
+  Math,
+  uUtils, uMain, uAddAlias;
 
 {$R *.lfm}
 
@@ -51,31 +56,27 @@ Uses uMain, uAddAlias;
 
 procedure TOpenBA.FormDestroy(Sender: TObject);
 begin
- If AliasDB.Active Then
-  AliasDB.Close;
+  if FAliasDB.Active then
+    FAliasDB.Close;
 end;
 
 procedure TOpenBA.FormShow(Sender: TObject);
+var
+  fn: String;
 begin
- Elenco.Clear;
- Elenco.Columns:=2;
+  FileListbox.Clear;
+  FileListbox.Columns := 2;
 
- If FileExists(Application.Location + 'alias.dbf') Then
-  Begin
-   AliasDB.TableName := 'alias.dbf';
-   AliasDB.FilePath := Application.Location;
-   AliasDB.IndexName := 'ALIAS';
-
-   AliasDB.Open;
-
-   DBGrid1CellClick(Nil);
-  End
- Else
-  Begin
-   Ds1.Enabled := False;
-
-   ShowMessage('Alias db non found!');
-  End;
+  fn := FAliasDB.FilePath + FAliasDB.Tablename;
+  if FileExists(fn) then
+  begin
+    FAliasDB.Open;
+    DBGrid1CellClick(Nil);
+  end else
+  begin
+    Ds1.Enabled := False;
+    MessageDlg('Alias db non found.', mtError, [mbOK], 0);
+  end;
 end;
 
 procedure TOpenBA.CloseBtnClick(Sender: TObject);
@@ -83,59 +84,86 @@ begin
   Close;
 end;
 
+// More columns on a wide form, fewer columns on a narrow form.
+procedure TOpenBA.FileListboxResize(Sender: TObject);
+var
+  w: Integer;
+  fn: String;
+begin
+  if not FileListbox.HandleAllocated then
+    exit;
+
+  if FileListbox.Items.Count = 0 then
+    exit;
+
+  w := 0;
+  for fn in FileListbox.Items do
+    w := Max(w, FileListbox.Canvas.TextWidth(fn));
+  FileListbox.Columns := FileListbox.ClientWidth div w;
+end;
+
+procedure TOpenBA.FormCreate(Sender: TObject);
+begin
+  FAliasDB := TDbf.Create(self);
+  FAliasDB.TableName := 'alias.dbf';
+  FAliasDB.FilePath := GetAliasDir;
+  FAliasDB.IndexName := 'ALIAS';
+  Ds1.Dataset := FAliasDB;
+end;
+
 procedure TOpenBA.OpenTableBtnClick(Sender: TObject);
- Var Ind : Word;
+var
+  Ind: Word;
+  dir: String;
+  fn: String;
 begin
- If Elenco.Count > 0 Then
-  For Ind := 0 To Elenco.Count - 1 Do
-   If Elenco.Selected[Ind] Then
-    Begin
-     Try
-       Main.Open_Table(IncludeTrailingBackslash(Elenco.Directory) + Elenco.Items.Strings[Ind]);
-     Except
-     End;
-    End;
+  if FileListbox.Count > 0 then
+  begin
+    dir := IncludeTrailingPathDelimiter(FileListbox.Directory);
+    for Ind := 0 to FileListbox.Count - 1 do
+      if FileListbox.Selected[Ind] then
+      begin
+        try
+          fn := dir + FileListbox.Items[ind];
+          Main.Open_Table(fn);
+        except
+        end;
+      end;
+  end;
 end;
 
-procedure TOpenBA.Button1Click(Sender: TObject);
+procedure TOpenBA.AddAliasClick(Sender: TObject);
 begin
- If Ds1.Enabled Then
-  Begin
-   AddAlias := TAddAlias.Create(Self);
-
-   AddAlias.ShowModal;
-
-   AddAlias.Release;
-
-   AliasDB.Close;
-   AliasDB.Open;
-
-   DBGrid1CellClick(Nil);
-  End;
+  if Ds1.Enabled then
+  begin
+    AddAlias := TAddAlias.Create(nil);
+    AddAlias.ShowModal;
+    AddAlias.Release;
+    FAliasDB.Close;
+    FAliasDB.Open;
+    DBGrid1CellClick(nil);
+  end;
 end;
 
-procedure TOpenBA.Button2Click(Sender: TObject);
+procedure TOpenBA.DeleteAliasClick(Sender: TObject);
 begin
- If Ds1.Enabled Then
-  If Not AliasDB.IsEmpty Then
-   If MessageDlg('Delete the selected alias?', mtWarning, [mbOk, mbCancel],0) = mrOk Then
-    Begin
-     AliasDB.Delete;
-
-     AliasDB.Close;
-     AliasDB.Open;
-
-     Elenco.Clear;
-
-     DBGrid1CellClick(Nil);
-    End;
+  if Ds1.Enabled then
+    if not FAliasDB.IsEmpty then
+      if MessageDlg('Delete the selected alias?', mtWarning, [mbOk, mbCancel],0) = mrOk then
+      begin
+        FAliasDB.Delete;
+        FAliasDB.Close;
+        FAliasDB.Open;
+        FileListbox.Clear;
+        DBGrid1CellClick(nil);
+      end;
 end;
 
 procedure TOpenBA.DBGrid1CellClick(Column: TColumn);
 begin
- If Ds1.Enabled Then
-  If Not AliasDB.IsEmpty Then
-   Elenco.Directory := AliasDB.FieldByName('PATH').AsString;
+  if Ds1.Enabled then
+    if not FAliasDB.IsEmpty then
+      FileListbox.Directory := FAliasDB.FieldByName('PATH').AsString;
 end;
 
 end.

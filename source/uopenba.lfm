@@ -6,6 +6,7 @@ object OpenBA: TOpenBA
   Caption = 'Open table by alias'
   ClientHeight = 553
   ClientWidth = 691
+  OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
   LCLVersion = '2.1.0.0'
@@ -24,7 +25,7 @@ object OpenBA: TOpenBA
     Caption = ' MyDbf Studio Alias '
     ClientHeight = 216
     ClientWidth = 675
-    Constraints.MinHeight = 200
+    Constraints.MinHeight = 100
     TabOrder = 0
     object DBGrid1: TDBGrid
       AnchorSideLeft.Control = GroupBox1
@@ -73,7 +74,7 @@ object OpenBA: TOpenBA
       Caption = 'Delete Alias'
       Images = CommonData.Images
       ImageIndex = 5
-      OnClick = Button2Click
+      OnClick = DeleteAliasClick
       TabOrder = 1
     end
     object AddAliasBtn: TBitBtn
@@ -91,7 +92,7 @@ object OpenBA: TOpenBA
       Caption = 'Add Alias'
       Images = CommonData.Images
       ImageIndex = 4
-      OnClick = Button1Click
+      OnClick = AddAliasClick
       TabOrder = 2
     end
   end
@@ -113,9 +114,8 @@ object OpenBA: TOpenBA
     Caption = ' Files '
     ClientHeight = 242
     ClientWidth = 675
-    Constraints.MinHeight = 150
     TabOrder = 1
-    object Elenco: TFileListBox
+    object FileListbox: TFileListBox
       AnchorSideLeft.Control = GroupBox2
       AnchorSideTop.Control = GroupBox2
       AnchorSideRight.Control = GroupBox2
@@ -130,12 +130,12 @@ object OpenBA: TOpenBA
       BorderSpacing.Left = 6
       BorderSpacing.Right = 6
       BorderSpacing.Bottom = 6
-      Directory = 'C:\Users\fog76\Desktop'
       FileType = [ftReadOnly, ftNormal]
       ItemHeight = 0
-      Mask = '*.dbf;*.db'
+      Mask = '*.dbf'
       MultiSelect = True
       OnDblClick = OpenTableBtnClick
+      OnResize = FileListboxResize
       TabOrder = 0
     end
   end
@@ -189,15 +189,7 @@ object OpenBA: TOpenBA
     ResizeAnchor = akBottom
   end
   object Ds1: TDataSource
-    DataSet = AliasDB
     Left = 228
-    Top = 108
-  end
-  object AliasDB: TDbf
-    IndexDefs = <>
-    TableLevel = 4
-    FilterOptions = []
-    Left = 276
     Top = 108
   end
 end

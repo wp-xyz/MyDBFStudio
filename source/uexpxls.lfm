@@ -1,7 +1,7 @@
 object ExpXLS: TExpXLS
-  Left = 536
+  Left = 503
   Height = 396
-  Top = 495
+  Top = 344
   Width = 453
   AutoSize = True
   BorderIcons = [biSystemMenu]

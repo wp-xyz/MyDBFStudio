@@ -26,6 +26,7 @@ const
 
 function FieldTypeAsString(AFieldType: TFieldType; Nice: Boolean): String;
 procedure FieldTypePickList(ATableLevel: Integer; const AList: TStrings);
+function GetAliasDir: String;
 function GetVersionStr: String;
 
 implementation
@@ -72,6 +73,11 @@ function FieldTypeAsString(AFieldType: TFieldType; Nice: Boolean): String;
 begin
   Result := GetEnumName(TypeInfo(TFieldType), integer(AFieldType));
   if Nice then Delete(Result, 1, 2);
+end;
+
+function GetAliasDir: String;
+begin
+  Result := GetAppConfigDir(false);
 end;
 
 function GetVersionStr: String;

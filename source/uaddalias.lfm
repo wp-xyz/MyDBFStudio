@@ -10,6 +10,7 @@ object AddAlias: TAddAlias
   ClientWidth = 383
   Constraints.MinWidth = 360
   OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
   OnShow = FormShow
   Position = poMainFormCenter
   LCLVersion = '2.1.0.0'
@@ -126,14 +127,6 @@ object AddAlias: TAddAlias
     Title = 'Select a directory...'
     Options = [ofPathMustExist, ofEnableSizing, ofViewDetail]
     Left = 56
-    Top = 96
-  end
-  object AliasDB: TDbf
-    IndexDefs = <>
-    TableLevel = 4
-    Filtered = True
-    FilterOptions = []
-    Left = 112
-    Top = 96
+    Top = 56
   end
 end

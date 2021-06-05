@@ -207,7 +207,7 @@ begin
    FreeAndNil(Splash);
  end;
 
- If Not FileExists(Application.Location + 'alias.dbf') Then
+ If not FileExists(GetAliasDir + 'alias.dbf') Then
   CreateAliasDB();
 
  FileHistory := THistoryFiles.Create(Self);
@@ -784,27 +784,31 @@ begin
 end;
 
 procedure TMain.CreateAliasDB;
- Var T : TDbf;
+var
+  T: TDbf;
+  dir: String;
 begin
- T := TDbf.Create(Self);
- Try
-   try
-     T.TableName := 'alias.dbf';
-     T.FilePath := ExtractFilePath(Application.ExeName);
-     T.FieldDefs.Add('ALIAS', ftString, 80);
-     T.FieldDefs.Add('PATH', ftString, 255);
-     T.CreateTable;
+  dir := GetAliasDir;
+  T := TDbf.Create(Self);
+  try
+    try
+      T.TableName := 'alias.dbf';
+      T.FilePath := dir;
+      T.FieldDefs.Add('ALIAS', ftString, 80);
+      T.FieldDefs.Add('PATH', ftString, 255);
+      T.CreateTable;
 
-     T.Open;
-     T.AddIndex('ALIAS', 'ALIAS', [ixPrimary]);
-     ShowMessage('Alias DB not found! Created!');
-     T.Close;
-   except
-     ShowMessage('Error while creating alias db.');
-   end;
- finally
-   T.Free;
- end;
+      T.Open;
+      T.AddIndex('ALIAS', 'ALIAS', [ixPrimary]);
+      MessageDlg('Alias DB not found. Created in ' + dir, mtError, [mbOK], 0);
+      T.Close;
+    except
+      on E:Exception do
+        MessageDlg('Error while creating alias db.' + LineEnding + E.Message, mtError, [mbOK], 0);
+    end;
+  finally
+    T.Free;
+  end;
 end;
 
 procedure TMain.TabChildCloseHandler(Sender: TObject; var CloseAction: TCloseAction);

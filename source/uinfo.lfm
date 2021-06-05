@@ -1,14 +1,14 @@
 object Info: TInfo
   Left = 419
-  Height = 630
+  Height = 536
   Top = 147
-  Width = 457
+  Width = 458
   AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Info'
-  ClientHeight = 630
-  ClientWidth = 457
+  ClientHeight = 536
+  ClientWidth = 458
   OnCreate = FormCreate
   Position = poMainFormCenter
   LCLVersion = '2.1.0.0'
@@ -20,7 +20,7 @@ object Info: TInfo
     Left = 6
     Height = 300
     Top = 6
-    Width = 445
+    Width = 446
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Around = 6
     Stretch = True
@@ -44,7 +44,7 @@ object Info: TInfo
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 376
+    Left = 377
     Height = 26
     Top = 504
     Width = 75
@@ -68,7 +68,7 @@ object Info: TInfo
     Left = 6
     Height = 6
     Top = 498
-    Width = 445
+    Width = 446
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 6
     BorderSpacing.Right = 6
@@ -83,7 +83,7 @@ object Info: TInfo
     Left = 6
     Height = 165
     Top = 312
-    Width = 445
+    Width = 446
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 6
     BorderSpacing.Top = 6
