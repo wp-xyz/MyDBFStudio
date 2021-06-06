@@ -149,24 +149,47 @@ end;
 
 procedure TExpDBF.Move_Records;
 var
-  Ind: Word;
+  i, n: Integer;
+  savedAfterScroll: TDatasetNotifyEvent;
+  bm: TBookmark;
+  counter: Integer;
+  percent: Integer;
 begin
-  ExpTable.Open;
-  DbfTable.First;
-
   pBar.Min := 0;
-  pBar.Max := DbfTable.ExactRecordCount;
+  pBar.Max := 100;
   pBar.Position := 0;
 
-  while not DbfTable.EOF do
-  begin
-    ExpTable.Insert;
-    for Ind := 0 To ClbField.Items.Count - 1 do
-      if ClbField.Checked[Ind] then
-        ExpTable.FieldByName(ClbField.Items[Ind]).AsVariant := Dbftable.FieldByName(ClbField.Items[Ind]).AsVariant;
-    ExpTable.Post;
-    DbfTable.Next;
-    pBar.StepIt;
+  ExpTable.Open;
+
+  n := DbfTable.ExactRecordCount;
+  savedAfterScroll := DbfTable.AfterScroll;
+  DbfTable.AfterScroll := nil;
+  DbfTable.DisableControls;
+  bm := DbfTable.GetBookmark;
+
+  try
+    DbfTable.First;
+    counter := 0;
+
+    while not DbfTable.EOF do
+    begin
+      ExpTable.Insert;
+      for i := 0 to ClbField.Items.Count - 1 do
+        if ClbField.Checked[i] then
+          ExpTable.FieldByName(ClbField.Items[i]).AsVariant := Dbftable.FieldByName(ClbField.Items[i]).AsVariant;
+      ExpTable.Post;
+      DbfTable.Next;
+      inc(counter);
+      percent := (counter * 100) div n;
+      if percent <> pBar.Position then
+        pBar.Position := percent;
+    end;
+
+  finally
+    DbfTable.AfterScroll := savedAfterScroll;
+    DbfTable.EnableControls;
+    DbfTable.GotoBookmark(bm);
+    DbfTable.FreeBookmark(bm);
   end;
 end;
 

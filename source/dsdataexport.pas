@@ -290,48 +290,49 @@ begin
 end;
 
 procedure TDsDataExport.SaveRecords;
- Var Bookmark : TBookmarkStr;
-     ACancel : Boolean;
+var
+  Bookmark: TBookmarkStr;
+  ACancel: Boolean;
+  savedAfterScroll: TDatasetNotifyEvent;
 begin
- FDataSet.DisableControls;
+  savedAfterScroll := FDataset.AfterScroll;
+  FDataset.AfterScroll := nil;
+  FDataSet.DisableControls;
 
- Try
-   If FPreserveBookmark Then
+  if FPreserveBookmark then
     Bookmark := PAnsiChar(@DataSet.Bookmark[0]);
 
-   Try
-     FRecNo:=0;
+  try
+    FRecNo := 0;
 
-     If FFetchFirst Then
+    if FFetchFirst then
       FDataSet.First;
 
-     While (Not FDataSet.EOF) And FActive And
-           ((FRecNo <= FMaxRecords) Or (FMaxRecords = 0)) Do
-      Begin
-       ACancel:=False;
+    while (not FDataSet.EOF) and FActive and
+           ((FRecNo <= FMaxRecords) Or (FMaxRecords = 0)) do
+    begin
+      ACancel := False;
 
-       If Assigned(FBeforeWriteRecord) Then
-        FBeforeWriteRecord(Self,ACancel);
+      if Assigned(FBeforeWriteRecord) then
+        FBeforeWriteRecord(Self, ACancel);
 
-       If Not ACancel Then
-        Begin
-         WriteRecord;
-
-         Inc(FRecNo);
-
-         If Assigned(FAfterWriteRecord) Then
+      if not ACancel then
+      begin
+        WriteRecord;
+        Inc(FRecNo);
+        if Assigned(FAfterWriteRecord) then
           FAfterWriteRecord(Self);
-        End;
+      end;
 
-       FDataSet.Next;
-      End;
-   Finally
-     If FPreserveBookmark Then
-      FDataSet.Bookmark := @Bookmark;
-   End;
- Finally
-   FDataSet.EnableControls;
- End;
+      FDataSet.Next;
+    end;
+
+  finally
+     FDataset.AfterScroll := savedAfterScroll;
+     if FPreserveBookmark then
+       FDataSet.Bookmark := @Bookmark;
+     FDataSet.EnableControls;
+  end;
 end;
 
 function TDsDataExport.Write(const Buffer; Count: Longint): Longint;
@@ -403,15 +404,15 @@ begin
 end;
 
 procedure TDsDataExport.SaveToFile(const FileName: String);
- Var Stream : TStream;
+var
+  stream: TStream;
 begin
- Stream:=TFileStream.Create(FileName,fmCreate);
-
- Try
-   SaveToStream(Stream);
- Finally
-   Stream.Free;
- End;
+  Stream := TFileStream.Create(FileName, fmCreate);
+  try
+    SaveToStream(stream);
+  finally
+    stream.Free;
+  end;
 end;
 
 procedure TDsDataExport.Cancel();

@@ -131,6 +131,8 @@ begin
 end;
 
 procedure TExpCSV.ExportBtnClick(Sender: TObject);
+var
+  savedAfterScroll: TDatasetNotifyEvent;
 begin
   if Trim(Separator.Text) = '' then
   begin
@@ -142,15 +144,19 @@ begin
   if not SaveExp.Execute then
     Exit;
 
-  DbfTable.First;
-
   pBar.Min := 0;
   pBar.Max := DbfTable.ExactRecordCount - 1;
   pBar.Position:=0;
 
+  savedAfterScroll := Dbftable.AfterScroll;
+  DbfTable.AfterScroll := nil;
+  DbfTable.DisableControls;
+
   ExpDs := TDsCSV.Create(Self);
   try
     try
+      DbfTable.First;
+
       ExpDs.Dataset := DbfTable;
       ExpDs.CSVFile := SaveExp.FileName;
       ExpDs.EmptyTable := True;
@@ -171,6 +177,8 @@ begin
     end;
   finally
     ExpDs.Free;
+    DbfTable.AfterScroll := savedAfterScroll;
+    DbfTable.EnableControls;
   end;
 end;
 

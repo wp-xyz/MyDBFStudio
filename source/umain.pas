@@ -441,14 +441,7 @@ begin
       ExpCSV := TExpCSV.Create(nil);
       try
         ExpCSV.DbfTable := TDbfTable(F).DBTable;
-
-        TDbfTable(F).Ds.Enabled := false;
-        TDbfTable(F).Ds.DataSet := nil;
-
         ExpCSV.ShowModal;
-
-        TDbfTable(F).Ds.DataSet := TDbfTable(F).DBTable;
-        TDbfTable(F).Ds.Enabled := True;
       finally
         FreeAndNil(ExpCSV);
       end;
@@ -467,14 +460,7 @@ begin
       ExpDBF := TExpDBF.Create(nil);
       try
         ExpDBF.DbfTable := TDbfTable(F).DBTable;
-
-        TDbfTable(F).Ds.Enabled := False;
-        TDbfTable(F).Ds.DataSet := nil;
-
         ExpDBF.ShowModal;
-
-        TDbfTable(F).Ds.DataSet := TDbfTable(F).DBTable;
-        TDbfTable(F).Ds.Enabled := True;
       finally
         FreeAndNil(ExpDBF);
       end;
@@ -493,13 +479,7 @@ begin
       ExpHTML := TExpHTML.Create(nil);
       try
         ExpHTML.DbfTable := (F As TDbfTable).DBTable;
-
-        (F As TDbfTable).Ds.Enabled := False;
-        (F As TDbfTable).Ds.DataSet := Nil;
         ExpHTML.ShowModal;
-        (F As TDbfTable).Ds.DataSet := (F As TDbfTable).DBTable;
-        (F As TDbfTable).Ds.Enabled := True;
-
       finally
         FreeAndNil(ExpHTML);
       end;
@@ -518,14 +498,7 @@ begin
       ExpSQL := TExpSQL.Create(nil);
       try
         ExpSQL.DbfTable := TDbfTable(F).DBTable;
-
-        TDbfTable(F).Ds.Enabled := false;
-        TDbfTable(F).Ds.DataSet := nil;
-
         ExpSQL.ShowModal;
-
-        TDbfTable(F).Ds.DataSet := TDbfTable(F).DBTable;
-        TDbfTable(F).Ds.Enabled := True;
       finally
         FreeAndNil(ExpSQL);
       end;
@@ -563,14 +536,7 @@ begin
       ExpXML := TExpXML.Create(nil);
       try
         ExpXML.DbfTable := TDbfTable(F).DBTable;
-
-        TDbfTable(F).Ds.Enabled := false;
-        TDbfTable(F As TDbfTable).Ds.DataSet := nil;
-
         ExpXML.ShowModal;
-
-        TDbfTable(F).Ds.DataSet := TDbfTable(F).DBTable;
-        TDbfTable(F).Ds.Enabled := True;
       finally
         FreeAndNil(ExpXML);
       end;

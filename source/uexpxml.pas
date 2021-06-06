@@ -54,74 +54,94 @@ end;
 procedure TExpXML.ExportBtnClick(Sender: TObject);
 var
   F: TextFile;
-  Ind: Word;
+  i: Integer;
   field: TField;
   stream: TStream;
   rs: RawByteString = '';
+  savedAfterScroll: TDatasetNotifyEvent;
+  bm: TBookmark;
+  percent: Integer;
+  counter, n: Integer;
 begin
   if not SaveExp.Execute then
     exit;
 
+  pBar.Min := 0;
+  pBar.Max := 100;
+  pBar.Position := 0;
+
+  savedAfterScroll := DbfTable.AfterScroll;
+  DbfTable.AfterScroll := nil;
+  DbfTable.DisableControls;
+  bm := DbfTable.Getbookmark;
   try
-    AssignFile(F, SaveExp.FileName);
-    ReWrite(F);
-
     DbfTable.First;
-    pBar.Min := 0;
-    pBar.Max := DbfTable.ExactRecordCount;
-    pBar.Position := 0;
+    n := DbfTable.ExactRecordCount;
+    counter := 0;
+    try
+      AssignFile(F, SaveExp.FileName);
+      ReWrite(F);
 
-    Writeln(F, '<?xml version="1.0" encoding="UTF-8"?>');
-    Writeln(F, '<' + DbfTable.TableName + '>');
+      Writeln(F, '<?xml version="1.0" encoding="UTF-8"?>');
+      Writeln(F, '<' + DbfTable.TableName + '>');
 
-    while not DbfTable.EOF Do
-    begin
-      Writeln(F, '  <record>');
-
-      for Ind := 0 To ClbField.Items.Count - 1 Do
-      if ClbField.Checked[Ind] then
+      while not DbfTable.EOF Do
       begin
-        field := DbfTable.FieldByName(ClbField.Items[Ind]);
-        if field.IsNull then
-          WriteLn(F, Format('    <%0:s> </%0:s>', [ClbField.Items[Ind]]))
-        else
-        if (field is TMemoField) then
-          WriteLn(F, Format('    <%0:s>%1:s</%0:s>', [ClbField.Items[Ind], field.AsString]))
-        else
-        if (field is TBlobField) then
-        begin
-          // Picture field --> encode with Base64
-          stream := TMemoryStream.Create;
-          try
-            TBlobField(field).SaveToStream(stream);
-            SetLength(rs, stream.Size);
-            stream.Position := 0;
-            stream.Write(rs[1], Length(rs));
-            rs := EncodeStringBase64(rs);
-            WriteLn(F, Format('    <%0:s>%1:s</%0:s>', [ClbField.Items[Ind], rs]));
-          finally
-            stream.Free;
+        Writeln(F, '  <record>');
+
+        for i := 0 To ClbField.Items.Count - 1 Do
+          if ClbField.Checked[i] then
+          begin
+            field := DbfTable.FieldByName(ClbField.Items[i]);
+            if field.IsNull then
+              WriteLn(F, Format('    <%0:s> </%0:s>', [ClbField.Items[i]]))
+            else
+            if (field is TMemoField) then
+              WriteLn(F, Format('    <%0:s>%1:s</%0:s>', [ClbField.Items[i], field.AsString]))
+            else
+            if (field is TBlobField) then
+            begin
+              // Picture field --> encode with Base64
+              stream := TMemoryStream.Create;
+              try
+                TBlobField(field).SaveToStream(stream);
+                SetLength(rs, stream.Size);
+                stream.Position := 0;
+                stream.Write(rs[1], Length(rs));
+                rs := EncodeStringBase64(rs);
+                WriteLn(F, Format('    <%0:s>%1:s</%0:s>', [ClbField.Items[i], rs]));
+              finally
+                stream.Free;
+              end;
+            end else
+              WriteLn(F, Format('    <%0:s>%1:s</%0:s>', [ClbField.Items[i], field.AsString]));
           end;
-        end else
-          WriteLn(F, Format('    <%0:s>%1:s</%0:s>', [ClbField.Items[Ind], field.AsString]));
+
+        Writeln(F, '  </record>');
+
+        DbfTable.Next;
+        inc(counter);
+        percent := (counter * 100) div n;
+        if percent <> pBar.Position then
+          pBar.Position := percent;
       end;
 
-      Writeln(F, '  </record>');
+      Writeln(F, '</' + DbfTable.TableName + '>');
+      System.Close(F);
 
-      DbfTable.Next;
+      Close;
+      MessageDlg('File successfully exported to ' + SaveExp.FileName, mtInformation, [mbOK], 0);
 
-      pBar.Position := pBar.Position + 1;
+    except
+      on E: Exception do
+        MessageDlg('Error writing file:' + LineEnding + E.Message, mtError, [mbOK], 0);
     end;
 
-    Writeln(F, '</' + DbfTable.TableName + '>');
-    System.Close(F);
-
-    Close;
-    MessageDlg('File successfully exported to ' + SaveExp.FileName, mtInformation, [mbOK], 0);
-
-  except
-    on E: Exception do
-      MessageDlg('Error writing file:' + LineEnding + E.Message, mtError, [mbOK], 0);
+  finally
+    DbfTable.AfterScroll := savedAfterScroll;
+    DbfTable.EnableControls;
+    DbfTable.GotoBookmark(bm);
+    DbfTable.FreeBookmark(bm);
   end;
 end;
 

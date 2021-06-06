@@ -202,29 +202,41 @@ end;
 
 procedure TExpSQL.CreateSQLScript;
 var
-  Ind : Word;
+  i, n: Integer;
   Str : TStringList;
   F : TextFile;
   field: TField;
+  savedAfterScroll: TDatasetNotifyEvent;
+  bm: TBookMark;
+  counter: Integer;
+  percent: Integer;
 begin
-  DbfTable.First;
   pBar.Min := 0;
-  pBar.Max := DbfTable.ExactRecordCount;
+  pBar.Max := 100;
   pBar.Position := 0;
+
+  savedAfterScroll := DbfTable.AfterScroll;
+  DbfTable.AfterScroll := nil;
+  DbfTable.DisableControls;
+  bm := DbfTable.GetBookmark;
+  n := DbfTable.ExactRecordCount;
 
   Str := TStringList.Create;
   try
     AssignFile(F, SaveExp.FileName);
     ReWrite(F);
 
+    DbfTable.First;
+    counter := 0;
+
     while not DbfTable.EOF do
     begin
       Str.Clear;
 
-      for Ind := 0 To ClbField.Items.Count - 1 do
-        if ClbField.Checked[Ind] then
+      for i := 0 To ClbField.Items.Count - 1 do
+        if ClbField.Checked[i] then
         begin
-          field := DbfTable.FieldByName(ClbField.Items[Ind]);
+          field := DbfTable.FieldByName(ClbField.Items[i]);
           case field.DataType of
             ftString,
             ftFixedChar,
@@ -287,22 +299,29 @@ begin
       begin
         Writeln(F, Format('INSERT INTO %s VALUES(', [UpperCase(Remove_FileExtension(DbfTable.TableName))]));
 
-        for Ind := 0 To Str.Count - 1 do
-          if Ind < Str.Count - 1 then
-            Writeln(F, Str.Strings[Ind] + ',')
+        for i := 0 to Str.Count - 1 do
+          if i < Str.Count - 1 then
+            Writeln(F, Str.Strings[i] + ',')
           else
-            Writeln(F, Str.Strings[Ind]);
+            Writeln(F, Str.Strings[i]);
 
         Writeln(F, ');');
       end;
 
-      pBar.Position := pBar.Position + 1;
+      inc(counter);
+      percent := (counter * 100) div n;
+      if percent <> pBar.Position then
+        pBar.Position := percent;;
     end;
 
   finally
-    pBar.Position := 0;
     System.Close(F);
     Str.Free;
+
+    DbfTable.AfterScroll := savedAfterScroll;
+    DbfTable.EnableControls;
+    DbfTable.GotoBookmark(bm);
+    DbfTable.FreeBookmark(bm);
   end;
 end;
 
