@@ -27,7 +27,7 @@ object OpenBA: TOpenBA
     ClientWidth = 675
     Constraints.MinHeight = 100
     TabOrder = 0
-    object DBGrid1: TDBGrid
+    object AliasGrid: TDBGrid
       AnchorSideLeft.Control = GroupBox1
       AnchorSideTop.Control = GroupBox1
       AnchorSideRight.Control = GroupBox1
@@ -59,7 +59,7 @@ object OpenBA: TOpenBA
       ReadOnly = True
       TabOrder = 0
       TitleFont.Height = -12
-      OnCellClick = DBGrid1CellClick
+      OnCellClick = AliasGridCellClick
     end
     object DeleteAliasBtn: TBitBtn
       AnchorSideLeft.Control = AddAliasBtn
@@ -130,6 +130,7 @@ object OpenBA: TOpenBA
       BorderSpacing.Left = 6
       BorderSpacing.Right = 6
       BorderSpacing.Bottom = 6
+      Directory = 'd:\Prog_Lazarus'
       FileType = [ftReadOnly, ftNormal]
       ItemHeight = 0
       Mask = '*.dbf'

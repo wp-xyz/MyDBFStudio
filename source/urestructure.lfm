@@ -67,6 +67,7 @@ object Restructure: TRestructure
       end>
     Constraints.MinWidth = 450
     FixedCols = 0
+    MouseWheelOption = mwGrid
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goAlwaysShowEditor, goSmoothScroll]
     RowCount = 2
     TabOrder = 0

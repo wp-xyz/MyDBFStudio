@@ -17,7 +17,7 @@ type
     OpenTableBtn: TBitBtn;
     DeleteAliasBtn: TBitBtn;
     AddAliasBtn: TBitBtn;
-    DBGrid1: TDBGrid;
+    AliasGrid: TDBGrid;
     Ds1: TDataSource;
     FileListbox: TFileListBox;
     GroupBox1: TGroupBox;
@@ -29,7 +29,7 @@ type
     procedure OpenTableBtnClick(Sender: TObject);
     procedure AddAliasClick(Sender: TObject);
     procedure DeleteAliasClick(Sender: TObject);
-    procedure DBGrid1CellClick({%H-}Column: TColumn);
+    procedure AliasGridCellClick({%H-}Column: TColumn);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -37,7 +37,6 @@ type
     FAliasDB: TDbf;
   public
     { public declarations }
-//    PageIdx : Integer;
     property AliasDB: TDbf read FAliasDB;
   end;
 
@@ -71,7 +70,7 @@ begin
   if FileExists(fn) then
   begin
     FAliasDB.Open;
-    DBGrid1CellClick(Nil);
+    AliasGridCellClick(nil);
   end else
   begin
     Ds1.Enabled := False;
@@ -141,7 +140,7 @@ begin
     AddAlias.Release;
     FAliasDB.Close;
     FAliasDB.Open;
-    DBGrid1CellClick(nil);
+    AliasGridCellClick(nil);
   end;
 end;
 
@@ -155,11 +154,11 @@ begin
         FAliasDB.Close;
         FAliasDB.Open;
         FileListbox.Clear;
-        DBGrid1CellClick(nil);
+        AliasGridCellClick(nil);
       end;
 end;
 
-procedure TOpenBA.DBGrid1CellClick(Column: TColumn);
+procedure TOpenBA.AliasGridCellClick(Column: TColumn);
 begin
   if Ds1.Enabled then
     if not FAliasDB.IsEmpty then
