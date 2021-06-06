@@ -612,6 +612,7 @@ begin
   if tabIndex < 0 then
   begin
     ObA := TOpenBA.Create(WorkSite);
+    ObA.AliasGrid.AlternateColor := Options.AlternateColor;
     ObA.OnClose := @TabChildCloseHandler;
     WorkSpace.AddFormToPageControl(ObA);
   end
