@@ -73,6 +73,7 @@ type
     { private declarations }
     FDBTable: TDbf;
     FColWidths: array of Integer;
+    procedure FixTabControlConstraints;
     function IsGraphicStream(AStream: TStream): Boolean;
     Procedure Load_Table_Indexes;
     procedure RestoreColWidths(ATable: TDbf);
@@ -422,6 +423,15 @@ begin
   Ds.Dataset := FDBTable;
 end;
 
+procedure TDbfTable.FixTabControlConstraints;
+var
+  P: TPoint;
+begin
+  // Calculate Top of PasteBlobBtn relative to TabControl.
+  P := TabControl.ScreenToClient(PasteBlobBtn.ClientToScreen(Point(0, 0)));
+  TabControl.Constraints.MinHeight := P.Y + PasteBlobBtn.Height + DBMemo.BorderSpacing.Around;
+end;
+
 procedure TDbfTable.tbEmptyClick(Sender: TObject);
 begin
   if DbTable.Active then
@@ -584,6 +594,7 @@ begin
       MemoSplitter.Show;
       MemoSplitter.Top := 0;
     end;
+    FixTabControlConstraints;
   finally
     TabControl.EndUpdate;
   end;

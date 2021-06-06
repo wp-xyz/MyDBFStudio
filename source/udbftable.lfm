@@ -1,10 +1,10 @@
 object DbfTable: TDbfTable
   Left = 470
-  Height = 495
+  Height = 504
   Top = 276
   Width = 708
   Caption = 'DbfTable'
-  ClientHeight = 495
+  ClientHeight = 504
   ClientWidth = 708
   KeyPreview = True
   OnCreate = FormCreate
@@ -252,7 +252,7 @@ object DbfTable: TDbfTable
   end
   object DBGrid: TDBGrid
     Left = 6
-    Height = 270
+    Height = 279
     Top = 78
     Width = 696
     Align = alClient
@@ -275,7 +275,7 @@ object DbfTable: TDbfTable
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 349
+    Top = 358
     Width = 708
     Align = alBottom
     ResizeAnchor = akBottom
@@ -284,7 +284,7 @@ object DbfTable: TDbfTable
   object TabControl: TTabControl
     Left = 6
     Height = 134
-    Top = 355
+    Top = 364
     Width = 696
     OnChange = TabControlChange
     Align = alBottom
