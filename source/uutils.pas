@@ -28,6 +28,7 @@ function FieldTypeAsString(AFieldType: TFieldType; Nice: Boolean): String;
 procedure FieldTypePickList(ATableLevel: Integer; const AList: TStrings);
 function GetAliasDir: String;
 function GetVersionStr: String;
+function TableFormat(ATableLevel: Integer): String;
 
 implementation
 
@@ -87,6 +88,18 @@ begin
   ver := Default(TProgramVersion);
   GetProgramVersion(ver);
   Result := Format('v%d.%d.%d', [ver.Major, ver.Minor, ver.Revision]);
+end;
+
+function TableFormat(ATableLevel: Integer): String;
+begin
+  case ATableLevel of
+    3: Result := 'dBase III+';
+    4: Result := 'dBase IV';
+    7: Result := 'Visual dBase VII';
+    25: Result := 'FoxPro';
+    30: Result := 'Visual FoxPro';
+    else Result := '(unsupported)';
+  end;
 end;
 
 end.

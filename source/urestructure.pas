@@ -21,6 +21,7 @@ type
 
   TRestructure = class(TForm)
     CloseBtn: TBitBtn;
+    lblTableLevel: TLabel;
     lblFieldList: TLabel;
     lblLanguage: TLabel;
     lblCodePage: TLabel;
@@ -489,6 +490,7 @@ end;
 
 procedure TRestructure.ShowInfo(ATable: TDbf);
 begin
+  lblTableLevel.Caption := Format('Table level: %d (%s)', [ATable.TableLevel, TableFormat(ATable.TableLevel)]);
   lblCodepage.Caption := Format('Code page: %d', [ATable.CodePage]);
   if ATable.LanguageStr <> '' then
     lblLanguage.Caption := Format('Language: %s', [ATable.LanguageStr])

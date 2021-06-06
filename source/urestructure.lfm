@@ -1,11 +1,11 @@
 object Restructure: TRestructure
   Left = 435
-  Height = 373
+  Height = 400
   Top = 316
   Width = 736
   AutoSize = True
   Caption = 'Table Restructure'
-  ClientHeight = 373
+  ClientHeight = 400
   ClientWidth = 736
   KeyPreview = True
   OnCloseQuery = FormCloseQuery
@@ -22,7 +22,7 @@ object Restructure: TRestructure
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
     Left = 6
-    Height = 344
+    Height = 371
     Top = 23
     Width = 493
     AlternateColor = clMoneyGreen
@@ -84,7 +84,7 @@ object Restructure: TRestructure
     AnchorSideRight.Control = CloseBtn
     Left = 514
     Height = 26
-    Top = 341
+    Top = 368
     Width = 135
     Anchors = [akTop, akRight]
     AutoSize = True
@@ -102,7 +102,7 @@ object Restructure: TRestructure
     AnchorSideBottom.Side = asrBottom
     Left = 655
     Height = 26
-    Top = 341
+    Top = 368
     Width = 75
     Anchors = [akRight, akBottom]
     AutoSize = True
@@ -121,7 +121,7 @@ object Restructure: TRestructure
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 505
-    Height = 316
+    Height = 335
     Top = 6
     Width = 225
     Anchors = [akTop, akRight]
@@ -129,7 +129,7 @@ object Restructure: TRestructure
     BorderSpacing.Top = 6
     BorderSpacing.Right = 6
     BevelOuter = bvNone
-    ClientHeight = 316
+    ClientHeight = 335
     ClientWidth = 225
     TabOrder = 1
     object lblIndexList: TLabel
@@ -224,11 +224,13 @@ object Restructure: TRestructure
     end
     object lblCodePage: TLabel
       AnchorSideLeft.Control = Panel1
-      AnchorSideTop.Side = asrCenter
+      AnchorSideTop.Control = lblTableLevel
+      AnchorSideTop.Side = asrBottom
       Left = 0
       Height = 15
-      Top = 282
+      Top = 301
       Width = 60
+      BorderSpacing.Top = 4
       BorderSpacing.Right = 6
       Caption = 'Code page:'
       ParentColor = False
@@ -239,10 +241,22 @@ object Restructure: TRestructure
       AnchorSideTop.Side = asrBottom
       Left = 0
       Height = 15
-      Top = 301
+      Top = 320
       Width = 55
       BorderSpacing.Top = 4
       Caption = 'Language:'
+      ParentColor = False
+    end
+    object lblTableLevel: TLabel
+      AnchorSideLeft.Control = Panel1
+      AnchorSideTop.Control = cbPack
+      AnchorSideTop.Side = asrBottom
+      Left = 0
+      Height = 15
+      Top = 282
+      Width = 57
+      BorderSpacing.Top = 12
+      Caption = 'Table level:'
       ParentColor = False
     end
   end
