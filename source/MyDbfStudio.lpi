@@ -209,13 +209,12 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uRestructure"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="21"/>
-        <TopLine Value="474"/>
-        <CursorPos X="20" Y="511"/>
+        <TopLine Value="307"/>
+        <CursorPos X="3" Y="292"/>
         <UsageCount Value="202"/>
         <Bookmarks Count="1">
-          <Item0 Y="471" ID="1"/>
+          <Item0 Y="473" ID="1"/>
         </Bookmarks>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -311,8 +310,7 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uExpHTML"/>
         <EditorIndex Value="11"/>
-        <TopLine Value="114"/>
-        <CursorPos X="93" Y="121"/>
+        <CursorPos Y="3"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -324,7 +322,7 @@
         <EditorIndex Value="3"/>
         <TopLine Value="127"/>
         <CursorPos X="3" Y="149"/>
-        <UsageCount Value="161"/>
+        <UsageCount Value="162"/>
         <Loaded Value="True"/>
       </Unit12>
       <Unit13>
@@ -378,7 +376,7 @@
         <EditorIndex Value="10"/>
         <TopLine Value="135"/>
         <CursorPos X="3" Y="154"/>
-        <UsageCount Value="197"/>
+        <UsageCount Value="198"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit16>
@@ -392,7 +390,7 @@
         <EditorIndex Value="24"/>
         <TopLine Value="27"/>
         <CursorPos X="15" Y="33"/>
-        <UsageCount Value="193"/>
+        <UsageCount Value="194"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit17>
@@ -406,7 +404,7 @@
         <EditorIndex Value="14"/>
         <TopLine Value="101"/>
         <CursorPos X="60" Y="113"/>
-        <UsageCount Value="189"/>
+        <UsageCount Value="190"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit18>
@@ -420,7 +418,7 @@
         <EditorIndex Value="16"/>
         <TopLine Value="34"/>
         <CursorPos X="63" Y="51"/>
-        <UsageCount Value="186"/>
+        <UsageCount Value="187"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit19>
@@ -448,7 +446,7 @@
         <EditorIndex Value="19"/>
         <TopLine Value="123"/>
         <CursorPos X="10" Y="143"/>
-        <UsageCount Value="179"/>
+        <UsageCount Value="180"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit22>
@@ -462,7 +460,7 @@
         <EditorIndex Value="5"/>
         <TopLine Value="32"/>
         <CursorPos X="15" Y="51"/>
-        <UsageCount Value="178"/>
+        <UsageCount Value="179"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit23>
@@ -476,7 +474,7 @@
         <EditorIndex Value="23"/>
         <TopLine Value="182"/>
         <CursorPos X="29" Y="200"/>
-        <UsageCount Value="175"/>
+        <UsageCount Value="176"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit24>
@@ -488,9 +486,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uExpSQL"/>
         <EditorIndex Value="12"/>
-        <TopLine Value="294"/>
-        <CursorPos Y="331"/>
-        <UsageCount Value="167"/>
+        <CursorPos Y="3"/>
+        <UsageCount Value="168"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit25>
@@ -498,10 +495,11 @@
         <Filename Value="uutils.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uUtils"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="27"/>
-        <TopLine Value="65"/>
-        <CursorPos Y="104"/>
-        <UsageCount Value="154"/>
+        <TopLine Value="57"/>
+        <CursorPos X="33" Y="82"/>
+        <UsageCount Value="155"/>
         <Loaded Value="True"/>
       </Unit26>
       <Unit27>
@@ -514,7 +512,7 @@
         <EditorIndex Value="26"/>
         <TopLine Value="102"/>
         <CursorPos Y="115"/>
-        <UsageCount Value="136"/>
+        <UsageCount Value="137"/>
         <Loaded Value="True"/>
       </Unit27>
       <Unit28>
@@ -533,7 +531,7 @@
         <EditorIndex Value="20"/>
         <TopLine Value="250"/>
         <CursorPos X="37" Y="282"/>
-        <UsageCount Value="135"/>
+        <UsageCount Value="136"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit29>
@@ -553,7 +551,7 @@
         <UnitName Value="uDatamodule"/>
         <EditorIndex Value="7"/>
         <CursorPos X="29" Y="5"/>
-        <UsageCount Value="143"/>
+        <UsageCount Value="144"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit31>
@@ -586,7 +584,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="453"/>
         <CursorPos X="16" Y="468"/>
-        <UsageCount Value="125"/>
+        <UsageCount Value="126"/>
       </Unit35>
       <Unit36>
         <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/comctrls.pp"/>
@@ -1008,121 +1006,121 @@
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="udbftable.pas"/>
-        <Caret Line="84" Column="14" TopLine="65"/>
-      </Position1>
-      <Position2>
-        <Filename Value="udbftable.pas"/>
-        <Caret Line="427" Column="27" TopLine="395"/>
-      </Position2>
-      <Position3>
-        <Filename Value="udbftable.pas"/>
-        <Caret Line="438" Column="11" TopLine="406"/>
-      </Position3>
-      <Position4>
-        <Filename Value="udbftable.pas"/>
-        <Caret Line="577" Column="16" TopLine="565"/>
-      </Position4>
-      <Position5>
-        <Filename Value="udbftable.pas"/>
-        <Caret Line="82" Column="15" TopLine="63"/>
-      </Position5>
-      <Position6>
-        <Filename Value="udbftable.pas"/>
-        <Caret Line="427" Column="27" TopLine="395"/>
-      </Position6>
-      <Position7>
-        <Filename Value="udbftable.pas"/>
-        <Caret Line="596" TopLine="571"/>
-      </Position7>
-      <Position8>
-        <Filename Value="udbftable.pas"/>
-        <Caret Line="76" Column="15" TopLine="57"/>
-      </Position8>
-      <Position9>
         <Filename Value="unewtable.pas"/>
         <Caret Line="432" Column="54" TopLine="416"/>
-      </Position9>
-      <Position10>
+      </Position1>
+      <Position2>
         <Filename Value="unewtable.pas"/>
         <Caret Line="130" Column="11" TopLine="111"/>
-      </Position10>
-      <Position11>
+      </Position2>
+      <Position3>
         <Filename Value="unewtable.pas"/>
         <Caret Line="184" Column="38" TopLine="166"/>
-      </Position11>
-      <Position12>
+      </Position3>
+      <Position4>
         <Filename Value="unewtable.pas"/>
         <Caret Line="327" Column="20" TopLine="309"/>
-      </Position12>
-      <Position13>
+      </Position4>
+      <Position5>
         <Filename Value="unewtable.pas"/>
         <Caret Line="332" Column="49" TopLine="313"/>
-      </Position13>
-      <Position14>
+      </Position5>
+      <Position6>
         <Filename Value="unewtable.pas"/>
         <Caret Line="357" Column="36" TopLine="338"/>
-      </Position14>
-      <Position15>
+      </Position6>
+      <Position7>
         <Filename Value="unewtable.pas"/>
         <Caret Line="424" Column="8" TopLine="402"/>
-      </Position15>
-      <Position16>
+      </Position7>
+      <Position8>
         <Filename Value="unewtable.pas"/>
         <Caret Line="106" TopLine="101"/>
+      </Position8>
+      <Position9>
+        <Filename Value="uopenba.pas"/>
+        <Caret Line="100" Column="30" TopLine="100"/>
+      </Position9>
+      <Position10>
+        <Filename Value="uopenba.pas"/>
+      </Position10>
+      <Position11>
+        <Filename Value="uopenba.pas"/>
+        <Caret Line="128" Column="16" TopLine="96"/>
+      </Position11>
+      <Position12>
+        <Filename Value="umain.pas"/>
+        <Caret Line="344" Column="10" TopLine="344"/>
+      </Position12>
+      <Position13>
+        <Filename Value="umain.pas"/>
+      </Position13>
+      <Position14>
+        <Filename Value="umain.pas"/>
+        <Caret Line="139" Column="32" TopLine="107"/>
+      </Position14>
+      <Position15>
+        <Filename Value="umain.pas"/>
+        <Caret Line="610" Column="26" TopLine="582"/>
+      </Position15>
+      <Position16>
+        <Filename Value="umain.pas"/>
+        <Caret Line="615" Column="60" TopLine="582"/>
       </Position16>
       <Position17>
         <Filename Value="uopenba.pas"/>
-        <Caret Line="100" Column="30" TopLine="100"/>
+        <Caret Line="73" Column="26" TopLine="53"/>
       </Position17>
       <Position18>
         <Filename Value="uopenba.pas"/>
       </Position18>
       <Position19>
         <Filename Value="uopenba.pas"/>
-        <Caret Line="128" Column="16" TopLine="96"/>
+        <Caret Line="163" Column="3" TopLine="130"/>
       </Position19>
       <Position20>
-        <Filename Value="umain.pas"/>
-        <Caret Line="344" Column="10" TopLine="344"/>
-      </Position20>
-      <Position21>
-        <Filename Value="umain.pas"/>
-      </Position21>
-      <Position22>
-        <Filename Value="umain.pas"/>
-        <Caret Line="139" Column="32" TopLine="107"/>
-      </Position22>
-      <Position23>
-        <Filename Value="umain.pas"/>
-        <Caret Line="610" Column="26" TopLine="582"/>
-      </Position23>
-      <Position24>
-        <Filename Value="umain.pas"/>
-        <Caret Line="615" Column="60" TopLine="582"/>
-      </Position24>
-      <Position25>
-        <Filename Value="uopenba.pas"/>
-        <Caret Line="73" Column="26" TopLine="53"/>
-      </Position25>
-      <Position26>
-        <Filename Value="uopenba.pas"/>
-      </Position26>
-      <Position27>
-        <Filename Value="uopenba.pas"/>
-        <Caret Line="163" Column="3" TopLine="130"/>
-      </Position27>
-      <Position28>
         <Filename Value="uopenba.pas"/>
         <Caret Line="73" Column="14" TopLine="53"/>
-      </Position28>
-      <Position29>
+      </Position20>
+      <Position21>
         <Filename Value="uopenba.pas"/>
         <Caret Line="157" Column="14" TopLine="123"/>
-      </Position29>
-      <Position30>
+      </Position21>
+      <Position22>
         <Filename Value="uopenba.pas"/>
         <Caret Line="143" Column="10" TopLine="123"/>
+      </Position22>
+      <Position23>
+        <Filename Value="uexpsql.pas"/>
+        <Caret Line="331" TopLine="294"/>
+      </Position23>
+      <Position24>
+        <Filename Value="uexphtml.pas"/>
+        <Caret Line="121" Column="93" TopLine="114"/>
+      </Position24>
+      <Position25>
+        <Filename Value="urestructure.pas"/>
+        <Caret Line="495" Column="20" TopLine="474"/>
+      </Position25>
+      <Position26>
+        <Filename Value="urestructure.pas"/>
+        <Caret Line="45" Column="21" TopLine="26"/>
+      </Position26>
+      <Position27>
+        <Filename Value="urestructure.pas"/>
+        <Caret Line="292" Column="3" TopLine="307"/>
+      </Position27>
+      <Position28>
+        <Filename Value="uutils.pas"/>
+        <Caret Line="28" Column="11" TopLine="8"/>
+      </Position28>
+      <Position29>
+        <Filename Value="uutils.pas"/>
+        <Caret Line="56" Column="3" TopLine="52"/>
+      </Position29>
+      <Position30>
+        <Filename Value="uutils.pas"/>
+        <Caret Line="29" Column="20"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>

@@ -1,5 +1,7 @@
 unit uRestructure;
 
+// todo: ftGraphic file in DBase III+/IV table is converted to memo field. Crash "Invalid field type B". Works if TableLevel >= 7.
+
 {$mode objfpc}{$H+}
 
 interface

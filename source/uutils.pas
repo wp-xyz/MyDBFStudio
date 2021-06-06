@@ -19,7 +19,9 @@ const
   SupportedFieldTypes: set of TFieldType = [
     ftString, ftSmallInt, ftInteger, ftWord, ftBoolean, ftFloat,
     ftDate, ftDateTime, ftDBaseOLE, ftFixedChar, ftWideString, ftLargeInt,
-    ftBLOB, ftMemo, ftGraphic,   // ftGraphic not supported by wiki, but seems to be outdated.
+    //ftBLOB,  // Seems to be equivalent to ftMemo. Causes confusion when both are available.
+    ftMemo,
+    ftGraphic, // ftGraphic not supported according to wiki, but works. Displayed in grid as (BLOB).
     ftCurrency, ftBCD, ftBytes,  // TableLevel 25 only
     ftAutoInc  // TableLevel 7 and 30 only
     ];
@@ -70,12 +72,15 @@ begin
     AList.Add(FieldTypeNames[ftAutoInc]);
 end;
 
+{ Converts a enumerated TFieldType value to a string. When Nice=true, the leading
+  'ft' is stripped. }
 function FieldTypeAsString(AFieldType: TFieldType; Nice: Boolean): String;
 begin
   Result := GetEnumName(TypeInfo(TFieldType), integer(AFieldType));
   if Nice then Delete(Result, 1, 2);
 end;
 
+{ Returns the directory in which the default "alias.dbf" file is stored. }
 function GetAliasDir: String;
 begin
   Result := GetAppConfigDir(false);
