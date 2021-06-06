@@ -102,33 +102,31 @@ begin
     end;
 
     if (FieldList.Cells[2,Ind] = Fieldtypenames[ftString]) or
-//      (FieldList.Cells[2,Ind] = Fieldtypenames[ftFloat]) or
-//      (FieldList.Cells[2,Ind] = Fieldtypenames[ftBlob]) or
-//      (FieldList.Cells[2,Ind] = Fieldtypenames[ftMemo]) or
+      (FieldList.Cells[2,Ind] = Fieldtypenames[ftFloat]) or
        (FieldList.Cells[2,Ind] = Fieldtypenames[ftFixedChar]) or
        (FieldList.Cells[2,Ind] = Fieldtypenames[ftWideString]) or
        (FieldList.Cells[2,Ind] = Fieldtypenames[ftBCD]) or
        (FieldList.Cells[2,Ind] = Fieldtypenames[ftBytes])
     then
-      if Not Check_Value(FieldList.Cells[3,Ind]) then
+      if not Check_Value(FieldList.Cells[3,Ind]) then
       begin
         MessageDlg('Row ' + IntToStr(Ind) + ': Field length error', mtError, [mbOK], 0);
         FieldList.Row := Ind;
         FieldList.Col := 3;
         Exit;
       end;
-
-{   If (FieldList.Cells[2,Ind] = Fieldtypenames[ftFloat]) Or
-      (FieldList.Cells[2,Ind] = Fieldtypenames[ftBCD]) Then
-    If Not Check_Value(FieldList.Cells[4,Ind]) Then
-     Begin
-      ShowMessage('Row: ' + IntToStr(Ind) + '. Decimals length error!');
-
-      FieldList.Row:=Ind;
-      FieldList.Col:=4;
-
-      Exit;
-     End;}
+{
+    if (FieldList.Cells[2,Ind] = Fieldtypenames[ftFloat]) or
+       (FieldList.Cells[2,Ind] = Fieldtypenames[ftBCD])
+    then
+      if not Check_Value(FieldList.Cells[4, Ind]) then
+      begin
+        MessageDlg('Row: ' + IntToStr(Ind) + ': Decimals count error!',mtError, [mbOK], 0);
+        FieldList.Row := Ind;
+        FieldList.Col := 4;
+        exit;
+      end;
+}
   end;
 
   if SaveTableDlg.Execute then
@@ -152,69 +150,69 @@ begin
 end;
 
 procedure TNewTable.DefineIndexBtnClick(Sender: TObject);
- Var Ind : Word;
-     lOpt : TIndexOptions;
-     ExpField : String;
+var
+  row, n: Integer;
+  idxOpt: TIndexOptions;
+  ExpField : String;
 begin
- If FieldList.RowCount > 1 Then
-  Begin
-   IdxTable := TIdxTable.Create(Self);
-   IdxTable.New := True;
-   IdxTable.Calling := NewTable;
-   lOpt := [];
+  if FieldList.RowCount > 1 then
+  begin
+    IdxTable := TIdxTable.Create(nil);
+    try
+      IdxTable.New := True;
+      IdxTable.Calling := NewTable;
+      idxOpt := [];
 
-   For Ind := 1 To FieldList.RowCount - 1 Do
-    IdxTable.IdxList.Items.Add(FieldList.Cells[1,Ind]);
+      for row := 1 to FieldList.RowCount - 1 do
+        IdxTable.IdxList.Items.Add(FieldList.Cells[1, row]);
 
-   IdxTable.ShowModal;
+      IdxTable.ShowModal;
 
-   If IdxTable.Ret Then
-    Begin
-     ExpField := IdxTable.SelField.Text;
+      if IdxTable.Ret then
+      begin
+        ExpField := IdxTable.SelField.Text;
 
-     If IdxTable.cbOpt.Checked[0] Then
-      lOpt := lOpt + [ixPrimary];
+        if IdxTable.cbOpt.Checked[0] then idxOpt := idxOpt + [ixPrimary];
+        if IdxTable.cbOpt.Checked[1] then idxOpt := idxOpt + [ixUnique];
+        if IdxTable.cbOpt.Checked[2] then idxOpt := idxOpt + [ixDescending];
+        if IdxTable.cbOpt.Checked[3] then idxOpt := idxOpt + [ixCaseInsensitive];
 
-     If IdxTable.cbOpt.Checked[1] Then
-      lOpt := lOpt + [ixUnique];
+        n := Length(MyIndexList);
+        SetLength(MyIndexList, n + 1);
 
-     If IdxTable.cbOpt.Checked[2] Then
-      lOpt := lOpt + [ixDescending];
+        MyIndexList[n].Options := idxOpt;
+        MyIndexList[n].IdxName := IdxTable.IdxName.Text;
+        MyIndexList[n].Fields := ExpField;
+        MyIndexList[n].Deleted := False;
 
-     If IdxTable.cbOpt.Checked[3] Then
-      lOpt := lOpt + [ixCaseInsensitive];
-
-     SetLength(MyIndexList, Length(MyIndexList) + 1);
-
-     MyIndexList[Length(MyIndexList) - 1].Options := lOpt;
-     MyIndexList[Length(MyIndexList) - 1].IdxName := IdxTable.IdxName.Text;
-     MyIndexList[Length(MyIndexList) - 1].Fields := ExpField;
-     MyIndexList[Length(MyIndexList) - 1].Deleted := False;
-
-     ShowIndexList();
-    End;
-
-   IdxTable.Free;
-  End;
+        ShowIndexList();
+      end;
+    finally
+      IdxTable.Free;
+    end;
+  end;
 end;
 
 procedure TNewTable.DeleteIndexBtnClick(Sender: TObject);
- Var dName : String;
-     Ind : Word;
+var
+  idxName: String;
+  i: Word;
 begin
-  If IndexList.ItemIndex < 0 Then
+  if IndexList.ItemIndex < 0 then
     Exit;
 
- If MessageDlg('Delete the selected index?', mtWarning ,[mbOk, mbCancel],0) = mrOk Then
-  Begin
-   dName := IndexList.Items[IndexList.ItemIndex];
+  if MessageDlg('Delete the selected index?', mtWarning ,[mbYes, mbNo], 0) <> mrYes then
+    exit;
 
-   For Ind := 0 To Length(MyIndexList) - 1 Do
-    If MyIndexList[Ind].IdxName = dName Then
-     MyIndexList[Ind].Deleted := True;
+  idxName := IndexList.Items[IndexList.ItemIndex];
+  for i := 0 To High(MyIndexList) do
+    if MyIndexList[i].IdxName = idxName then
+    begin
+      MyIndexList[i].Deleted := True;
+      break;
+    end;
 
-   ShowIndexList();
-  End;
+  ShowIndexList();
 end;
 
 procedure TNewTable.FieldListSelectEditor(Sender: TObject; aCol, aRow: Integer;
@@ -282,9 +280,9 @@ begin
 
        If FieldList.Row = 0 Then
         Begin
-         FieldList.RowCount:=FieldList.RowCount + 1;
+         FieldList.RowCount := FieldList.RowCount + 1;
 
-         FieldList.Cells[0,FieldList.RowCount - 1]:=IntToStr(FieldList.RowCount - 1);
+         FieldList.Cells[0,FieldList.RowCount - 1] := IntToStr(FieldList.RowCount - 1);
          FieldList.Col:=1;
          FieldList.Row:=FieldList.RowCount - 1;
         End;
@@ -301,82 +299,71 @@ begin
 end;
 
 procedure TNewTable.IndexListDblClick(Sender: TObject);
- Var OldIdxName : String;
-     Ind : Word;
-     lOpt : TIndexOptions;
+var
+  oldIdxName: String;
+  row, i, n: Integer;
+  idxOpt: TIndexOptions;
 begin
- If IndexList.Items.Count > 0 Then
-  Begin
-   OldIdxName := IndexList.Items[IndexList.ItemIndex];
+  if (IndexList.Items.Count = 0) or (IndexList.ItemIndex = -1) then
+     exit;
 
-   IdxTable := TIdxTable.Create(Self);
-   IdxTable.New := False;
-   IdxTable.Calling := NewTable;
-   lOpt := [];
+  oldIdxName := IndexList.Items[IndexList.ItemIndex];
 
-   For Ind := 1 To FieldList.RowCount - 1 Do
-    IdxTable.IdxList.Items.Add(FieldList.Cells[1,Ind]);
+  IdxTable := TIdxTable.Create(nil);
+  try
+    IdxTable.New := False;
+    IdxTable.Calling := NewTable;
+    idxOpt := [];
 
-   For Ind := 0 To Length(MyIndexList) - 1 Do
-    If Not MyIndexList[Ind].Deleted Then
-     If MyIndexList[Ind].IdxName = OldIdxName Then
-      Begin
-       lOpt := MyIndexList[Ind].Options;
+    for row := 1 to FieldList.RowCount - 1 do
+      IdxTable.IdxList.Items.Add(FieldList.Cells[1, row]);
 
-       Break;
-      End;
+    for i := 0 to High(MyIndexList) do
+      if not MyIndexList[i].Deleted then
+        if MyIndexList[i].IdxName = oldIdxName then
+        begin
+          idxOpt := MyIndexList[i].Options;
+          IdxTable.SelField.Text := MyIndexList[i].Fields;
+          Break;
+        end;
+    IdxTable.IdxName.Text := oldIdxName;
+    IdxTable.cbOpt.Checked[0] := ixPrimary in idxOpt;
+    IdxTable.cbOpt.Checked[1] := ixUnique in idxOpt;
+    IdxTable.cbOpt.Checked[2] := ixDescending in idxOpt;;
+    IdxTable.cbOpt.Checked[3] := ixCaseInsensitive in idxOpt;
 
-   IdxTable.IdxName.Text := OldIdxName;
+    IdxTable.ShowModal;
 
-   IdxTable.SelField.Text := MyIndexList[Ind].Fields;
+    if IdxTable.Ret then
+    begin
+      for i := 0 to High(MyIndexList) do
+        if not MyIndexList[i].Deleted then
+          if MyIndexList[i].IdxName = oldIdxName then
+          begin
+            MyIndexList[i].Deleted := True;         //Delete old index...
+            break;
+          end;
 
-   If ixPrimary In lOpt Then
-    IdxTable.cbOpt.Checked[0] := True;
+      idxOpt := [];
+      if IdxTable.cbOpt.Checked[0] then idxOpt := idxOpt + [ixPrimary];
+      if IdxTable.cbOpt.Checked[1] then idxOpt := idxOpt + [ixUnique];
+      if IdxTable.cbOpt.Checked[2] then idxOpt := idxOpt + [ixDescending];
+      if IdxTable.cbOpt.Checked[3] then idxOpt := idxOpt + [ixCaseInsensitive];
 
-   If ixUnique In lOpt Then
-    IdxTable.cbOpt.Checked[1] := True;
+      n := Length(MyIndexList);
+      SetLength(MyIndexList, n + 1);     //Insert New Index
 
-   If ixDescending In lOpt Then
-    IdxTable.cbOpt.Checked[2] := True;
+      MyIndexList[n].Options := idxOpt;
+      MyIndexList[n].IdxName := IdxTable.IdxName.Text;
+      MyIndexList[n].Fields := IdxTable.SelField.Text;
+      MyIndexList[n].Deleted := False;
 
-   If ixCaseInsensitive In lOpt Then
-    IdxTable.cbOpt.Checked[3] := True;
+      ShowIndexList;
+    end;
 
-   IdxTable.ShowModal;
-
-   If IdxTable.Ret Then
-    Begin
-     For Ind := 0 To Length(MyIndexList) - 1 Do
-      If Not MyIndexList[Ind].Deleted Then
-       If MyIndexList[Ind].IdxName = OldIdxName Then
-        MyIndexList[Ind].Deleted := True;         //Delete old index...
-
-     lOpt := [];
-
-     If IdxTable.cbOpt.Checked[0] Then
-      lOpt := lOpt + [ixPrimary];
-
-     If IdxTable.cbOpt.Checked[1] Then
-      lOpt := lOpt + [ixUnique];
-
-     If IdxTable.cbOpt.Checked[2] Then
-      lOpt := lOpt + [ixDescending];
-
-     If IdxTable.cbOpt.Checked[3] Then
-      lOpt := lOpt + [ixCaseInsensitive];
-
-     SetLength(MyIndexList, Length(MyIndexList) + 1);     //Insert New Index
-
-     MyIndexList[Length(MyIndexList) - 1].Options := lOpt;
-     MyIndexList[Length(MyIndexList) - 1].IdxName := IdxTable.IdxName.Text;
-     MyIndexList[Length(MyIndexList) - 1].Fields := IdxTable.SelField.Text;
-     MyIndexList[Length(MyIndexList) - 1].Deleted := False;
-
-     ShowIndexList;
-    End;
-
-   IdxTable.Free;
-  End;
+  finally
+    IdxTable.Free;
+  end;
 end;
 
 procedure TNewTable.TableTypeChange(Sender: TObject);
@@ -392,14 +379,13 @@ begin
 end;
 
 procedure TNewTable.ShowIndexList;
- Var Ind : Word;
+var
+  i: Integer;
 begin
- IndexList.Clear;
-
- If Length(MyIndexList) > 0 Then
-  For Ind := 0 To Length(MyIndexList) - 1 Do
-   If Not MyIndexList[Ind].Deleted Then
-    IndexList.Items.Add(MyIndexList[Ind].IdxName);
+  IndexList.Clear;
+  for i := 0 to High(MyIndexList) do
+    if not MyIndexList[i].Deleted then
+      IndexList.Items.Add(MyIndexList[i].IdxName);
 end;
 
 function TNewTable.Check_Value(Val: String): Boolean;
@@ -419,59 +405,54 @@ begin
 end;
 
 function TNewTable.CreateNewFieldDefs: TDbfFieldDefs;
- Var Ind : Word;
-     App : TDbfFieldDefs;
-     TmpF : TDbfFieldDef;
+var
+  row: Integer;
+  fieldDef: TDbfFieldDef;
+  n: Integer;
 begin
- App := TDbfFieldDefs.Create(Self);
+  Result := TDbfFieldDefs.Create(Self);
 
- For Ind := 1 To FieldList.RowCount - 1 Do
-  Begin
-   TmpF := App.AddFieldDef;
-   TmpF.FieldName := FieldList.Cells[1,Ind];
-   TmpF.FieldType := RetFieldType(FieldList.Cells[2,Ind]);
-   TmpF.Required := True;
+  for row := 1 to FieldList.RowCount - 1 do
+  begin
+    fieldDef := Result.AddFieldDef;
+    fieldDef.FieldName := FieldList.Cells[1, row];
+    fieldDef.FieldType := RetFieldType(FieldList.Cells[2, row]);
+    fieldDef.Required := True;
 
-   If TmpF.FieldType <> ftFloat Then
-    Begin
-     If FieldList.Cells[3,Ind] <> '' Then
-      TmpF.Size := StrToInt(FieldList.Cells[3,Ind]);
-    End
-   Else
-    TmpF.Precision := StrToInt(FieldList.Cells[3,Ind]);
-  End;
-
- Result := App;
+    if FieldList.Cells[3, row] <> '' then
+      if TryStrToInt(FieldList.Cells[3, row], n) then
+      begin
+        if fieldDef.FieldType <> ftFloat then
+          fieldDef.Size := n
+        else
+          fieldDef.Precision := n;
+      end;
+  end;
 end;
 
 procedure TNewTable.CreateMyIndex;
- Var Ind : Word;
-     Tmp : TIndexOptions;
+var
+  i: Integer;
+  idxOpt: TIndexOptions;
 begin
- If Length(MyIndexList) > 0 Then
-  For Ind := 0 To Length(MyIndexList) - 1 Do
-   If Not MyIndexList[Ind].Deleted Then
-    Begin
-     Tmp := MyIndexList[Ind].Options;
-
-     DbTable.AddIndex(MyIndexList[Ind].IdxName, MyIndexList[Ind].Fields, Tmp);
+  for i := 0 to High(MyIndexList) do
+    if not MyIndexList[i].Deleted then
+    begin
+      idxOpt := MyIndexList[i].Options;
+      DbTable.AddIndex(MyIndexList[i].IdxName, MyIndexList[i].Fields, idxOpt);
     end;
 end;
 
 function TNewTable.TestIndexName(Val: String): Boolean;
- Var Ind : Word;
+var
+  i: Integer;
 begin
- Result := True;
-
- If Length(MyIndexList) > 0 Then
-  For Ind := 0 To Length(MyIndexList) - 1 Do
-   If Not MyIndexList[Ind].Deleted Then
-    If MyIndexList[Ind].IdxName = Val Then
-     Begin
-      Result := False;
-
-      Break;
-     End;
+  Result := false;
+  for i := 0 to High(MyIndexList) do
+    if not MyIndexList[i].Deleted then
+      if MyIndexList[i].IdxName = Val then
+        exit;
+  Result := true;
 end;
 
 end.

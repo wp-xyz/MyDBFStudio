@@ -246,9 +246,7 @@ begin
     end;
 
     if (FieldList.Cells[2, row] = FieldTypenames[ftString]) or
-       //(FieldList.Cells[2, row] = Fieldtypenames[ftFloat]) or
-       //(FieldList.Cells[2, row] = Fieldtypenames[ftBlob]) or
-       //(FieldList.Cells[2, row] = Fieldtypenames[ftMemo]) or
+       (FieldList.Cells[2, row] = Fieldtypenames[ftFloat]) or
        (FieldList.Cells[2, row] = FieldTypenames[ftFixedChar]) or
        (FieldList.Cells[2, row] = FieldTypenames[ftWideString]) or
        (FieldList.Cells[2, row] = FieldTypenames[ftBCD]) or
@@ -256,7 +254,7 @@ begin
     then
       if not Check_Value(FieldList.Cells[3, row]) then
       begin
-        MessageDlg('Row ' + IntToStr(row) + ': Field length error', mtError, [mbOK], 0);
+         MessageDlg('Row ' + IntToStr(row) + ': Field length error', mtError, [mbOK], 0);
        FieldList.Row := row;
        FieldList.Col := 3;
        exit;
@@ -441,6 +439,7 @@ function TRestructure.CreateNewFieldDefs: TDbfFieldDefs;
 var
   row: Integer;
   fieldDef: TDbfFieldDef;
+  n: Integer;
 begin
   Result := TDbfFieldDefs.Create(self);
 
@@ -453,19 +452,21 @@ begin
     if FieldList.Cells[4, row] = 'N' then
      fieldDef.CopyFrom := StrToInt(FieldList.Cells[0, row]) - 1;
 
-    if fieldDef.FieldType <> ftFloat then
-    begin
-      if FieldList.Cells[3, row] <> '' then
-        fieldDef.Size := StrToInt(FieldList.Cells[3, row]);
-    end else
-      fieldDef.Precision := StrToInt(FieldList.Cells[3, row]);   // todo: crashes for float fields when cell is empty
+    if FieldList.Cells[3, row] <> '' then
+      if TryStrToInt(FieldList.Cells[3, row], n) then
+      begin
+        if fieldDef.FieldType <> ftFloat then
+          fieldDef.Size := n
+        else
+          fieldDef.Precision := n
+      end;
   end;
 end;
 
 procedure TRestructure.RecreateMyIndex;
 var
   i: Integer;
-  iOpt: TIndexOptions;
+  idxOpt: TIndexOptions;
 begin
   //First delete the index
   for i := 0 To High(MyIndexList) do
@@ -476,8 +477,8 @@ begin
   for i := 0 to High(MyIndexList) do
     if not MyIndexList[i].Deleted then
     begin
-      iOpt:= MyIndexList[i].Options;
-      FDbf.AddIndex(MyIndexList[i].IdxName, MyIndexList[i].Fields, iOpt);
+      idxOpt := MyIndexList[i].Options;
+      FDbf.AddIndex(MyIndexList[i].IdxName, MyIndexList[i].Fields, idxOpt);
     end;
 end;
 

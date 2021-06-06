@@ -58,8 +58,10 @@ object Restructure: TRestructure
         Width = 64
       end    
       item
+        Alignment = taCenter
         ReadOnly = True
         SizePriority = 0
+        Title.Alignment = taCenter
         Title.Caption = 'New'
         Width = 30
       end>
