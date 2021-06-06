@@ -467,15 +467,17 @@ begin
 end;
 
 procedure TDbfTable.ShowTableInfo(DataSet: TDataSet);
+const
+  SPACE = '   ';   // Margin to the right (hard to control on the toolbar...)
 var
   field: TField;
 begin
   Assert(Dataset is TDbf, '[ShowTableInfo] Dataset must be a TDbf.');
 
   if Dataset.IsEmpty then
-    RecordInfo.Caption := 'Record (none) of 0   '
+    RecordInfo.Caption := 'Record (none)' + SPACE
   else
-    RecordInfo.Caption := Format('Record %d of %d   ', [Dataset.RecNo, TDbf(Dataset).ExactRecordCount]);
+    RecordInfo.Caption := Format('Record %d of %d%s', [Dataset.RecNo, TDbf(Dataset).ExactRecordCount, SPACE]);
   InfoPanel.Width := RecordInfo.Width;
 
   if TabControl.Tabs.Count > 0 then
