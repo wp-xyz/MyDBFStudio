@@ -10,11 +10,11 @@ uses
 
 type
 
-  MyIndex         = Packed Record
-   IdxName        : String;
-   Fields         : String;
-   Options        : TIndexOptions;
-   Deleted        : Boolean;
+  MyIndex = Record
+   IdxName : String;
+   Fields  : String;
+   Options : TIndexOptions;
+   Deleted : Boolean;
   End;
 
   { TNewTable }
@@ -47,7 +47,8 @@ type
   private
     { private declarations }
     FDBTable: TDbf;
-    MyIndexList : array of MyIndex;
+    FFileName: String;
+    MyIndexList: array of MyIndex;
     Function ReturnTableLevel : Word;
     Procedure ShowIndexList;
     Function Check_Value(Val : String) : Boolean;
@@ -57,9 +58,9 @@ type
   public
     { public declarations }
     Ret : Boolean;
-    PageIdx : Integer;
     Function TestIndexName(Val : String) : Boolean;
     property DBTable: TDbf read FDBTable;
+    property FileName: String read FFileName;
   end;
 
 var
@@ -68,7 +69,7 @@ var
 implementation
 
 uses
-  Math, TypInfo, uUtils, uMain, uIdxTable;
+  Math, TypInfo, uUtils, uIdxTable;
 
 {$R *.lfm}
 
@@ -140,8 +141,11 @@ begin
       FDBTable.Close;
       Ret := True;
 
-      if cbOpenTB.Checked Then
-        Main.Open_Table(SaveTableDlg.FileName);
+      if cbOpenTB.Checked then
+        // This file will be opened by the OnClose handler.
+        FFileName := SaveTableDlg.FileName
+      else
+        FFileName := '';
 
       Close;
     except

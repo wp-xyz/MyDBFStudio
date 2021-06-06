@@ -116,16 +116,17 @@ type
     FirstShow : Boolean;
     Procedure CreateAliasDB;
     Procedure ClickOnHistoryFile(Sender : TObject; {%H-}Item : TMenuItem; Const FileName : String);
-    procedure TabChildCloseHandler(Sender: TObject; var CloseAction: TCloseAction);
     procedure HistoryPopupClick(Sender: TObject);
     Function TableIsAlreadyOpen(TblName : String): Integer;
     Function OBAIsAlreadyOpen: Integer;
     procedure ReadCmdLine;
 
+    procedure NewTableCloseHandler(Sender: TObject; var CloseAction: TCloseAction);
+    procedure TabChildCloseHandler(Sender: TObject; var CloseAction: TCloseAction);
   public
     { public declarations }
     FileHistory : THistoryFiles;
-    Procedure Open_Table(TblName : String);
+    Procedure Open_Table(TblName: String);
   end;
 
 var
@@ -599,7 +600,7 @@ var
 begin
   NT := TNewTable.Create(WorkSite);
   NT.FieldList.AlternateColor := Options.AlternateColor;
-  NT.OnClose := @TabChildCloseHandler;
+  NT.OnClose := @NewTableCloseHandler;
   WorkSpace.AddFormToPageControl(NT);
 end;
 
@@ -806,12 +807,31 @@ begin
   end;
 end;
 
+procedure TMain.NewTableCloseHandler(Sender: TObject; var CloseAction: TCloseAction);
+var
+  fn: String;
+begin
+  Assert(Sender is TNewTable, 'NewTableCloseHandler can be used by a TNewTable class only.');
+
+  // Prepare destruction of the form
+  CloseAction := caFree;
+
+  // Open pending table
+  fn := TNewTable(Sender).FileName;
+  if fn <> '' then
+     Open_Table(fn);
+
+  // Remove the tabsheet
+  TNewTable(Sender).Parent.Free;
+end;
+
+
 procedure TMain.TabChildCloseHandler(Sender: TObject; var CloseAction: TCloseAction);
 begin
   CloseAction := caFree;
 
   // Remove the tabsheet
-  if (Sender is TDBFTable) or (Sender is TNewTable) or (Sender is TOpenBA) then
+  if (Sender is TDBFTable) {or (Sender is TNewTable) }or (Sender is TOpenBA) then
     TControl(Sender).Parent.Free;
 end;
 
