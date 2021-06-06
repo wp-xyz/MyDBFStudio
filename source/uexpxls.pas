@@ -41,10 +41,9 @@ type
   private
     { private declarations }
     ExpObj : TDsXlsFile;
-    XlsRow : Word;
     FDbfTable: TDbf;
     Procedure CreateFieldTitle;
-    Procedure WriteRecordValue(T : TDbf);
+    Procedure WriteRecordValue(T: TDbf; ARow: Word);
     Function CreateSplitFileName(Orig : String; Ind : Word) : String;
   public
     { public declarations }
@@ -119,52 +118,52 @@ var
 begin
   for Ind := 0 to ClbField.Items.Count - 1 do
     if ClbField.Checked[Ind] then
-      ExpObj.PutStr(1, Ind + 1, ClbField.Items.Strings[Ind]);
+      ExpObj.PutStr(1, Ind + 1, ClbField.Items[Ind]);
 end;
 
-procedure TExpXLS.WriteRecordValue(T: TDbf);
+procedure TExpXLS.WriteRecordValue(T: TDbf; ARow: Word);
 var
-  Ind: Word;
+  i: Integer;
   field: TField;
   s: String;
 begin
-  for Ind := 0 To ClbField.Items.Count - 1 do
-    if ClbField.Checked[Ind] then
+  for i := 0 to ClbField.Items.Count - 1 do
+    if ClbField.Checked[i] then
     begin
-      field := T.FieldByName(ClbField.Items.Strings[Ind]);
-      case field.DataType Of
+      field := T.FieldByName(ClbField.Items[i]);
+      case field.DataType of
         ftString,
         ftFixedChar,
         ftWideString,
         ftMemo:
           begin
             // field.AsString is utf8. Excel2 is ANSI
-            s := ConvertEncoding(field.AsString, 'utf8', 'cp1252');
-            ExpObj.PutStr(XlsRow, Ind + 1, s);
+            s := ConvertEncoding(field.AsString, 'utf8', 'cp' + IntToStr(DbfTable.CodePage));
+            ExpObj.PutStr(ARow, i + 1, s);
           end;
 
         ftFloat,
         ftLargeInt,
         ftCurrency,
         ftBCD:
-          ExpObj.PutExt(XlsRow, Ind + 1, field.AsFloat);
+          ExpObj.PutExt(ARow, i + 1, field.AsFloat);
 
         ftBytes,
         ftSmallInt,
         ftWord,
         ftAutoInc,
         ftInteger:
-          ExpObj.PutInt(XlsRow, Ind + 1, field.AsInteger);
+          ExpObj.PutInt(ARow, i + 1, field.AsInteger);
 
         ftDate,
         ftDateTime:
-          ExpObj.PutDay(XlsRow, Ind + 1, field.AsDateTime);
+          ExpObj.PutDay(ARow, i + 1, field.AsDateTime);
 
         ftBoolean:
           if field.AsBoolean then
-            ExpObj.PutInt(XlsRow, Ind + 1, 1)
+            ExpObj.PutInt(ARow, i + 1, 1)
           else
-            ExpObj.PutInt(XlsRow, Ind + 1, 0);
+            ExpObj.PutInt(ARow, i + 1, 0);
       end;
     end;
 end;
@@ -209,124 +208,90 @@ end;
 
 procedure TExpXLS.ExportBtnClick(Sender: TObject);
 var
-  NumBlocks65K: Extended;
-  IntBlc, Ind, Ind2: LongInt;
+  i, j, n: Integer;
   FileName: String;
+  pcnt: Integer;
+  xlsRow: Integer;
+  savedAfterScroll: TDatasetNotifyEvent;
+  bm: TBookmark;
 begin
   if not SaveExp.Execute then
     exit;
 
-  NumBlocks65k := DbfTable.ExactRecordCount / $FFFF;
-
-  pBar.Min:=0;
-  pBar.Max := DbfTable.ExactRecordCount;
-  pBar.Position := 0;
-
-  if NumBlocks65K > 1 then
-    if MessageDlg('Table records is more then 65.535 and must split the export file. Continue?', mtWarning, [mbYes, mbCancel], 0) = mrCancel then
+  n := DbfTable.ExactRecordCount;
+  if n > 65535 then
+    if MessageDlg('There are more than 65.535 records. The export file must be split. Continue?', mtWarning, [mbYes, mbCancel], 0) = mrCancel then
       Exit;
 
-  ExpObj:=TDsXlsFile.Create;
+  pBar.Min := 0;
+  pBar.Max := 100; //DbfTable.ExactRecordCount;
+  pBar.Position := 0;
+
+  savedAfterScroll := DbfTable.AfterScroll;
+  DbfTable.AfterScroll := nil;
+  bm := DbfTable.GetBookmark;
+  DbfTable.DisableControls;
+
+  ExpObj := TDsXLSFile.Create;
   try
-    ExpObj.StrFormatNumber:=StrFN.Text;
-    ExpObj.StrFormatNumberDec:=StrFND.Text;
-    ExpObj.StrFormatMaskNumber:=StrMFN.Text;
-    ExpObj.StrFormatMaskNumberDec:=StrMFND.Text;
-    ExpObj.StrFormatDate:=cbDateF.Text;
+    ExpObj.StrFormatNumber := StrFN.Text;
+    ExpObj.StrFormatNumberDec := StrFND.Text;
+    ExpObj.StrFormatMaskNumber := StrMFN.Text;
+    ExpObj.StrFormatMaskNumberDec := StrMFND.Text;
+    ExpObj.StrFormatDate := cbDateF.Text;
 
-    IntBlc:=Trunc(NumBlocks65K);
+    xlsRow := 2;
+    FileName := SaveExp.FileName;
+    ExpObj.Open(FileName);
+    CreateFieldTitle();
 
+    i := 0;
+    j := 1;
     DbfTable.First;
-    XlsRow := 2;
-
-    if NumBlocks65K < 1.0 then
-    begin
-      try
-        FileName := SaveExp.FileName;
-        ExpObj.Open(FileName);
-        CreateFieldTitle();
-        while not DbfTable.EOF Do
-        begin
-          WriteRecordValue(DbfTable);
-          DbfTable.Next;
-          pBar.Position := pBar.Position + 1;
-          Inc(XlsRow);
+    try
+      while not DbfTable.EOF do
+      begin
+        WriteRecordValue(DbfTable, xlsRow);
+        DbfTable.Next;
+        inc(i);
+        pcnt := (i * 100) div n;
+        if pcnt <> pBar.Position then
+          pBar.Position := pcnt;
+        Inc(xlsRow);
+        // Write at most 65535 records to an Excel2 file. Begin a new file if there are more.
+        if xlsRow = 65536 then begin
+          ExpObj.Close;
+          if DbfTable.EOF then
+            break;
+          // Prepare next part
+          FileName := CreateSplitFileName(SaveExp.FileName, j);
+          xlsRow := 2;
+          ExpObj.Open(FileName);
+          CreateFieldTitle();
+          inc(j);
+          i := 0;
         end;
-
+      end;
+      if i <> 65536 then
         ExpObj.Close;
 
-        pBar.Position := 0;
-      except
-        on E:Exception do
-        begin
-          MessageDlg('Error writing file:' + LineEnding + E.Message, mtError, [mbOK], 0);
-          exit;
-        end;
-      end;
-    end else
-    begin
-      for Ind:=1 To IntBlc do
+      Close;
+      MessageDlg('Table successfully exported to ' + FileName, mtInformation, [mbOK], 0);
+
+    except
+      on E:Exception do
       begin
-        XlsRow := 2;
-
-        if Ind = 1 then
-          FileName := SaveExp.FileName
-        else
-          FileName := CreateSplitFileName(SaveExp.FileName, Ind);
-
-        try
-          ExpObj.Open(FileName);
-          CreateFieldTitle();
-          for ind2 := 1 To $FFFF do
-          begin
-            WriteRecordValue(DbfTable);
-            DbfTable.Next;
-            pBar.Position := pBar.Position + 1;
-            Inc(XlsRow);
-          end;
-          ExpObj.Close;
-        except
-          on E:Exception do
-            begin
-              MessageDlg('Error on writing file:' + LineEnding + E.Message, mtError, [mbOK], 0);
-              exit;
-            end;
-        end;
-      end;
-
-      if not DbfTable.EOF then
-      begin
-        XlsRow := 2;
-        FileName := CreateSplitFileName(SaveExp.FileName, Ind + 1);     // todo: is Ind defined here?
-
-        try
-          ExpObj.Open(FileName);
-          CreateFieldTitle();
-          while not DbfTable.EOF do
-          begin
-            WriteRecordValue(DbfTable);
-            DbfTable.Next;
-            pBar.Position := pBar.Position + 1;
-            Inc(XlsRow);
-          end;
-          ExpObj.Close;
-
-          pBar.Position := 0;
-        except
-          on E:Exception do
-            begin
-              MessageDlg('Error writing file:' + LineEnding + E.Message, mtError, [mbOK], 0);
-              exit;
-            end;
-        end;
+        MessageDlg('Error writing file ' + FileName + ':' + LineEnding + E.Message, mtError, [mbOK], 0);
+        exit;
       end;
     end;
 
-    Close;
-    MessageDlg('Table successfully exported to ' + FileName, mtInformation, [mbOK], 0);
-
   finally
     ExpObj.Free;
+    DbfTable.AfterScroll := savedAfterScroll;
+    DbfTable.DisableControls;
+    DbfTable.GotoBookmark(bm);
+    DbfTable.FreeBookmark(bm);
   end;
 end;
 

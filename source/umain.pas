@@ -544,14 +544,7 @@ begin
       ExpXLS := TExpXLS.Create(nil);
       try
         ExpXLS.DbfTable := TDbfTable(F).DBTable;
-
-        TDbfTable(F).Ds.Enabled := false;
-        TDbfTable(F).Ds.DataSet := nil;
-
         ExpXLS.ShowModal;
-
-        TDbfTable(F).Ds.DataSet := TDbfTable(F).DBTable;
-        TDbfTable(F).Ds.Enabled := true;
       finally
         FreeAndNil(ExpXLS);
       end;
