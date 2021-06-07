@@ -64,7 +64,6 @@ type
     procedure tbRestructClick(Sender: TObject);
     procedure SaveBlobBtnClick(Sender: TObject);
     procedure tbSetFieldClick(Sender: TObject);
-    Procedure ShowTableInfo(DataSet: TDataSet);
     procedure TabControlChange(Sender: TObject);
     procedure CloseTabBtnClick(Sender: TObject);
     procedure tbAutoFillColumnsClick(Sender: TObject);
@@ -73,6 +72,7 @@ type
     { private declarations }
     FDBTable: TDbf;
     FColWidths: array of Integer;
+    FRecordCount: Integer;
     procedure FixTabControlConstraints;
     function IsGraphicStream(AStream: TStream): Boolean;
     Procedure Load_Table_Indexes;
@@ -80,8 +80,10 @@ type
     procedure SaveColWidths(ATable: TDbf);
     procedure ShowBlob(ATable: TDbf);
     procedure ShowBlobField(AField: TField);
+    Procedure ShowTableInfo(DataSet: TDataSet);
     function TranslateHandler(ATable: TDbf; Src, Dest: PChar; ToOem: Boolean): Integer;
     procedure UpdateCmds;
+    procedure UpdateTableInfo(Dataset: TDataset);
 
   public
     { public declarations }
@@ -412,7 +414,8 @@ begin
   FDBTable := TDbf.Create(Self);
   FDBTable.Exclusive := true;
   FDBTable.Filtered := true;
-  FDBTable.AfterInsert := @ShowTableInfo;
+  FDBTable.AfterInsert := @UpdateTableInfo;
+  FDBTable.AfterDelete := @UpdateTableInfo;
   FDBTable.AfterEdit := @DBTableAfterEdit;
   FDBTable.AfterPost := @ShowTableInfo;
   FDBTable.AfterCancel := @ShowTableInfo;
@@ -477,7 +480,7 @@ begin
   if Dataset.IsEmpty then
     RecordInfo.Caption := 'Record (none)' + SPACE
   else
-    RecordInfo.Caption := Format('Record %d of %d%s', [Dataset.RecNo, TDbf(Dataset).ExactRecordCount, SPACE]);
+    RecordInfo.Caption := Format('Record %d of %d%s', [Dataset.RecNo, FRecordCount, SPACE]);
   InfoPanel.Width := RecordInfo.Width;
 
   if TabControl.Tabs.Count > 0 then
@@ -487,6 +490,14 @@ begin
   end;
 
   UpdateCmds;
+end;
+
+procedure TDbfTable.UpdateTableInfo(Dataset: TDataset);
+begin
+  Assert(Dataset is TDbf, '[ShowTableInfo] Dataset must be a TDbf.');
+
+  FRecordCount := TDbf(Dataset).ExactRecordCount;
+  ShowTableInfo(Dataset);
 end;
 
 procedure TDbfTable.TabControlChange(Sender: TObject);
@@ -557,6 +568,7 @@ procedure TDbfTable.Setup;
 var
   field: TField;
 begin
+  FRecordCount := DbTable.ExactRecordCount;
   Load_Table_Indexes();
   ShowBlob(DbTable);
   ShowTableInfo(DbTable);
