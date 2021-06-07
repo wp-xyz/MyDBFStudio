@@ -1,7 +1,7 @@
 unit uExpSQL;
 
-{todo: Export MEMO and BLOB fields }
-{todo: Allow selection of code page }
+{ todo: Export MEMO and BLOB fields }
+{ todo: Save date/time formats and separators to cfg }
 
 {$mode objfpc}{$H+}
 
@@ -9,22 +9,34 @@ interface
 
 uses
   Classes, SysUtils, dbf, FileUtil, Forms, Controls, Graphics, Dialogs,
-  CheckLst, StdCtrls, ComCtrls, Buttons, DB;
+  CheckLst, StdCtrls, ComCtrls, Buttons, ExtCtrls, DB;
 
 type
 
   { TExpSQL }
 
   TExpSQL = class(TForm)
+    Bevel1: TBevel;
+    cbDateFmt: TComboBox;
+    cbDateSep: TComboBox;
+    cbTimeSep: TComboBox;
+    cbTimeFmt: TComboBox;
+    cbDateTimeFmt: TComboBox;
     CloseBtn: TBitBtn;
     ExportBtn: TBitBtn;
     ClbField: TCheckListBox;
-    CrTab: TCheckBox;
-    ExpRec: TCheckBox;
+    cbCreateTable: TCheckBox;
+    cbExportRec: TCheckBox;
+    lblDateFmt: TLabel;
+    lblTimeFmt: TLabel;
+    lblDateTimeFmt: TLabel;
+    lblDateSep: TLabel;
+    lblTimeSep: TLabel;
     lblExportFields: TLabel;
     lblProgress: TLabel;
     pBar: TProgressBar;
     SaveExp: TSaveDialog;
+    procedure cbExportRecChange(Sender: TObject);
     procedure CloseBtnClick(Sender: TObject);
     procedure ExportBtnClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -36,7 +48,8 @@ type
     Procedure GenCreateTableScript;
     Function Remove_FileExtension(Val : String) : String;
     Function ConvertFloat(Val : String) : String;
-    Procedure CreateSQLScript;
+    procedure CreateSQLScript;
+    function Validate(out AMsg: String; AControl: TWinControl): Boolean;
   public
     { public declarations }
     property DbfTable: TDbf read FDbfTable write FDbfTable;
@@ -71,7 +84,7 @@ var
   w: Integer;
 begin
   w := Max(ExportBtn.Width, CloseBtn.Width);
-  w := Max(w, (crTab.Width - ExportBtn.BorderSpacing.Right) div 2);
+  w := Max(w, (cbCreateTable.Width - ExportBtn.BorderSpacing.Right) div 2);
   ExportBtn.Constraints.MinWidth := w;
   CloseBtn.Constraints.MinWidth := w;
 
@@ -182,25 +195,17 @@ begin
 end;
 
 function TExpSQL.ConvertFloat(Val: String): String;
- Var I : Word;
+var
+  i: Integer;
 begin
- Result := Val;
-
- If Pos(',',Val) > 0 Then
-  Begin
-   Result := '';
-
-   For I := 1 To Pos(',',Val) - 1 Do
-    Result := Result + Val[I];
-
-   Result := Result + '.';
-
-   For I := Pos(',',Val) + 1 To Length(Val) Do
-    Result := Result + Val[I];
-  End;
+  Result := Val;
+  for i := 1 to Length(Result) do
+    if Result[i] = ',' then Result[i] := '.';
 end;
 
 procedure TExpSQL.CreateSQLScript;
+const
+  INDENT = '  ';
 var
   i, n: Integer;
   Str : TStringList;
@@ -210,6 +215,7 @@ var
   bm: TBookMark;
   counter: Integer;
   percent: Integer;
+  fs: TFormatSettings;
 begin
   pBar.Min := 0;
   pBar.Max := 100;
@@ -220,6 +226,10 @@ begin
   DbfTable.DisableControls;
   bm := DbfTable.GetBookmark;
   n := DbfTable.ExactRecordCount;
+
+  fs := FormatSettings;
+  if cbDateSep.Text <> '' then fs.DateSeparator := cbDateSep.Text[1];
+  if cbTimeSep.Text <> '' then fs.TimeSeparator := cbTimeSep.Text[1];
 
   Str := TStringList.Create;
   try
@@ -243,9 +253,9 @@ begin
             ftWideString,
             ftFixedWideChar:
               if field.AsString <> '' then
-                Str.Add(Format('      %s', [QuotedStr(field.AsString)]))
+                Str.Add(INDENT + QuotedStr(field.AsString))
               else
-                Str.Add(Format('      %s', [QuotedStr('')]));
+                Str.Add(INDENT + QuotedStr(''));
 
             ftAutoInc,
             ftLargeint,
@@ -255,41 +265,41 @@ begin
             ftBytes,
             ftVarBytes:
               if field.AsString <> '' then
-                Str.Add(Format('      %s', [field.AsString]))
+                Str.Add(INDENT + field.AsString)
               else
-                Str.Add(       '      NULL');
+                Str.Add(INDENT + 'NULL');
 
             ftFloat,
             ftCurrency,
             ftBCD:
               if field.AsString <> '' then
-                Str.Add(Format('      %s', [ConvertFloat(field.AsString)]))
+                Str.Add(INDENT + ConvertFloat(field.AsString))
               else
-                Str.Add(       '      NULL');
+                Str.Add(INDENT + 'NULL');
 
             ftBoolean:
               if field.AsBoolean then
-                Str.Add(       '      1')
+                Str.Add(INDENT + '1')
               else
-                Str.Add(       '      0');
+                Str.Add(INDENT + '0');
 
             ftDate:
               if field.AsString <> '' then
-                Str.Add(Format('      %s', [DateToStr(field.AsDateTime)]))   // todo: Is this the right format???
+                Str.Add(INDENT + FormatDateTime(cbDateFmt.Text, field.AsDateTime, fs))
               else
-                Str.Add(       '      NULL');
+                Str.Add(INDENT + 'NULL');
 
             ftDateTime:
               if field.AsString <> '' then
-                Str.Add(Format('      %s', [DateTimeToStr(field.AsDateTime)]))  // todo: Is this the right format ???
+                Str.Add(INDENT + FormatDateTime(cbDateTimeFmt.Text, field.AsDateTime, fs))
               else
-                Str.Add(       '      NULL');
+                Str.Add(INDENT + 'NULL');
 
             ftTime:
               if field.AsString <> '' then
-                Str.Add(Format('      %s', [TimeToStr(field.AsDateTime)]))   // todo: Is this format correct?
+                Str.Add(INDENT + FormatDateTime(cbTimeFmt.Text, field.AsDateTime, fs))
               else
-                Str.Add(       '      NULL');
+                Str.Add(INDENT + 'NULL');
           end;
         end;
 
@@ -330,16 +340,43 @@ begin
   Close;
 end;
 
-procedure TExpSQL.ExportBtnClick(Sender: TObject);
+procedure TExpSQL.cbExportRecChange(Sender: TObject);
+var
+  doExportRec: Boolean;
 begin
+  doExportRec := cbExportRec.Checked;
+  lblDateSep.Enabled := doExportRec;
+  cbDateSep.Enabled := doExportRec;
+  lblTimeSep.Enabled := doExportRec;
+  cbTimeSep.Enabled := doExportRec;
+  lblDateFmt.Enabled := doExportRec;
+  cbDateFmt.Enabled := doExportRec;
+  lblTimeFmt.Enabled := doExportRec;
+  cbTimeFmt.Enabled := doExportRec;
+  lblDateTimeFmt.Enabled := doExportRec;
+  cbDateTimeFmt.Enabled := doExportRec;
+end;
+
+procedure TExpSQL.ExportBtnClick(Sender: TObject);
+var
+  C: TWinControl;
+  msg: String;
+begin
+  if not Validate(msg, C) then
+  begin
+    C.SetFocus;
+    MessageDlg(msg, mtError, [mbOK], 0);
+    exit;
+  end;
+
   if not SaveExp.Execute then
     exit;
 
   try
-    if CrTab.Checked then
+    if cbCreateTable.Checked then
       GenCreateTableScript;
 
-    if ExpRec.Checked then
+    if cbExportRec.Checked then
       CreateSQLScript;
 
     Close;
@@ -348,6 +385,57 @@ begin
     on E: Exception do
       MessageDlg('Error writing file:' + LineEnding + E.Message, mtError, [mbOK], 0);
   end;
+end;
+
+function TExpSQL.Validate(out AMsg: String; AControl: TWinControl): Boolean;
+var
+  f: TField;
+begin
+  Result := false;
+
+  if not (cbCreateTable.Checked or cbExportRec.Checked) then
+  begin
+    AControl := cbCreateTable;
+    AMsg := 'No script type selected.';
+    exit;
+  end;
+
+  if cbExportRec.Checked then
+    for f in DbfTable.Fields do
+    begin
+      if (f.DataType in [ftDate, ftDateTime]) and (cbDateSep.Text = '') then
+      begin
+        AControl := cbDateSep;
+        AMsg := 'Date separator not specified.';
+        exit;
+      end;
+      if (f.DataType in [ftTime, ftDateTime]) and (cbTimeSep.Text = '') then
+      begin
+        AControl := cbTimeSep;
+        AMsg := 'Time separator not specified.';
+        exit;
+      end;
+      if (f.DataType = ftDate) and (cbDateFmt.Text = '') then
+      begin
+        AControl := cbDateFmt;
+        AMsg := 'No date format specified.';
+        exit;
+      end;
+      if (f.DataType = ftTime) and (cbTimeFmt.Text = '') then
+      begin
+        AControl := cbTimeFmt;
+        AMsg := 'No time format specified.';
+        exit;
+      end;
+      if (f.DataType = ftDateTime) and (cbDateTimeFmt.Text = '') then
+      begin
+        AControl := cbDateTimeFmt;
+        AMsg := 'No date/time format specified.';
+        exit;
+      end;
+    end;
+
+  Result := true;
 end;
 
 end.

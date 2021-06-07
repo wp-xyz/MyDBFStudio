@@ -1,13 +1,13 @@
 object ExpSQL: TExpSQL
   Left = 410
-  Height = 349
+  Height = 444
   Top = 241
-  Width = 464
+  Width = 501
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'Export Table To SQL Script'
-  ClientHeight = 349
-  ClientWidth = 464
+  ClientHeight = 444
+  ClientWidth = 501
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnShow = FormShow
@@ -21,9 +21,9 @@ object ExpSQL: TExpSQL
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
     Left = 6
-    Height = 320
+    Height = 415
     Top = 23
-    Width = 285
+    Width = 322
     Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Left = 6
     BorderSpacing.Top = 2
@@ -50,11 +50,11 @@ object ExpSQL: TExpSQL
     Caption = 'Export Fields'
     ParentColor = False
   end
-  object CrTab: TCheckBox
+  object cbCreateTable: TCheckBox
     AnchorSideLeft.Control = ClbField
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = ClbField
-    Left = 297
+    Left = 334
     Height = 19
     Top = 23
     Width = 180
@@ -62,29 +62,30 @@ object ExpSQL: TExpSQL
     Caption = 'Generate CREATE TABLE Script'
     TabOrder = 1
   end
-  object ExpRec: TCheckBox
+  object cbExportRec: TCheckBox
     AnchorSideLeft.Control = ClbField
     AnchorSideLeft.Side = asrBottom
-    AnchorSideTop.Control = CrTab
+    AnchorSideTop.Control = cbCreateTable
     AnchorSideTop.Side = asrBottom
-    Left = 297
+    Left = 334
     Height = 19
     Top = 48
     Width = 96
     BorderSpacing.Top = 6
     Caption = 'Export records'
     Checked = True
+    OnChange = cbExportRecChange
     State = cbChecked
     TabOrder = 2
   end
   object lblProgress: TLabel
     AnchorSideLeft.Control = ClbField
     AnchorSideLeft.Side = asrBottom
-    AnchorSideTop.Control = ExpRec
+    AnchorSideTop.Control = cbDateSep
     AnchorSideTop.Side = asrBottom
-    Left = 297
+    Left = 334
     Height = 15
-    Top = 91
+    Top = 299
     Width = 45
     BorderSpacing.Top = 24
     Caption = 'Progress'
@@ -97,15 +98,15 @@ object ExpSQL: TExpSQL
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 297
+    Left = 334
     Height = 20
-    Top = 108
+    Top = 316
     Width = 161
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
     BorderSpacing.Bottom = 200
-    TabOrder = 3
+    TabOrder = 8
   end
   object ExportBtn: TBitBtn
     AnchorSideLeft.Side = asrBottom
@@ -113,9 +114,9 @@ object ExpSQL: TExpSQL
     AnchorSideRight.Control = CloseBtn
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 297
+    Left = 334
     Height = 26
-    Top = 317
+    Top = 412
     Width = 80
     Anchors = [akRight, akBottom]
     AutoSize = True
@@ -126,7 +127,7 @@ object ExpSQL: TExpSQL
     Images = CommonData.Images
     ImageIndex = 7
     OnClick = ExportBtnClick
-    TabOrder = 4
+    TabOrder = 9
   end
   object CloseBtn: TBitBtn
     AnchorSideLeft.Side = asrBottom
@@ -135,9 +136,9 @@ object ExpSQL: TExpSQL
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 383
+    Left = 420
     Height = 26
-    Top = 317
+    Top = 412
     Width = 75
     Anchors = [akRight, akBottom]
     AutoSize = True
@@ -148,7 +149,191 @@ object ExpSQL: TExpSQL
     Images = CommonData.Images
     ImageIndex = 37
     OnClick = CloseBtnClick
+    TabOrder = 10
+  end
+  object lblDateFmt: TLabel
+    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = cbExportRec
+    AnchorSideTop.Side = asrBottom
+    Left = 334
+    Height = 15
+    Top = 91
+    Width = 65
+    BorderSpacing.Top = 24
+    Caption = 'Date Format'
+    ParentColor = False
+  end
+  object cbDateFmt: TComboBox
+    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = lblDateFmt
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 334
+    Height = 23
+    Top = 108
+    Width = 161
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 2
+    BorderSpacing.Right = 6
+    ItemHeight = 15
+    Items.Strings = (
+      'dd/mm/yyyy'
+      'mm/dd/yyyy'
+      'yyyy/mm/dd'
+      'yyyy/dd/mm'
+    )
     TabOrder = 5
+  end
+  object lblTimeFmt: TLabel
+    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = cbDateFmt
+    AnchorSideTop.Side = asrBottom
+    Left = 334
+    Height = 15
+    Top = 139
+    Width = 67
+    BorderSpacing.Top = 8
+    Caption = 'Time Format'
+    ParentColor = False
+  end
+  object cbTimeFmt: TComboBox
+    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = lblTimeFmt
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 334
+    Height = 23
+    Top = 156
+    Width = 161
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 2
+    BorderSpacing.Right = 6
+    ItemHeight = 15
+    Items.Strings = (
+      'hh:nn:ss'
+      'hh:nn'
+    )
+    TabOrder = 6
+  end
+  object lblDateTimeFmt: TLabel
+    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = cbTimeFmt
+    AnchorSideTop.Side = asrBottom
+    Left = 334
+    Height = 15
+    Top = 187
+    Width = 96
+    BorderSpacing.Top = 8
+    Caption = 'Date/Time Format'
+    ParentColor = False
+  end
+  object cbDateTimeFmt: TComboBox
+    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = lblDateTimeFmt
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 334
+    Height = 23
+    Top = 204
+    Width = 161
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 2
+    BorderSpacing.Right = 6
+    ItemHeight = 15
+    Items.Strings = (
+      'yyyy/mm/dd hh:nn:ss'
+      'dd/mm/yyyy hh:nn:ss'
+      'mm/dd/yyyy hh:ss:ss'
+      'yyyy"/"mm"/"dd"T"hh":"nn":"ss"Z"'
+      'yyyymmdd"T"hhnnss"Z"'
+    )
+    TabOrder = 7
+  end
+  object lblDateSep: TLabel
+    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = cbDateTimeFmt
+    AnchorSideTop.Side = asrBottom
+    Left = 334
+    Height = 15
+    Top = 235
+    Width = 77
+    BorderSpacing.Top = 8
+    Caption = 'Date Separator'
+    ParentColor = False
+  end
+  object cbDateSep: TComboBox
+    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = lblDateSep
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Bevel1
+    Left = 334
+    Height = 23
+    Top = 252
+    Width = 77
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 2
+    ItemHeight = 15
+    Items.Strings = (
+      '/'
+      '-'
+      '.'
+      ':'
+    )
+    TabOrder = 3
+  end
+  object lblTimeSep: TLabel
+    AnchorSideLeft.Control = cbTimeSep
+    AnchorSideTop.Control = lblDateSep
+    AnchorSideRight.Side = asrBottom
+    Left = 418
+    Height = 15
+    Top = 235
+    Width = 79
+    Caption = 'Time Separator'
+    ParentColor = False
+  end
+  object cbTimeSep: TComboBox
+    AnchorSideLeft.Control = Bevel1
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = lblTimeSep
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 418
+    Height = 23
+    Top = 252
+    Width = 77
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 2
+    BorderSpacing.Right = 6
+    ItemHeight = 15
+    Items.Strings = (
+      '/'
+      '-'
+      '.'
+      ':'
+    )
+    TabOrder = 4
+  end
+  object Bevel1: TBevel
+    AnchorSideLeft.Control = cbDateFmt
+    AnchorSideLeft.Side = asrCenter
+    Left = 411
+    Height = 18
+    Top = 344
+    Width = 7
+    Shape = bsSpacer
   end
   object SaveExp: TSaveDialog
     Title = 'Save as...'
