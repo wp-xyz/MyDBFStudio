@@ -19,6 +19,7 @@ Type
       FStrMaskNumber              : String;
       FStrMaskNumberDec           : String;
       FStrDate                    : String;
+      FCodePage                   : Word;
 
       Procedure WriteByte(B : Byte);
       Procedure WriteWord(W : Word);
@@ -52,6 +53,7 @@ Type
       Property StrFormatMaskNumber : String Read FStrMaskNumber Write FStrMaskNumber;
       Property StrFormatMaskNumberDec : String Read FStrMaskNumberDec Write FStrMaskNumberDec;
       Property StrFormatDate : String Read FStrDate Write FStrDate;
+      Property CodePage: Word Read FCodePage write FCodePage;
     End;
 
 implementation
@@ -65,17 +67,17 @@ end;
 
 procedure TDsXlsFile.WriteWord(W: Word);
 begin
- FStream.Write(W,2);
+  FStream.Write(W,2);
 end;
 
 procedure TDsXlsFile.WriteInt(I: Longint);
 begin
- FStream.Write(I,4);
+  FStream.Write(I,4);
 end;
 
 procedure TDsXlsFile.WriteDbl(D: Double);
 begin
- FStream.Write(D,8);
+  FStream.Write(D,8);
 end;
 
 procedure TDsXlsFile.WritePos(Row, Col, Format: Word; Fmt: Byte);
@@ -112,7 +114,6 @@ end;
 destructor TDsXlsFile.Destroy;
 begin
  FStream.Free;
-
  Inherited Destroy;
 end;
 
@@ -232,50 +233,62 @@ begin
 end;
 
 procedure TDsXlsFile.Open(Fn: String);
- Procedure PutFormat(F : String);
-   Var Len : Byte;
-  Begin
-   Len:=Length(F);
 
-   WriteWord(30);                // Format code
-   WriteWord(1 + Len);           // Length
-   WriteByte(Len);
+  procedure PutFormat(F: String);
+  var
+    len: Byte;
+  begin
+    len := Length(F);
+     WriteWord(30);                // Format code
+     WriteWord(1 + len);           // Length
+     WriteByte(len);
+     FStream.Write(F[1],len);
+  end;
 
-   FStream.Write(F[1],Len);
-  End;
 begin
- FStream.Free;
- FStream := TFileStream.Create(Fn, fmCreate);
+  FStream.Free;
+  FStream := TFileStream.Create(Fn, fmCreate);
 
- WriteWord($0809);                 // BOF
- WriteWord(6);                     // Length
- WriteWord(0);
- WriteWord($0010);                 // XLS document
- WriteInt(0);
- WriteWord(8);                     // Length
- WriteWord(0);                     // MinSaveRecs
- WriteWord($FFFF);                 // MaxSaveRecs
- WriteWord(0);                     // MinSaveCols
- WriteWord(512);                   // MaxSaveCols
+  // Write BOF record
+  WriteWord($0009);                 // BOF (Excel2)
+  WriteWord(4);                     // Record length
+  WriteWord($0200);                 // BIFF version
+  WriteWord($0010);                 // XLS document
 
- PutFormat('General');
- PutFormat(FStrNumber);
- PutFormat(FStrNumberDec);
- PutFormat(FStrMaskNumber);
- PutFormat(FStrMaskNumberDec);
- PutFormat(FStrDate);
+  // Write CODEPAGE record
+  if FCodePage > 0 then
+  begin
+    WriteWord($0042);               // ID of CODEPAGE record
+    WriteWord(2);                   // Record length
+    WriteWord(FCodePage);           // Code page value
+  end;
+
+  // Write DIMENSION record
+  WriteWord(0);                     // ID of DIMENSION record
+  WriteWord(8);                     // Length
+  WriteWord(0);                     // MinSaveRecs
+  WriteWord($FFFF);                 // MaxSaveRecs
+  WriteWord(0);                     // MinSaveCols
+  WriteWord(512);                   // MaxSaveCols
+
+  PutFormat('General');
+  PutFormat(FStrNumber);
+  PutFormat(FStrNumberDec);
+  PutFormat(FStrMaskNumber);
+  PutFormat(FStrMaskNumberDec);
+  PutFormat(FStrDate);
 end;
 
 procedure TDsXlsFile.Close;
 begin
- If FStream = Nil Then
-  Exit;
+  if FStream = Nil then
+    Exit;
 
- WriteWord(10);                    // EOF
- WriteWord(0);
+  WriteWord(10);                    // EOF
+  WriteWord(0);
 
- FStream.Free;
- FStream:=Nil;
+  FStream.Free;
+  FStream := nil;
 end;
 
 end.

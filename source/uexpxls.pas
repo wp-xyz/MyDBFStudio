@@ -1,7 +1,5 @@
 unit uExpXLS;
 
-{ todo: Allow selection of code page }
-
 {$mode objfpc}{$H+}
 
 interface
@@ -210,7 +208,7 @@ procedure TExpXLS.ExportBtnClick(Sender: TObject);
 var
   i, j, n: Integer;
   FileName: String;
-  pcnt: Integer;
+  percent: Integer;
   xlsRow: Integer;
   savedAfterScroll: TDatasetNotifyEvent;
   bm: TBookmark;
@@ -239,6 +237,7 @@ begin
     ExpObj.StrFormatMaskNumber := StrMFN.Text;
     ExpObj.StrFormatMaskNumberDec := StrMFND.Text;
     ExpObj.StrFormatDate := cbDateF.Text;
+    ExpObj.CodePage := DbfTable.CodePage;
 
     xlsRow := 2;
     FileName := SaveExp.FileName;
@@ -254,9 +253,9 @@ begin
         WriteRecordValue(DbfTable, xlsRow);
         DbfTable.Next;
         inc(i);
-        pcnt := (i * 100) div n;
-        if pcnt <> pBar.Position then
-          pBar.Position := pcnt;
+        percent := (i * 100) div n;
+        if percent <> pBar.Position then
+          pBar.Position := percent;
         Inc(xlsRow);
         // Write at most 65535 records to an Excel2 file. Begin a new file if there are more.
         if xlsRow = 65536 then begin
@@ -269,7 +268,6 @@ begin
           ExpObj.Open(FileName);
           CreateFieldTitle();
           inc(j);
-          i := 0;
         end;
       end;
       if i <> 65536 then
