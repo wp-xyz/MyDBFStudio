@@ -106,9 +106,9 @@ end;
 
 function TExpDBF.ReturnTableLevel: Word;
 const
-  TABLE_LEVELS: array[0..3] of Integer = (3, 4, 7, 25);
+  TABLE_LEVELS: array[0..4] of Integer = (3, 4, 7, 25, 30);
 begin
-  if (TableType.ItemIndex >= 0) and (TableType.ItemIndex <= 3) then
+  if (TableType.ItemIndex >= 0) and (TableType.ItemIndex <= 4) then
     Result := TABLE_LEVELS[TableType.ItemIndex]
   else
     Result := 4;

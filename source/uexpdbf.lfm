@@ -69,6 +69,7 @@ object ExpDBF: TExpDBF
       'dBase IV'
       'Visual dBase VII'
       'FoxPro'
+      'Visual FoxPro'
     )
     Style = csDropDownList
     TabOrder = 1
