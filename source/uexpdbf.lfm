@@ -9,7 +9,6 @@ object ExpDBF: TExpDBF
   ClientHeight = 372
   ClientWidth = 441
   OnCloseQuery = FormCloseQuery
-  OnCreate = FormCreate
   OnShow = FormShow
   Position = poMainFormCenter
   LCLVersion = '2.1.0.0'

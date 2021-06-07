@@ -27,7 +27,6 @@ type
     procedure CloseBtnClick(Sender: TObject);
     procedure ExportBtnClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-    procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
@@ -36,10 +35,11 @@ type
     Function ReturnTableLevel : Word;
     Procedure Create_Fields_List;
     Procedure Move_Records;
+    procedure SetDbfTable(AValue: TDbf);
     property ExpTable: TDbf read FExpTable write FExpTable;
   public
     { public declarations }
-    property DbfTable: TDbf read FDbfTable write FDbfTable;
+    property DbfTable: TDbf read FDbfTable write SetDbfTable;
   end;
 
 var
@@ -50,7 +50,7 @@ implementation
 {$R *.lfm}
 
 uses
-  Math, uOptions;
+  Math, LConvEncoding, dbf_dbffile, uOptions;
 
 { TExpDBF }
 
@@ -64,10 +64,12 @@ begin
   if not SaveExp.Execute then
     Exit;
 
-  ExpTable.TableName := SaveExp.FileName;
-  ExpTable.TableLevel := ReturnTableLevel;
-
+  ExpTable.Free;
+  ExpTable := TDbf.Create(self);
   try
+    ExpTable.TableName := SaveExp.FileName;
+    ExpTable.TableLevel := ReturnTableLevel;
+    ExpTable.LanguageID := DbfTable.LanguageID;   // This copies the codepage
     Create_Fields_List();
     Move_Records();
     ExpTable.Close;
@@ -86,12 +88,6 @@ begin
     Options.ExportDBFWindow.ExtractFromForm(Self);
 end;
 
-procedure TExpDBF.FormCreate(Sender: TObject);
-begin
-  FDbfTable := TDbf.Create(self);
-  FExpTable := TDbf.Create(self);
-end;
-
 procedure TExpDBF.FormShow(Sender: TObject);
 var
   ind: Integer;
@@ -107,14 +103,6 @@ begin
   begin
     AutoSize := false;
     Options.ExportDBFWindow.ApplyToForm(Self);
-  end;
-
-  ClbField.Clear;
-
-  for ind := 0 to DbfTable.FieldDefs.Count - 1 do
-  begin
-    ClbField.Items.Add(DbfTable.FieldDefs.Items[ind].Name);
-    ClbField.Checked[ind] := True;
   end;
 end;
 
@@ -154,12 +142,18 @@ var
   bm: TBookmark;
   counter: Integer;
   percent: Integer;
+  srcField: TField;
+  expField: TField;
+  s: String;
+  rs: RawByteString;
+  cp: String;
 begin
   pBar.Min := 0;
   pBar.Max := 100;
   pBar.Position := 0;
 
   ExpTable.Open;
+  cp := 'cp' + IntToStr(ExpTable.CodePage);
 
   n := DbfTable.ExactRecordCount;
   savedAfterScroll := DbfTable.AfterScroll;
@@ -168,6 +162,7 @@ begin
   bm := DbfTable.GetBookmark;
 
   try
+
     DbfTable.First;
     counter := 0;
 
@@ -176,7 +171,16 @@ begin
       ExpTable.Insert;
       for i := 0 to ClbField.Items.Count - 1 do
         if ClbField.Checked[i] then
-          ExpTable.FieldByName(ClbField.Items[i]).AsVariant := Dbftable.FieldByName(ClbField.Items[i]).AsVariant;
+        begin
+          srcField := DbfTable.FieldByName(ClbField.Items[i]);
+          expField := ExpTable.FieldByName(ClbField.Items[i]);
+          if (srcField is TStringField) or (srcField is TMemoField) then
+          begin
+            s := srcField.AsString;
+            expField.AsString := ConvertEncoding(s, 'utf-8', cp);
+          end else
+            expField.AsVariant := srcField.AsVariant;
+        end;
       ExpTable.Post;
       DbfTable.Next;
       inc(counter);
@@ -190,6 +194,23 @@ begin
     DbfTable.EnableControls;
     DbfTable.GotoBookmark(bm);
     DbfTable.FreeBookmark(bm);
+  end;
+end;
+
+procedure TExpDBF.SetDbfTable(AValue: TDbf);
+var
+  i: Integer;
+begin
+  if AValue = FDbfTable then
+    exit;
+
+  FDbfTable := AValue;
+
+  ClbField.Clear;
+  for i := 0 to DbfTable.FieldDefs.Count - 1 do
+  begin
+    ClbField.Items.Add(DbfTable.FieldDefs.Items[i].Name);
+    ClbField.Checked[i] := True;
   end;
 end;
 
