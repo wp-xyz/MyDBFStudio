@@ -63,7 +63,14 @@ uses
 procedure TExpXLS.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   if CanClose then
+  begin
     Options.ExportXLSWindow.ExtractFromForm(Self);
+    Options.ExportXLSNumberFormat := StrFN.Text;
+    Options.ExportXLSFloatNumberFormat := StrFND.Text;
+    Options.ExportXLSNumberMaskFormat := StrMFN.Text;
+    Options.ExportXLSFloatNumberMaskFormat := StrMFND.Text;
+    Options.ExportXLSDateFormat := cbDateF.Text;
+  end;
 end;
 
 procedure TExpXLS.FormCreate(Sender: TObject);
@@ -95,9 +102,15 @@ begin
     AutoSize := false;
     Options.ExportXLSWindow.ApplyToForm(Self);
   end;
+  // Apply the format settings defined by the Options
+  StrFN.Text := Options.ExportXLSNumberFormat;
+  StrFND.Text := Options.ExportXLSFloatNumberFormat;
+  StrMFN.Text := Options.ExportXLSNumberMaskFormat;
+  StrMFND.Text := Options.ExportXLSFloatNumberMaskFormat;
+  cbDateF.Text := Options.ExportXLSDateFormat;
 
+  // Populate the field list
   ClbField.Clear;
-
   for ind := 0 to DbfTable.FieldDefs.Count - 1 do
     with DbfTable.FieldDefs.Items[Ind] do
     begin

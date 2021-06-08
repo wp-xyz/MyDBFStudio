@@ -45,6 +45,11 @@ type
     ExportHTMLCellPadding         : Integer;
     ExportHTMLCellSpacing         : Integer;
     ExportXLSWindow               : TWindowOptions;
+    ExportXLSNumberFormat         : String;
+    ExportXLSFloatNumberFormat    : String;
+    ExportXLSNumberMaskFormat     : String;
+    ExportXLSFloatNumberMaskFormat: String;
+    ExportXLSDateFormat           : String;
     ExportDBFWindow               : TWindowOptions;
     ExportDBFTableLevel           : String;
     ExportXMLWindow               : TWindowOptions;
@@ -96,6 +101,11 @@ var
     ExportHTMLCellPadding: -1;
     ExportHTMLCellSpacing: -1;
     ExportXLSWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
+    ExportXLSNumberFormat: '0';
+    ExportXLSFloatNumberFormat: '0.00';
+    ExportXLSNumberMaskFormat: '# ### ##0';
+    ExportXLSFloatNumberMaskFormat: '# ### ##0.00';
+    ExportXLSDateFormat: 'yyyy"/"mm"/"dd';
     ExportDBFWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
     ExportDBFTableLevel: '';
     ExportXMLWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
@@ -374,6 +384,11 @@ begin
         Options.ExportHTMLCellSpacing := n;
 
       Options.ExportXLSWindow.ReadFromIni(ini, 'ExportXLSForm');
+      Options.ExportXLSNumberFormat := ini.ReadString('ExportXLSForm', 'NumberFormat', Options.ExportXLSNumberFormat);
+      Options.ExportXLSFloatNumberFormat := ini.ReadString('ExportXLSForm', 'FloatNumberFormat', Options.ExportXLSFloatNumberFormat);
+      Options.ExportXLSNumberMaskFormat := ini.ReadString('ExportXLSForm', 'NumberMaskFormat', Options.ExportXLSNumberMaskFormat);
+      Options.ExportXLSFloatNumberMaskFormat := ini.ReadString('ExportXLSForm', 'FloatNumberMaskFormat', Options.ExportXLSFloatNumberMaskFormat);
+      Options.ExportXLSDateFormat := ini.ReadString('ExportXLSForm', 'DateFormat', Options.ExportXLSDateFormat);
 
       Options.ExportDBFWindow.ReadFromIni(ini, 'ExportDBFForm');
       Options.ExportDBFTableLevel := ini.ReadString('ExportDBFForm', 'TableLevel', '');
@@ -452,6 +467,11 @@ begin
     ini.WriteInteger('ExportHTMLForm', 'CellSpacing', Options.ExportHTMLCellSpacing);
 
     Options.ExportXLSWindow.WriteToIni(ini, 'ExportXLSForm');
+    ini.WriteString('ExportXLSForm', 'NumberFormat', Options.ExportXLSNumberFormat);
+    ini.WriteString('ExportXLSForm', 'FloatNumberFormat', Options.ExportXLSFloatNumberFormat);
+    ini.WriteString('ExportXLSForm', 'NumberMaskFormat', Options.ExportXLSNumberMaskFormat);
+    ini.WriteString('ExportXLSForm', 'FloatNumberMaskFormat', Options.ExportXLSFloatNumberMaskFormat);
+    ini.WriteString('ExportXLSForm', 'DateFormat', Options.ExportXLSDateFormat);
 
     Options.ExportDBFWindow.WriteToIni(ini, 'ExportDBFForm');
     ini.WriteString('ExportDBFForm', 'TableLevel', Options.ExportDBFTableLevel);

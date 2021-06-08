@@ -60,18 +60,21 @@ object ExpXLS: TExpXLS
     AnchorSideRight.Side = asrBottom
     Left = 286
     Height = 23
-    Top = 231
+    Top = 215
     Width = 161
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
     ItemHeight = 15
-    ItemIndex = 0
     Items.Strings = (
-      'dd/mm/yyyy'
-      'mm/dd/yyyy'
-      'yyyy/mm/dd'
-      'yyyy/dd/mm'
+      'dd"/"mm"/"yyyy'
+      'mm"/"dd"/"yyyy'
+      'yyyy"/"mm"/"dd'
+      'yyyy"/"dd"/"mm'
+      'dd-mm-yyyy'
+      'mm-dd-yyyy'
+      'yyyy-mm-dd'
+      'yyyy-dd-mm'
     )
     TabOrder = 5
     Text = 'dd/mm/yyyy'
@@ -85,7 +88,7 @@ object ExpXLS: TExpXLS
     AnchorSideRight.Side = asrBottom
     Left = 286
     Height = 20
-    Top = 283
+    Top = 267
     Width = 161
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
@@ -99,7 +102,7 @@ object ExpXLS: TExpXLS
     AnchorSideTop.Side = asrBottom
     Left = 286
     Height = 15
-    Top = 266
+    Top = 250
     Width = 45
     BorderSpacing.Top = 12
     Caption = 'Progress'
@@ -184,9 +187,9 @@ object ExpXLS: TExpXLS
     AnchorSideRight.Side = asrBottom
     Left = 286
     Height = 15
-    Top = 58
+    Top = 54
     Width = 162
-    BorderSpacing.Top = 12
+    BorderSpacing.Top = 8
     BorderSpacing.Right = 6
     Caption = 'Format Number with Decimals'
     ParentColor = False
@@ -200,7 +203,7 @@ object ExpXLS: TExpXLS
     AnchorSideRight.Side = asrBottom
     Left = 286
     Height = 23
-    Top = 75
+    Top = 71
     Width = 161
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
@@ -216,9 +219,9 @@ object ExpXLS: TExpXLS
     AnchorSideRight.Side = asrBottom
     Left = 286
     Height = 15
-    Top = 110
+    Top = 102
     Width = 75
-    BorderSpacing.Top = 12
+    BorderSpacing.Top = 8
     BorderSpacing.Right = 6
     Caption = 'Mask Number'
     ParentColor = False
@@ -232,7 +235,7 @@ object ExpXLS: TExpXLS
     AnchorSideRight.Side = asrBottom
     Left = 286
     Height = 23
-    Top = 127
+    Top = 119
     Width = 161
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
@@ -247,9 +250,9 @@ object ExpXLS: TExpXLS
     AnchorSideTop.Side = asrBottom
     Left = 286
     Height = 15
-    Top = 162
+    Top = 150
     Width = 152
-    BorderSpacing.Top = 12
+    BorderSpacing.Top = 8
     BorderSpacing.Right = 6
     Caption = 'Mask Number with Decimals'
     ParentColor = False
@@ -263,7 +266,7 @@ object ExpXLS: TExpXLS
     AnchorSideRight.Side = asrBottom
     Left = 286
     Height = 23
-    Top = 179
+    Top = 167
     Width = 161
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
@@ -278,9 +281,9 @@ object ExpXLS: TExpXLS
     AnchorSideTop.Side = asrBottom
     Left = 286
     Height = 15
-    Top = 214
+    Top = 198
     Width = 65
-    BorderSpacing.Top = 12
+    BorderSpacing.Top = 8
     Caption = 'Date Format'
     ParentColor = False
   end

@@ -147,8 +147,10 @@ var
   Len: Integer;
 begin
   Len := Length(S);
+  if Len = 0 then
+    exit;
 
-  // Excel 2 (used by this export) does not support strings longer than 255.
+  // Excel2 (used by this export) does not support strings longer than 255.
   if Len > 255 then begin
     SetLength(S, 255);
     Len := 255;
