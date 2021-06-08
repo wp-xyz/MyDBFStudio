@@ -59,6 +59,13 @@ end;
 
 procedure TExpDBF.ExportBtnClick(Sender: TObject);
 begin
+  if TableType.ItemIndex = -1 then
+  begin
+    TableType.SetFocus;
+    MessageDlg('Table type not selected.', mtError, [mbOK], 0);
+    exit;
+  end;
+
   if not SaveExp.Execute then
     Exit;
 
@@ -82,13 +89,18 @@ end;
 procedure TExpDBF.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   if CanClose then
-    // Save form position and size to ini
+  begin
+    // Save form position and size to options (--> ini)
     Options.ExportDBFWindow.ExtractFromForm(Self);
+    // Save selected table type to ini.
+    Options.ExportDBFTableLevel := TableType.Items[TableType.ItemIndex];
+  end;
 end;
 
 procedure TExpDBF.FormShow(Sender: TObject);
 var
-  ind: Integer;
+  i: Integer;
+  idx: Integer;
 begin
   ExportBtn.Constraints.MinWidth := Max(ExportBtn.Width, CloseBtn.Width);
   CloseBtn.Constraints.MinWidth := ExportBtn.Constraints.MinWidth;
@@ -102,6 +114,16 @@ begin
     AutoSize := false;
     Options.ExportDBFWindow.ApplyToForm(Self);
   end;
+
+  // Find selected table type in options and restore it.
+  idx := -1;
+  for i := 0 to TableType.Items.Count-1 do
+    if TableType.Items[i] = Options.ExportDBFTableLevel then
+    begin
+      idx := i;
+      break;
+    end;
+  TableType.ItemIndex := idx;
 end;
 
 function TExpDBF.ReturnTableLevel: Word;

@@ -23,34 +23,41 @@ type
   end;
 
   TRecOptions = Record
-    RememberWindowSizePos     : Boolean;
-    MainWindowState           : TWindowState;
-    MainWidth                 : Integer;
-    MainHeight                : Integer;
-    MainTop                   : Integer;
-    MainLeft                  : Integer;
-    ExportCSVWindow           : TWindowOptions;
-    ExportHTMLWindow          : TWindowOptions;
-    ExportXLSWindow           : TWindowOptions;
-    ExportDBFWindow           : TWindowOptions;
-    ExportXMLWindow           : TWindowOptions;
-    ExportSQLScriptWindow     : TWindowOptions;
-    AddTablesWindow           : TWindowOptions;
-    AddAliasWindow            : TWindowOptions;
-    SubtractTablesWindow      : TWindowOptions;
-    SortTableWindow           : TWindowOptions;
-    TabsListWindow            : TWindowOptions;
-    RestructureWindow         : TWindowOptions;
-    SetFieldValueWindow       : TWindowOptions;
-    IndexTableWindow          : TWindowOptions;
-    OptionsWindow             : TWindowOptions;
-    StartWithOBA              : Boolean;
-    GotoLastRecord            : Boolean;
-    EnableToolBar             : Boolean;
-    EnableStatusBar           : Boolean;
-    AlternateColor            : TColor;
-    MaxHistoryRecords         : Integer;
-    ShowSplashScreen          : Boolean;
+    RememberWindowSizePos         : Boolean;
+    MainWindowState               : TWindowState;
+    MainWidth                     : Integer;
+    MainHeight                    : Integer;
+    MainTop                       : Integer;
+    MainLeft                      : Integer;
+    ExportCSVWindow               : TWindowOptions;
+    ExportHTMLWindow              : TWindowOptions;
+    ExportXLSWindow               : TWindowOptions;
+    ExportDBFWindow               : TWindowOptions;
+    ExportDBFTableLevel           : String;
+    ExportXMLWindow               : TWindowOptions;
+    ExportSQLScriptWindow         : TWindowOptions;
+    ExportSQLScriptItems          : Integer;
+    ExportSQLScriptDateFormat     : String;
+    ExportSQLScriptTimeFormat     : String;
+    ExportSQLScriptDateTimeFormat : String;
+    ExportSQLScriptDateSeparator  : String;
+    ExportSQLScriptTimeSeparator  : String;
+    AddTablesWindow               : TWindowOptions;
+    AddAliasWindow                : TWindowOptions;
+    SubtractTablesWindow          : TWindowOptions;
+    SortTableWindow               : TWindowOptions;
+    TabsListWindow                : TWindowOptions;
+    RestructureWindow             : TWindowOptions;
+    SetFieldValueWindow           : TWindowOptions;
+    IndexTableWindow              : TWindowOptions;
+    OptionsWindow                 : TWindowOptions;
+    StartWithOBA                  : Boolean;
+    GotoLastRecord                : Boolean;
+    EnableToolBar                 : Boolean;
+    EnableStatusBar               : Boolean;
+    AlternateColor                : TColor;
+    MaxHistoryRecords             : Integer;
+    ShowSplashScreen              : Boolean;
   end;
 
 var
@@ -65,8 +72,15 @@ var
     ExportHTMLWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
     ExportXLSWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
     ExportDBFWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
+    ExportDBFTableLevel: '';
     ExportXMLWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
     ExportSQLScriptWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
+    ExportSQLScriptItems: 0;
+    ExportSQLScriptDateFormat: '';
+    ExportSQLScriptTimeFormat: '';
+    ExportSQLScriptDateTimeFormat: '';
+    ExportSQLScriptDateSeparator: '';
+    ExportSQLScriptTimeSeparator: '';
     AddTablesWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
     AddAliasWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
     SubtractTablesWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
@@ -305,9 +319,20 @@ begin
       Options.ExportCSVWindow.ReadFromIni(ini, 'ExportCSVForm');
       Options.ExportHTMLWindow.ReadFromIni(ini, 'ExportHTMLForm');
       Options.ExportXLSWindow.ReadFromIni(ini, 'ExportXLSForm');
+
       Options.ExportDBFWindow.ReadFromIni(ini, 'ExportDBFForm');
+      Options.ExportDBFTableLevel := ini.ReadString('ExportDBFForm', 'TableLevel', '');
+
       Options.ExportXMLWindow.ReadFromIni(ini, 'ExportXMLForm');
+
       Options.ExportSQLScriptWindow.ReadFromIni(ini, 'ExportSQLScriptForm');
+      Options.ExportSQLScriptItems := ini.ReadInteger('ExportSQLScriptForm', 'Items', 0);
+      Options.ExportSQLScriptDateFormat := ini.ReadString('ExportSQLScriptForm', 'DateFormat', '');
+      Options.ExportSQLScriptTimeFormat := ini.ReadString('ExportSQLScriptForm', 'TimeFormat', '');
+      Options.ExportSQLScriptDateTimeFormat := ini.ReadString('ExportSQLScriptForm', 'DateTimeFormat', '');
+      Options.ExportSQLSCriptDateSeparator := ini.ReadString('ExportSQLScriptForm', 'DateSeparator', '');
+      Options.ExportSQLSCriptTimeSeparator := ini.ReadString('ExportSQLScriptForm', 'TimeSeparator', '');
+
       Options.AddTablesWindow.ReadFromIni(ini, 'AddTablesForm');
       Options.AddAliasWindow.ReadFromIni(ini, 'AddAliasForm');
       Options.SubtractTablesWindow.ReadFromIni(ini, 'SubtractTablesForm');
@@ -358,9 +383,20 @@ begin
     Options.ExportCSVWindow.WriteToIni(ini, 'ExportCSVForm');
     Options.ExportHTMLWindow.WriteToIni(ini, 'ExportHTMLForm');
     Options.ExportXLSWindow.WriteToIni(ini, 'ExportXLSForm');
+
     Options.ExportDBFWindow.WriteToIni(ini, 'ExportDBFForm');
+    ini.WriteString('ExportDBFForm', 'TableLevel', Options.ExportDBFTableLevel);
+
     Options.ExportXMLWindow.WriteToIni(ini, 'ExportXMLForm');
+
     Options.ExportSQLScriptWindow.WriteToIni(ini, 'ExportSQLScriptForm');
+    ini.WriteInteger('ExportSQLScriptForm', 'Items', Options.ExportSQLScriptItems);
+    ini.WriteString('ExportSQLScriptForm', 'DateFormat', Options.ExportSQLScriptDateFormat);
+    ini.WriteString('ExportSQLScriptForm', 'TimeFormat', Options.ExportSQLScriptTimeFormat);
+    ini.WriteString('ExportSQLScriptForm', 'DateTimeFormat', Options.ExportSQLScriptDateTimeFormat);
+    ini.WriteString('EXportSQLScriptForm', 'DateSeparator', Options.ExportSQLScriptDateSeparator);
+    ini.WriteString('EXportSQLScriptForm', 'TimeSeparator', Options.ExportSQLScriptTimeSeparator);
+
     Options.AddTablesWindow.WriteToIni(ini, 'AddTablesForm');
     Options.AddAliasWindow.WriteToIni(ini, 'AddAliasForm');
     Options.SubtractTablesWindow.WriteToIni(ini, 'SubtractTablesForm');

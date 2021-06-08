@@ -49,7 +49,7 @@ type
     Function Remove_FileExtension(Val : String) : String;
     Function ConvertFloat(Val : String) : String;
     procedure CreateSQLScript;
-    function Validate(out AMsg: String; AControl: TWinControl): Boolean;
+    function Validate(out AMsg: String; out AControl: TWinControl): Boolean;
   public
     { public declarations }
     property DbfTable: TDbf read FDbfTable write FDbfTable;
@@ -70,7 +70,17 @@ uses
 procedure TExpSQL.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   if CanClose then
+  begin
     Options.ExportSQLScriptWindow.ExtractFromForm(Self);
+    Options.ExportSQLScriptItems := 0;
+    if cbCreateTable.Checked then inc(Options.ExportSQLScriptItems, 1);
+    if cbExportRec.Checked then inc(Options.ExportSQLScriptItems, 2);
+    Options.ExportSQLScriptDateFormat := cbDateFmt.Text;
+    Options.ExportSQLScriptTimeFormat := cbTimeFmt.Text;
+    Options.ExportSQLScriptDateTimeFormat := cbDateTimeFmt.Text;
+    Options.ExportSQLScriptDateSeparator := cbDateSep.Text;
+    Options.ExportSQLScriptTimeSeparator := cbTimeSep.Text;
+  end;
 end;
 
 procedure TExpSQL.FormCreate(Sender: TObject);
@@ -97,9 +107,15 @@ begin
     AutoSize := false;
     Options.ExportSQLScriptWindow.ApplyToForm(Self);
   end;
+  cbCreateTable.Checked := Options.ExportSQLScriptItems and 1 <> 0;
+  cbExportRec.Checked := Options.ExportSQLScriptItems and 2 <> 0;
+  cbDateFmt.Text := Options.ExportSQLScriptDateFormat;
+  cbTimeFmt.Text := Options.ExportSQLScriptTimeFormat;
+  cbDateTimeFmt.Text := Options.ExportSQLScriptDateTimeFormat;
+  cbDateSep.Text := Options.ExportSQLScriptDateSeparator;
+  cbTimeSep.Text := Options.ExportSQLScriptTimeSeparator;
 
   ClbField.Clear;
-
   for ind := 0 to DbfTable.FieldDefs.Count - 1 do
   begin
     ClbField.Items.Add(DbfTable.FieldDefs.Items[ind].Name);
@@ -387,7 +403,7 @@ begin
   end;
 end;
 
-function TExpSQL.Validate(out AMsg: String; AControl: TWinControl): Boolean;
+function TExpSQL.Validate(out AMsg: String; out AControl: TWinControl): Boolean;
 var
   f: TField;
 begin
@@ -396,7 +412,7 @@ begin
   if not (cbCreateTable.Checked or cbExportRec.Checked) then
   begin
     AControl := cbCreateTable;
-    AMsg := 'No script type selected.';
+    AMsg := 'No script item selected.';
     exit;
   end;
 
