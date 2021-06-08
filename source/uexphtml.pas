@@ -8,7 +8,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  CheckLst, ColorBox, ExtCtrls, ComCtrls, Buttons, DsHtml, dbf;
+  CheckLst, ColorBox, ExtCtrls, ComCtrls, Buttons, ComboEx, DsHtml, dbf;
 
 type
 
@@ -24,7 +24,7 @@ type
     HeaderBC: TColorBox;
     HeaderFC: TColorBox;
     HeaderFS: TComboBox;
-    HeaderST: TComboBox;
+    HeaderST: TCheckComboBox;
     lblCellTitle: TLabel;
     lblCellSpacing: TLabel;
     lblCellPadding: TLabel;
@@ -43,7 +43,7 @@ type
     PageBC: TColorBox;
     PageFC: TColorBox;
     PageFS: TComboBox;
-    PageFT: TComboBox;
+    PageFT: TCheckComboBox;
     PageTLT: TEdit;
     pBar: TProgressBar;
     SaveExp: TSaveDialog;
@@ -65,8 +65,9 @@ type
     FDbfTable: TDbf;
     Procedure IncrementPBar(Sender: TObject);
     Function Return_Font_Size(cb : TComboBox) : THTMLFontSize;
-    Function Return_Font_Style(cb : TComboBox) : THTMLFontStyles;
     Procedure Generate_Field_List;
+    function GetFontStyles(cb: TCheckComboBox): THTMLFontStyles;
+    procedure SetFontStyles(cb: TCheckCombobox; fs: THTMLFontStyles);
   public
     { public declarations }
     property DbfTable: TDbf read FDbfTable write FDbfTable;
@@ -125,15 +126,18 @@ begin
   ExpObj.PageOptions.BackColor := PageBC.Colors[PageBC.ItemIndex];
   ExpObj.PageOptions.Font.Color := PageFC.Colors[PageFC.ItemIndex];
   ExpObj.PageOptions.Font.Size := Return_Font_Size(PageFS);
-  ExpObj.PageOptions.Font.Style := Return_Font_Style(PageFT);
+  ExpObj.PageOptions.Font.Style := GetFontStyles(PageFT);
   ExpObj.Detail.Headers.BackColor := HeaderBC.Colors[HeaderBC.ItemIndex];
   ExpObj.Detail.Headers.Font.Color := HeaderFC.Colors[HeaderFC.ItemIndex];
   ExpObj.Detail.Headers.Font.Size := Return_Font_Size(HeaderFS);
-  ExpObj.Detail.Headers.Font.Style := Return_Font_Style(HeaderST);
-  ExpObj.Detail.BorderWidth := StrToInt(TableW.Text);
+  ExpObj.Detail.Headers.Font.Style := GetFontStyles(HeaderST);
+  if TableW.Text <> '' then
+    ExpObj.Detail.BorderWidth := StrToInt(TableW.Text);
   ExpObj.Detail.BorderColor := TableBC.Colors[TableBC.ItemIndex];
-  ExpObj.Detail.CellPadding := StrToInt(CellP.Text);
-  ExpObj.Detail.CellSpacing := StrToInt(CellS.Text);
+  if CellP.Text <> '' then
+    ExpObj.Detail.CellPadding := StrToInt(CellP.Text);
+  if CellS.Text <> '' then
+    ExpObj.Detail.CellSpacing := StrToInt(CellS.Text);
 
   Generate_Field_List;
 
@@ -150,7 +154,21 @@ end;
 procedure TExpHTML.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   if CanClose then
+  begin
     Options.ExportHTMLWindow.ExtractFromForm(Self);
+    Options.ExportHTMLPageBackColor := PageBC.Selected;
+    Options.ExportHTMLPageFontColor := PageFC.Selected;
+    Options.ExportHTMLHeaderBackColor := HeaderBC.Selected;
+    Options.ExportHTMLHeaderFontColor := HeaderFC.Selected;
+    Options.ExportHTMLPageFontSize := THtmlFontSize(PageFS.ItemIndex);
+    Options.ExportHTMLHeaderFontSize := THtmlFontSize(HeaderFS.ItemIndex);
+    Options.ExportHTMLPageFontStyle := GetFontStyles(PageFT);
+    Options.ExportHTMLHeaderFontStyle := GetFontStyles(HeaderST);
+    Options.ExportHTMLTableWidth := StrToIntDef(TableW.Text, -1);
+    Options.ExportHTMLTableBorderColor := TableBC.Selected;
+    Options.ExportHTMLCellPadding := StrToIntDef(CellP.Text, -1);
+    Options.ExportHTMLCellSpacing := StrToIntDef(CellS.Text, -1);
+  end;
 end;
 
 procedure TExpHTML.FormCreate(Sender: TObject);
@@ -177,12 +195,35 @@ begin
     pBar.Top + pBar.Height +
     CloseBtn.BorderSpacing.Top + CloseBtn.Height + CloseBtn.BorderSpacing.Bottom;
 
+  // Get initial values from options
   if Options.RememberWindowSizePos and (Options.ExportHTMLWindow.Width > 0) then
   begin
     AutoSize := false;
     Options.ExportHTMLWindow.ApplyToForm(Self);
   end;
+  PageBC.Selected := Options.ExportHTMLPageBackColor;
+  PageFC.Selected := Options.ExportHTMLPageFontColor;
+  HeaderBC.Selected := Options.ExportHTMLHeaderBackColor;
+  HeaderFC.Selected := Options.ExportHTMLHeaderFontColor;
+  PageFS.ItemIndex := ord(Options.ExportHTMLPageFontSize);
+  HeaderFS.ItemIndex := ord(Options.ExportHTMLHeaderFontSize);
+  SetFontStyles(PageFT, Options.ExportHTMLPageFontStyle);
+  SetFontStyles(HeaderST,  Options.ExportHTMLHeaderFontStyle);
+  if Options.ExportHTMLTableWidth > -1 then
+    TableW.Text := IntToStr(Options.ExportHTMLTableWidth)
+  else
+    TableW.Text := '';
+  TableBC.Selected := Options.ExportHTMLTableBorderColor;
+  if Options.ExportHTMLCellPadding > -1 then
+    CellP.Text := IntToStr(Options.ExportHTMLCellPadding)
+  else
+    CellP.Text := '';
+  if Options.ExportHTMLCellSpacing > -1 then
+    CellS.Text := IntToStr(Options.ExportHTMLCellSpacing)
+  else
+    CellS.Text := '';
 
+  // Prepare field list
   ClbField.Clear;
   for ind := 0 to DbfTable.FieldDefs.Count - 1 do
     with FDbftable.FieldDefs.Items[Ind] do
@@ -212,11 +253,29 @@ begin
     Result := fsNormal;
 end;
 
-function TExpHTML.Return_Font_Style(cb: TComboBox): THTMLFontStyles;
+function TExpHTML.GetFontStyles(cb: TCheckComboBox): THTMLFontStyles;
+var
+  i: Integer;
+  s: String;
 begin
+  s := '';
   Result := [];
-  if (cb.ItemIndex >= 0) and (cb.ItemIndex <= ord(High(THtmlFontStyle))) then
-    Include(Result, THtmlFontStyle(cb.ItemIndex));
+  for i := 0 to cb.Items.Count-1 do
+    if cb.Checked[i] then
+    begin
+      Include(Result, THtmlFontStyle(i));
+      if s = '' then s := cb.Items[i] else s := s + ' ' + cb.Items[i]
+    end;
+  cb.Text := s;  // does not work - TCheckCombobox is crappy!
+  // Todo: Replace TCheckCombobox by a version in which the checked items are visible in the non-dropped-down state.
+end;
+
+procedure TExpHTML.SetFontStyles(cb: TCheckCombobox; fs: THTMLFontStyles);
+var
+  i: Integer;
+begin
+  for i := 0 to cb.Items.Count-1 do
+    cb.Checked[i] := THTMLFontStyle(i) in fs;
 end;
 
 procedure TExpHTML.Generate_Field_List;

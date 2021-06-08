@@ -1,13 +1,13 @@
 object ExpHTML: TExpHTML
-  Left = 405
-  Height = 461
-  Top = 185
-  Width = 499
+  Left = 611
+  Height = 454
+  Top = 130
+  Width = 488
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'Export Table To HTML File'
-  ClientHeight = 461
-  ClientWidth = 499
+  ClientHeight = 454
+  ClientWidth = 488
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -34,9 +34,9 @@ object ExpHTML: TExpHTML
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
     Left = 6
-    Height = 432
+    Height = 425
     Top = 23
-    Width = 320
+    Width = 309
     Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Left = 6
     BorderSpacing.Top = 2
@@ -53,10 +53,9 @@ object ExpHTML: TExpHTML
     }
   end
   object lblPageBackColor: TLabel
-    AnchorSideLeft.Control = ClbField
-    AnchorSideLeft.Side = asrBottom
+    AnchorSideLeft.Control = PageBC
     AnchorSideTop.Control = lblExportField
-    Left = 332
+    Left = 321
     Height = 15
     Top = 6
     Width = 86
@@ -65,31 +64,31 @@ object ExpHTML: TExpHTML
   end
   object lblPageFontColor: TLabel
     AnchorSideLeft.Control = PageFC
-    AnchorSideTop.Control = lblPageBackColor
-    Left = 415
+    AnchorSideTop.Control = PageBC
+    AnchorSideTop.Side = asrBottom
+    Left = 321
     Height = 15
-    Top = 6
+    Top = 57
     Width = 85
+    BorderSpacing.Top = 12
     Caption = 'Page Font Color'
     ParentColor = False
   end
   object PageFC: TColorBox
-    AnchorSideLeft.Control = Bevel1
+    AnchorSideLeft.Control = ClbField
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = lblPageFontColor
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = Owner
-    AnchorSideRight.Side = asrBottom
-    Left = 415
+    AnchorSideRight.Control = Bevel1
+    Left = 321
     Height = 22
-    Top = 23
-    Width = 78
+    Top = 74
+    Width = 77
     Style = [cbStandardColors, cbExtendedColors, cbSystemColors, cbPrettyNames]
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
-    BorderSpacing.Right = 6
     ItemHeight = 16
-    TabOrder = 2
+    TabOrder = 3
   end
   object PageBC: TColorBox
     AnchorSideLeft.Control = ClbField
@@ -97,7 +96,7 @@ object ExpHTML: TExpHTML
     AnchorSideTop.Control = lblPageBackColor
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Bevel1
-    Left = 332
+    Left = 321
     Height = 22
     Top = 23
     Width = 77
@@ -109,34 +108,34 @@ object ExpHTML: TExpHTML
     TabOrder = 1
   end
   object lblHeaderBackColor: TLabel
-    AnchorSideLeft.Control = ClbField
-    AnchorSideLeft.Side = asrBottom
-    AnchorSideTop.Control = PageBC
-    AnchorSideTop.Side = asrBottom
-    Left = 332
+    AnchorSideLeft.Control = HeaderBC
+    AnchorSideTop.Control = lblPageBackColor
+    Left = 404
     Height = 15
-    Top = 57
+    Top = 6
     Width = 98
-    BorderSpacing.Top = 12
+    BorderSpacing.Right = 6
     Caption = 'Header Back Color'
     ParentColor = False
   end
   object HeaderBC: TColorBox
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = Bevel1
     AnchorSideLeft.Side = asrBottom
-    AnchorSideTop.Control = lblHeaderBackColor
+    AnchorSideTop.Control = lblPageBackColor
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = Bevel1
-    Left = 332
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 404
     Height = 22
-    Top = 74
-    Width = 77
+    Top = 23
+    Width = 78
     Selected = clSilver
     Style = [cbStandardColors, cbExtendedColors, cbSystemColors, cbPrettyNames]
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
+    BorderSpacing.Right = 6
     ItemHeight = 16
-    TabOrder = 3
+    TabOrder = 2
   end
   object HeaderFC: TColorBox
     AnchorSideLeft.Control = Bevel1
@@ -145,7 +144,7 @@ object ExpHTML: TExpHTML
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 415
+    Left = 404
     Height = 22
     Top = 74
     Width = 78
@@ -158,9 +157,9 @@ object ExpHTML: TExpHTML
   end
   object lblHeaderFontColor: TLabel
     AnchorSideLeft.Control = HeaderFC
-    AnchorSideTop.Control = PageFC
+    AnchorSideTop.Control = HeaderBC
     AnchorSideTop.Side = asrBottom
-    Left = 415
+    Left = 404
     Height = 15
     Top = 57
     Width = 97
@@ -171,9 +170,9 @@ object ExpHTML: TExpHTML
   object lblPageFontSize: TLabel
     AnchorSideLeft.Control = ClbField
     AnchorSideLeft.Side = asrBottom
-    AnchorSideTop.Control = HeaderBC
+    AnchorSideTop.Control = PageFC
     AnchorSideTop.Side = asrBottom
-    Left = 332
+    Left = 321
     Height = 15
     Top = 108
     Width = 76
@@ -185,7 +184,7 @@ object ExpHTML: TExpHTML
     AnchorSideLeft.Control = HeaderFS
     AnchorSideTop.Control = HeaderFC
     AnchorSideTop.Side = asrBottom
-    Left = 415
+    Left = 404
     Height = 15
     Top = 108
     Width = 88
@@ -200,7 +199,7 @@ object ExpHTML: TExpHTML
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 415
+    Left = 404
     Height = 23
     Top = 125
     Width = 78
@@ -229,7 +228,7 @@ object ExpHTML: TExpHTML
     AnchorSideTop.Control = lblPageFontSize
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Bevel1
-    Left = 332
+    Left = 321
     Height = 23
     Top = 125
     Width = 77
@@ -252,11 +251,10 @@ object ExpHTML: TExpHTML
     Text = 'Normal'
   end
   object lblPageFontStyle: TLabel
-    AnchorSideLeft.Control = ClbField
-    AnchorSideLeft.Side = asrBottom
+    AnchorSideLeft.Control = PageFT
     AnchorSideTop.Control = PageFS
     AnchorSideTop.Side = asrBottom
-    Left = 332
+    Left = 321
     Height = 15
     Top = 160
     Width = 81
@@ -264,81 +262,11 @@ object ExpHTML: TExpHTML
     Caption = 'Page Font Style'
     ParentColor = False
   end
-  object PageFT: TComboBox
-    AnchorSideLeft.Control = ClbField
-    AnchorSideLeft.Side = asrBottom
-    AnchorSideTop.Control = lblPageFontStyle
-    AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = Bevel1
-    Left = 332
-    Height = 23
-    Top = 177
-    Width = 77
-    Anchors = [akTop, akLeft, akRight]
-    BorderSpacing.Top = 2
-    ItemHeight = 15
-    ItemIndex = 0
-    Items.Strings = (
-      ''
-      'Bold'
-      'Italic'
-      'Underline'
-      'StrikeOut'
-      'Blink'
-      'Sup'
-      'Sub'
-      'Define'
-      'Strong'
-      'Em'
-      'Cite'
-      'Variable'
-      'Keyboard'
-      'Code'
-    )
-    Style = csDropDownList
-    TabOrder = 7
-  end
-  object HeaderST: TComboBox
-    AnchorSideLeft.Control = Bevel1
-    AnchorSideLeft.Side = asrBottom
-    AnchorSideTop.Control = lblHeaderFontStyle
-    AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = Owner
-    AnchorSideRight.Side = asrBottom
-    Left = 415
-    Height = 23
-    Top = 177
-    Width = 78
-    Anchors = [akTop, akLeft, akRight]
-    BorderSpacing.Top = 2
-    BorderSpacing.Right = 6
-    ItemHeight = 15
-    ItemIndex = 0
-    Items.Strings = (
-      ''
-      'Bold'
-      'Italic'
-      'Underline'
-      'StrikeOut'
-      'Blink'
-      'Sup'
-      'Sub'
-      'Define'
-      'Strong'
-      'Em'
-      'Cite'
-      'Variable'
-      'Keyboard'
-      'Code'
-    )
-    Style = csDropDownList
-    TabOrder = 8
-  end
   object lblHeaderFontStyle: TLabel
     AnchorSideLeft.Control = HeaderST
     AnchorSideTop.Control = HeaderFS
     AnchorSideTop.Side = asrBottom
-    Left = 415
+    Left = 404
     Height = 15
     Top = 160
     Width = 93
@@ -348,9 +276,9 @@ object ExpHTML: TExpHTML
   end
   object UpDown1: TUpDown
     AnchorSideRight.Control = Bevel1
-    Left = 392
+    Left = 381
     Height = 23
-    Top = 229
+    Top = 227
     Width = 17
     Anchors = [akTop, akRight]
     Associate = TableW
@@ -361,9 +289,9 @@ object ExpHTML: TExpHTML
   end
   object UpDown2: TUpDown
     AnchorSideRight.Control = Bevel1
-    Left = 392
+    Left = 381
     Height = 23
-    Top = 281
+    Top = 279
     Width = 17
     Anchors = [akTop, akRight]
     Associate = CellP
@@ -375,9 +303,9 @@ object ExpHTML: TExpHTML
   object UpDown3: TUpDown
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 476
+    Left = 465
     Height = 23
-    Top = 280
+    Top = 278
     Width = 17
     Anchors = [akTop, akRight]
     Associate = CellS
@@ -394,9 +322,9 @@ object ExpHTML: TExpHTML
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 415
+    Left = 404
     Height = 22
-    Top = 229
+    Top = 227
     Width = 78
     Selected = clWhite
     Style = [cbStandardColors, cbExtendedColors, cbSystemColors, cbPrettyNames]
@@ -410,9 +338,9 @@ object ExpHTML: TExpHTML
     AnchorSideLeft.Control = TableBC
     AnchorSideTop.Control = HeaderST
     AnchorSideTop.Side = asrBottom
-    Left = 415
+    Left = 404
     Height = 15
-    Top = 212
+    Top = 210
     Width = 97
     BorderSpacing.Top = 12
     Caption = 'Table Border Color'
@@ -425,9 +353,9 @@ object ExpHTML: TExpHTML
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 332
+    Left = 321
     Height = 20
-    Top = 383
+    Top = 381
     Width = 161
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
@@ -435,13 +363,12 @@ object ExpHTML: TExpHTML
     TabOrder = 17
   end
   object lblProgress: TLabel
-    AnchorSideLeft.Control = ClbField
-    AnchorSideLeft.Side = asrBottom
+    AnchorSideLeft.Control = pBar
     AnchorSideTop.Control = PageTLT
     AnchorSideTop.Side = asrBottom
-    Left = 332
+    Left = 321
     Height = 15
-    Top = 366
+    Top = 364
     Width = 45
     BorderSpacing.Top = 12
     Caption = 'Progress'
@@ -451,9 +378,9 @@ object ExpHTML: TExpHTML
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = CloseBtn
     AnchorSideRight.Control = CloseBtn
-    Left = 332
+    Left = 321
     Height = 26
-    Top = 429
+    Top = 422
     Width = 80
     Anchors = [akTop, akRight]
     AutoSize = True
@@ -472,9 +399,9 @@ object ExpHTML: TExpHTML
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 418
+    Left = 407
     Height = 26
-    Top = 429
+    Top = 422
     Width = 75
     Anchors = [akRight, akBottom]
     AutoSize = True
@@ -489,16 +416,15 @@ object ExpHTML: TExpHTML
     TabOrder = 19
   end
   object lblTableWidth: TLabel
-    AnchorSideLeft.Control = ClbField
-    AnchorSideLeft.Side = asrBottom
+    AnchorSideLeft.Control = TableW
     AnchorSideTop.Control = PageFT
     AnchorSideTop.Side = asrBottom
-    Left = 332
+    Left = 321
     Height = 15
-    Top = 212
-    Width = 62
+    Top = 210
+    Width = 100
     BorderSpacing.Top = 12
-    Caption = 'Table Width'
+    Caption = 'Table Border Width'
     ParentColor = False
   end
   object TableW: TEdit
@@ -507,9 +433,9 @@ object ExpHTML: TExpHTML
     AnchorSideTop.Control = lblTableWidth
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = UpDown1
-    Left = 332
+    Left = 321
     Height = 23
-    Top = 229
+    Top = 227
     Width = 58
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
@@ -518,13 +444,12 @@ object ExpHTML: TExpHTML
     TabOrder = 9
   end
   object lblCellPadding: TLabel
-    AnchorSideLeft.Control = ClbField
-    AnchorSideLeft.Side = asrBottom
+    AnchorSideLeft.Control = CellP
     AnchorSideTop.Control = TableW
     AnchorSideTop.Side = asrBottom
-    Left = 332
+    Left = 321
     Height = 15
-    Top = 264
+    Top = 262
     Width = 67
     BorderSpacing.Top = 12
     Caption = 'Cell Padding'
@@ -536,9 +461,9 @@ object ExpHTML: TExpHTML
     AnchorSideTop.Control = lblCellPadding
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = UpDown2
-    Left = 332
+    Left = 321
     Height = 23
-    Top = 281
+    Top = 279
     Width = 58
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
@@ -550,9 +475,9 @@ object ExpHTML: TExpHTML
     AnchorSideLeft.Control = CellS
     AnchorSideTop.Control = TableBC
     AnchorSideTop.Side = asrBottom
-    Left = 415
+    Left = 404
     Height = 15
-    Top = 263
+    Top = 261
     Width = 65
     BorderSpacing.Top = 12
     Caption = 'Cell Spacing'
@@ -564,9 +489,9 @@ object ExpHTML: TExpHTML
     AnchorSideTop.Control = lblCellSpacing
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = UpDown3
-    Left = 415
+    Left = 404
     Height = 23
-    Top = 280
+    Top = 278
     Width = 59
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
@@ -575,13 +500,12 @@ object ExpHTML: TExpHTML
     TabOrder = 14
   end
   object lblCellTitle: TLabel
-    AnchorSideLeft.Control = ClbField
-    AnchorSideLeft.Side = asrBottom
+    AnchorSideLeft.Control = PageTLT
     AnchorSideTop.Control = CellP
     AnchorSideTop.Side = asrBottom
-    Left = 332
+    Left = 321
     Height = 15
-    Top = 316
+    Top = 314
     Width = 51
     BorderSpacing.Top = 12
     Caption = 'Page Title'
@@ -594,9 +518,9 @@ object ExpHTML: TExpHTML
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 332
+    Left = 321
     Height = 23
-    Top = 331
+    Top = 329
     Width = 161
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Right = 6
@@ -605,11 +529,75 @@ object ExpHTML: TExpHTML
   object Bevel1: TBevel
     AnchorSideLeft.Control = pBar
     AnchorSideLeft.Side = asrCenter
-    Left = 409
+    Left = 398
     Height = 18
     Top = 408
     Width = 6
     Shape = bsSpacer
+  end
+  object PageFT: TCheckComboBox
+    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = lblPageFontStyle
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Bevel1
+    Left = 321
+    Height = 21
+    Top = 177
+    Width = 77
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 2
+    ItemHeight = 15
+    Items.Strings = (
+      'Bold'
+      'Italic'
+      'Underline'
+      'StrikeOut'
+      'Blink'
+      'Sup'
+      'Sub'
+      'Define'
+      'Strong'
+      'Em'
+      'Cite'
+      'Variable'
+      'Keyboard'
+      'Code'
+    )
+    TabOrder = 7
+  end
+  object HeaderST: TCheckComboBox
+    AnchorSideLeft.Control = Bevel1
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = lblHeaderFontStyle
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 404
+    Height = 21
+    Top = 177
+    Width = 78
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 2
+    BorderSpacing.Right = 6
+    ItemHeight = 15
+    Items.Strings = (
+      'Bold'
+      'Italic'
+      'Underline'
+      'StrikeOut'
+      'Blink'
+      'Sup'
+      'Sub'
+      'Define'
+      'Strong'
+      'Em'
+      'Cite'
+      'Variable'
+      'Keyboard'
+      'Code'
+    )
+    TabOrder = 8
   end
   object SaveExp: TSaveDialog
     Title = 'Save as...'

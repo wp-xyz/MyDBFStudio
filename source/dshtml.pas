@@ -1,5 +1,7 @@
 unit DsHtml;
 
+// Todo: Cell font is not applied
+
 {$mode objfpc}{$H+}
 
 interface

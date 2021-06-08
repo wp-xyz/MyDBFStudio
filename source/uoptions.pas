@@ -7,7 +7,8 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ColorBox, ComCtrls, Buttons, ExtCtrls, Spin, IniFiles;
+  ColorBox, ComCtrls, Buttons, ExtCtrls, Spin, IniFiles,
+  DsHtml;
 
 type
   TWindowOptions = record
@@ -31,6 +32,18 @@ type
     MainLeft                      : Integer;
     ExportCSVWindow               : TWindowOptions;
     ExportHTMLWindow              : TWindowOptions;
+    ExportHTMLPageBackColor       : TColor;
+    ExportHTMLPageFontColor       : TColor;
+    ExportHTMLHeaderBackColor     : TColor;
+    ExportHTMLHeaderFontColor     : TColor;
+    ExportHTMLPageFontSize        : THTMLFontSize;
+    ExportHTMLHeaderFontSize      : THTMLFontSize;
+    ExportHTMLPageFontStyle       : THTMLFontStyles;
+    ExportHTMLHeaderFontStyle     : THTMLFontStyles;
+    ExportHTMLTableWidth          : Integer;
+    ExportHTMLTableBorderColor    : TColor;
+    ExportHTMLCellPadding         : Integer;
+    ExportHTMLCellSpacing         : Integer;
     ExportXLSWindow               : TWindowOptions;
     ExportDBFWindow               : TWindowOptions;
     ExportDBFTableLevel           : String;
@@ -70,6 +83,18 @@ var
     MainLeft: 0;
     ExportCSVWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
     ExportHTMLWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
+    ExportHTMLPageBackColor: clWhite;
+    ExportHTMLPageFontColor: clBlack;
+    ExportHTMLHeaderBackColor: clSilver;
+    ExportHTMLHeaderFontColor: clBlack;
+    ExportHTMLPageFontSize: fsNormal;
+    ExportHTMLHeaderFontSize: fsNormal;
+    ExportHTMLPageFontStyle: [];
+    ExportHTMLHeaderFontStyle: [];
+    ExportHTMLTableWidth: -1;
+    ExportHTMLTableBorderColor: clWhite;
+    ExportHTMLCellPadding: -1;
+    ExportHTMLCellSpacing: -1;
     ExportXLSWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
     ExportDBFWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
     ExportDBFTableLevel: '';
@@ -141,7 +166,7 @@ procedure SaveOptions;
 implementation
 
 uses
-  Math, uMain;
+  Math, TypInfo, uMain;
 
 {$R *.lfm}
 
@@ -299,6 +324,8 @@ end;
 procedure LoadOptions;
 var
   ini: TCustomIniFile;
+  n: Integer;
+  s: String;
 begin
   ini := TIniFile.Create(IniFileName);
   try
@@ -317,7 +344,35 @@ begin
       end;
 
       Options.ExportCSVWindow.ReadFromIni(ini, 'ExportCSVForm');
+
       Options.ExportHTMLWindow.ReadFromIni(ini, 'ExportHTMLForm');
+      Options.ExportHTMLPageBackColor := TColor(ini.ReadInteger('ExportHTMLForm', 'PageBackColor', Integer(Options.ExportHTMLPageBackColor)));
+      Options.ExportHTMLPageFontColor := TColor(ini.ReadInteger('ExportHTMLForm', 'PageFontColor', integer(Options.ExportHTMLPageFontColor)));
+      Options.ExportHTMLHeaderBackColor := TColor(ini.ReadInteger('ExportHTMLForm', 'HeaderBackColor', integer(Options.ExportHTMLHeaderBackColor)));
+      Options.ExportHTMLHeaderFontColor := TColor(ini.ReadInteger('ExportHTMLForm', 'HeaderFontColor', integer(Options.ExportHTMLHeaderFontColor)));
+      s := ini.ReadString('ExportHTMLForm', 'PageFontSize', '');
+      if s <> '' then
+        Options.ExportHTMLPageFontSize := THtmlFontSize(GetEnumValue(TypeInfo(THTMLFontSize), s));
+      s := ini.ReadString('ExportHTMLForm', 'HeaderFontSize', '');
+      if s <> '' then
+        Options.ExportHTMLHeaderFontSize := THtmlFontSize(GetEnumValue(TypeInfo(THTMLFontSize), s));
+      s := ini.ReadString('ExportHTMLForm', 'PageFontStyle', '');
+      if s <> '' then
+        Options.ExportHTMLPageFontStyle := THTMLFontStyles(StringToSet(PTypeInfo(TypeInfo(THTMLFontStyles)), s));
+      s := ini.ReadString('ExportHTMLForm', 'HeaderFontStyle', '');
+      if s <> '' then
+        Options.ExportHTMLHeaderFontStyle := THTMLFontStyles(StringToSet(PTypeInfo(TypeInfo(THTMLFontStyles)), s));
+      n := ini.ReadInteger('ExportHTMLForm', 'TableWidth', -1);
+      if n > -1 then
+        Options.ExportHTMLTableWidth := n;
+      Options.ExportHTMLTableBorderColor := TColor(ini.ReadInteger('ExportHTMLForm', 'TableBorderColor', Integer(Options.ExportHTMLTableBorderColor)));
+      n := ini.ReadInteger('ExportHTMLForm', 'CellPadding', -1);
+      if n > -1 then
+        Options.ExportHTMLCellPadding := n;
+      n := ini.ReadInteger('ExportHTMLForm', 'CellSpacing', -1);
+      if n > -1 then
+        Options.ExportHTMLCellSpacing := n;
+
       Options.ExportXLSWindow.ReadFromIni(ini, 'ExportXLSForm');
 
       Options.ExportDBFWindow.ReadFromIni(ini, 'ExportDBFForm');
@@ -381,7 +436,21 @@ begin
     end;
 
     Options.ExportCSVWindow.WriteToIni(ini, 'ExportCSVForm');
+
     Options.ExportHTMLWindow.WriteToIni(ini, 'ExportHTMLForm');
+    ini.WriteInteger('ExportHTMLForm', 'PageBackColor', Integer(Options.ExportHTMLPageBackColor));
+    ini.WriteInteger('ExportHTMLForm', 'PageFontColor', integer(Options.ExportHTMLPageFontColor));
+    ini.WriteInteger('ExportHTMLForm', 'HeaderBackColor', integer(Options.ExportHTMLHeaderBackColor));
+    ini.WriteInteger('ExportHTMLForm', 'HeaderFontColor', integer(Options.ExportHTMLHeaderFontColor));
+    ini.WriteString('ExportHTMLForm', 'PageFontSize', GetEnumName(TypeInfo(THTMLFontSize), integer(Options.ExportHTMLPageFontSize)));
+    ini.WriteString('ExportHTMLForm', 'HeaderFontSize', GetEnumName(TypeInfo(THTMLFontSize), integer(Options.ExportHTMLHeaderFontSize)));;
+    ini.WriteString('ExportHTMLForm', 'PageFontStyle', SetToString(PTypeInfo(TypeInfo(THTMLFontStyles)), integer(Options.ExportHTMLPageFontStyle), true));
+    ini.WriteString('ExportHTMLForm', 'HeaderFontStyle', SetToString(PTypeInfo(TypeInfo(THTMLFontStyles)), integer(Options.ExportHTMLHeaderFontStyle), true));
+    ini.WriteInteger('ExportHTMLForm', 'TableWidth', Options.ExportHTMLTableWidth);
+    ini.WriteInteger('ExportHTMLForm', 'TableBorderColor', Integer(Options.ExportHTMLTableBorderColor));
+    ini.WriteInteger('ExportHTMLForm', 'CellPadding', Options.ExportHTMLCellPadding);
+    ini.WriteInteger('ExportHTMLForm', 'CellSpacing', Options.ExportHTMLCellSpacing);
+
     Options.ExportXLSWindow.WriteToIni(ini, 'ExportXLSForm');
 
     Options.ExportDBFWindow.WriteToIni(ini, 'ExportDBFForm');
