@@ -105,7 +105,7 @@ function MaxValueI(const AData: Array of Integer): Integer;
 var
   value: Integer;
 begin
-  Result := MaxInt;
+  Result := -MaxInt;
   for value in AData do
     if value > Result then Result := value;
 end;
