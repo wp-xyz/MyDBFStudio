@@ -744,6 +744,7 @@ var
   dir: String;
 begin
   dir := GetAliasDir;
+  ForceDirectories(dir);
   T := TDbf.Create(Self);
   try
     try
