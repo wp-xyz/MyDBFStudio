@@ -56,7 +56,7 @@ implementation
 {$R *.lfm}
 
 uses
-  Math, LConvEncoding, uOptions;
+  LConvEncoding, uUtils, uOptions;
 
 { TExpXLS }
 
@@ -83,7 +83,7 @@ var
   ind: Integer;
   w: Integer;
 begin
-  w := {%H-}MaxValue([lblFormatNumberWithDecimals.Width div 2,
+  w := MaxValueI([lblFormatNumberWithDecimals.Width div 2,
                  lblMaskNumberWithDecimals.Width div 2,
                  ExportBtn.Width,
                  CloseBtn.Width

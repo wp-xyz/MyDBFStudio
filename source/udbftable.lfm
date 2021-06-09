@@ -1,25 +1,26 @@
 object DbfTable: TDbfTable
   Left = 470
-  Height = 504
+  Height = 502
   Top = 276
-  Width = 708
+  Width = 709
   Caption = 'DbfTable'
-  ClientHeight = 504
-  ClientWidth = 708
+  ClientHeight = 502
+  ClientWidth = 709
   KeyPreview = True
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   LCLVersion = '2.1.0.0'
   object Panel1: TPanel
     Left = 0
     Height = 72
     Top = 0
-    Width = 708
+    Width = 709
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ClientHeight = 72
-    ClientWidth = 708
+    ClientWidth = 709
     TabOrder = 0
     object Label1: TLabel
       AnchorSideLeft.Control = Panel1
@@ -42,7 +43,7 @@ object DbfTable: TDbfTable
       Left = 6
       Height = 23
       Top = 43
-      Width = 355
+      Width = 356
       Anchors = [akTop, akLeft, akRight]
       BorderSpacing.Left = 6
       BorderSpacing.Top = 2
@@ -57,7 +58,7 @@ object DbfTable: TDbfTable
       AnchorSideRight.Control = Panel1
       AnchorSideRight.Side = asrBottom
       AnchorSideBottom.Side = asrBottom
-      Left = 569
+      Left = 570
       Height = 19
       Top = 45
       Width = 133
@@ -74,7 +75,7 @@ object DbfTable: TDbfTable
       AnchorSideTop.Control = leFilter
       AnchorSideTop.Side = asrCenter
       AnchorSideRight.Control = cbShowDel
-      Left = 367
+      Left = 368
       Height = 23
       Top = 43
       Width = 196
@@ -89,7 +90,7 @@ object DbfTable: TDbfTable
     object Label2: TLabel
       AnchorSideLeft.Control = Indexes
       AnchorSideTop.Control = Label1
-      Left = 367
+      Left = 368
       Height = 15
       Top = 26
       Width = 40
@@ -100,7 +101,7 @@ object DbfTable: TDbfTable
       Left = 0
       Height = 24
       Top = 0
-      Width = 708
+      Width = 709
       AutoSize = True
       ButtonHeight = 24
       ButtonWidth = 28
@@ -252,9 +253,9 @@ object DbfTable: TDbfTable
   end
   object DBGrid: TDBGrid
     Left = 6
-    Height = 279
+    Height = 277
     Top = 78
-    Width = 696
+    Width = 697
     Align = alClient
     AlternateColor = clMoneyGreen
     BorderSpacing.Left = 6
@@ -275,17 +276,18 @@ object DbfTable: TDbfTable
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 358
-    Width = 708
+    Top = 356
+    Width = 709
     Align = alBottom
+    OnMoved = MemoSplitterMoved
     ResizeAnchor = akBottom
     Visible = False
   end
   object TabControl: TTabControl
     Left = 6
     Height = 134
-    Top = 364
-    Width = 696
+    Top = 362
+    Width = 697
     OnChange = TabControlChange
     Align = alBottom
     BorderSpacing.Left = 6
@@ -298,7 +300,7 @@ object DbfTable: TDbfTable
       Left = 2
       Height = 129
       Top = 3
-      Width = 631
+      Width = 632
       PageIndex = 0
       Align = alClient
       TabOrder = 1
@@ -307,7 +309,7 @@ object DbfTable: TDbfTable
           Left = 6
           Height = 117
           Top = 6
-          Width = 619
+          Width = 620
           Align = alClient
           BorderSpacing.Around = 6
           BorderStyle = bsNone
@@ -329,7 +331,7 @@ object DbfTable: TDbfTable
       end
     end
     object Panel2: TPanel
-      Left = 633
+      Left = 634
       Height = 129
       Top = 3
       Width = 61

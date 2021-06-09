@@ -18,11 +18,11 @@ type
     DeleteAliasBtn: TBitBtn;
     AddAliasBtn: TBitBtn;
     AliasGrid: TDBGrid;
-    Ds1: TDataSource;
+    DataSource: TDataSource;
     FileListbox: TFileListBox;
     GroupBox1: TGroupBox;
     GroupBox2: TGroupBox;
-    Splitter1: TSplitter;
+    Splitter: TSplitter;
     procedure CloseBtnClick(Sender: TObject);
     procedure FileListboxResize(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -32,6 +32,7 @@ type
     procedure AliasGridCellClick({%H-}Column: TColumn);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure SplitterMoved(Sender: TObject);
   private
     { private declarations }
     FAliasDB: TDbf;
@@ -47,11 +48,20 @@ implementation
 
 uses
   Math,
-  uUtils, uMain, uAddAlias;
+  uUtils, uMain, uAddAlias, uOptions;
 
 {$R *.lfm}
 
 { TOpenBA }
+
+procedure TOpenBA.FormCreate(Sender: TObject);
+begin
+  FAliasDB := TDbf.Create(self);
+  FAliasDB.TableName := 'alias.dbf';
+  FAliasDB.FilePath := GetAliasDir;
+  FAliasDB.IndexName := 'ALIAS';
+  DataSource.Dataset := FAliasDB;
+end;
 
 procedure TOpenBA.FormDestroy(Sender: TObject);
 begin
@@ -73,9 +83,17 @@ begin
     AliasGridCellClick(nil);
   end else
   begin
-    Ds1.Enabled := False;
+    DataSource.Enabled := False;
     MessageDlg('Alias db non found.', mtError, [mbOK], 0);
   end;
+
+  if Options.OpenByAliasSplitter > -1 then
+    Splitter.Top := Options.OpenByAliasSplitter;
+end;
+
+procedure TOpenBA.SplitterMoved(Sender: TObject);
+begin
+  Options.OpenByAliasSplitter := Splitter.Top;
 end;
 
 procedure TOpenBA.CloseBtnClick(Sender: TObject);
@@ -101,15 +119,6 @@ begin
   FileListbox.Columns := FileListbox.ClientWidth div w;
 end;
 
-procedure TOpenBA.FormCreate(Sender: TObject);
-begin
-  FAliasDB := TDbf.Create(self);
-  FAliasDB.TableName := 'alias.dbf';
-  FAliasDB.FilePath := GetAliasDir;
-  FAliasDB.IndexName := 'ALIAS';
-  Ds1.Dataset := FAliasDB;
-end;
-
 procedure TOpenBA.OpenTableBtnClick(Sender: TObject);
 var
   Ind: Word;
@@ -133,7 +142,7 @@ end;
 
 procedure TOpenBA.AddAliasClick(Sender: TObject);
 begin
-  if Ds1.Enabled then
+  if DataSource.Enabled then
   begin
     AddAlias := TAddAlias.Create(nil);
     AddAlias.ShowModal;
@@ -146,7 +155,7 @@ end;
 
 procedure TOpenBA.DeleteAliasClick(Sender: TObject);
 begin
-  if Ds1.Enabled then
+  if DataSource.Enabled then
     if not FAliasDB.IsEmpty then
       if MessageDlg('Delete the selected alias?', mtWarning, [mbOk, mbCancel],0) = mrOk then
       begin
@@ -160,7 +169,7 @@ end;
 
 procedure TOpenBA.AliasGridCellClick(Column: TColumn);
 begin
-  if Ds1.Enabled then
+  if DataSource.Enabled then
     if not FAliasDB.IsEmpty then
       FileListbox.Directory := FAliasDB.FieldByName('PATH').AsString;
 end;

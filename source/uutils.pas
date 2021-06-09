@@ -30,6 +30,7 @@ function FieldTypeAsString(AFieldType: TFieldType; Nice: Boolean): String;
 procedure FieldTypePickList(ATableLevel: Integer; const AList: TStrings);
 function GetAliasDir: String;
 function GetVersionStr: String;
+function MaxValueI(const AData: array of Integer): Integer;
 function TableFormat(ATableLevel: Integer): String;
 
 implementation
@@ -38,6 +39,7 @@ uses
   TypInfo, FileInfo;
 
 {$IF LCL_FullVersion < 2010000}
+{ Fixes a compilation problem in the DBGrid of Lazarus before v2.2 }
 function TDBGridColumnsHelper.ColumnByFieldname(const aFieldname: string): TColumn;
 var
   i: Integer;
@@ -51,6 +53,7 @@ begin
 end;
 {$IFEND}
 
+{ Populates a list with the field types supported by a specific table level. }
 procedure FieldTypePickList(ATableLevel: Integer; const AList: TStrings);
 var
   ft: TFieldType;
@@ -86,6 +89,7 @@ begin
   Result := GetAppConfigDir(false);
 end;
 
+{ Returns the version of the application. }
 function GetVersionStr: String;
 var
   ver: TProgramVersion;
@@ -95,6 +99,18 @@ begin
   Result := Format('v%d.%d.%d', [ver.Major, ver.Minor, ver.Revision]);
 end;
 
+{ Reimplements the MaxValue() function from Math to fix a 64-bit compilation
+  problem. }
+function MaxValueI(const AData: Array of Integer): Integer;
+var
+  value: Integer;
+begin
+  Result := MaxInt;
+  for value in AData do
+    if value > Result then Result := value;
+end;
+
+{ Returns the database type of a given table level }
 function TableFormat(ATableLevel: Integer): String;
 begin
   case ATableLevel of

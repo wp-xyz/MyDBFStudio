@@ -1,10 +1,10 @@
 object OpenBA: TOpenBA
   Left = 317
-  Height = 553
+  Height = 548
   Top = 166
   Width = 691
   Caption = 'Open table by alias'
-  ClientHeight = 553
+  ClientHeight = 548
   ClientWidth = 691
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -15,7 +15,7 @@ object OpenBA: TOpenBA
     AnchorSideTop.Control = Owner
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    AnchorSideBottom.Control = Splitter1
+    AnchorSideBottom.Control = Splitter
     Left = 6
     Height = 236
     Top = 6
@@ -54,7 +54,7 @@ object OpenBA: TOpenBA
           Width = 350
           FieldName = 'PATH'
         end>
-      DataSource = Ds1
+      DataSource = DataSource
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
       ReadOnly = True
       TabOrder = 0
@@ -98,13 +98,13 @@ object OpenBA: TOpenBA
   end
   object GroupBox2: TGroupBox
     AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = Splitter1
+    AnchorSideTop.Control = Splitter
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = CloseBtn
     Left = 6
-    Height = 262
+    Height = 257
     Top = 253
     Width = 679
     Anchors = [akTop, akLeft, akRight, akBottom]
@@ -112,7 +112,7 @@ object OpenBA: TOpenBA
     BorderSpacing.Right = 6
     BorderSpacing.Bottom = 6
     Caption = ' Files '
-    ClientHeight = 242
+    ClientHeight = 237
     ClientWidth = 675
     TabOrder = 1
     object FileListbox: TFileListBox
@@ -123,7 +123,7 @@ object OpenBA: TOpenBA
       AnchorSideBottom.Control = GroupBox2
       AnchorSideBottom.Side = asrBottom
       Left = 6
-      Height = 236
+      Height = 231
       Top = 0
       Width = 663
       Anchors = [akTop, akLeft, akRight, akBottom]
@@ -145,7 +145,7 @@ object OpenBA: TOpenBA
     AnchorSideRight.Control = CloseBtn
     Left = 487
     Height = 26
-    Top = 521
+    Top = 516
     Width = 117
     Anchors = [akTop, akRight]
     AutoSize = True
@@ -164,7 +164,7 @@ object OpenBA: TOpenBA
     AnchorSideBottom.Side = asrBottom
     Left = 610
     Height = 26
-    Top = 521
+    Top = 516
     Width = 75
     Anchors = [akRight, akBottom]
     AutoSize = True
@@ -176,7 +176,7 @@ object OpenBA: TOpenBA
     OnClick = CloseBtnClick
     TabOrder = 3
   end
-  object Splitter1: TSplitter
+  object Splitter: TSplitter
     AnchorSideLeft.Control = Owner
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
@@ -187,9 +187,10 @@ object OpenBA: TOpenBA
     Width = 691
     Align = alNone
     Anchors = [akTop, akLeft, akRight]
+    OnMoved = SplitterMoved
     ResizeAnchor = akBottom
   end
-  object Ds1: TDataSource
+  object DataSource: TDataSource
     Left = 228
     Top = 108
   end

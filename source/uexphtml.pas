@@ -267,7 +267,7 @@ begin
       if s = '' then s := cb.Items[i] else s := s + ' ' + cb.Items[i]
     end;
   cb.Text := s;  // does not work - TCheckCombobox is crappy!
-  // Todo: Replace TCheckCombobox by a version in which the checked items are visible in the non-dropped-down state.
+  // Todo: Replace TCheckCombobox by a component in which the checked items are visible in the non-dropped-down state.
 end;
 
 procedure TExpHTML.SetFontStyles(cb: TCheckCombobox; fs: THTMLFontStyles);

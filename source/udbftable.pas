@@ -54,8 +54,10 @@ type
     procedure DBGridColEnter(Sender: TObject);
     procedure DBTableAfterEdit({%H-}DataSet: TDataSet);
     procedure FormCreate(Sender: TObject);
-    procedure tbEmptyClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure MemoSplitterMoved(Sender: TObject);
+    procedure tbEmptyClick(Sender: TObject);
     procedure IndexesChange(Sender: TObject);
     procedure leFilterKeyDown(Sender: TObject; var Key: Word; {%H-}Shift: TShiftState);
     procedure LoadBlobBtnClick(Sender: TObject);
@@ -102,7 +104,7 @@ uses
   LConvEncoding, LCLType, clipbrd,
   {%H-}uUtils,       // needed by Laz 2.0.12 for DBGrid helper
   {%H-}uDataModule,  // uDatamodule needed for imagelist
-  uRestructure, uSetFV;
+  uOptions, uRestructure, uSetFV;
 
 const
   GRAPHIC_FILTER =
@@ -409,6 +411,15 @@ begin
   UpdateCmds;
 end;
 
+procedure TDbfTable.FixTabControlConstraints;
+var
+  P: TPoint;
+begin
+  // Calculate Top of PasteBlobBtn relative to TabControl.
+  P := TabControl.ScreenToClient(PasteBlobBtn.ClientToScreen(Point(0, 0)));
+  TabControl.Constraints.MinHeight := P.Y + PasteBlobBtn.Height + DBMemo.BorderSpacing.Around;
+end;
+
 procedure TDbfTable.FormCreate(Sender: TObject);
 begin
   FDBTable := TDbf.Create(Self);
@@ -426,13 +437,15 @@ begin
   Ds.Dataset := FDBTable;
 end;
 
-procedure TDbfTable.FixTabControlConstraints;
-var
-  P: TPoint;
+procedure TDbfTable.FormShow(Sender: TObject);
 begin
-  // Calculate Top of PasteBlobBtn relative to TabControl.
-  P := TabControl.ScreenToClient(PasteBlobBtn.ClientToScreen(Point(0, 0)));
-  TabControl.Constraints.MinHeight := P.Y + PasteBlobBtn.Height + DBMemo.BorderSpacing.Around;
+  if Options.DBFTableSplitter > 0 then
+    TabControl.Height := Options.DBFTableSplitter;
+end;
+
+procedure TDbfTable.MemoSplitterMoved(Sender: TObject);
+begin
+  Options.DBFTableSplitter := TabControl.Height;
 end;
 
 procedure TDbfTable.tbEmptyClick(Sender: TObject);

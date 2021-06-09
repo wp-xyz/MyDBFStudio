@@ -165,7 +165,6 @@ var
   srcField: TField;
   expField: TField;
   s: String;
-  rs: RawByteString;
   cp: String;
 begin
   pBar.Min := 0;

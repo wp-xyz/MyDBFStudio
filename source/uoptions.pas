@@ -30,6 +30,8 @@ type
     MainHeight                    : Integer;
     MainTop                       : Integer;
     MainLeft                      : Integer;
+    DBFTableSplitter              : Integer;
+    OpenByAliasSplitter           : Integer;
     ExportCSVWindow               : TWindowOptions;
     ExportCSVSeparator            : string;
     ExportCSVDateFormat           : string;
@@ -91,6 +93,8 @@ var
     MainHeight: 0;
     MainTop: 0;
     MainLeft: 0;
+    DBFTableSplitter: -1;
+    OpenByAliasSplitter: -1;
     ExportCSVWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
     ExportCSVSeparator: ',';
     ExportCSVDateFormat: 'mm"/"dd"/"yyyy';
@@ -363,6 +367,9 @@ begin
         Options.MainTop := ini.ReadInteger('MainForm', 'Top', Options.MainTop);
       end;
 
+      Options.DBFTableSplitter := ini.ReadInteger('DBFTable', 'Splitter', Options.DBFTableSplitter);
+      Options.OpenByAliasSplitter := ini.ReadInteger('OpenByAlias', 'Splitter', Options.OpenByAliasSplitter);
+
       Options.ExportCSVWindow.ReadFromIni(ini, 'ExportCSVForm');
       Options.ExportCSVSeparator := ini.ReadString('ExportCSVForm', 'CSVSeparator', Options.ExportCSVSeparator);
       Options.ExportCSVDateFormat := ini.ReadString('ExportCSVForm', 'DateFormat', Options.ExportCSVDateFormat);
@@ -464,6 +471,9 @@ begin
       ini.WriteInteger('MainForm', 'Left', Options.MainLeft);
       ini.WriteInteger('MainForm', 'Top', Options.MainTop);
     end;
+
+    ini.WriteInteger('DBFTable', 'Splitter', Options.DBFTableSplitter);
+    ini.WriteInteger('OpenByAlias', 'Splitter', Options.OpenByAliasSplitter);
 
     Options.ExportCSVWindow.WriteToIni(ini, 'ExportCSVForm');
     ini.WriteString('ExportCSVForm', 'CSVSeparator', Options.ExportCSVSeparator);
