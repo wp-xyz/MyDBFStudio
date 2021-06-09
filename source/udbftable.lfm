@@ -1,17 +1,17 @@
 object DbfTable: TDbfTable
   Left = 470
-  Height = 502
+  Height = 494
   Top = 276
   Width = 709
   Caption = 'DbfTable'
-  ClientHeight = 502
+  ClientHeight = 494
   ClientWidth = 709
   KeyPreview = True
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
   LCLVersion = '2.1.0.0'
-  object Panel1: TPanel
+  object TopPanel: TPanel
     Left = 0
     Height = 72
     Top = 0
@@ -23,7 +23,7 @@ object DbfTable: TDbfTable
     ClientWidth = 709
     TabOrder = 0
     object Label1: TLabel
-      AnchorSideLeft.Control = Panel1
+      AnchorSideLeft.Control = TopPanel
       AnchorSideTop.Control = ToolBar1
       AnchorSideTop.Side = asrBottom
       Left = 6
@@ -36,7 +36,7 @@ object DbfTable: TDbfTable
       ParentColor = False
     end
     object leFilter: TEdit
-      AnchorSideLeft.Control = Panel1
+      AnchorSideLeft.Control = TopPanel
       AnchorSideTop.Control = Label1
       AnchorSideTop.Side = asrBottom
       AnchorSideRight.Control = Indexes
@@ -55,7 +55,7 @@ object DbfTable: TDbfTable
     object cbShowDel: TCheckBox
       AnchorSideTop.Control = leFilter
       AnchorSideTop.Side = asrCenter
-      AnchorSideRight.Control = Panel1
+      AnchorSideRight.Control = TopPanel
       AnchorSideRight.Side = asrBottom
       AnchorSideBottom.Side = asrBottom
       Left = 570
@@ -253,7 +253,7 @@ object DbfTable: TDbfTable
   end
   object DBGrid: TDBGrid
     Left = 6
-    Height = 277
+    Height = 289
     Top = 78
     Width = 697
     Align = alClient
@@ -272,119 +272,151 @@ object DbfTable: TDbfTable
     TitleFont.Height = -12
     OnColEnter = DBGridColEnter
   end
-  object MemoSplitter: TSplitter
+  object Splitter: TSplitter
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 356
+    Top = 368
     Width = 709
     Align = alBottom
-    OnMoved = MemoSplitterMoved
+    OnMoved = SplitterMoved
     ResizeAnchor = akBottom
+    ResizeStyle = rsPattern
     Visible = False
   end
-  object TabControl: TTabControl
-    Left = 6
-    Height = 134
-    Top = 362
-    Width = 697
-    OnChange = TabControlChange
+  object BottomPanel: TPanel
+    Left = 0
+    Height = 121
+    Top = 373
+    Width = 709
     Align = alBottom
-    BorderSpacing.Left = 6
-    BorderSpacing.Top = 1
-    BorderSpacing.Right = 6
-    BorderSpacing.Bottom = 6
+    BevelOuter = bvNone
+    ClientHeight = 121
+    ClientWidth = 709
     TabOrder = 3
-    Visible = False
-    object Notebook: TNotebook
-      Left = 2
-      Height = 129
-      Top = 3
-      Width = 632
-      PageIndex = 0
-      Align = alClient
-      TabOrder = 1
-      object pgMemo: TPage
-        object DBMemo: TDBMemo
-          Left = 6
-          Height = 117
-          Top = 6
-          Width = 620
-          Align = alClient
-          BorderSpacing.Around = 6
-          BorderStyle = bsNone
-          DataSource = Ds
-          ScrollBars = ssAutoBoth
-          TabOrder = 0
-        end
-      end
-      object pgGraphic: TPage
-        object Image: TImage
-          Left = 0
-          Height = 129
-          Top = 0
-          Width = 631
-          Align = alClient
-          Proportional = True
-          StretchOutEnabled = False
-        end
-      end
-    end
-    object Panel2: TPanel
-      Left = 634
-      Height = 129
-      Top = 3
+    object ButtonPanel: TPanel
+      Left = 642
+      Height = 109
+      Top = 6
       Width = 61
       Align = alRight
       AutoSize = True
+      BorderSpacing.Around = 6
       BevelOuter = bvNone
-      ChildSizing.VerticalSpacing = 2
-      ChildSizing.Layout = cclLeftToRightThenTopToBottom
-      ChildSizing.ControlsPerLine = 1
-      ClientHeight = 129
+      ClientHeight = 109
       ClientWidth = 61
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 2
+      TabOrder = 0
       object LoadBlobBtn: TButton
+        AnchorSideLeft.Control = ButtonPanel
+        AnchorSideRight.Control = ButtonPanel
+        AnchorSideRight.Side = asrBottom
+        AnchorSideBottom.Control = SaveBlobBtn
         Left = 0
         Height = 25
-        Top = 0
+        Top = 3
         Width = 61
+        Anchors = [akLeft, akRight, akBottom]
         AutoSize = True
         Caption = 'Load...'
         OnClick = LoadBlobBtnClick
         TabOrder = 0
       end
       object SaveBlobBtn: TButton
+        AnchorSideLeft.Control = ButtonPanel
+        AnchorSideRight.Control = ButtonPanel
+        AnchorSideRight.Side = asrBottom
+        AnchorSideBottom.Control = CopyBlobBtn
         Left = 0
         Height = 25
-        Top = 27
+        Top = 30
         Width = 61
+        Anchors = [akLeft, akRight, akBottom]
         AutoSize = True
+        BorderSpacing.Top = 2
         Caption = 'Save...'
         OnClick = SaveBlobBtnClick
         TabOrder = 1
       end
       object CopyBlobBtn: TButton
+        AnchorSideLeft.Control = ButtonPanel
+        AnchorSideRight.Control = ButtonPanel
+        AnchorSideRight.Side = asrBottom
+        AnchorSideBottom.Control = PasteBlobBtn
         Left = 0
         Height = 25
-        Top = 54
+        Top = 57
         Width = 61
+        Anchors = [akLeft, akRight, akBottom]
         AutoSize = True
+        BorderSpacing.Top = 2
         Caption = 'Copy'
         OnClick = CopyBlobBtnClick
         TabOrder = 2
       end
       object PasteBlobBtn: TButton
+        AnchorSideLeft.Control = ButtonPanel
+        AnchorSideRight.Control = ButtonPanel
+        AnchorSideRight.Side = asrBottom
+        AnchorSideBottom.Control = ButtonPanel
+        AnchorSideBottom.Side = asrBottom
         Left = 0
         Height = 25
-        Top = 81
+        Top = 84
         Width = 61
+        Anchors = [akLeft, akRight, akBottom]
         AutoSize = True
+        BorderSpacing.Top = 2
         Caption = 'Paste'
         OnClick = PasteBlobBtnClick
         TabOrder = 3
+      end
+    end
+    object TabControl: TTabControl
+      Left = 6
+      Height = 114
+      Top = 1
+      Width = 630
+      OnChange = TabControlChange
+      Align = alClient
+      BorderSpacing.Left = 6
+      BorderSpacing.Top = 1
+      BorderSpacing.Right = 6
+      BorderSpacing.Bottom = 6
+      TabOrder = 1
+      object Notebook: TNotebook
+        Left = 2
+        Height = 109
+        Top = 3
+        Width = 626
+        PageIndex = 0
+        Align = alClient
+        TabOrder = 1
+        object pgMemo: TPage
+          object DBMemo: TDBMemo
+            Left = 0
+            Height = 109
+            Top = 0
+            Width = 626
+            Align = alClient
+            BorderStyle = bsNone
+            DataSource = Ds
+            ScrollBars = ssAutoBoth
+            TabOrder = 0
+          end
+        end
+        object pgGraphic: TPage
+          object Image: TImage
+            Left = 0
+            Height = 129
+            Top = 0
+            Width = 626
+            Align = alClient
+            Proportional = True
+            StretchOutEnabled = False
+          end
+        end
       end
     end
   end

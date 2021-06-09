@@ -13,6 +13,7 @@ type
   { TDbfTable }
 
   TDbfTable = class(TForm)
+    BottomPanel: TPanel;
     RecordInfo: TLabel;
     LoadBlobBtn: TButton;
     OpenDialog: TOpenDialog;
@@ -31,12 +32,12 @@ type
     Label2: TLabel;
     leFilter: TEdit;
     Notebook: TNotebook;
-    Panel2: TPanel;
+    ButtonPanel: TPanel;
     pgGraphic: TPage;
     pgMemo: TPage;
-    Panel1: TPanel;
+    TopPanel: TPanel;
     SaveDialog: TSaveDialog;
-    MemoSplitter: TSplitter;
+    Splitter: TSplitter;
     TabControl: TTabControl;
     ToolBar1: TToolBar;
     tbPack: TToolButton;
@@ -56,7 +57,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure MemoSplitterMoved(Sender: TObject);
+    procedure SplitterMoved(Sender: TObject);
     procedure tbEmptyClick(Sender: TObject);
     procedure IndexesChange(Sender: TObject);
     procedure leFilterKeyDown(Sender: TObject; var Key: Word; {%H-}Shift: TShiftState);
@@ -75,7 +76,7 @@ type
     FDBTable: TDbf;
     FColWidths: array of Integer;
     FRecordCount: Integer;
-    procedure FixTabControlConstraints;
+    procedure FixBottomPanelConstraints;
     function IsGraphicStream(AStream: TStream): Boolean;
     Procedure Load_Table_Indexes;
     procedure RestoreColWidths(ATable: TDbf);
@@ -394,7 +395,7 @@ procedure TDbfTable.DBGridColEnter(Sender: TObject);
 var
   idx: Integer;
 begin
-  if not TabControl.Visible then
+  if not BottomPanel.Visible then
     exit;
 
   for idx := 0 to TabControl.Tabs.Count-1 do
@@ -411,13 +412,11 @@ begin
   UpdateCmds;
 end;
 
-procedure TDbfTable.FixTabControlConstraints;
-var
-  P: TPoint;
+procedure TDbfTable.FixBottomPanelConstraints;
 begin
-  // Calculate Top of PasteBlobBtn relative to TabControl.
-  P := TabControl.ScreenToClient(PasteBlobBtn.ClientToScreen(Point(0, 0)));
-  TabControl.Constraints.MinHeight := P.Y + PasteBlobBtn.Height + DBMemo.BorderSpacing.Around;
+  BottomPanel.Constraints.MinHeight :=
+    PasteBlobBtn.Top + PasteBlobBtn.Height - LoadBlobBtn.Top +
+    ButtonPanel.BorderSpacing.Around * 2;
 end;
 
 procedure TDbfTable.FormCreate(Sender: TObject);
@@ -440,12 +439,12 @@ end;
 procedure TDbfTable.FormShow(Sender: TObject);
 begin
   if Options.DBFTableSplitter > 0 then
-    TabControl.Height := Options.DBFTableSplitter;
+    BottomPanel.Height := Options.DBFTableSplitter;
 end;
 
-procedure TDbfTable.MemoSplitterMoved(Sender: TObject);
+procedure TDbfTable.SplitterMoved(Sender: TObject);
 begin
-  Options.DBFTableSplitter := TabControl.Height;
+  Options.DBFTableSplitter := BottomPanel.Height;
 end;
 
 procedure TDbfTable.tbEmptyClick(Sender: TObject);
@@ -609,19 +608,19 @@ begin
     // No BLOBs --> hide tabcontrol
     if TabControl.Tabs.Count = 0 then
     begin
-      TabControl.Hide;
-      MemoSplitter.Hide;
+      BottomPanel.Hide;
+      Splitter.Hide;
     end else
     begin
       // BLOBs found --> Display first BLOB field in tab control.
       field := ATable.FieldByName(TabControl.Tabs[0]);
       ShowBLOBField(field);
-      TabControl.Show;
+      BottomPanel.Show;
       TabControl.PageIndex := 0;
-      MemoSplitter.Show;
-      MemoSplitter.Top := 0;
+      Splitter.Show;
+      Splitter.Top := 0;
     end;
-    FixTabControlConstraints;
+    FixBottomPanelConstraints;
   finally
     TabControl.EndUpdate;
   end;

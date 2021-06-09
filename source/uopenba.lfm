@@ -33,15 +33,13 @@ object OpenBA: TOpenBA
       AnchorSideRight.Control = GroupBox1
       AnchorSideBottom.Control = AddAliasBtn
       Left = 6
-      Height = 178
-      Top = 0
+      Height = 172
+      Top = 6
       Width = 663
       Align = alTop
       AlternateColor = clMoneyGreen
       Anchors = [akTop, akLeft, akRight, akBottom]
-      BorderSpacing.Left = 6
-      BorderSpacing.Right = 6
-      BorderSpacing.Bottom = 6
+      BorderSpacing.Around = 6
       Color = clWindow
       Columns = <      
         item
@@ -123,13 +121,11 @@ object OpenBA: TOpenBA
       AnchorSideBottom.Control = GroupBox2
       AnchorSideBottom.Side = asrBottom
       Left = 6
-      Height = 231
-      Top = 0
+      Height = 225
+      Top = 6
       Width = 663
       Anchors = [akTop, akLeft, akRight, akBottom]
-      BorderSpacing.Left = 6
-      BorderSpacing.Right = 6
-      BorderSpacing.Bottom = 6
+      BorderSpacing.Around = 6
       Directory = 'd:\Prog_Lazarus'
       FileType = [ftReadOnly, ftNormal]
       ItemHeight = 0
