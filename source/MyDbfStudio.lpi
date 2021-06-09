@@ -181,6 +181,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="17"/>
         <TopLine Value="450"/>
         <CursorPos X="3" Y="455"/>
@@ -318,11 +319,10 @@
         <Filename Value="dsxls.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="DsXls"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
         <TopLine Value="143"/>
-        <CursorPos X="11" Y="153"/>
-        <UsageCount Value="188"/>
+        <CursorPos X="16" Y="162"/>
+        <UsageCount Value="189"/>
         <Loaded Value="True"/>
       </Unit12>
       <Unit13>
@@ -495,7 +495,7 @@
         <EditorIndex Value="12"/>
         <TopLine Value="360"/>
         <CursorPos Y="381"/>
-        <UsageCount Value="194"/>
+        <UsageCount Value="195"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit25>
@@ -506,7 +506,7 @@
         <EditorIndex Value="27"/>
         <TopLine Value="57"/>
         <CursorPos X="33" Y="82"/>
-        <UsageCount Value="181"/>
+        <UsageCount Value="182"/>
         <Loaded Value="True"/>
       </Unit26>
       <Unit27>
@@ -519,7 +519,7 @@
         <EditorIndex Value="26"/>
         <TopLine Value="102"/>
         <CursorPos Y="115"/>
-        <UsageCount Value="163"/>
+        <UsageCount Value="164"/>
         <Loaded Value="True"/>
       </Unit27>
       <Unit28>
@@ -538,7 +538,7 @@
         <EditorIndex Value="20"/>
         <TopLine Value="86"/>
         <CursorPos X="39" Y="108"/>
-        <UsageCount Value="162"/>
+        <UsageCount Value="163"/>
         <Bookmarks Count="1">
           <Item0 X="41" Y="465" ID="1"/>
         </Bookmarks>
@@ -561,7 +561,7 @@
         <UnitName Value="uDatamodule"/>
         <EditorIndex Value="7"/>
         <CursorPos X="29" Y="5"/>
-        <UsageCount Value="170"/>
+        <UsageCount Value="171"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit31>
@@ -594,7 +594,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="453"/>
         <CursorPos X="16" Y="468"/>
-        <UsageCount Value="152"/>
+        <UsageCount Value="153"/>
       </Unit35>
       <Unit36>
         <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/comctrls.pp"/>
