@@ -93,7 +93,8 @@ begin
     // Save form position and size to options (--> ini)
     Options.ExportDBFWindow.ExtractFromForm(Self);
     // Save selected table type to ini.
-    Options.ExportDBFTableLevel := TableType.Items[TableType.ItemIndex];
+    if TableType.ItemIndex > -1 then
+      Options.ExportDBFTableLevel := TableType.Items[TableType.ItemIndex];
   end;
 end;
 
