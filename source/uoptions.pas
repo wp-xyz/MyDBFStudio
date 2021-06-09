@@ -31,6 +31,11 @@ type
     MainTop                       : Integer;
     MainLeft                      : Integer;
     ExportCSVWindow               : TWindowOptions;
+    ExportCSVSeparator            : string;
+    ExportCSVDateFormat           : string;
+    ExportCSVFieldDelimiter       : string;
+    ExportCSVStringToIgnore       : string;
+    ExportCSVSaveFieldsHeader     : boolean;
     ExportHTMLWindow              : TWindowOptions;
     ExportHTMLPageBackColor       : TColor;
     ExportHTMLPageFontColor       : TColor;
@@ -87,6 +92,11 @@ var
     MainTop: 0;
     MainLeft: 0;
     ExportCSVWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
+    ExportCSVSeparator: ',';
+    ExportCSVDateFormat: 'mm"/"dd"/"yyyy';
+    ExportCSVFieldDelimiter: '"';
+    ExportCSVStringToIgnore: '';
+    ExportCSVSaveFieldsHeader: true;
     ExportHTMLWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
     ExportHTMLPageBackColor: clWhite;
     ExportHTMLPageFontColor: clBlack;
@@ -354,6 +364,11 @@ begin
       end;
 
       Options.ExportCSVWindow.ReadFromIni(ini, 'ExportCSVForm');
+      Options.ExportCSVSeparator := ini.ReadString('ExportCSVForm', 'CSVSeparator', Options.ExportCSVSeparator);
+      Options.ExportCSVDateFormat := ini.ReadString('ExportCSVForm', 'DateFormat', Options.ExportCSVDateFormat);
+      Options.ExportCSVFieldDelimiter := ini.ReadString('ExportCSVForm', 'FieldDelimiter', Options.ExportCSVFieldDelimiter);
+      Options.ExportCSVStringToIgnore := ini.ReadString('ExportCSVForm', 'StringToIgnore', Options.ExportCSVStringToIgnore);
+      Options.ExportCSVSaveFieldsHeader := ini.ReadBool('ExportCSVForm', 'SaveFieldHeader', Options.ExportCSVSaveFieldsHeader);
 
       Options.ExportHTMLWindow.ReadFromIni(ini, 'ExportHTMLForm');
       Options.ExportHTMLPageBackColor := TColor(ini.ReadInteger('ExportHTMLForm', 'PageBackColor', Integer(Options.ExportHTMLPageBackColor)));
@@ -451,6 +466,11 @@ begin
     end;
 
     Options.ExportCSVWindow.WriteToIni(ini, 'ExportCSVForm');
+    ini.WriteString('ExportCSVForm', 'CSVSeparator', Options.ExportCSVSeparator);
+    ini.WriteString('ExportCSVForm', 'DateFormat', Options.ExportCSVDateFormat);
+    ini.WriteString('ExportCSVForm', 'FieldDelimiter', Options.ExportCSVFieldDelimiter);
+    ini.WriteString('ExportCSVForm', 'StringToIgnore', Options.ExportCSVStringToIgnore);
+    ini.WriteBool('ExportCSVForm', 'SaveFieldHeader', Options.ExportCSVSaveFieldsHeader);
 
     Options.ExportHTMLWindow.WriteToIni(ini, 'ExportHTMLForm');
     ini.WriteInteger('ExportHTMLForm', 'PageBackColor', Integer(Options.ExportHTMLPageBackColor));

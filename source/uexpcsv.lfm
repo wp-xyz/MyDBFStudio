@@ -67,15 +67,13 @@ object ExpCSV: TExpCSV
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
     ItemHeight = 15
-    ItemIndex = 0
     Items.Strings = (
-      'MM/DD/YY'
-      'DD/MM/YY'
-      'YY/MM/DD'
-      'YY/DD/MM'
+      'MM"/"DD"/"YYYY'
+      'DD"/"MM"/"YYYY'
+      'YYYY"/"MM"/"DD'
+      'YYYY"/"DD"/"MM'
     )
     TabOrder = 2
-    Text = 'MM/DD/YY'
   end
   object lblDateFormat: TLabel
     AnchorSideLeft.Control = Separator
@@ -98,20 +96,20 @@ object ExpCSV: TExpCSV
     AnchorSideRight.Side = asrBottom
     Left = 222
     Height = 20
-    Top = 139
+    Top = 170
     Width = 280
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
-    TabOrder = 5
+    TabOrder = 6
   end
   object lblProgress: TLabel
     AnchorSideLeft.Control = pBar
-    AnchorSideTop.Control = fDel
+    AnchorSideTop.Control = cbSaveHeader
     AnchorSideTop.Side = asrBottom
     Left = 222
     Height = 15
-    Top = 122
+    Top = 153
     Width = 45
     BorderSpacing.Top = 24
     Caption = 'Progress'
@@ -161,15 +159,15 @@ object ExpCSV: TExpCSV
   object cbSaveHeader: TCheckBox
     AnchorSideLeft.Control = ClbField
     AnchorSideLeft.Side = asrBottom
-    AnchorSideTop.Control = pBar
+    AnchorSideTop.Control = fDel
     AnchorSideTop.Side = asrBottom
     Left = 222
     Height = 19
-    Top = 183
+    Top = 110
     Width = 114
-    BorderSpacing.Top = 24
+    BorderSpacing.Top = 12
     Caption = 'Save fields header'
-    TabOrder = 6
+    TabOrder = 5
   end
   object lblFieldSeparator: TLabel
     AnchorSideLeft.Control = ClbField

@@ -76,6 +76,11 @@ begin
     AutoSize := false;
     Options.ExportCSVWindow.ApplyToForm(Self);
   end;
+  Separator.Text := Options.ExportCSVSeparator;
+  cbDateF.Text := Options.ExportCSVDateFormat;
+  fDel.Text := Options.ExportCSVFieldDelimiter;
+  Ignore.Text := Options.ExportCSVStringToIgnore;
+  cbSaveHeader.Checked := Options.ExportCSVSaveFieldsHeader;
 
   Separator.Height := cbDateF.Height;
   fDel.Height := Separator.Height;
@@ -185,7 +190,14 @@ end;
 procedure TExpCSV.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   if CanClose then
+  begin
     Options.ExportCSVWindow.ExtractFromForm(Self);
+    Options.ExportCSVSeparator := Separator.Text;
+    Options.ExportCSVDateFormat := cbDateF.Text;
+    Options.ExportCSVFieldDelimiter := fDel.Text;
+    Options.ExportCSVStringToIgnore := Ignore.Text;
+    Options.ExportCSVSaveFieldsHeader := cbSaveHeader.Checked;
+  end;
 end;
 
 procedure TExpCSV.FormCreate(Sender: TObject);
