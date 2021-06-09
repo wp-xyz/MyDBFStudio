@@ -34,8 +34,8 @@
      inkscape:zoom="2.5964076"
      inkscape:cx="93.1508"
      inkscape:cy="137.82361"
-     inkscape:window-x="872"
-     inkscape:window-y="0"
+     inkscape:window-x="655"
+     inkscape:window-y="19"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg2"
      inkscape:snap-bbox="true"
@@ -171,7 +171,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -186,14 +186,14 @@
      ry="30" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:119.176px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.97943"
-     x="13.463412"
-     y="191.75954"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:127.668px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.19174"
+     x="14.451909"
+     y="186.57411"
      id="text975"
-     transform="scale(0.88285503,1.1326888)"><tspan
+     transform="scale(0.86986022,1.14961)"><tspan
        sodipodi:role="line"
        id="tspan973"
-       x="13.463412"
-       y="191.75954"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:119.176px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:2.97943">DBF</tspan></text>
+       x="14.451909"
+       y="186.57411"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:127.668px;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:3.19174">DBF</tspan></text>
 </svg>
