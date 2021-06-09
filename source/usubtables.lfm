@@ -18,7 +18,7 @@ object SubTables: TSubTables
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 6
-    Height = 51
+    Height = 55
     Top = 6
     Width = 309
     Anchors = [akTop, akLeft, akRight]
@@ -27,7 +27,7 @@ object SubTables: TSubTables
     BorderSpacing.Top = 6
     BorderSpacing.Right = 6
     Caption = ' Select First Table... '
-    ClientHeight = 31
+    ClientHeight = 35
     ClientWidth = 305
     TabOrder = 0
     object cbTable1: TComboBox
@@ -37,13 +37,10 @@ object SubTables: TSubTables
       AnchorSideRight.Side = asrBottom
       Left = 6
       Height = 23
-      Top = 2
+      Top = 6
       Width = 293
       Anchors = [akTop, akLeft, akRight]
-      BorderSpacing.Left = 6
-      BorderSpacing.Top = 2
-      BorderSpacing.Right = 6
-      BorderSpacing.Bottom = 6
+      BorderSpacing.Around = 6
       ItemHeight = 15
       Style = csDropDownList
       TabOrder = 0
@@ -56,8 +53,8 @@ object SubTables: TSubTables
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 6
-    Height = 51
-    Top = 69
+    Height = 55
+    Top = 73
     Width = 309
     Anchors = [akTop, akLeft, akRight]
     AutoSize = True
@@ -65,7 +62,7 @@ object SubTables: TSubTables
     BorderSpacing.Top = 12
     BorderSpacing.Right = 6
     Caption = ' Select Second Table... '
-    ClientHeight = 31
+    ClientHeight = 35
     ClientWidth = 305
     TabOrder = 1
     object cbTable2: TComboBox
@@ -75,13 +72,10 @@ object SubTables: TSubTables
       AnchorSideRight.Side = asrBottom
       Left = 6
       Height = 23
-      Top = 2
+      Top = 6
       Width = 293
       Anchors = [akTop, akLeft, akRight]
-      BorderSpacing.Left = 6
-      BorderSpacing.Top = 2
-      BorderSpacing.Right = 6
-      BorderSpacing.Bottom = 6
+      BorderSpacing.Around = 6
       ItemHeight = 15
       Style = csDropDownList
       TabOrder = 0
@@ -95,7 +89,7 @@ object SubTables: TSubTables
     AnchorSideRight.Side = asrBottom
     Left = 6
     Height = 74
-    Top = 132
+    Top = 140
     Width = 309
     Anchors = [akTop, akLeft, akRight]
     AutoFill = True
@@ -128,7 +122,7 @@ object SubTables: TSubTables
     AnchorSideTop.Side = asrBottom
     Left = 6
     Height = 15
-    Top = 218
+    Top = 226
     Width = 45
     BorderSpacing.Left = 6
     BorderSpacing.Top = 12
@@ -143,7 +137,7 @@ object SubTables: TSubTables
     AnchorSideRight.Side = asrBottom
     Left = 6
     Height = 20
-    Top = 235
+    Top = 243
     Width = 309
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 6
@@ -156,7 +150,7 @@ object SubTables: TSubTables
     AnchorSideRight.Control = CloseBtn
     Left = 164
     Height = 26
-    Top = 267
+    Top = 275
     Width = 70
     Anchors = [akTop, akRight]
     AutoSize = True
@@ -175,7 +169,7 @@ object SubTables: TSubTables
     AnchorSideRight.Side = asrBottom
     Left = 240
     Height = 26
-    Top = 267
+    Top = 275
     Width = 75
     Anchors = [akTop, akRight]
     AutoSize = True

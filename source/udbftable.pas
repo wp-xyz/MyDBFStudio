@@ -1,5 +1,7 @@
 unit uDbfTable;
 
+//todo: TabControl looks buggy on macOS.
+
 {$mode objfpc}{$H+}
 
 interface

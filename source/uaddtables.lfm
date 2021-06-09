@@ -19,7 +19,7 @@ object AddTables: TAddTables
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 6
-    Height = 51
+    Height = 55
     Top = 6
     Width = 387
     Anchors = [akTop, akLeft, akRight]
@@ -28,7 +28,7 @@ object AddTables: TAddTables
     BorderSpacing.Top = 6
     BorderSpacing.Right = 6
     Caption = ' Select First Table... '
-    ClientHeight = 31
+    ClientHeight = 35
     ClientWidth = 383
     TabOrder = 0
     object cbTable1: TComboBox
@@ -38,13 +38,10 @@ object AddTables: TAddTables
       AnchorSideRight.Side = asrBottom
       Left = 6
       Height = 23
-      Top = 2
+      Top = 6
       Width = 371
       Anchors = [akTop, akLeft, akRight]
-      BorderSpacing.Left = 6
-      BorderSpacing.Top = 2
-      BorderSpacing.Right = 6
-      BorderSpacing.Bottom = 6
+      BorderSpacing.Around = 6
       ItemHeight = 15
       Style = csDropDownList
       TabOrder = 0
@@ -57,8 +54,8 @@ object AddTables: TAddTables
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 6
-    Height = 51
-    Top = 69
+    Height = 55
+    Top = 73
     Width = 387
     Anchors = [akTop, akLeft, akRight]
     AutoSize = True
@@ -66,7 +63,7 @@ object AddTables: TAddTables
     BorderSpacing.Top = 12
     BorderSpacing.Right = 6
     Caption = ' Select Second Table... '
-    ClientHeight = 31
+    ClientHeight = 35
     ClientWidth = 383
     TabOrder = 1
     object cbTable2: TComboBox
@@ -78,13 +75,10 @@ object AddTables: TAddTables
       AnchorSideBottom.Side = asrBottom
       Left = 6
       Height = 23
-      Top = 2
+      Top = 6
       Width = 371
-      Anchors = [akTop, akLeft, akRight, akBottom]
-      BorderSpacing.Left = 6
-      BorderSpacing.Top = 2
-      BorderSpacing.Right = 6
-      BorderSpacing.Bottom = 6
+      Anchors = [akTop, akLeft, akRight]
+      BorderSpacing.Around = 6
       ItemHeight = 15
       Style = csDropDownList
       TabOrder = 0
@@ -98,7 +92,7 @@ object AddTables: TAddTables
     AnchorSideRight.Side = asrBottom
     Left = 6
     Height = 74
-    Top = 132
+    Top = 140
     Width = 387
     Anchors = [akTop, akLeft, akRight]
     AutoFill = True
@@ -131,7 +125,7 @@ object AddTables: TAddTables
     AnchorSideTop.Side = asrBottom
     Left = 6
     Height = 15
-    Top = 218
+    Top = 226
     Width = 45
     BorderSpacing.Left = 6
     BorderSpacing.Top = 12
@@ -146,7 +140,7 @@ object AddTables: TAddTables
     AnchorSideRight.Side = asrBottom
     Left = 6
     Height = 20
-    Top = 235
+    Top = 243
     Width = 387
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 6
@@ -159,7 +153,7 @@ object AddTables: TAddTables
     AnchorSideRight.Control = CloseBtn
     Left = 242
     Height = 26
-    Top = 267
+    Top = 275
     Width = 70
     Anchors = [akTop, akRight]
     AutoSize = True
@@ -178,7 +172,7 @@ object AddTables: TAddTables
     AnchorSideRight.Side = asrBottom
     Left = 318
     Height = 26
-    Top = 267
+    Top = 275
     Width = 75
     Anchors = [akTop, akRight]
     AutoSize = True
