@@ -1,7 +1,7 @@
 object ExpCSV: TExpCSV
-  Left = 569
+  Left = 614
   Height = 375
-  Top = 328
+  Top = 405
   Width = 508
   AutoSize = True
   BorderIcons = [biSystemMenu]

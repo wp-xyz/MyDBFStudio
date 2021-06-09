@@ -68,7 +68,7 @@ begin
   Constraints.MinWidth :=
     (Width - Separator.Left) * 3 div 2;
   Constraints.MinHeight :=
-    cbSaveHeader.Top + cbSaveHeader.Height +
+    pBar.Top + pBar.Height +
     CloseBtn.BorderSpacing.Top + CloseBtn.Height + CloseBtn.BorderSpacing.Bottom;
 
   if Options.RememberWindowSizePos and (Options.ExportCSVWindow.Width > 0) then
