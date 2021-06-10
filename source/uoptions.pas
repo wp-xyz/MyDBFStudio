@@ -23,7 +23,7 @@ type
     procedure WriteToIni(AIniFile: TCustomIniFile; ASection: String);
   end;
 
-  TRecOptions = Record
+  TOptions = record
     RememberWindowSizePosContent  : Boolean;
     MainWindowState               : TWindowState;
     MainWidth                     : Integer;
@@ -89,7 +89,7 @@ type
   end;
 
 var
-  Options: TRecOptions = (
+  Options: TOptions = (
     RememberWindowSizePosContent: true;
     MainWindowState: wsNormal;
     MainWidth: 0;
@@ -174,6 +174,12 @@ type
     Label2: TLabel;
     cbShowGridLines: TCheckBox;
     seMaxNumberFileHistory: TSpinEdit;
+    procedure cbEnableStatusBarChange(Sender: TObject);
+    procedure cbEnableToolbarChange(Sender: TObject);
+    procedure cbShowGridLinesChange(Sender: TObject);
+    procedure cbUseAlternateColorChange(Sender: TObject);
+    procedure clbAlternateColorChange(Sender: TObject);
+    procedure clbGridLineColorChange(Sender: TObject);
     procedure CloseBtnClick(Sender: TObject);
     procedure ConfirmBtnClick(Sender: TObject);
     procedure ClearRecentBtnClick(Sender: TObject);
@@ -181,10 +187,15 @@ type
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
-    procedure OptionsToControls;
-    procedure ControlsToOptions;
+    FSavedOptions: TOptions;
+    FOnUpdateOptions: TNotifyEvent;
+    FUpdateLock: Integer;
+    procedure OptionsToControls(const AOptions: TOptions);
+    procedure ControlsToOptions(var AOptions: TOptions);
+    procedure DoUpdateOptions(Restore: Boolean);
   public
     { public declarations }
+    property OnUpdateOptions: TNotifyEvent read FOnUpdateOptions write FOnUpdateOptions;
   end;
 
 var
@@ -287,15 +298,47 @@ end;
 
 procedure TOptionsForm.CloseBtnClick(Sender: TObject);
 begin
- Close;
+  DoUpdateOptions(true);
+  Options := FSavedOptions;
+  Close;
+end;
+
+procedure TOptionsForm.cbUseAlternateColorChange(Sender: TObject);
+begin
+  DoUpdateOptions(false);
+end;
+
+procedure TOptionsForm.cbShowGridLinesChange(Sender: TObject);
+begin
+  DoUpdateOptions(false);
+end;
+
+procedure TOptionsForm.cbEnableToolbarChange(Sender: TObject);
+begin
+  DoUpdateOptions(false);
+end;
+
+procedure TOptionsForm.cbEnableStatusBarChange(Sender: TObject);
+begin
+  DoUpdateOptions(false);
+end;
+
+procedure TOptionsForm.clbAlternateColorChange(Sender: TObject);
+begin
+  DoUpdateOptions(false);
+end;
+
+procedure TOptionsForm.clbGridLineColorChange(Sender: TObject);
+begin
+  DoUpdateOptions(false);
 end;
 
 procedure TOptionsForm.ConfirmBtnClick(Sender: TObject);
 begin
-  ControlsToOptions;
-  SaveOptions;
+  ControlsToOptions(FSavedOptions);
+  Options := FSavedOptions;
 
-  ShowMessage('Some changes will become effective only at the next reboot.');
+//  ShowMessage('Some changes will become effective only at the next reboot.');
 
   Close;
 end;
@@ -304,6 +347,21 @@ procedure TOptionsForm.ClearRecentBtnClick(Sender: TObject);
 begin
   if MessageDlg('Do you really want to clear the list of recently used files', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     Main.FileHistory.Clear;
+end;
+
+procedure TOptionsForm.DoUpdateOptions(Restore: Boolean);
+begin
+  if FUpdateLock > 0 then
+    exit;
+
+  if Assigned(FOnUpdateOptions) then
+  begin
+    if Restore then
+      Options := FSavedOptions
+    else
+      ControlsToOptions(Options);
+    FOnUpdateOptions(self);
+  end;
 end;
 
 procedure TOptionsForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -317,38 +375,44 @@ begin
   ConfirmBtn.Constraints.MinWidth := Max(ConfirmBtn.Width, CloseBtn.Width);
   CloseBtn.Constraints.MinWidth := ConfirmBtn.Constraints.MinWidth;
 
-  OptionsToControls;
+  FSavedOptions := Options;
+  OptionsToControls(Options);
   Options.OptionsWindow.ApplyToForm(Self);
 end;
 
-procedure TOptionsForm.ControlsToOptions;
+procedure TOptionsForm.ControlsToOptions(var AOptions: TOptions);
 begin
-  Options.RememberWindowSizePosContent := cbRememberWPos.Checked;
-  Options.StartWithOBA := cbStartWithOBA.Checked;
-  Options.GotoLastRecord := cbGotoLastRec.Checked;
-  Options.EnableToolBar := cbEnableToolbar.Checked;
-  Options.EnableStatusBar := cbEnableStatusBar.Checked;
-  Options.UseAlternateColor := cbUseAlternateColor.Checked;
-  Options.AlternateColor := clbAlternateColor.Selected;
-  Options.ShowGridLines := cbShowGridLines.Checked;
-  Options.GridLineColor := clbGridLineColor.Selected;
-  Options.MaxHistoryRecords := seMaxNumberFileHistory.Value;
-  Options.ShowSplashScreen := cbShowSplashScreen.Checked;
+  AOptions.RememberWindowSizePosContent := cbRememberWPos.Checked;
+  AOptions.StartWithOBA := cbStartWithOBA.Checked;
+  AOptions.GotoLastRecord := cbGotoLastRec.Checked;
+  AOptions.EnableToolBar := cbEnableToolbar.Checked;
+  AOptions.EnableStatusBar := cbEnableStatusBar.Checked;
+  AOptions.UseAlternateColor := cbUseAlternateColor.Checked;
+  AOptions.AlternateColor := clbAlternateColor.Selected;
+  AOptions.ShowGridLines := cbShowGridLines.Checked;
+  AOptions.GridLineColor := clbGridLineColor.Selected;
+  AOptions.MaxHistoryRecords := seMaxNumberFileHistory.Value;
+  AOptions.ShowSplashScreen := cbShowSplashScreen.Checked;
 end;
 
-procedure TOptionsForm.OptionsToControls;
+procedure TOptionsForm.OptionsToControls(const AOptions: TOptions);
 begin
-  cbRememberWPos.Checked := Options.RememberWindowSizePosContent;
-  cbStartWithOBA.Checked := Options.StartWithOBA;
-  cbGoToLastRec.Checked := Options.GotoLastRecord;
-  cbEnableToolbar.Checked := Options.EnableToolbar;
-  cbEnableStatusBar.Checked := Options.EnableStatusbar;
-  cbUseAlternateColor.Checked := Options.UseAlternateColor;
-  clbAlternateColor.Selected := Options.AlternateColor;
-  cbShowGridLines.Checked := Options.ShowGridLines;
-  clbGridLineColor.Selected := Options.GridLineColor;
-  seMaxNumberFileHistory.Value := Options.MaxHistoryRecords;
-  cbShowSplashScreen.Checked := Options.ShowSplashScreen;
+  inc(FUpdateLock);
+  try
+    cbRememberWPos.Checked := AOptions.RememberWindowSizePosContent;
+    cbStartWithOBA.Checked := AOptions.StartWithOBA;
+    cbGoToLastRec.Checked := AOptions.GotoLastRecord;
+    cbEnableToolbar.Checked := AOptions.EnableToolbar;
+    cbEnableStatusBar.Checked := AOptions.EnableStatusbar;
+    cbUseAlternateColor.Checked := AOptions.UseAlternateColor;
+    clbAlternateColor.Selected := AOptions.AlternateColor;
+    cbShowGridLines.Checked := AOptions.ShowGridLines;
+    clbGridLineColor.Selected := AOptions.GridLineColor;
+    seMaxNumberFileHistory.Value := AOptions.MaxHistoryRecords;
+    cbShowSplashScreen.Checked := AOptions.ShowSplashScreen;
+  finally
+    dec(FUpdateLock);
+  end;
 end;
 
 

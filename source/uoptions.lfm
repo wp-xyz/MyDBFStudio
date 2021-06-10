@@ -60,6 +60,7 @@ object OptionsForm: TOptionsForm
     BorderSpacing.Top = 12
     Caption = 'Enable toolbar'
     Checked = True
+    OnChange = cbEnableToolbarChange
     State = cbChecked
     TabOrder = 3
   end
@@ -73,6 +74,7 @@ object OptionsForm: TOptionsForm
     Width = 109
     Caption = 'Enable status bar'
     Checked = True
+    OnChange = cbEnableStatusBarChange
     State = cbChecked
     TabOrder = 4
   end
@@ -93,6 +95,7 @@ object OptionsForm: TOptionsForm
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Right = 18
     ItemHeight = 16
+    OnChange = clbAlternateColorChange
     TabOrder = 7
   end
   object Label2: TLabel
@@ -213,6 +216,7 @@ object OptionsForm: TOptionsForm
     BorderSpacing.Right = 6
     MaxValue = 100
     TabOrder = 10
+    Value = 5
   end
   object cbUseAlternateColor: TCheckBox
     AnchorSideLeft.Control = cbRememberWPos
@@ -226,6 +230,7 @@ object OptionsForm: TOptionsForm
     BorderSpacing.Right = 6
     Caption = 'Use alternate color for table rows'
     Color = clDefault
+    OnChange = cbUseAlternateColorChange
     ParentColor = False
     TabOrder = 6
   end
@@ -247,6 +252,7 @@ object OptionsForm: TOptionsForm
     BorderSpacing.Top = 4
     BorderSpacing.Right = 18
     ItemHeight = 16
+    OnChange = clbGridLineColorChange
     TabOrder = 9
   end
   object cbShowGridLines: TCheckBox
@@ -259,6 +265,7 @@ object OptionsForm: TOptionsForm
     Width = 100
     Caption = 'Show grid lines'
     Color = clDefault
+    OnChange = cbShowGridLinesChange
     ParentColor = False
     TabOrder = 8
   end

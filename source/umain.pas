@@ -75,7 +75,7 @@ type
     ToolButton9: TToolButton;
     WorkSite: TPageControl;
     StatusBar: TStatusBar;
-    ToolBar1: TToolBar;
+    ToolBar: TToolBar;
     procedure FormClose(Sender: TObject; var {%H-}CloseAction: TCloseAction);
     procedure FormCloseQuery(Sender: TObject; var CanClose: boolean);
     procedure FormCreate(Sender: TObject);
@@ -120,13 +120,14 @@ type
     Function TableIsAlreadyOpen(TblName : String): Integer;
     Function OBAIsAlreadyOpen: Integer;
     procedure ReadCmdLine;
+    procedure UpdateOptionsHandler(Sender: TObject);
 
     procedure NewTableCloseHandler(Sender: TObject; var CloseAction: TCloseAction);
     procedure TabChildCloseHandler(Sender: TObject; var CloseAction: TCloseAction);
   public
     { public declarations }
     FileHistory : THistoryFiles;
-    Procedure Open_Table(TblName: String);
+    procedure Open_Table(TblName: String);
   end;
 
 var
@@ -196,48 +197,48 @@ End;
 
 procedure TMain.FormCreate(Sender: TObject);
 begin
- FirstShow := True;
+  FirstShow := True;
 
- LoadOptions;
+  LoadOptions;
 
- Splash := TSplash.Create(Self);
- try
-   if Options.ShowSplashScreen Then
-     Splash.ShowModal;
- finally
-   FreeAndNil(Splash);
- end;
+  Splash := TSplash.Create(Self);
+  try
+    if Options.ShowSplashScreen Then
+      Splash.ShowModal;
+  finally
+    FreeAndNil(Splash);
+  end;
 
- If not FileExists(GetAliasDir + 'alias.dbf') Then
-  CreateAliasDB();
+  if not FileExists(GetAliasDir + 'alias.dbf') Then
+    CreateAliasDB();
 
- FileHistory := THistoryFiles.Create(Self);
- FileHistory.ParentMenu := miRecentFiles;
- FileHistory.LocalPath := Application.Location;
- FileHistory.IniFile := IniFileName;
- FileHistory.OnClickHistoryItem := @ClickOnHistoryFile;
- FileHistory.FileMustExist := True;
- FileHistory.MaxItems := Options.MaxHistoryRecords;
+  FileHistory := THistoryFiles.Create(Self);
+  FileHistory.ParentMenu := miRecentFiles;
+  FileHistory.LocalPath := Application.Location;
+  FileHistory.IniFile := IniFileName;
+  FileHistory.OnClickHistoryItem := @ClickOnHistoryFile;
+  FileHistory.FileMustExist := True;
+  FileHistory.MaxItems := Options.MaxHistoryRecords;
 
- WorkSpace := TTabForm.Create(WorkSite);
+  WorkSpace := TTabForm.Create(WorkSite);
 
- dbf_prscore.DbfWordsGeneralList.Add(TFunction.Create('STR', '', 'LII', 1, etString, @FuncFloatToStr, ''));
+  dbf_prscore.DbfWordsGeneralList.Add(TFunction.Create('STR', '', 'LII', 1, etString, @FuncFloatToStr, ''));
 
- dbf_prscore.DbfWordsSensPartialList.Add(TFunction.CreateOper('=', 'DS', etBoolean, @FuncStrD_StrEq, 80));
- dbf_prscore.DbfWordsSensPartialList.Add(TFunction.CreateOper('<>', 'DS', etBoolean, @FuncStrD_StrDif, 80));
- dbf_prscore.DbfWordsSensPartialList.Add(TFunction.CreateOper('>', 'DS', etBoolean, @FuncStrD_StrMax, 80));
- dbf_prscore.DbfWordsSensPartialList.Add(TFunction.CreateOper('<', 'DS', etBoolean, @FuncStrD_StrMin, 80));
- dbf_prscore.DbfWordsSensPartialList.Add(TFunction.CreateOper('>=', 'DS', etBoolean, @FuncStrD_StrMaxEq, 80));
- dbf_prscore.DbfWordsSensPartialList.Add(TFunction.CreateOper('<=', 'DS', etBoolean, @FuncStrD_StrMinEq, 80));
- dbf_prscore.DbfWordsSensPartialList.Add(TFunction.CreateOper('=', 'BS', etBoolean, @FuncStrB_StrEq, 80));
+  dbf_prscore.DbfWordsSensPartialList.Add(TFunction.CreateOper('=', 'DS', etBoolean, @FuncStrD_StrEq, 80));
+  dbf_prscore.DbfWordsSensPartialList.Add(TFunction.CreateOper('<>', 'DS', etBoolean, @FuncStrD_StrDif, 80));
+  dbf_prscore.DbfWordsSensPartialList.Add(TFunction.CreateOper('>', 'DS', etBoolean, @FuncStrD_StrMax, 80));
+  dbf_prscore.DbfWordsSensPartialList.Add(TFunction.CreateOper('<', 'DS', etBoolean, @FuncStrD_StrMin, 80));
+  dbf_prscore.DbfWordsSensPartialList.Add(TFunction.CreateOper('>=', 'DS', etBoolean, @FuncStrD_StrMaxEq, 80));
+  dbf_prscore.DbfWordsSensPartialList.Add(TFunction.CreateOper('<=', 'DS', etBoolean, @FuncStrD_StrMinEq, 80));
+  dbf_prscore.DbfWordsSensPartialList.Add(TFunction.CreateOper('=', 'BS', etBoolean, @FuncStrB_StrEq, 80));
 
- Caption := Caption + ' ' + GetVersionStr;
+  Caption := Caption + ' ' + GetVersionStr;
 
- HtmlHD.KeywordPrefix := HELP_KEYWORD_PREFIX + '/';
- HtmlHD.BaseURL := 'file://' + Application.Location + HELP_KEYWORD_PREFIX;
+  HtmlHD.KeywordPrefix := HELP_KEYWORD_PREFIX + '/';
+  HtmlHD.BaseURL := 'file://' + Application.Location + HELP_KEYWORD_PREFIX;
 
- If ParamStr(1) <> '' Then
-  Open_Table(ParamStr(1));
+  if ParamStr(1) <> '' then
+    Open_Table(ParamStr(1));
 end;
 
 procedure TMain.FormCloseQuery(Sender: TObject; var CanClose: boolean);
@@ -313,7 +314,7 @@ begin
    FileHistory.MaxItems := Options.MaxHistoryRecords;
    FileHistory.UpdateParentMenu;
 
-   ToolBar1.Visible := Options.EnableToolBar;
+   ToolBar.Visible := Options.EnableToolBar;
    StatusBar.Visible := Options.EnableStatusBar;
 
    If Options.StartWithOBA Then
@@ -592,6 +593,7 @@ procedure TMain.miSettingsClick(Sender: TObject);
 begin
   OptionsForm := TOptionsForm.Create(nil);
   try
+    OptionsForm.OnUpdateOptions := @UpdateOptionsHandler;
     OptionsForm.ShowModal;
   finally
     FreeAndNil(OptionsForm);
@@ -874,6 +876,28 @@ var
 begin
   for i := 1 to ParamCount do
     Open_Table(ParamStr(i));
+end;
+
+procedure TMain.UpdateOptionsHandler(Sender: TObject);
+var
+  i: Integer;
+  tf: TTabForm;
+begin
+  Toolbar.Visible := Options.EnableToolbar;
+  Statusbar.Visible := Options.EnableStatusbar;
+  for i := 0 to WorkSite.PageCount-1 do
+  begin
+    if (WorkSite.Pages[i] is TTabForm) then
+    begin
+      tf := TTabForm(WorkSite.Pages[i]);
+      if tf.ParentForm is TDbfTable then
+        TDbfTable(tf.ParentForm).UpdateOptions
+      else if tf.ParentForm is TNewTable then
+        TNewTable(tf.ParentForm).UpdateOptions
+      else if tf.ParentForm is TOpenBA then
+        TOpenBA(tf.ParentForm).UpdateOptions;
+    end;
+  end;
 end;
 
 end.

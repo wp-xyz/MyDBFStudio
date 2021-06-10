@@ -93,6 +93,7 @@ type
   public
     { public declarations }
     procedure Setup;
+    procedure UpdateOptions;
     property DBTable: TDbf read FDBTable;
   end;
 
@@ -437,15 +438,7 @@ begin
 
   Ds.Dataset := FDBTable;
 
-  if Options.UseAlternateColor then
-    DBGrid.AlternateColor := Options.AlternateColor
-  else
-    DBGrid.AlternateColor := DBGrid.Color;
-  if Options.ShowGridLines then
-    DBGrid.Options := DBGrid.Options + [dgRowLines, dgColLines]
-  else
-    DBGrid.Options := DBGrid.Options - [dgRowLines, dgColLines];
-  DBGrid.GridLineColor := Options.GridLineColor;
+  UpdateOptions;
 end;
 
 procedure TDbfTable.FormShow(Sender: TObject);
@@ -721,6 +714,18 @@ begin
   PasteBlobBtn.Enabled := isEditing;
 end;
 
+procedure TDbfTable.UpdateOptions;
+begin
+  if Options.UseAlternateColor then
+    DBGrid.AlternateColor := Options.AlternateColor
+  else
+    DBGrid.AlternateColor := DBGrid.Color;
+  if Options.ShowGridLines then
+    DBGrid.Options := DBGrid.Options + [dgRowLines, dgColLines]
+  else
+    DBGrid.Options := DBGrid.Options - [dgRowLines, dgColLines];
+  DBGrid.GridLineColor := Options.GridLineColor;
+end;
 
 initialization
   cfJPEG := RegisterClipboardFormat('image/jpeg');

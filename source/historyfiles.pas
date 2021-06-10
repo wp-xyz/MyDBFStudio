@@ -19,7 +19,7 @@ Type
   THistoryItemClick            = Procedure(Sender : TObject; Item : TMenuItem; Const FileName : String) Of Object;
   THistoryCreateItem           = Procedure(Sender : TObject; Item : TMenuItem; Const FileName : String) Of Object;
 
-  Items                        = 1..255;
+  TMaxHistoryItems             = 0..255;
 
   { THistoryFiles }
 
@@ -28,7 +28,7 @@ Type
       FItems                   : TStringList;
       FOnHistoryItemClick      : THistoryItemClick;
       FOnHistoryCreateItem     : THistoryCreateItem;
-      FMaxItems                : Items;
+      FMaxItems                : TMaxHistoryItems;
       FIniKey,
       FLocalPath,
       FIniFile                 : String;
@@ -76,7 +76,7 @@ Type
       Procedure ClearLastItem;
 
     Published
-      Property MaxItems : Items Read FMaxItems Write FMaxItems Default 5;
+      Property MaxItems : TMaxHistoryItems Read FMaxItems Write FMaxItems Default 10;
       Property IniKey : String Read FIniKey Write FIniKey;
       Property LocalPath : String Read FLocalPath Write FLocalPath;
       Property ShowFullPath : Boolean Read FShowFullPath Write FShowFullPath Default True;
@@ -436,7 +436,7 @@ begin
  inherited Create(AOwner);
 
  FIniKey:='History Files';
- FMaxItems:=5;
+ FMaxItems:=10;
  FLocalPath:='';
  FIniFile:='History.ini';
  FParentMenu:=Nil;

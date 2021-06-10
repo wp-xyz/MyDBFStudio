@@ -23,21 +23,22 @@ type
     GroupBox1: TGroupBox;
     GroupBox2: TGroupBox;
     Splitter: TSplitter;
+    procedure AddAliasClick(Sender: TObject);
+    procedure AliasGridCellClick({%H-}Column: TColumn);
     procedure CloseBtnClick(Sender: TObject);
+    procedure DeleteAliasClick(Sender: TObject);
     procedure FileListboxResize(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure OpenTableBtnClick(Sender: TObject);
-    procedure AddAliasClick(Sender: TObject);
-    procedure DeleteAliasClick(Sender: TObject);
-    procedure AliasGridCellClick({%H-}Column: TColumn);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure OpenTableBtnClick(Sender: TObject);
     procedure SplitterMoved(Sender: TObject);
   private
     { private declarations }
     FAliasDB: TDbf;
   public
     { public declarations }
+    procedure UpdateOptions;
     property AliasDB: TDbf read FAliasDB;
   end;
 
@@ -182,6 +183,19 @@ begin
   if DataSource.Enabled then
     if not FAliasDB.IsEmpty then
       FileListbox.Directory := FAliasDB.FieldByName('PATH').AsString;
+end;
+
+procedure TOpenBA.UpdateOptions;
+begin
+  if Options.UseAlternateColor then
+    AliasGrid.AlternateColor := Options.AlternateColor
+  else
+    AliasGrid.AlternateColor := AliasGrid.Color;
+  if Options.ShowGridLines then
+    AliasGrid.Options := AliasGrid.Options + [dgRowLines, dgColLines]
+  else
+    AliasGrid.Options := AliasGrid.Options - [dgRowLines, dgColLines];
+  AliasGrid.GridLineColor := Options.GridLineColor;
 end;
 
 end.

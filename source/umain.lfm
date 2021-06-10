@@ -16,14 +16,14 @@ object Main: TMain
   OnShow = FormShow
   Position = poDesktopCenter
   LCLVersion = '2.1.0.0'
-  object ToolBar1: TToolBar
+  object ToolBar: TToolBar
     Left = 0
     Top = 0
     Width = 750
     AutoSize = True
     ButtonHeight = 32
     ButtonWidth = 34
-    Caption = 'ToolBar1'
+    Caption = 'ToolBar'
     EdgeInner = esNone
     EdgeOuter = esNone
     Images = CommonData.Images

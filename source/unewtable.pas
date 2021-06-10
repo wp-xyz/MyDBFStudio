@@ -58,7 +58,8 @@ type
   public
     { public declarations }
     Ret : Boolean;
-    Function TestIndexName(Val : String) : Boolean;
+    function TestIndexName(Val : String) : Boolean;
+    procedure UpdateOptions;
     property DBTable: TDbf read FDBTable;
     property FileName: String read FFileName;
   end;
@@ -237,15 +238,8 @@ begin
   FieldList.Cells[0,FieldList.RowCount - 1] := IntToStr(FieldList.RowCount - 1);
   FieldList.Col := 1;
   FieldList.Row := FieldList.RowCount - 1;
-  if Options.UseAlternateColor then
-    FieldList.AlternateColor := Options.AlternateColor
-  else
-    FieldList.AlternateColor := FieldList.Color;
-  if Options.ShowGridLines then
-    FieldList.Options := FieldList.Options + [goHorzLine, goVertLine]
-  else
-    FieldList.Options := FieldList.Options - [goHorzLine, goVertLine];
-  FieldList.GridLineColor := Options.GridLineColor;
+
+  UpdateOptions;
 
   Ret := False;
 end;
@@ -465,6 +459,19 @@ begin
       if MyIndexList[i].IdxName = Val then
         exit;
   Result := true;
+end;
+
+procedure TNewTable.UpdateOptions;
+begin
+  if Options.UseAlternateColor then
+    FieldList.AlternateColor := Options.AlternateColor
+  else
+    FieldList.AlternateColor := FieldList.Color;
+  if Options.ShowGridLines then
+    FieldList.Options := FieldList.Options + [goHorzLine, goVertLine]
+  else
+    FieldList.Options := FieldList.Options - [goHorzLine, goVertLine];
+  FieldList.GridLineColor := Options.GridLineColor;
 end;
 
 end.
