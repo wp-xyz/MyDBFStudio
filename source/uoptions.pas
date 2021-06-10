@@ -212,7 +212,7 @@ procedure SaveOptions;
 implementation
 
 uses
-  Math, TypInfo;
+  LCLIntf, LCLType, Math, TypInfo;
 
 {$R *.lfm}
 
@@ -379,9 +379,19 @@ begin
 end;
 
 procedure TOptionsForm.FormShow(Sender: TObject);
+var
+  s: String;
+  w: Integer;
 begin
   ConfirmBtn.Constraints.MinWidth := Max(ConfirmBtn.Width, CloseBtn.Width);
   CloseBtn.Constraints.MinWidth := ConfirmBtn.Constraints.MinWidth;
+  w := 0;
+  with clbAlternateColor do
+  begin
+    for s in Items do
+      w := Max(w, Canvas.GetTextWidth(s));
+    Constraints.MinWidth := w + ColorRectWidth + 3*ColorRectOffset + GetSystemMetrics(SM_CXVSCROLL);
+  end;
 
   FSavedOptions := Options;
   OptionsToControls(Options);

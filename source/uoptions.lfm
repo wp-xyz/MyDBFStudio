@@ -94,6 +94,7 @@ object OptionsForm: TOptionsForm
     Style = [cbStandardColors, cbExtendedColors, cbSystemColors, cbIncludeDefault, cbPrettyNames]
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Right = 18
+    DropDownCount = 24
     ItemHeight = 16
     OnChange = clbAlternateColorChange
     TabOrder = 7
@@ -251,6 +252,7 @@ object OptionsForm: TOptionsForm
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 4
     BorderSpacing.Right = 18
+    DropDownCount = 24
     ItemHeight = 16
     OnChange = clbGridLineColorChange
     TabOrder = 9
