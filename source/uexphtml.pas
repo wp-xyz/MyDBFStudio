@@ -196,32 +196,35 @@ begin
     CloseBtn.BorderSpacing.Top + CloseBtn.Height + CloseBtn.BorderSpacing.Bottom;
 
   // Get initial values from options
-  if Options.RememberWindowSizePos and (Options.ExportHTMLWindow.Width > 0) then
+  if Options.RememberWindowSizePosContent then
   begin
-    AutoSize := false;
-    Options.ExportHTMLWindow.ApplyToForm(Self);
+    if (Options.ExportHTMLWindow.Width > 0) then
+    begin
+      AutoSize := false;
+      Options.ExportHTMLWindow.ApplyToForm(Self);
+    end;
+    PageBC.Selected := Options.ExportHTMLPageBackColor;
+    PageFC.Selected := Options.ExportHTMLPageFontColor;
+    HeaderBC.Selected := Options.ExportHTMLHeaderBackColor;
+    HeaderFC.Selected := Options.ExportHTMLHeaderFontColor;
+    PageFS.ItemIndex := ord(Options.ExportHTMLPageFontSize);
+    HeaderFS.ItemIndex := ord(Options.ExportHTMLHeaderFontSize);
+    SetFontStyles(PageFT, Options.ExportHTMLPageFontStyle);
+    SetFontStyles(HeaderST,  Options.ExportHTMLHeaderFontStyle);
+    if Options.ExportHTMLTableWidth > -1 then
+      TableW.Text := IntToStr(Options.ExportHTMLTableWidth)
+    else
+      TableW.Text := '';
+    TableBC.Selected := Options.ExportHTMLTableBorderColor;
+    if Options.ExportHTMLCellPadding > -1 then
+      CellP.Text := IntToStr(Options.ExportHTMLCellPadding)
+    else
+      CellP.Text := '';
+    if Options.ExportHTMLCellSpacing > -1 then
+      CellS.Text := IntToStr(Options.ExportHTMLCellSpacing)
+    else
+      CellS.Text := '';
   end;
-  PageBC.Selected := Options.ExportHTMLPageBackColor;
-  PageFC.Selected := Options.ExportHTMLPageFontColor;
-  HeaderBC.Selected := Options.ExportHTMLHeaderBackColor;
-  HeaderFC.Selected := Options.ExportHTMLHeaderFontColor;
-  PageFS.ItemIndex := ord(Options.ExportHTMLPageFontSize);
-  HeaderFS.ItemIndex := ord(Options.ExportHTMLHeaderFontSize);
-  SetFontStyles(PageFT, Options.ExportHTMLPageFontStyle);
-  SetFontStyles(HeaderST,  Options.ExportHTMLHeaderFontStyle);
-  if Options.ExportHTMLTableWidth > -1 then
-    TableW.Text := IntToStr(Options.ExportHTMLTableWidth)
-  else
-    TableW.Text := '';
-  TableBC.Selected := Options.ExportHTMLTableBorderColor;
-  if Options.ExportHTMLCellPadding > -1 then
-    CellP.Text := IntToStr(Options.ExportHTMLCellPadding)
-  else
-    CellP.Text := '';
-  if Options.ExportHTMLCellSpacing > -1 then
-    CellS.Text := IntToStr(Options.ExportHTMLCellSpacing)
-  else
-    CellS.Text := '';
 
   // Prepare field list
   ClbField.Clear;

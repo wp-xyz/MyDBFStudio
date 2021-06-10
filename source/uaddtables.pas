@@ -122,7 +122,7 @@ begin
   Constraints.MinHeight := Height;
   Constraints.MaxHeight := Height;
 
-  if Options.RememberWindowSizePos and (Options.AddTablesWindow.Width > 0) then
+  if Options.RememberWindowSizePosContent and (Options.AddTablesWindow.Width > 0) then
   begin
     AutoSize := false;
     Options.AddTablesWindow.ApplyToForm(self);

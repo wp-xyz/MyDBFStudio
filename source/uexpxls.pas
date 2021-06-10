@@ -97,17 +97,20 @@ begin
     pBar.Top + pBar.Height +
     CloseBtn.BorderSpacing.Top + CloseBtn.Height + CloseBtn.BorderSpacing.Bottom;
 
-  if Options.RememberWindowSizePos and (Options.ExportXLSWindow.Width > 0) then
+  if Options.RememberWindowSizePosContent then
   begin
-    AutoSize := false;
-    Options.ExportXLSWindow.ApplyToForm(Self);
+    if (Options.ExportXLSWindow.Width > 0) then
+    begin
+      AutoSize := false;
+      Options.ExportXLSWindow.ApplyToForm(Self);
+    end;
+    // Apply the format settings defined by the Options
+    StrFN.Text := Options.ExportXLSNumberFormat;
+    StrFND.Text := Options.ExportXLSFloatNumberFormat;
+    StrMFN.Text := Options.ExportXLSNumberMaskFormat;
+    StrMFND.Text := Options.ExportXLSFloatNumberMaskFormat;
+    cbDateF.Text := Options.ExportXLSDateFormat;
   end;
-  // Apply the format settings defined by the Options
-  StrFN.Text := Options.ExportXLSNumberFormat;
-  StrFND.Text := Options.ExportXLSFloatNumberFormat;
-  StrMFN.Text := Options.ExportXLSNumberMaskFormat;
-  StrMFND.Text := Options.ExportXLSFloatNumberMaskFormat;
-  cbDateF.Text := Options.ExportXLSDateFormat;
 
   // Populate the field list
   ClbField.Clear;

@@ -106,6 +106,7 @@ begin
   OrigFields.Clear;
   for Ind := 0 To FOrigTable.FieldDefs.Count - 1 do
     OrigFields.Items.Add(FOrigTable.FieldDefs.Items[Ind].Name);
+
   Options.SortTableWindow.ApplyToForm(self);
 end;
 

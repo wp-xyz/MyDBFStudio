@@ -1,5 +1,7 @@
 program MyDbfStudio;
 
+// todo: set grid line color to some system color for less dominant rendering in dark mode.
+
 {$mode objfpc}{$H+}
 
 uses

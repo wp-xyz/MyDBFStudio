@@ -68,7 +68,7 @@ begin
   Constraints.MinHeight := IdxName.Top + Idxname.Height +
     CloseBtn.BorderSpacing.Top + CloseBtn.Height + CloseBtn.BorderSpacing.Bottom;
 
-  if Options.RememberWindowSizePos and (Options.IndexTableWindow.Width > 0) then
+  if Options.RememberWindowSizePosContent and (Options.IndexTableWindow.Width > 0) then
   begin
     AutoSize := false;
     Options.IndexTableWindow.ApplyToForm(Self);

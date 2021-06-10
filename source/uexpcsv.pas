@@ -71,16 +71,19 @@ begin
     pBar.Top + pBar.Height +
     CloseBtn.BorderSpacing.Top + CloseBtn.Height + CloseBtn.BorderSpacing.Bottom;
 
-  if Options.RememberWindowSizePos and (Options.ExportCSVWindow.Width > 0) then
+  if Options.RememberWindowSizePosContent then
   begin
-    AutoSize := false;
-    Options.ExportCSVWindow.ApplyToForm(Self);
+    if (Options.ExportCSVWindow.Width > 0) then
+    begin
+      AutoSize := false;
+      Options.ExportCSVWindow.ApplyToForm(Self);
+    end;
+    Separator.Text := Options.ExportCSVSeparator;
+    cbDateF.Text := Options.ExportCSVDateFormat;
+    fDel.Text := Options.ExportCSVFieldDelimiter;
+    Ignore.Text := Options.ExportCSVStringToIgnore;
+    cbSaveHeader.Checked := Options.ExportCSVSaveFieldsHeader;
   end;
-  Separator.Text := Options.ExportCSVSeparator;
-  cbDateF.Text := Options.ExportCSVDateFormat;
-  fDel.Text := Options.ExportCSVFieldDelimiter;
-  Ignore.Text := Options.ExportCSVStringToIgnore;
-  cbSaveHeader.Checked := Options.ExportCSVSaveFieldsHeader;
 
   Separator.Height := cbDateF.Height;
   fDel.Height := Separator.Height;

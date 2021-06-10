@@ -167,14 +167,16 @@ begin
   Constraints.MinHeight := pBar.Top + pBar.Height +
     CloseBtn.BorderSpacing.Top + CloseBtn.Height + CloseBtn.BorderSpacing.Bottom;
 
-  if Options.RememberWindowSizePos and (Options.ExportXMLWindow.Width > 0) then
+  if Options.RememberWindowSizePosContent then
   begin
-    AutoSize := false;
-    Options.ExportXMLWindow.ApplyToForm(Self);
+    if (Options.ExportXMLWindow.Width > 0) then
+    begin
+      AutoSize := false;
+      Options.ExportXMLWindow.ApplyToForm(Self);
+    end;
   end;
 
   ClbField.Clear;
-
   for Ind := 0 to DbfTable.FieldDefs.Count - 1 do
   begin
     ClbField.Items.Add(Dbftable.FieldDefs.Items[ind].Name);

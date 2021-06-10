@@ -61,6 +61,16 @@ begin
   FAliasDB.FilePath := GetAliasDir;
   FAliasDB.IndexName := 'ALIAS';
   DataSource.Dataset := FAliasDB;
+
+  if Options.UseAlternateColor then
+    AliasGrid.AlternateColor := Options.AlternateColor
+  else
+    AliasGrid.AlternateColor := AliasGrid.Color;
+  if Options.ShowGridLines then
+    AliasGrid.Options := AliasGrid.Options + [dgRowLines, dgColLines]
+  else
+    AliasGrid.Options := AliasGrid.Options - [dgRowLines, dgColLines];
+  AliasGrid.GridLineColor := Options.GridLineColor;
 end;
 
 procedure TOpenBA.FormDestroy(Sender: TObject);

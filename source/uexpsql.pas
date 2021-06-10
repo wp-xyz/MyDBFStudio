@@ -102,18 +102,21 @@ begin
   Constraints.MinHeight := pBar.Top + pBar.Height +
     CloseBtn.BorderSpacing.Top + CloseBtn.Height + CloseBtn.BorderSpacing.Bottom;
 
-  if Options.RememberWindowSizePos and (Options.ExportSQLScriptWindow.Width > 0) then
+  if Options.RememberWindowSizePosContent then
   begin
-    AutoSize := false;
-    Options.ExportSQLScriptWindow.ApplyToForm(Self);
+    if (Options.ExportSQLScriptWindow.Width > 0) then
+    begin
+      AutoSize := false;
+      Options.ExportSQLScriptWindow.ApplyToForm(Self);
+    end;
+    cbCreateTable.Checked := Options.ExportSQLScriptItems and 1 <> 0;
+    cbExportRec.Checked := Options.ExportSQLScriptItems and 2 <> 0;
+    cbDateFmt.Text := Options.ExportSQLScriptDateFormat;
+    cbTimeFmt.Text := Options.ExportSQLScriptTimeFormat;
+    cbDateTimeFmt.Text := Options.ExportSQLScriptDateTimeFormat;
+    cbDateSep.Text := Options.ExportSQLScriptDateSeparator;
+    cbTimeSep.Text := Options.ExportSQLScriptTimeSeparator;
   end;
-  cbCreateTable.Checked := Options.ExportSQLScriptItems and 1 <> 0;
-  cbExportRec.Checked := Options.ExportSQLScriptItems and 2 <> 0;
-  cbDateFmt.Text := Options.ExportSQLScriptDateFormat;
-  cbTimeFmt.Text := Options.ExportSQLScriptTimeFormat;
-  cbDateTimeFmt.Text := Options.ExportSQLScriptDateTimeFormat;
-  cbDateSep.Text := Options.ExportSQLScriptDateSeparator;
-  cbTimeSep.Text := Options.ExportSQLScriptTimeSeparator;
 
   ClbField.Clear;
   for ind := 0 to DbfTable.FieldDefs.Count - 1 do

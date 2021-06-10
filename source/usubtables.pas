@@ -122,11 +122,7 @@ begin
   Constraints.MinHeight := Height;
   Constraints.MaxHeight := Height;
 
-  if Options.RememberWindowSizePos and (Options.SubtractTablesWindow.Width > 0) then
-  begin
-    AutoSize := false;
-    Options.SubtractTablesWindow.ApplyToForm(Self);
-  end;
+  Options.SubtractTablesWindow.ApplyToForm(Self);
 
   for Ind := 0 To Main.WorkSite.PageCount - 1 do
     if (Main.WorkSite.Pages[Ind] is TTabForm) then

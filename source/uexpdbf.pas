@@ -110,21 +110,23 @@ begin
   Constraints.MinHeight := pBar.Top + pBar.Height +
     CloseBtn.BorderSpacing.Top + CloseBtn.Height + CloseBtn.BorderSpacing.Bottom;
 
-  if Options.RememberWindowSizePos and (Options.ExportDBFWindow.Width > 0) then
+  if Options.RememberWindowSizePosContent then
   begin
-    AutoSize := false;
-    Options.ExportDBFWindow.ApplyToForm(Self);
-  end;
-
-  // Find selected table type in options and restore it.
-  idx := -1;
-  for i := 0 to TableType.Items.Count-1 do
-    if TableType.Items[i] = Options.ExportDBFTableLevel then
+    if (Options.ExportDBFWindow.Width > 0) then
     begin
-      idx := i;
-      break;
+      AutoSize := false;
+      Options.ExportDBFWindow.ApplyToForm(Self);
     end;
-  TableType.ItemIndex := idx;
+    // Find selected table type in options and restore it.
+    idx := -1;
+    for i := 0 to TableType.Items.Count-1 do
+      if TableType.Items[i] = Options.ExportDBFTableLevel then
+      begin
+        idx := i;
+        break;
+      end;
+    TableType.ItemIndex := idx;
+  end;
 end;
 
 function TExpDBF.ReturnTableLevel: Word;

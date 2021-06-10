@@ -250,7 +250,7 @@ end;
 
 procedure TMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  If Options.RememberWindowSizePos Then
+  If Options.RememberWindowSizePosContent then
   Begin
     Options.MainWindowState := WindowState;
     if WindowState = wsNormal then
@@ -319,7 +319,7 @@ begin
    If Options.StartWithOBA Then
     miOpenAliasClick(Sender);
 
-   If Options.RememberWindowSizePos Then
+   If Options.RememberWindowSizePosContent then
    Begin
      WindowState := Options.MainWindowState;
      if WindowState = wsNormal then
@@ -340,7 +340,7 @@ begin
        if L + W > R.Right then L := R.Right - W;
        if T + H > R.Bottom then T := R.Bottom - H;
        SetBounds(L, T, W, H);
-    end;
+     end;
     FirstShow := False;
    end;
   end;
@@ -558,7 +558,6 @@ var
   NT: TNewTable;
 begin
   NT := TNewTable.Create(WorkSite);
-  NT.FieldList.AlternateColor := Options.AlternateColor;
   NT.OnClose := @NewTableCloseHandler;
   WorkSpace.AddFormToPageControl(NT);
 end;
@@ -572,7 +571,6 @@ begin
   if tabIndex < 0 then
   begin
     ObA := TOpenBA.Create(WorkSite);
-    ObA.AliasGrid.AlternateColor := Options.AlternateColor;
     ObA.OnClose := @TabChildCloseHandler;
     WorkSpace.AddFormToPageControl(ObA);
   end
@@ -855,7 +853,6 @@ begin
     WorkSpace.AddFormToPageControl(OT);
 
     OT.DBTable.TableName := TblName;
-    OT.DBGrid.AlternateColor := Options.AlternateColor;
     OT.DBTable.Open;
 
     If Options.GotoLastRecord Then

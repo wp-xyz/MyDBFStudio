@@ -24,7 +24,7 @@ type
   end;
 
   TRecOptions = Record
-    RememberWindowSizePos         : Boolean;
+    RememberWindowSizePosContent  : Boolean;
     MainWindowState               : TWindowState;
     MainWidth                     : Integer;
     MainHeight                    : Integer;
@@ -80,14 +80,17 @@ type
     GotoLastRecord                : Boolean;
     EnableToolBar                 : Boolean;
     EnableStatusBar               : Boolean;
+    UseAlternateColor             : Boolean;
     AlternateColor                : TColor;
+    ShowGridLines                 : Boolean;
+    GridLineColor                 : TColor;
     MaxHistoryRecords             : Integer;
     ShowSplashScreen              : Boolean;
   end;
 
 var
   Options: TRecOptions = (
-    RememberWindowSizePos: true;
+    RememberWindowSizePosContent: true;
     MainWindowState: wsNormal;
     MainWidth: 0;
     MainHeight: 0;
@@ -143,7 +146,10 @@ var
     GotoLastRecord: false;
     EnableToolBar: true;
     EnableStatusBar: true;
-    AlternateColor: clCream;
+    UseAlternateColor: true;
+    AlternateColor: clBtnFace;
+    ShowGridLines: true;
+    GridLineColor: clBtnFace;
     MaxHistoryRecords: 10;
     ShowSplashScreen: true
   );
@@ -153,6 +159,7 @@ type
 
   TOptionsForm = class(TForm)
     Bevel1: TBevel;
+    clbGridLineColor: TColorBox;
     ClearRecentBtn: TBitBtn;
     CloseBtn: TBitBtn;
     ConfirmBtn: TBitBtn;
@@ -161,10 +168,11 @@ type
     cbGotoLastRec: TCheckBox;
     cbEnableToolbar: TCheckBox;
     cbEnableStatusBar: TCheckBox;
-    cbAlternateColor: TColorBox;
+    clbAlternateColor: TColorBox;
     cbShowSplashScreen: TCheckBox;
-    Label1: TLabel;
+    cbUseAlternateColor: TCheckBox;
     Label2: TLabel;
+    cbShowGridLines: TCheckBox;
     seMaxNumberFileHistory: TSpinEdit;
     procedure CloseBtnClick(Sender: TObject);
     procedure ConfirmBtnClick(Sender: TObject);
@@ -207,7 +215,7 @@ var
   R: TRect;
   W, H: Integer;
 begin
-  if not Options.RememberWindowSizePos then
+  if not Options.RememberWindowSizePosContent then
     exit;
 
   R := Screen.WorkAreaRect;
@@ -315,24 +323,30 @@ end;
 
 procedure TOptionsForm.ControlsToOptions;
 begin
-  Options.RememberWindowSizePos := cbRememberWPos.Checked;
+  Options.RememberWindowSizePosContent := cbRememberWPos.Checked;
   Options.StartWithOBA := cbStartWithOBA.Checked;
   Options.GotoLastRecord := cbGotoLastRec.Checked;
   Options.EnableToolBar := cbEnableToolbar.Checked;
   Options.EnableStatusBar := cbEnableStatusBar.Checked;
-  Options.AlternateColor := cbAlternateColor.Selected;
+  Options.UseAlternateColor := cbUseAlternateColor.Checked;
+  Options.AlternateColor := clbAlternateColor.Selected;
+  Options.ShowGridLines := cbShowGridLines.Checked;
+  Options.GridLineColor := clbGridLineColor.Selected;
   Options.MaxHistoryRecords := seMaxNumberFileHistory.Value;
   Options.ShowSplashScreen := cbShowSplashScreen.Checked;
 end;
 
 procedure TOptionsForm.OptionsToControls;
 begin
-  cbRememberWPos.Checked := Options.RememberWindowSizePos;
+  cbRememberWPos.Checked := Options.RememberWindowSizePosContent;
   cbStartWithOBA.Checked := Options.StartWithOBA;
   cbGoToLastRec.Checked := Options.GotoLastRecord;
   cbEnableToolbar.Checked := Options.EnableToolbar;
   cbEnableStatusBar.Checked := Options.EnableStatusbar;
-  cbAlternateColor.Selected := Options.AlternateColor;
+  cbUseAlternateColor.Checked := Options.UseAlternateColor;
+  clbAlternateColor.Selected := Options.AlternateColor;
+  cbShowGridLines.Checked := Options.ShowGridLines;
+  clbGridLineColor.Selected := Options.GridLineColor;
   seMaxNumberFileHistory.Value := Options.MaxHistoryRecords;
   cbShowSplashScreen.Checked := Options.ShowSplashScreen;
 end;
@@ -353,9 +367,12 @@ var
 begin
   ini := TIniFile.Create(IniFileName);
   try
-    Options.RememberWindowSizePos := ini.ReadBool('Options', 'RememberWindowSizePos',
-      Options.RememberWindowSizePos);
-    if Options.RememberWindowSizePos then
+    Options.RememberWindowSizePosContent := ini.ReadBool(
+      'Options',
+      'RememberWindowSizePosContent',
+      Options.RememberWindowSizePosContent
+    );
+    if Options.RememberWindowSizePosContent then
     begin
       Options.MainWindowState := TWindowState(ini.ReadInteger('MainForm', 'WindowState',
         Integer(Options.MainWindowState)));
@@ -440,7 +457,10 @@ begin
     Options.GotoLastRecord := ini.ReadBool('Options', 'GotoLastRecord', Options.GotoLastRecord);
     Options.EnableToolbar := ini.ReadBool('Options', 'EnableToolbar', Options.EnableToolbar);
     Options.EnableStatusbar := ini.ReadBool('Options', 'EnableStatusbar', Options.EnableStatusbar);
+    Options.UseAlternateColor := ini.ReadBool('Options', 'UseAlternateColor', Options.UseAlternateColor);
     Options.AlternateColor := TColor(ini.ReadInteger('Options', 'AlternateColor', Integer(Options.AlternateColor)));
+    Options.ShowGridLines := ini.ReadBool('Options', 'ShowGridLines', Options.ShowGridLines);
+    Options.GridLineColor := TColor(ini.ReadInteger('Options', 'GridLineColor', Options.GridLineColor));
     Options.MaxHistoryRecords := ini.ReadInteger('Options', 'MaxHistoryRecords', Options.MaxHistoryRecords);
     Options.ShowSplashScreen := ini.ReadBool('Options', 'ShowSplashScreen', Options.ShowSplashScreen);
   finally
@@ -454,12 +474,15 @@ var
 begin
   ini := TIniFile.Create(IniFileName);
   try
-    ini.WriteBool('Options', 'RememberWindowSizePos', Options.RememberWindowSizePos);
+    ini.WriteBool('Options', 'RememberWindowSizePosContent', Options.RememberWindowSizePosContent);
     ini.WriteBool('Options', 'StartWithOBA', Options.StartWithOBA);
     ini.WriteBool('Options', 'GotoLastRecord', Options.GotoLastRecord);
     ini.WriteBool('Options', 'EnableToolbar', Options.EnableToolbar);
     ini.WriteBool('Options', 'EnableStatusbar', Options.EnableStatusbar);
+    ini.WriteBool('Options', 'UseAlternateColor', Options.UseAlternateColor);
     ini.WriteInteger('Options', 'AlternateColor', integer(Options.AlternateColor));
+    ini.WriteBool('Options', 'ShowGridLines', Options.ShowGridLines);
+    ini.WriteInteger('Options', 'GridLineColor', Options.GridLineColor);
     ini.WriteInteger('Options', 'MaxHistoryRecords', Options.MaxHistoryRecords);
     ini.WriteBool('Options', 'ShowSplashScreen', Options.ShowSplashScreen);
 

@@ -436,17 +436,31 @@ begin
   FDBTable.AfterScroll := @ShowTableInfo;
 
   Ds.Dataset := FDBTable;
+
+  if Options.UseAlternateColor then
+    DBGrid.AlternateColor := Options.AlternateColor
+  else
+    DBGrid.AlternateColor := DBGrid.Color;
+  if Options.ShowGridLines then
+    DBGrid.Options := DBGrid.Options + [dgRowLines, dgColLines]
+  else
+    DBGrid.Options := DBGrid.Options - [dgRowLines, dgColLines];
+  DBGrid.GridLineColor := Options.GridLineColor;
 end;
 
 procedure TDbfTable.FormShow(Sender: TObject);
 begin
-  if Options.DBFTableSplitter > 0 then
-    BottomPanel.Height := Options.DBFTableSplitter;
+  if Options.RememberWindowSizePosContent then
+  begin
+    if Options.DBFTableSplitter > 0 then
+      BottomPanel.Height := Options.DBFTableSplitter;
+  end;
 end;
 
 procedure TDbfTable.SplitterMoved(Sender: TObject);
 begin
-  Options.DBFTableSplitter := BottomPanel.Height;
+  if Options.RememberWindowSizePosContent then
+    Options.DBFTableSplitter := BottomPanel.Height;
 end;
 
 procedure TDbfTable.tbEmptyClick(Sender: TObject);

@@ -222,7 +222,15 @@ end;
 
 procedure TRestructure.FormCreate(Sender: TObject);
 begin
-  FieldList.AlternateColor := Options.AlternateColor
+  if Options.UseAlternateColor then
+    FieldList.AlternateColor := Options.AlternateColor
+  else
+    FieldList.AlternateColor := FieldList.Color;
+  if Options.ShowGridLines then
+    FieldList.Options := FieldList.Options + [goHorzLine, goVertLine]
+  else
+    FieldList.Options := FieldList.Options - [goHorzLine, goVertLine];
+  FieldList.GridLineColor := Options.GridLineColor;
 end;
 
 procedure TRestructure.RestructureBtnClick(Sender: TObject);
@@ -299,7 +307,7 @@ begin
     FieldList.Left + FieldList.Constraints.MinWidth +
     FieldList.BorderSpacing.Around + Panel1.Width + Panel1.Borderspacing.Right;
 
-  if Options.RememberWindowSizePos then
+  if Options.RememberWindowSizePosContent then
   begin
     AutoSize := false;
     Options.RestructureWindow.ApplyToForm(self);

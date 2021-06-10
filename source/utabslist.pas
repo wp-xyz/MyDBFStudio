@@ -20,13 +20,13 @@ type
     CloseTabBtn: TBitBtn;
     TabsGrid: TStringGrid;
     procedure CloseBtnClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    procedure MoveUpBtnClick(Sender: TObject);
-    procedure MoveDownBtnClick(Sender: TObject);
-    procedure GoToTabBtnClick(Sender: TObject);
     procedure CloseTabBtnClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormShow(Sender: TObject);
+    procedure GoToTabBtnClick(Sender: TObject);
+    procedure MoveUpBtnClick(Sender: TObject);
+    procedure MoveDownBtnClick(Sender: TObject);
   private
     { private declarations }
     Procedure Load_Tabs;
@@ -67,7 +67,15 @@ end;
 
 procedure TTabsList.FormCreate(Sender: TObject);
 begin
-  TabsGrid.AlternateColor := Options.AlternateColor;
+  if Options.UseAlternateColor then
+    TabsGrid.AlternateColor := Options.AlternateColor
+  else
+    TabsGrid.AlternateColor := TabsGrid.Color;
+  if Options.ShowGridLines then
+    TabsGrid.Options := TabsGrid.Options + [goHorzLine]
+  else
+    TabsGrid.Options := TabsGrid.Options - [goHorzLine];
+  TabsGrid.GridLineColor := Options.GridLineColor;
 end;
 
 procedure TTabsList.MoveUpBtnClick(Sender: TObject);
@@ -83,20 +91,6 @@ begin
     TabsGrid.Row := oldPos - 1 + TabsGrid.FixedRows;
     UpdateCmds;
   end;
-  {
- If lvTabs.Items.Count > 1 Then
-  If lvTabs.Selected.Index > 0 Then
-   Begin
-    OldPos := lvTabs.Selected.Index;
-
-    Main.WorkSite.Pages[OldPos].PageIndex := OldPos - 1;
-
-    Load_Tabs;
-
-    lvTabs.SetFocus;
-    lvTabs.Items[OldPos - 1].Selected := True;
-   end;
-   }
 end;
 
 procedure TTabsList.MoveDownBtnClick(Sender: TObject);

@@ -69,7 +69,7 @@ var
 implementation
 
 uses
-  Math, TypInfo, uUtils, uIdxTable;
+  Math, TypInfo, uUtils, uOptions, uIdxTable;
 
 {$R *.lfm}
 
@@ -234,10 +234,18 @@ begin
   TableTypeChange(Sender);
 
   FieldList.RowCount := 2;
-
   FieldList.Cells[0,FieldList.RowCount - 1] := IntToStr(FieldList.RowCount - 1);
   FieldList.Col := 1;
   FieldList.Row := FieldList.RowCount - 1;
+  if Options.UseAlternateColor then
+    FieldList.AlternateColor := Options.AlternateColor
+  else
+    FieldList.AlternateColor := FieldList.Color;
+  if Options.ShowGridLines then
+    FieldList.Options := FieldList.Options + [goHorzLine, goVertLine]
+  else
+    FieldList.Options := FieldList.Options - [goHorzLine, goVertLine];
+  FieldList.GridLineColor := Options.GridLineColor;
 
   Ret := False;
 end;
