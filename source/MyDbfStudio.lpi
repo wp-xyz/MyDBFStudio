@@ -4,9 +4,13 @@
     <Version Value="12"/>
     <General>
       <Flags>
+        <SaveClosedFiles Value="False"/>
+        <SaveOnlyProjectUnits Value="True"/>
         <LRSInOutputDirectory Value="False"/>
+        <SaveJumpHistory Value="False"/>
         <CompatibilityMode Value="True"/>
       </Flags>
+      <SessionStorage Value="InProjectDir"/>
       <Title Value="MyDbfStudio"/>
       <Scaled Value="True"/>
       <ResourceType Value="res"/>
@@ -25,7 +29,7 @@
       <RevisionNr Value="3"/>
       <StringTable FileDescription="Administrative tool for DBF tables." LegalCopyright="Calogiuri Enzo Antonio" ProductName="MyDbfStudio"/>
     </VersionInfo>
-    <BuildModes Count="4" Active="Debug">
+    <BuildModes Count="4">
       <Item1 Name="default" Default="True"/>
       <Item2 Name="Debug">
         <CompilerOptions>
@@ -164,15 +168,10 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="107">
+    <Units Count="29">
       <Unit0>
         <Filename Value="MyDbfStudio.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="4"/>
-        <CursorPos Y="4"/>
-        <UsageCount Value="201"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="umain.pas"/>
@@ -181,12 +180,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <EditorIndex Value="17"/>
-        <TopLine Value="194"/>
-        <CursorPos X="14" Y="211"/>
-        <UsageCount Value="201"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="udbftable.pas"/>
@@ -195,12 +188,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uDbfTable"/>
-        <EditorIndex Value="8"/>
-        <TopLine Value="432"/>
-        <CursorPos X="3" Y="463"/>
-        <UsageCount Value="201"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="urestructure.pas"/>
@@ -209,12 +196,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uRestructure"/>
-        <EditorIndex Value="21"/>
-        <TopLine Value="212"/>
-        <CursorPos X="66" Y="232"/>
-        <UsageCount Value="202"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit3>
       <Unit4>
         <Filename Value="uidxtable.pas"/>
@@ -223,12 +204,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uIdxTable"/>
-        <EditorIndex Value="15"/>
-        <TopLine Value="51"/>
-        <CursorPos X="42" Y="71"/>
-        <UsageCount Value="203"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit4>
       <Unit5>
         <Filename Value="unewtable.pas"/>
@@ -237,12 +212,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uNewTable"/>
-        <EditorIndex Value="18"/>
-        <TopLine Value="225"/>
-        <CursorPos X="69" Y="247"/>
-        <UsageCount Value="202"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit5>
       <Unit6>
         <Filename Value="usetfv.pas"/>
@@ -251,21 +220,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uSetFV"/>
-        <EditorIndex Value="22"/>
-        <TopLine Value="64"/>
-        <CursorPos Y="71"/>
-        <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit6>
       <Unit7>
         <Filename Value="dscsv.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="DsCsv"/>
-        <TopLine Value="369"/>
-        <CursorPos X="17" Y="376"/>
-        <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit7>
       <Unit8>
         <Filename Value="uexpcsv.pas"/>
@@ -274,31 +233,16 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uExpCSV"/>
-        <EditorIndex Value="9"/>
-        <TopLine Value="15"/>
-        <CursorPos X="15" Y="35"/>
-        <UsageCount Value="203"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit8>
       <Unit9>
         <Filename Value="dsdataexport.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="DsDataExport"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="277"/>
-        <CursorPos X="2" Y="281"/>
-        <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit9>
       <Unit10>
         <Filename Value="dshtml.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="DsHtml"/>
-        <EditorIndex Value="2"/>
-        <CursorPos Y="3"/>
-        <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit10>
       <Unit11>
         <Filename Value="uexphtml.pas"/>
@@ -307,21 +251,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uExpHTML"/>
-        <EditorIndex Value="11"/>
-        <TopLine Value="153"/>
-        <CursorPos X="3" Y="156"/>
-        <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit11>
       <Unit12>
         <Filename Value="dsxls.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="DsXls"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="143"/>
-        <CursorPos X="16" Y="162"/>
-        <UsageCount Value="196"/>
-        <Loaded Value="True"/>
       </Unit12>
       <Unit13>
         <Filename Value="uexpxls.pas"/>
@@ -330,19 +264,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uExpXLS"/>
-        <EditorIndex Value="13"/>
-        <TopLine Value="81"/>
-        <CursorPos Y="107"/>
-        <ExtraEditorCount Value="1"/>
-        <ExtraEditor1>
-          <EditorIndex Value="-1"/>
-          <WindowIndex Value="1"/>
-          <TopLine Value="190"/>
-          <CursorPos Y="298"/>
-        </ExtraEditor1>
-        <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit13>
       <Unit14>
         <Filename Value="uaddtables.pas"/>
@@ -351,12 +272,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uAddTables"/>
-        <EditorIndex Value="6"/>
-        <TopLine Value="105"/>
-        <CursorPos X="42" Y="125"/>
-        <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit14>
       <Unit15>
         <Filename Value="usubtables.pas"/>
@@ -365,12 +280,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uSubTables"/>
-        <EditorIndex Value="25"/>
-        <TopLine Value="101"/>
-        <CursorPos Y="126"/>
-        <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit15>
       <Unit16>
         <Filename Value="uexpdbf.pas"/>
@@ -379,12 +288,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uExpDBF"/>
-        <EditorIndex Value="10"/>
-        <TopLine Value="89"/>
-        <CursorPos X="3" Y="91"/>
-        <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit16>
       <Unit17>
         <Filename Value="usplash.pas"/>
@@ -393,12 +296,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uSplash"/>
-        <EditorIndex Value="24"/>
-        <TopLine Value="27"/>
-        <CursorPos X="15" Y="33"/>
-        <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit17>
       <Unit18>
         <Filename Value="uexpxml.pas"/>
@@ -407,12 +304,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uExpXML"/>
-        <EditorIndex Value="14"/>
-        <TopLine Value="154"/>
-        <CursorPos Y="172"/>
-        <UsageCount Value="205"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit18>
       <Unit19>
         <Filename Value="uinfo.pas"/>
@@ -421,814 +312,74 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uInfo"/>
-        <EditorIndex Value="16"/>
-        <TopLine Value="34"/>
-        <CursorPos X="63" Y="51"/>
-        <UsageCount Value="202"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit19>
       <Unit20>
-        <Filename Value="uinfo.lfm"/>
-        <TopLine Value="21"/>
-        <CursorPos Y="35"/>
-        <UsageCount Value="1"/>
-        <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit20>
-      <Unit21>
-        <Filename Value="uexphtml.lfm"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="18" Y="319"/>
-        <UsageCount Value="7"/>
-        <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit21>
-      <Unit22>
         <Filename Value="uopenba.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="OpenBA"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uOpenBA"/>
-        <EditorIndex Value="19"/>
-        <TopLine Value="57"/>
-        <CursorPos Y="73"/>
-        <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
-      </Unit22>
-      <Unit23>
+      </Unit20>
+      <Unit21>
         <Filename Value="uaddalias.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="AddAlias"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uAddAlias"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="32"/>
-        <CursorPos X="15" Y="51"/>
-        <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
-      </Unit23>
-      <Unit24>
+      </Unit21>
+      <Unit22>
         <Filename Value="usorttable.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="SortTable"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uSortTable"/>
-        <EditorIndex Value="23"/>
-        <TopLine Value="101"/>
-        <CursorPos Y="111"/>
-        <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
-      </Unit24>
-      <Unit25>
+      </Unit22>
+      <Unit23>
         <Filename Value="uexpsql.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="ExpSQL"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uExpSQL"/>
-        <EditorIndex Value="12"/>
-        <TopLine Value="90"/>
-        <CursorPos X="42" Y="105"/>
-        <UsageCount Value="201"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
-      </Unit25>
-      <Unit26>
+      </Unit23>
+      <Unit24>
         <Filename Value="uutils.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uUtils"/>
-        <EditorIndex Value="27"/>
-        <TopLine Value="76"/>
-        <CursorPos X="15" Y="89"/>
-        <UsageCount Value="189"/>
-        <Loaded Value="True"/>
-      </Unit26>
-      <Unit27>
+      </Unit24>
+      <Unit25>
         <Filename Value="utabslist.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="TabsList"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uTabsList"/>
-        <EditorIndex Value="26"/>
-        <TopLine Value="56"/>
-        <CursorPos Y="59"/>
-        <UsageCount Value="171"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
-      </Unit27>
-      <Unit28>
-        <Filename Value="uoptions.lfm"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="1"/>
-        <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit28>
-      <Unit29>
+      </Unit25>
+      <Unit26>
         <Filename Value="uoptions.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="OptionsForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uOptions"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="20"/>
-        <TopLine Value="350"/>
-        <CursorPos X="47" Y="362"/>
-        <UsageCount Value="170"/>
-        <Bookmarks Count="1">
-          <Item0 X="41" Y="518" ID="1"/>
-        </Bookmarks>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
-      </Unit29>
-      <Unit30>
-        <Filename Value="t_mainform - Kopie.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="241"/>
-        <CursorPos X="10" Y="273"/>
-        <UsageCount Value="6"/>
-      </Unit30>
-      <Unit31>
+      </Unit26>
+      <Unit27>
         <Filename Value="udatamodule.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="CommonData"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
         <UnitName Value="uDatamodule"/>
-        <EditorIndex Value="7"/>
-        <CursorPos X="29" Y="5"/>
-        <UsageCount Value="178"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
-      </Unit31>
-      <Unit32>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/dbctrls.pp"/>
-        <UnitName Value="DBCtrls"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1290"/>
-        <CursorPos X="3" Y="1310"/>
-        <UsageCount Value="3"/>
-      </Unit32>
-      <Unit33>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lclintf.pas"/>
-        <UnitName Value="LCLIntf"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="49"/>
-        <UsageCount Value="3"/>
-      </Unit33>
-      <Unit34>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/include/winapih.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="53"/>
-        <CursorPos X="18" Y="85"/>
-        <UsageCount Value="3"/>
-      </Unit34>
-      <Unit35>
+      </Unit27>
+      <Unit28>
         <Filename Value="historyfiles.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="HistoryFiles"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="453"/>
-        <CursorPos X="16" Y="468"/>
-        <UsageCount Value="160"/>
-      </Unit35>
-      <Unit36>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/comctrls.pp"/>
-        <UnitName Value="ComCtrls"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="2022"/>
-        <CursorPos X="5" Y="2043"/>
-        <UsageCount Value="3"/>
-      </Unit36>
-      <Unit37>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/include/toolbutton.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="132"/>
-        <CursorPos Y="140"/>
-        <UsageCount Value="3"/>
-      </Unit37>
-      <Unit38>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/menus.pp"/>
-        <UnitName Value="Menus"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="189"/>
-        <CursorPos X="17" Y="204"/>
-        <UsageCount Value="3"/>
-      </Unit38>
-      <Unit39>
-        <Filename Value="../../Hex/source/hxsettingsdlg.pas"/>
-        <UnitName Value="hxSettingsDlg"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="13"/>
-        <UsageCount Value="4"/>
-      </Unit39>
-      <Unit40>
-        <Filename Value="../../Hex/source/hxglobal.pas"/>
-        <UnitName Value="hxGlobal"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="184"/>
-        <UsageCount Value="4"/>
-      </Unit40>
-      <Unit41>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/packages/fcl-db/src/dbase/dbf.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="399"/>
-        <CursorPos X="19" Y="402"/>
-        <UsageCount Value="6"/>
-      </Unit41>
-      <Unit42>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/stdctrls.pp"/>
-        <UnitName Value="StdCtrls"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="260"/>
-        <CursorPos X="3" Y="280"/>
-        <UsageCount Value="4"/>
-      </Unit42>
-      <Unit43>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/lcltype.pp"/>
-        <UnitName Value="LCLType"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1132"/>
-        <CursorPos X="3" Y="1152"/>
-        <UsageCount Value="4"/>
-      </Unit43>
-      <Unit44>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/packages/fcl-db/src/dbase/dbf_dbffile.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1244"/>
-        <CursorPos X="3" Y="1248"/>
-        <UsageCount Value="4"/>
-      </Unit44>
-      <Unit45>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/packages/fcl-db/src/dbase/dbf_common.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="90"/>
-        <CursorPos X="10" Y="110"/>
-        <UsageCount Value="4"/>
-      </Unit45>
-      <Unit46>
-        <Filename Value="C:/Lazarus/fpc-trunk/packages/fcl-db/src/dbase/dbf.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1197"/>
-        <CursorPos X="40" Y="1213"/>
-        <UsageCount Value="4"/>
-      </Unit46>
-      <Unit47>
-        <Filename Value="C:/Lazarus/fpc-trunk/rtl/win/wininc/func.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="943"/>
-        <CursorPos X="10" Y="960"/>
-        <UsageCount Value="4"/>
-      </Unit47>
-      <Unit48>
-        <Filename Value="C:/Lazarus/fpc-trunk/packages/fcl-db/src/dbase/dbf_dbffile.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="3109"/>
-        <CursorPos X="19" Y="3131"/>
-        <UsageCount Value="4"/>
-      </Unit48>
-      <Unit49>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/include/tabcontrol.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="558"/>
-        <CursorPos X="3" Y="560"/>
-        <UsageCount Value="5"/>
-      </Unit49>
-      <Unit50>
-        <Filename Value="utabform.pas"/>
-        <UnitName Value="uTabForm"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="5" Y="14"/>
-        <UsageCount Value="5"/>
-      </Unit50>
-      <Unit51>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/grids.pas"/>
-        <UnitName Value="Grids"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="10073"/>
-        <CursorPos X="31" Y="10083"/>
-        <UsageCount Value="5"/>
-      </Unit51>
-      <Unit52>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/packages/fcl-db/src/dbase/dbf_fields.pas"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="5"/>
-      </Unit52>
-      <Unit53>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/include/customcheckbox.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="112"/>
-        <CursorPos Y="134"/>
-        <UsageCount Value="5"/>
-      </Unit53>
-      <Unit54>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/packages/fcl-db/src/base/db.pas"/>
-        <UnitName Value="DB"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1689"/>
-        <CursorPos X="15" Y="1707"/>
-        <UsageCount Value="5"/>
-      </Unit54>
-      <Unit55>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/dbgrids.pas"/>
-        <UnitName Value="DBGrids"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="294"/>
-        <CursorPos X="15" Y="314"/>
-        <UsageCount Value="5"/>
-      </Unit55>
-      <Unit56>
-        <Filename Value="C:/Lazarus/lazarus-2.0.12_fpc-3.2.0/fpc/3.2.0/source/packages/fcl-base/src/fileinfo.pp"/>
-        <UnitName Value="FileInfo"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="86"/>
-        <CursorPos X="10" Y="105"/>
-        <UsageCount Value="5"/>
-      </Unit56>
-      <Unit57>
-        <Filename Value="C:/Lazarus/fpc-trunk/rtl/inc/generic.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="866"/>
-        <CursorPos Y="882"/>
-        <UsageCount Value="5"/>
-      </Unit57>
-      <Unit58>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-trunk/lcl/grids.pas"/>
-        <UnitName Value="Grids"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="11080"/>
-        <CursorPos X="8" Y="11085"/>
-        <UsageCount Value="5"/>
-      </Unit58>
-      <Unit59>
-        <Filename Value="C:/Lazarus/fpc-trunk/packages/fcl-db/src/dbase/dbf_fields.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="508"/>
-        <CursorPos X="32" Y="521"/>
-        <UsageCount Value="5"/>
-      </Unit59>
-      <Unit60>
-        <Filename Value="C:/Lazarus/fpc-trunk/packages/fcl-db/src/base/db.pas"/>
-        <UnitName Value="DB"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="2268"/>
-        <CursorPos X="3" Y="2273"/>
-        <UsageCount Value="6"/>
-      </Unit60>
-      <Unit61>
-        <Filename Value="C:/Lazarus/fpc-trunk/rtl/objpas/typinfo.pp"/>
-        <UnitName Value="TypInfo"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="148"/>
-        <CursorPos X="35" Y="166"/>
-        <UsageCount Value="6"/>
-      </Unit61>
-      <Unit62>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/packages/fcl-base/src/fileinfo.pp"/>
-        <UnitName Value="FileInfo"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="90"/>
-        <CursorPos X="10" Y="110"/>
-        <UsageCount Value="5"/>
-      </Unit62>
-      <Unit63>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/include/dbmemo.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="228"/>
-        <CursorPos X="17" Y="241"/>
-        <UsageCount Value="11"/>
-      </Unit63>
-      <Unit64>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/include/fpimagebitmap.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="121"/>
-        <CursorPos X="30" Y="137"/>
-        <UsageCount Value="11"/>
-      </Unit64>
-      <Unit65>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/graphics.pp"/>
-        <UnitName Value="Graphics"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="864"/>
-        <CursorPos X="13" Y="842"/>
-        <UsageCount Value="8"/>
-      </Unit65>
-      <Unit66>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/include/custombitmap.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="60"/>
-        <CursorPos X="3" Y="62"/>
-        <UsageCount Value="8"/>
-      </Unit66>
-      <Unit67>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/clipbrd.pp"/>
-        <UnitName Value="Clipbrd"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="197"/>
-        <CursorPos X="14" Y="217"/>
-        <UsageCount Value="7"/>
-      </Unit67>
-      <Unit68>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/include/clipbrd.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="457"/>
-        <CursorPos X="3" Y="462"/>
-        <UsageCount Value="7"/>
-      </Unit68>
-      <Unit69>
-        <Filename Value="C:/Lazarus/lazarus-2.0.12_fpc-3.2.0/lcl/include/fpimagebitmap.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="123"/>
-        <CursorPos X="53" Y="137"/>
-        <UsageCount Value="6"/>
-      </Unit69>
-      <Unit70>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/include/picture.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="575"/>
-        <CursorPos X="17" Y="586"/>
-        <UsageCount Value="6"/>
-      </Unit70>
-      <Unit71>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/packages/fcl-db/src/dbase/dbf_str.pas"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="6"/>
-      </Unit71>
-      <Unit72>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/packages/fcl-db/src/dbase/dbf_avl.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="25"/>
-        <UsageCount Value="6"/>
-      </Unit72>
-      <Unit73>
-        <Filename Value="uexpcsv.lfm"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="227"/>
-        <UsageCount Value="7"/>
-        <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit73>
-      <Unit74>
-        <Filename Value="uexpdbf.lfm"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="8"/>
-        <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit74>
-      <Unit75>
-        <Filename Value="uaddtables.lfm"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="169"/>
-        <UsageCount Value="8"/>
-        <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit75>
-      <Unit76>
-        <Filename Value="udbftable.lfm"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="378"/>
-        <CursorPos X="32" Y="385"/>
-        <UsageCount Value="8"/>
-        <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit76>
-      <Unit77>
-        <Filename Value="usubtables.lfm"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="166"/>
-        <UsageCount Value="8"/>
-        <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit77>
-      <Unit78>
-        <Filename Value="usetfv.lfm"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="267"/>
-        <UsageCount Value="8"/>
-        <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit78>
-      <Unit79>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/include/control.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="3593"/>
-        <CursorPos Y="3612"/>
-        <UsageCount Value="8"/>
-      </Unit79>
-      <Unit80>
-        <Filename Value="uaddalias.lfm"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="100"/>
-        <UsageCount Value="8"/>
-        <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit80>
-      <Unit81>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/rtl/objpas/sysutils/osutilsh.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="24"/>
-        <CursorPos X="10" Y="44"/>
-        <UsageCount Value="10"/>
-      </Unit81>
-      <Unit82>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/rtl/win/sysutils.pp"/>
-        <UnitName Value="SysUtils"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1409"/>
-        <CursorPos X="3" Y="1411"/>
-        <UsageCount Value="10"/>
-      </Unit82>
-      <Unit83>
-        <Filename Value="uopenba.lfm"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="164"/>
-        <UsageCount Value="8"/>
-        <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit83>
-      <Unit84>
-        <Filename Value="unewtable.lfm"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="229"/>
-        <CursorPos X="28" Y="248"/>
-        <UsageCount Value="8"/>
-        <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit84>
-      <Unit85>
-        <Filename Value="usorttable.lfm"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="182"/>
-        <UsageCount Value="8"/>
-        <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit85>
-      <Unit86>
-        <Filename Value="urestructure.lfm"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="228"/>
-        <UsageCount Value="8"/>
-        <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit86>
-      <Unit87>
-        <Filename Value="third-party/tdbf_svn/dbf_prscore.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="186"/>
-        <CursorPos X="11" Y="206"/>
-        <UsageCount Value="8"/>
-      </Unit87>
-      <Unit88>
-        <Filename Value="third-party/tdbf_svn/dbf_prsdef.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="6"/>
-        <CursorPos X="33" Y="26"/>
-        <UsageCount Value="8"/>
-      </Unit88>
-      <Unit89>
-        <Filename Value="third-party/tdbf_svn/dbf.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1546"/>
-        <CursorPos X="78" Y="1574"/>
-        <UsageCount Value="8"/>
-      </Unit89>
-      <Unit90>
-        <Filename Value="third-party/tdbf_svn/dbf_memo.pas"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="49" Y="25"/>
-        <UsageCount Value="8"/>
-      </Unit90>
-      <Unit91>
-        <Filename Value="third-party/tdbf_fpc/dbf_fields.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="461"/>
-        <CursorPos X="23" Y="475"/>
-        <UsageCount Value="8"/>
-      </Unit91>
-      <Unit92>
-        <Filename Value="third-party/tdbf_fpc_320/dbf.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1483"/>
-        <CursorPos X="50" Y="1504"/>
-        <UsageCount Value="8"/>
-      </Unit92>
-      <Unit93>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/include/progressbar.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="228"/>
-        <CursorPos X="3" Y="237"/>
-        <UsageCount Value="8"/>
-      </Unit93>
-      <Unit94>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/rtl/win/wininc/func.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="941"/>
-        <CursorPos X="10" Y="961"/>
-        <UsageCount Value="8"/>
-      </Unit94>
-      <Unit95>
-        <Filename Value="C:/Lazarus/fpc-trunk/packages/fcl-db/src/base/dataset.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="392"/>
-        <CursorPos Y="410"/>
-        <UsageCount Value="8"/>
-      </Unit95>
-      <Unit96>
-        <Filename Value="C:/Lazarus/fpc-trunk/packages/fcl-db/src/dbase/dbf_pgfile.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="219"/>
-        <CursorPos Y="235"/>
-        <UsageCount Value="8"/>
-      </Unit96>
-      <Unit97>
-        <Filename Value="C:/Lazarus/fpc-trunk/packages/fcl-db/src/dbase/dbf_lang.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="603"/>
-        <CursorPos Y="631"/>
-        <UsageCount Value="8"/>
-      </Unit97>
-      <Unit98>
-        <Filename Value="C:/Lazarus/fpc-trunk/rtl/inc/system.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1629"/>
-        <CursorPos Y="1646"/>
-        <UsageCount Value="8"/>
-      </Unit98>
-      <Unit99>
-        <Filename Value="C:/Lazarus/fpc-trunk/rtl/i386/i386.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1444"/>
-        <CursorPos Y="1460"/>
-        <UsageCount Value="8"/>
-      </Unit99>
-      <Unit100>
-        <Filename Value="C:/Lazarus/fpc-trunk/packages/fcl-db/src/dbase/dbf_struct.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="142"/>
-        <CursorPos X="5" Y="38"/>
-        <UsageCount Value="8"/>
-      </Unit100>
-      <Unit101>
-        <Filename Value="C:/Lazarus/fpc-trunk/rtl/win/wininc/defines.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="4495"/>
-        <CursorPos X="6" Y="4320"/>
-        <UsageCount Value="8"/>
-      </Unit101>
-      <Unit102>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/rtl/objpas/typinfo.pp"/>
-        <UnitName Value="TypInfo"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="860"/>
-        <CursorPos X="10" Y="879"/>
-        <UsageCount Value="13"/>
-      </Unit102>
-      <Unit103>
-        <Filename Value="C:/Lazarus/lazarus-2.0.10_fpc-3.2.0_win64/fpc/3.2.0/source/rtl/objpas/math.pp"/>
-        <UnitName Value="Math"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="483"/>
-        <CursorPos X="10" Y="501"/>
-        <UsageCount Value="10"/>
-      </Unit103>
-      <Unit104>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/rtl/objpas/sysutils/diskh.inc"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="10" Y="23"/>
-        <UsageCount Value="11"/>
-      </Unit104>
-      <Unit105>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/fpc/3.2.0/source/rtl/objpas/sysutils/disk.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="58"/>
-        <CursorPos X="12" Y="78"/>
-        <UsageCount Value="11"/>
-      </Unit105>
-      <Unit106>
-        <Filename Value="C:/Lazarus/lazarus-trunk_fpc-3.2.0/lcl/include/picture.inc"/>
-        <EditorIndex Value="28"/>
-        <TopLine Value="574"/>
-        <CursorPos X="13" Y="591"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
-      </Unit106>
+      </Unit28>
     </Units>
-    <JumpHistory Count="30" HistoryIndex="29">
-      <Position1>
-        <Filename Value="umain.pas"/>
-        <Caret Line="84" Column="15" TopLine="63"/>
-      </Position1>
-      <Position2>
-        <Filename Value="urestructure.pas"/>
-        <Caret Line="481" Column="17" TopLine="464"/>
-      </Position2>
-      <Position3>
-        <Filename Value="urestructure.pas"/>
-        <Caret Line="45" Column="15" TopLine="41"/>
-      </Position3>
-      <Position4>
-        <Filename Value="urestructure.pas"/>
-        <Caret Line="302" Column="42" TopLine="286"/>
-      </Position4>
-      <Position5>
-        <Filename Value="urestructure.pas"/>
-        <Caret Line="43" Column="15" TopLine="26"/>
-      </Position5>
-      <Position6>
-        <Filename Value="urestructure.pas"/>
-        <Caret Line="228" Column="49" TopLine="223"/>
-      </Position6>
-      <Position7>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="334" Column="53" TopLine="306"/>
-      </Position7>
-      <Position8>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="347" Column="26" TopLine="313"/>
-      </Position8>
-      <Position9>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="341" Column="65" TopLine="321"/>
-      </Position9>
-      <Position10>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="372" Column="7" TopLine="350"/>
-      </Position10>
-      <Position11>
-        <Filename Value="urestructure.pas"/>
-        <Caret Line="230" Column="49" TopLine="210"/>
-      </Position11>
-      <Position12>
-        <Filename Value="urestructure.pas"/>
-        <Caret Line="232" Column="66" TopLine="212"/>
-      </Position12>
-      <Position13>
-        <Filename Value="uidxtable.pas"/>
-        <Caret Line="71" Column="42" TopLine="51"/>
-      </Position13>
-      <Position14>
-        <Filename Value="unewtable.pas"/>
-        <Caret Line="248" Column="66" TopLine="225"/>
-      </Position14>
-      <Position15>
-        <Filename Value="unewtable.pas"/>
-        <Caret Line="247" Column="69" TopLine="225"/>
-      </Position15>
-      <Position16>
-        <Filename Value="uaddtables.pas"/>
-        <Caret Line="125" Column="42" TopLine="105"/>
-      </Position16>
-      <Position17>
-        <Filename Value="umain.pas"/>
-        <Caret Line="253" Column="44" TopLine="234"/>
-      </Position17>
-      <Position18>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="365" Column="47" TopLine="350"/>
-      </Position18>
-      <Position19>
-        <Filename Value="uutils.pas"/>
-        <Caret Line="89" TopLine="76"/>
-      </Position19>
-      <Position20>
-        <Filename Value="uutils.pas"/>
-        <Caret Line="88" TopLine="76"/>
-      </Position20>
-      <Position21>
-        <Filename Value="uutils.pas"/>
-        <Caret Line="90" TopLine="76"/>
-      </Position21>
-      <Position22>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="360" TopLine="350"/>
-      </Position22>
-      <Position23>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="361" TopLine="350"/>
-      </Position23>
-      <Position24>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="358" TopLine="350"/>
-      </Position24>
-      <Position25>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="361" TopLine="350"/>
-      </Position25>
-      <Position26>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="358" Column="19" TopLine="350"/>
-      </Position26>
-      <Position27>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="361" TopLine="350"/>
-      </Position27>
-      <Position28>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="358" TopLine="350"/>
-      </Position28>
-      <Position29>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="361" TopLine="350"/>
-      </Position29>
-      <Position30>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="370" TopLine="350"/>
-      </Position30>
-    </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
@@ -1260,11 +411,6 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Watches Count="1">
-      <Item1>
-        <Expression Value="expobj.fdetail"/>
-      </Item1>
-    </Watches>
     <Exceptions Count="3">
       <Item1>
         <Name Value="EAbort"/>
