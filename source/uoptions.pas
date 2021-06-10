@@ -188,13 +188,16 @@ type
   private
     { private declarations }
     FSavedOptions: TOptions;
+    FOnClearHistory: TNotifyEvent;
     FOnUpdateOptions: TNotifyEvent;
     FUpdateLock: Integer;
     procedure OptionsToControls(const AOptions: TOptions);
     procedure ControlsToOptions(var AOptions: TOptions);
+    procedure DoClearHistory;
     procedure DoUpdateOptions(Restore: Boolean);
   public
     { public declarations }
+    property OnClearHistory: TNotifyEvent read FOnClearHistory write FOnClearHistory;
     property OnUpdateOptions: TNotifyEvent read FOnUpdateOptions write FOnUpdateOptions;
   end;
 
@@ -209,7 +212,7 @@ procedure SaveOptions;
 implementation
 
 uses
-  Math, TypInfo, uMain;
+  Math, TypInfo;
 
 {$R *.lfm}
 
@@ -345,8 +348,13 @@ end;
 
 procedure TOptionsForm.ClearRecentBtnClick(Sender: TObject);
 begin
-  if MessageDlg('Do you really want to clear the list of recently used files', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-    Main.FileHistory.Clear;
+  DoClearHistory;
+end;
+
+procedure TOptionsForm.DoClearHistory;
+begin
+  if Assigned(FOnClearHistory) then
+    FOnClearHistory(self);
 end;
 
 procedure TOptionsForm.DoUpdateOptions(Restore: Boolean);

@@ -120,8 +120,12 @@ type
     Function TableIsAlreadyOpen(TblName : String): Integer;
     Function OBAIsAlreadyOpen: Integer;
     procedure ReadCmdLine;
+
+    // Event handlers communicating with the Options dialog.
+    procedure ClearHistoryHandler(Sender: TObject);
     procedure UpdateOptionsHandler(Sender: TObject);
 
+    // Close handlers for the embedded forms
     procedure NewTableCloseHandler(Sender: TObject; var CloseAction: TCloseAction);
     procedure TabChildCloseHandler(Sender: TObject; var CloseAction: TCloseAction);
   public
@@ -593,6 +597,7 @@ procedure TMain.miSettingsClick(Sender: TObject);
 begin
   OptionsForm := TOptionsForm.Create(nil);
   try
+    OptionsForm.OnClearHistory := @ClearHistoryHandler;
     OptionsForm.OnUpdateOptions := @UpdateOptionsHandler;
     OptionsForm.ShowModal;
   finally
@@ -730,6 +735,12 @@ end;
 procedure TMain.WorkSiteCloseTabClicked(Sender: TObject);
 begin
  (Sender As TTabForm).Free;
+end;
+
+procedure TMain.ClearHistoryHandler(Sender: TObject);
+begin
+  if MessageDlg('Do you really want to clear the list of recently used files', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+    FileHistory.Clear;
 end;
 
 procedure TMain.ClickOnHistoryFile(Sender: TObject; Item: TMenuItem;
