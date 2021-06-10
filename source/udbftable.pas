@@ -189,6 +189,11 @@ begin
 
   Result := TIcon.IsStreamFormatSupported(AStream);
   if Result then exit;
+
+  // Picture blobs saved by Delphi have an 8-byte header.
+  AStream.Position := 8;
+  Result := TBitmap.IsStreamFormatSupported(AStream);
+  if Result then exit;
 end;
 
 procedure TDbfTable.tbPackClick(Sender: TObject);
@@ -650,7 +655,7 @@ begin
       Notebook.PageIndex := 0;
       DBMemo.DataField := AField.FieldName;
     end else
-    if (AField is TBlobField) or IsGraphicStream(stream) then
+    if (AField is TBlobField) and IsGraphicStream(stream) then
     begin
       Notebook.PageIndex := 1;
       if stream.Size > 0 then
