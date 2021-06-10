@@ -132,6 +132,7 @@ object SetFV: TSetFV
       BorderSpacing.Top = 2
       BorderSpacing.Right = 6
       BorderSpacing.Bottom = 6
+      DropDownCount = 24
       ItemHeight = 15
       Style = csDropDownList
       TabOrder = 0
@@ -149,6 +150,7 @@ object SetFV: TSetFV
       Anchors = [akTop, akLeft, akRight]
       BorderSpacing.Left = 6
       BorderSpacing.Right = 6
+      DropDownCount = 24
       ItemHeight = 15
       Style = csDropDownList
       TabOrder = 2
@@ -161,6 +163,7 @@ object SetFV: TSetFV
       Height = 23
       Top = 29
       Width = 48
+      DropDownCount = 24
       Font.Style = [fsBold]
       ItemHeight = 15
       ItemIndex = 0

@@ -65,6 +65,7 @@ object ExpXLS: TExpXLS
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
+    DropDownCount = 24
     ItemHeight = 15
     Items.Strings = (
       'dd"/"mm"/"yyyy'

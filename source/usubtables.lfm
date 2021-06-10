@@ -41,6 +41,7 @@ object SubTables: TSubTables
       Width = 293
       Anchors = [akTop, akLeft, akRight]
       BorderSpacing.Around = 6
+      DropDownCount = 24
       ItemHeight = 15
       Style = csDropDownList
       TabOrder = 0
@@ -76,6 +77,7 @@ object SubTables: TSubTables
       Width = 293
       Anchors = [akTop, akLeft, akRight]
       BorderSpacing.Around = 6
+      DropDownCount = 24
       ItemHeight = 15
       Style = csDropDownList
       TabOrder = 0

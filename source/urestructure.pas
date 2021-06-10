@@ -305,7 +305,7 @@ begin
     Panel1.Top + Panel1.Height + CloseBtn.Height + CloseBtn.BorderSpacing.Top*2;
   Constraints.MinWidth :=
     FieldList.Left + FieldList.Constraints.MinWidth +
-    FieldList.BorderSpacing.Around + Panel1.Width + Panel1.Borderspacing.Right;
+    FieldList.BorderSpacing.Left*2 + Panel1.Width + Panel1.Borderspacing.Right;
 
   if Options.RememberWindowSizePosContent then
   begin

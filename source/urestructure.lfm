@@ -2,11 +2,11 @@ object Restructure: TRestructure
   Left = 435
   Height = 400
   Top = 316
-  Width = 736
+  Width = 673
   AutoSize = True
   Caption = 'Table Restructure'
   ClientHeight = 400
-  ClientWidth = 736
+  ClientWidth = 673
   KeyPreview = True
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
@@ -24,7 +24,7 @@ object Restructure: TRestructure
     Left = 6
     Height = 371
     Top = 23
-    Width = 493
+    Width = 450
     AlternateColor = clMoneyGreen
     Anchors = [akTop, akLeft, akRight, akBottom]
     AutoFillColumns = True
@@ -43,7 +43,7 @@ object Restructure: TRestructure
       end    
       item
         Title.Caption = 'Field Name'
-        Width = 260
+        Width = 217
       end    
       item
         DropDownRows = 24
@@ -76,7 +76,7 @@ object Restructure: TRestructure
     OnSelectEditor = FieldListSelectEditor
     ColWidths = (
       35
-      260
+      217
       100
       64
       30
@@ -85,7 +85,7 @@ object Restructure: TRestructure
   object RestructureBtn: TBitBtn
     AnchorSideTop.Control = CloseBtn
     AnchorSideRight.Control = CloseBtn
-    Left = 514
+    Left = 451
     Height = 26
     Top = 368
     Width = 135
@@ -103,7 +103,7 @@ object Restructure: TRestructure
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 655
+    Left = 592
     Height = 26
     Top = 368
     Width = 75
@@ -123,7 +123,7 @@ object Restructure: TRestructure
     AnchorSideTop.Control = Owner
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 505
+    Left = 442
     Height = 335
     Top = 6
     Width = 225

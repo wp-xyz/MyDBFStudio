@@ -178,6 +178,7 @@ object ExpSQL: TExpSQL
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
+    DropDownCount = 24
     ItemHeight = 15
     Items.Strings = (
       'dd/mm/yyyy'
@@ -214,6 +215,7 @@ object ExpSQL: TExpSQL
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
+    DropDownCount = 24
     ItemHeight = 15
     Items.Strings = (
       'hh:nn:ss'
@@ -248,6 +250,7 @@ object ExpSQL: TExpSQL
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
+    DropDownCount = 24
     ItemHeight = 15
     Items.Strings = (
       'yyyy/mm/dd hh:nn:ss'
@@ -283,6 +286,7 @@ object ExpSQL: TExpSQL
     Width = 77
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
+    DropDownCount = 24
     ItemHeight = 15
     Items.Strings = (
       '/'
@@ -317,6 +321,7 @@ object ExpSQL: TExpSQL
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
+    DropDownCount = 24
     ItemHeight = 15
     Items.Strings = (
       '/'

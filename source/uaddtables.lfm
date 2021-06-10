@@ -42,6 +42,7 @@ object AddTables: TAddTables
       Width = 371
       Anchors = [akTop, akLeft, akRight]
       BorderSpacing.Around = 6
+      DropDownCount = 24
       ItemHeight = 15
       Style = csDropDownList
       TabOrder = 0
@@ -79,6 +80,7 @@ object AddTables: TAddTables
       Width = 371
       Anchors = [akTop, akLeft, akRight]
       BorderSpacing.Around = 6
+      DropDownCount = 24
       ItemHeight = 15
       Style = csDropDownList
       TabOrder = 0

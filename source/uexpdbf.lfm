@@ -62,6 +62,7 @@ object ExpDBF: TExpDBF
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 2
     BorderSpacing.Right = 6
+    DropDownCount = 24
     ItemHeight = 15
     Items.Strings = (
       'dBase III+'

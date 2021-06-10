@@ -80,6 +80,7 @@ object DbfTable: TDbfTable
       Top = 43
       Width = 196
       Anchors = [akTop, akRight]
+      DropDownCount = 24
       ItemHeight = 15
       OnChange = IndexesChange
       ParentShowHint = False
