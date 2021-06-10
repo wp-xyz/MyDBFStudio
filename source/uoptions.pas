@@ -356,7 +356,7 @@ end;
 
 function IniFileName: String;
 begin
-  Result := ChangeFileExt(GetAppConfigFile(false), '.ini');
+  Result := GetAppConfigDir(false) + ChangeFileExt(ExtractFileName(Application.ExeName), '.ini');
 end;
 
 procedure LoadOptions;
