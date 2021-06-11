@@ -134,23 +134,26 @@ end;
 procedure TDbfTable.leFilterKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
- If Key = 13 Then
-  Begin
-   If Trim(leFilter.Text) <> '' Then
-    Begin
-     Try
-       DbTable.Filter := leFilter.Text;
-     Except
-       ShowMessage('Error in filter...');
-
-       DbTable.Filter := '';
-     End;
-    End
-   Else
-    DbTable.Filter := '';
-
-   ShowTableInfo(DbTable);
-  End;
+  if Key = 13 then
+  begin
+    if Trim(leFilter.Text) <> '' then
+    begin
+      try
+        DbTable.Filter := leFilter.Text;
+        DbTable.Filtered := true;
+      except
+        ShowMessage('Error in filter...');
+        DbTable.Filter := '';
+        DbTable.Filtered := false;
+      End;
+    end
+    else
+    begin
+      DbTable.Filter := '';
+      DbTable.Filtered := true;
+    end;
+    ShowTableInfo(DbTable);
+  end;
 end;
 
 procedure TDbfTable.LoadBlobBtnClick(Sender: TObject);
@@ -431,7 +434,7 @@ procedure TDbfTable.FormCreate(Sender: TObject);
 begin
   FDBTable := TDbf.Create(Self);
   FDBTable.Exclusive := true;
-  FDBTable.Filtered := true;
+//  FDBTable.Filtered := true;
   FDBTable.AfterInsert := @UpdateTableInfo;
   FDBTable.AfterDelete := @UpdateTableInfo;
   FDBTable.AfterEdit := @DBTableAfterEdit;
@@ -440,7 +443,6 @@ begin
   FDBTable.AfterDelete := @ShowTableInfo;
   FDBTable.AfterRefresh := @ShowTableInfo;
   FDBTable.AfterScroll := @ShowTableInfo;
-
   Ds.Dataset := FDBTable;
 
   UpdateOptions;

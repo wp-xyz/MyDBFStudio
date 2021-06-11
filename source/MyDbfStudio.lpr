@@ -1,8 +1,5 @@
 program MyDbfStudio;
 
-// todo: set grid line color to some system color for less dominant rendering in dark mode.
-// todo: Fix dbgrid scrollbar behaviour
-
 {$mode objfpc}{$H+}
 
 uses

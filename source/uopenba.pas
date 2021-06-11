@@ -27,7 +27,7 @@ type
     ToolBar1: TToolBar;
     tbViewStyleList: TToolButton;
     tbViewStyleIcon: TToolButton;
-    tvViewStyleReport: TToolButton;
+    tbViewStyleReport: TToolButton;
     procedure AddAliasClick(Sender: TObject);
     procedure AliasGridCellClick({%H-}Column: TColumn);
     procedure CloseBtnClick(Sender: TObject);
@@ -39,9 +39,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure OpenTableBtnClick(Sender: TObject);
     procedure SplitterMoved(Sender: TObject);
-    procedure tbViewStyleIconClick(Sender: TObject);
-    procedure tbViewStyleListClick(Sender: TObject);
-    procedure tvViewStyleReportClick(Sender: TObject);
+    procedure tbViewStyleClick(Sender: TObject);
   private
     { private declarations }
     FAliasDB: TDbf;
@@ -116,33 +114,16 @@ begin
   Options.OpenByAliasSplitter := Splitter.Top;
 end;
 
-procedure TOpenBA.tbViewStyleIconClick(Sender: TObject);
+procedure TOpenBA.tbViewStyleClick(Sender: TObject);
 begin
-  FileListView.ViewStyle := vsIcon;
-  FileListView.Width := FileListView.Width + 1;
-  FileListview.Width := FileListview.Width - 1;
-end;
-
-procedure TOpenBA.tbViewStyleListClick(Sender: TObject);
-var
-  oldViewStyle: TViewStyle;
-begin
-  oldViewStyle := FileListView.ViewStyle;
-
-  FileListView.ViewStyle := vsList;
-
-  if ((oldViewStyle = vsIcon) and (FileListView.ViewStyle <> vsIcon)) or
-     ((oldViewStyle <> vsIcon) and (FileListView.ViewStyle = vsIcon)) then
-  begin
-    FileListView.Width := FileListView.Width + 1;
-    FileListview.Width := FileListview.Width - 1;
-//    FileListView.PopulateWithRoot;
-  end;
-end;
-
-procedure TOpenBA.tvViewStyleReportClick(Sender: TObject);
-begin
-  FileListView.ViewStyle := vsReport;
+  if Sender = tbViewStyleIcon then
+    FileListView.ViewStyle := vsIcon
+  else if Sender = tbViewStyleList then
+    FileListView.ViewStyle := vsList
+  else if Sender = tbViewStyleReport then
+    FileListView.ViewStyle := vsReport
+  else
+    exit;
   FileListView.Width := FileListView.Width + 1;
   FileListview.Width := FileListview.Width - 1;
 end;
