@@ -44,14 +44,15 @@ object OpenBA: TOpenBA
       Color = clWindow
       Columns = <      
         item
+          SizePriority = 0
           Title.Caption = 'Alias'
-          Width = 280
+          Width = 150
           FieldName = 'ALIAS'
         end      
         item
-          SizePriority = 0
+          SizePriority = 1
           Title.Caption = 'Path'
-          Width = 350
+          Width = 480
           FieldName = 'PATH'
         end>
       DataSource = DataSource

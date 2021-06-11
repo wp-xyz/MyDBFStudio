@@ -258,7 +258,7 @@ object DbfTable: TDbfTable
     Top = 78
     Width = 697
     Align = alClient
-    AlternateColor = clMoneyGreen
+    AlternateColor = clBtnFace
     BorderSpacing.Left = 6
     BorderSpacing.Top = 6
     BorderSpacing.Right = 6
