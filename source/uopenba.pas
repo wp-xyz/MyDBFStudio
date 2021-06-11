@@ -6,36 +6,46 @@ interface
 
 uses
   Classes, SysUtils, db, dbf, FileUtil, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, DBGrids, FileCtrl, Buttons, ExtCtrls;
+  StdCtrls, DBGrids, Buttons, ExtCtrls, ComCtrls, ShellCtrls;
 
 type
-
   { TOpenBA }
 
   TOpenBA = class(TForm)
     CloseBtn: TBitBtn;
+    FileListView: TShellListView;
+    SmallImages: TImageList;
+    LargeImage: TImageList;
     OpenTableBtn: TBitBtn;
     DeleteAliasBtn: TBitBtn;
     AddAliasBtn: TBitBtn;
     AliasGrid: TDBGrid;
     DataSource: TDataSource;
-    FileListbox: TFileListBox;
     GroupBox1: TGroupBox;
     GroupBox2: TGroupBox;
     Splitter: TSplitter;
+    ToolBar1: TToolBar;
+    tbViewStyleList: TToolButton;
+    tbViewStyleIcon: TToolButton;
+    tvViewStyleReport: TToolButton;
     procedure AddAliasClick(Sender: TObject);
     procedure AliasGridCellClick({%H-}Column: TColumn);
     procedure CloseBtnClick(Sender: TObject);
     procedure DeleteAliasClick(Sender: TObject);
-    procedure FileListboxResize(Sender: TObject);
+    procedure FileListViewDblClick(Sender: TObject);
+    procedure FileListViewFileAdded(Sender: TObject; Item: TListItem);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure OpenTableBtnClick(Sender: TObject);
     procedure SplitterMoved(Sender: TObject);
+    procedure tbViewStyleIconClick(Sender: TObject);
+    procedure tbViewStyleListClick(Sender: TObject);
+    procedure tvViewStyleReportClick(Sender: TObject);
   private
     { private declarations }
     FAliasDB: TDbf;
+    procedure SelectCurrentFile;
   public
     { public declarations }
     procedure UpdateOptions;
@@ -48,10 +58,10 @@ var
 implementation
 
 uses
-  Math,
-  uUtils, uMain, uAddAlias, uOptions;
+  uUtils, uDataModule, uMain, uAddAlias, uOptions;
 
 {$R *.lfm}
+
 
 { TOpenBA }
 
@@ -84,14 +94,13 @@ procedure TOpenBA.FormShow(Sender: TObject);
 var
   fn: String;
 begin
-  FileListbox.Clear;
-  FileListbox.Columns := 2;
+  FileListView.Clear;
 
   fn := FAliasDB.FilePath + FAliasDB.Tablename;
   if FileExists(fn) then
   begin
     FAliasDB.Open;
-    AliasGridCellClick(nil);
+    SelectCurrentFile;
   end else
   begin
     DataSource.Enabled := False;
@@ -107,48 +116,67 @@ begin
   Options.OpenByAliasSplitter := Splitter.Top;
 end;
 
+procedure TOpenBA.tbViewStyleIconClick(Sender: TObject);
+begin
+  FileListView.ViewStyle := vsIcon;
+  FileListView.Width := FileListView.Width + 1;
+  FileListview.Width := FileListview.Width - 1;
+end;
+
+procedure TOpenBA.tbViewStyleListClick(Sender: TObject);
+var
+  oldViewStyle: TViewStyle;
+begin
+  oldViewStyle := FileListView.ViewStyle;
+
+  FileListView.ViewStyle := vsList;
+
+  if ((oldViewStyle = vsIcon) and (FileListView.ViewStyle <> vsIcon)) or
+     ((oldViewStyle <> vsIcon) and (FileListView.ViewStyle = vsIcon)) then
+  begin
+    FileListView.Width := FileListView.Width + 1;
+    FileListview.Width := FileListview.Width - 1;
+//    FileListView.PopulateWithRoot;
+  end;
+end;
+
+procedure TOpenBA.tvViewStyleReportClick(Sender: TObject);
+begin
+  FileListView.ViewStyle := vsReport;
+  FileListView.Width := FileListView.Width + 1;
+  FileListview.Width := FileListview.Width - 1;
+end;
+
 procedure TOpenBA.CloseBtnClick(Sender: TObject);
 begin
   Close;
 end;
 
-// More columns on a wide form, fewer columns on a narrow form.
-procedure TOpenBA.FileListboxResize(Sender: TObject);
-var
-  w: Integer;
-  fn: String;
+procedure TOpenBA.FileListViewDblClick(Sender: TObject);
 begin
-  if not FileListbox.HandleAllocated then
-    exit;
+  OpenTableBtnClick(nil);
+end;
 
-  if FileListbox.Items.Count = 0 then
-    exit;
-
-  w := 0;
-  for fn in FileListbox.Items do
-    w := Max(w, FileListbox.Canvas.TextWidth(fn));
-  FileListbox.Columns := FileListbox.ClientWidth div w;
+procedure TOpenBA.FileListViewFileAdded(Sender: TObject; Item: TListItem);
+begin
+  Item.ImageIndex := 0;
 end;
 
 procedure TOpenBA.OpenTableBtnClick(Sender: TObject);
 var
-  Ind: Word;
-  dir: String;
+  i: Word;
   fn: String;
 begin
-  if FileListbox.Count > 0 then
-  begin
-    dir := IncludeTrailingPathDelimiter(FileListbox.Directory);
-    for Ind := 0 to FileListbox.Count - 1 do
-      if FileListbox.Selected[Ind] then
-      begin
-        try
-          fn := dir + FileListbox.Items[ind];
-          Main.Open_Table(fn);
-        except
-        end;
+  if FileListView.Items.Count = 0 then
+    exit;
+
+  for i := 0 to FileListView.Items.Count-1 do
+    if FileListView.Items[i].Selected then
+      try
+        fn := FileListView.GetPathFromItem(FileListView.Items[i]);
+        Main.Open_Table(fn);
+      except
       end;
-  end;
 end;
 
 procedure TOpenBA.AddAliasClick(Sender: TObject);
@@ -156,11 +184,14 @@ begin
   if DataSource.Enabled then
   begin
     AddAlias := TAddAlias.Create(nil);
-    AddAlias.ShowModal;
-    AddAlias.Release;
+    try
+      AddAlias.ShowModal;
+    finally
+      AddAlias.Free;
+    end;
     FAliasDB.Close;
     FAliasDB.Open;
-    AliasGridCellClick(nil);
+    SelectCurrentFile;
   end;
 end;
 
@@ -173,16 +204,29 @@ begin
         FAliasDB.Delete;
         FAliasDB.Close;
         FAliasDB.Open;
-        FileListbox.Clear;
-        AliasGridCellClick(nil);
+        FileListView.Clear;
+        SelectCurrentFile;
       end;
 end;
 
 procedure TOpenBA.AliasGridCellClick(Column: TColumn);
 begin
+  SelectCurrentFile;
+end;
+
+procedure TOpenBA.SelectCurrentFile;
+var
+  F: TField;
+begin
   if DataSource.Enabled then
-    if not FAliasDB.IsEmpty then
-      FileListbox.Directory := FAliasDB.FieldByName('PATH').AsString;
+  begin
+    F := FAliasDB.FieldByName('PATH');
+    if not F.IsNull then
+      FileListView.Root := F.AsString;
+//      FileListbox.Directory := F.AsString;
+//    if not FAliasDB.IsEmpty then
+//      FileListbox.Directory := FAliasDB.FieldByName('PATH').AsString;
+  end;
 end;
 
 procedure TOpenBA.UpdateOptions;

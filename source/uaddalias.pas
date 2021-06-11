@@ -59,8 +59,6 @@ function TAddAlias.CheckAliasName(Val: String): Boolean;
 begin
   Result := true;
 
-  ChDir(ExtractFilePath(Application.ExeName));
-
   AliasDB.TableName := 'alias.dbf';
   AliasDB.FilePath := GetAliasDir;
   AliasDB.Open;
