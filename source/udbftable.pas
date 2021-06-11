@@ -167,12 +167,15 @@ begin
   field := DBTable.FieldByName(TabControl.Tabs[TabControl.TabIndex]);;
   if not (field is TBLOBField) then
     exit;
-  case Notebook.PageIndex of
-    0: OpenDialog.Filter := MEMO_FILTER;
-    1: OpenDialog.Filter := GRAPHIC_FILTER;
+  case Notebook.ActivePage of
+    'pgMemo': OpenDialog.Filter := MEMO_FILTER;
+    'pgGraphic': OpenDialog.Filter := GRAPHIC_FILTER;
   end;
   if OpenDialog.Execute then
+  begin
     TBLOBField(field).LoadFromFile(OpenDialog.FileName);
+    ShowBlobField(field);
+  end;
 end;
 
 function TDbfTable.IsGraphicStream(AStream: TStream): boolean;

@@ -1,7 +1,6 @@
 unit uExpSQL;
 
 { todo: Export MEMO and BLOB fields }
-{ todo: Save date/time formats and separators to cfg }
 
 {$mode objfpc}{$H+}
 

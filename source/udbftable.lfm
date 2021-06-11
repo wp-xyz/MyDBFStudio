@@ -410,7 +410,7 @@ object DbfTable: TDbfTable
         object pgGraphic: TPage
           object Image: TImage
             Left = 0
-            Height = 129
+            Height = 109
             Top = 0
             Width = 626
             Align = alClient
