@@ -1,6 +1,7 @@
 unit uDbfTable;
 
 //todo: TabControl looks buggy on macOS.
+//todo: When a table contains only a single field, and this is a graphic (BLOB) field, it is recognized as memo and graphic is not shown.
 
 {$mode objfpc}{$H+}
 
