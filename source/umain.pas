@@ -25,6 +25,9 @@ type
     MenuItem12: TMenuItem;
     MenuItem13: TMenuItem;
     MenuItem14: TMenuItem;
+    MenuItem15: TMenuItem;
+    MenuItem16: TMenuItem;
+    miImpCSV: TMenuItem;
     miSettings: TMenuItem;
     MenuItem3: TMenuItem;
     miHelp: TMenuItem;
@@ -56,6 +59,7 @@ type
     miOpenAlias: TMenuItem;
     miOpen: TMenuItem;
     miNew: TMenuItem;
+    ImportDialog: TOpenDialog;
     OpenTable: TOpenDialog;
     HistoryPopup: TPopupMenu;
     SaveAsTable: TSaveDialog;
@@ -66,7 +70,7 @@ type
     ToolButton11: TToolButton;
     ToolButton12: TToolButton;
     ToolButton13: TToolButton;
-    ToolButton2: TToolButton;
+    tbSettings: TToolButton;
     ToolButton3: TToolButton;
     ToolButton5: TToolButton;
     ToolButton6: TToolButton;
@@ -76,13 +80,14 @@ type
     WorkSite: TPageControl;
     StatusBar: TStatusBar;
     ToolBar: TToolBar;
+
     procedure FormClose(Sender: TObject; var {%H-}CloseAction: TCloseAction);
     procedure FormCloseQuery(Sender: TObject; var CanClose: boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormDropFiles(Sender: TObject; const FileNames: array of string);
     procedure FormShow(Sender: TObject);
-    procedure miHelpClick(Sender: TObject);
+
     procedure miAdd2TblsClick(Sender: TObject);
     procedure miCloseAllClick(Sender: TObject);
     procedure miCloseClick(Sender: TObject);
@@ -94,6 +99,8 @@ type
     procedure miExpSQLClick(Sender: TObject);
     procedure miExpXLSClick(Sender: TObject);
     procedure miExpXMLClick(Sender: TObject);
+    procedure miHelpClick(Sender: TObject);
+    procedure miImpCSVClick(Sender: TObject);
     procedure miInfoClick(Sender: TObject);
     procedure miNewClick(Sender: TObject);
     procedure miOpenAliasClick(Sender: TObject);
@@ -103,10 +110,12 @@ type
     procedure miSortTableClick(Sender: TObject);
     procedure miSubTablesClick(Sender: TObject);
     procedure miTabsListClick(Sender: TObject);
-    procedure tbQuitClick(Sender: TObject);
+
     procedure tbFileOpenMouseDown(Sender: TObject; {%H-}Button: TMouseButton;
       {%H-}Shift: TShiftState; {%H-}X, {%H-}Y: Integer);
-    procedure ToolButton2Click(Sender: TObject);
+    procedure tbSettingsClick(Sender: TObject);
+    procedure tbQuitClick(Sender: TObject);
+
     procedure WorkSiteChange(Sender: TObject);
     procedure WorkSiteCloseTabClicked(Sender: TObject);
 
@@ -142,7 +151,7 @@ implementation
 {$R *.lfm}
 
 Uses
-  uNewTable, uDbfTable, uOpenBA, uExpCSV, uExpHtml, uExpXLS, uExpDBF,
+  uNewTable, uDbfTable, uOpenBA, uExpCSV, uImpCSV, uExpHtml, uExpXLS, uExpDBF,
   uExpXML, uExpSQL, uAddTables, uSubTables, uSortTable, uTabsList,
   uOptions, uSplash, uInfo, uUtils;
 
@@ -351,6 +360,27 @@ begin
   end;
 
   ReadCmdLine;
+end;
+
+procedure TMain.miImpCSVClick(Sender: TObject);
+var
+  F: TImportCSVForm;
+begin
+  ImportDialog.Filter := 'CSV files (*.csv; *.txt; *.dat)|*.csv;*.txt;*.cat';
+  ImportDialog.InitialDir := ExtractFileDir(ImportDialog.FileName);
+  ImportDialog.FileName := '';
+  if ImportDialog.Execute then
+  begin
+    F := TImportCSVForm.Create(nil);
+    try
+      F.CSVFileName := ImportDialog.FileName;
+      F.OnClose := @NewTableCloseHandler;
+      if F.ShowModal <> mrOK then
+        exit;
+    finally
+      F.Free;
+    end;
+  end;
 end;
 
 procedure TMain.HistoryPopupClick(Sender: TObject);
@@ -701,7 +731,7 @@ begin
   end;
 end;
 
-procedure TMain.ToolButton2Click(Sender: TObject);
+procedure TMain.tbSettingsClick(Sender: TObject);
 begin
   miSettingsClick(nil);
 end;
@@ -782,18 +812,23 @@ procedure TMain.NewTableCloseHandler(Sender: TObject; var CloseAction: TCloseAct
 var
   fn: String;
 begin
-  Assert(Sender is TNewTable, 'NewTableCloseHandler can be used by a TNewTable class only.');
+  Assert((Sender is TNewTable) or (Sender is TImportCSVForm),
+    'NewTableCloseHandler can be used by a TNewTable or TImportCSVForm class only.');
 
   // Prepare destruction of the form
   CloseAction := caFree;
 
   // Open pending table
-  fn := TNewTable(Sender).FileName;
+  if (Sender is TNewTable) then
+    fn := TNewTable(Sender).FileName
+  else if (Sender is TImportCSVForm) then
+    fn := TImportCSVForm(Sender).FileName;
+
   if fn <> '' then
      Open_Table(fn);
 
   // Remove the tabsheet
-  TNewTable(Sender).Parent.Free;
+  TForm(Sender).Parent.Free;
 end;
 
 

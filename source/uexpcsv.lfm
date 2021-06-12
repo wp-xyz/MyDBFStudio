@@ -24,7 +24,6 @@ object ExpCSV: TExpCSV
     BorderSpacing.Top = 6
     Caption = 'Export Field'
     FocusControl = ClbField
-    ParentColor = False
   end
   object ClbField: TCheckListBox
     AnchorSideLeft.Control = Owner
@@ -87,7 +86,6 @@ object ExpCSV: TExpCSV
     BorderSpacing.Left = 12
     BorderSpacing.Top = 6
     Caption = 'Date Format'
-    ParentColor = False
   end
   object pBar: TProgressBar
     AnchorSideLeft.Control = Separator
@@ -114,7 +112,6 @@ object ExpCSV: TExpCSV
     Width = 45
     BorderSpacing.Top = 24
     Caption = 'Progress'
-    ParentColor = False
   end
   object ExportBtn: TBitBtn
     AnchorSideTop.Control = CloseBtn
@@ -181,7 +178,6 @@ object ExpCSV: TExpCSV
     BorderSpacing.Top = 6
     Caption = 'Field Separator'
     FocusControl = Separator
-    ParentColor = False
   end
   object Separator: TEdit
     AnchorSideLeft.Side = asrBottom
@@ -208,7 +204,6 @@ object ExpCSV: TExpCSV
     Width = 76
     BorderSpacing.Top = 12
     Caption = 'Field Delimiter'
-    ParentColor = False
   end
   object fDel: TEdit
     AnchorSideLeft.Control = Separator
@@ -234,7 +229,6 @@ object ExpCSV: TExpCSV
     Top = 58
     Width = 83
     Caption = 'String To Ignore'
-    ParentColor = False
   end
   object Ignore: TEdit
     AnchorSideLeft.Control = cbDateF

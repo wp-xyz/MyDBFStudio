@@ -114,7 +114,6 @@ object OptionsForm: TOptionsForm
     BorderSpacing.Top = 12
     BorderSpacing.Right = 6
     Caption = 'Maximum count of recently-used file items'
-    ParentColor = False
     WordWrap = True
   end
   object ConfirmBtn: TBitBtn

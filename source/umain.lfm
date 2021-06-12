@@ -122,13 +122,13 @@ object Main: TMain
       ImageIndex = 37
       OnClick = tbQuitClick
     end
-    object ToolButton2: TToolButton
+    object tbSettings: TToolButton
       Left = 300
       Hint = 'User settings'
       Top = 0
-      Caption = 'ToolButton2'
+      Caption = 'tbSettings'
       ImageIndex = 41
-      OnClick = ToolButton2Click
+      OnClick = tbSettingsClick
     end
     object ToolButton12: TToolButton
       Left = 295
@@ -274,6 +274,17 @@ object Main: TMain
           OnClick = miExpSQLClick
         end
       end
+      object MenuItem15: TMenuItem
+        Caption = 'Import from...'
+        object miImpCSV: TMenuItem
+          Caption = 'CSV File'
+          ImageIndex = 18
+          OnClick = miImpCSVClick
+        end
+      end
+      object MenuItem16: TMenuItem
+        Caption = '-'
+      end
       object miAdd2Tbls: TMenuItem
         Caption = 'Add two tables'
         ImageIndex = 24
@@ -334,7 +345,7 @@ object Main: TMain
   object OpenTable: TOpenDialog
     Title = 'Open a database table...'
     DefaultExt = '.dbf'
-    Filter = 'DBF File|*.dbf|Paradox File|*.db|All Files|*.*'
+    Filter = 'DBF files (*.dbf)|*.dbf|All files (*.*)|*.*'
     Options = [ofAllowMultiSelect, ofPathMustExist, ofFileMustExist, ofEnableSizing, ofViewDetail]
     Left = 440
     Top = 172
@@ -370,5 +381,9 @@ object Main: TMain
     object MenuItem14: TMenuItem
       Caption = 'MenuItem14'
     end
+  end
+  object ImportDialog: TOpenDialog
+    Left = 440
+    Top = 292
   end
 end

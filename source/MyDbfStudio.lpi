@@ -168,7 +168,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="29">
+    <Units Count="30">
       <Unit0>
         <Filename Value="MyDbfStudio.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -379,6 +379,14 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="HistoryFiles"/>
       </Unit28>
+      <Unit29>
+        <Filename Value="uimpcsv.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="ImportCSVForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="uImpCSV"/>
+      </Unit29>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -411,7 +419,7 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="3">
+    <Exceptions Count="4">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -421,6 +429,9 @@
       <Item3>
         <Name Value="EFOpenError"/>
       </Item3>
+      <Item4>
+        <Name Value="EConvertError"/>
+      </Item4>
     </Exceptions>
   </Debugging>
 </CONFIG>

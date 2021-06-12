@@ -67,6 +67,17 @@ type
     ExportSQLScriptDateTimeFormat : String;
     ExportSQLScriptDateSeparator  : String;
     ExportSQLScriptTimeSeparator  : String;
+    ImportCSVWindow               : TWindowOptions;
+    ImportCSVFieldSeparator       : String;
+    ImportCSVDateFormat           : String;
+    ImportCSVTimeFormat           : String;
+    ImportCSVDateTimeFormat       : String;
+    ImportCSVDateSeparator        : String;
+    ImportCSVTimeSeparator        : String;
+    ImportCSVDecimalSeparator     : String;
+    ImportCSVUseFirstLine         : Boolean;
+    ImportCSVTableLevel           : String;
+    ImportCSVOpenAfterCreating    : Boolean;
     AddTablesWindow               : TWindowOptions;
     AddAliasWindow                : TWindowOptions;
     SubtractTablesWindow          : TWindowOptions;
@@ -96,8 +107,10 @@ var
     MainHeight: 0;
     MainTop: 0;
     MainLeft: 0;
+
     DBFTableSplitter: -1;
     OpenByAliasSplitter: -1;
+
     ExportCSVWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
     ExportCSVSeparator: ',';
     ExportCSVDateFormat: 'mm"/"dd"/"yyyy';
@@ -133,6 +146,19 @@ var
     ExportSQLScriptDateTimeFormat: '';
     ExportSQLScriptDateSeparator: '';
     ExportSQLScriptTimeSeparator: '';
+
+    ImportCSVWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
+    ImportCSVFieldSeparator: ', (Comma)';
+    ImportCSVDateFormat: '';
+    ImportCSVTimeFormat: '';
+    ImportCSVDateTimeFormat: '';
+    ImportCSVDateSeparator: '';
+    ImportCSVTimeSeparator: '';
+    ImportCSVDecimalSeparator: '';
+    ImportCSVUseFirstLine: true;
+    ImportCSVTableLevel: '';
+    ImportCSVOpenAfterCreating: false;
+
     AddTablesWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
     AddAliasWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
     SubtractTablesWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
@@ -524,6 +550,18 @@ begin
       Options.ExportSQLSCriptDateSeparator := ini.ReadString('ExportSQLScriptForm', 'DateSeparator', '');
       Options.ExportSQLSCriptTimeSeparator := ini.ReadString('ExportSQLScriptForm', 'TimeSeparator', '');
 
+      Options.ImportCSVWindow.ReadFromIni(ini, 'ImportCSVForm');
+      Options.ImportCSVFieldSeparator := ini.ReadString('ImportCSVForm', 'FieldDelimiter', Options.ImportCSVFieldSeparator);
+      Options.ImportCSVDateFormat := ini.ReadString('ImportCSVForm', 'DateFormat', '');
+      Options.ImportCSVTimeFormat := ini.ReadString('ImportCSVFormat', 'TimeFormat', '');
+      Options.ImportCSVDateTimeFormat := ini.ReadString('ImportCSVForm', 'DateTimeFormat', '');
+      Options.ImportCSVDateSeparator := ini.ReadString('ImportCSVForm', 'DateSeparator', '');
+      Options.ImportCSVTimeSeparator := ini.ReadString('ImportCSVForm', 'TimeSeparator', '');
+      Options.ImportCSVDecimalSeparator := ini.ReadString('ImportCSVForm', 'DecimalSeparator', '');
+      Options.ImportCSVUseFirstLine := ini.ReadBool('ImportCSVForm', 'UseFirstLine', true);
+      Options.ImportCSVTableLevel := ini.ReadString('ImportCSVForm', 'TableLevel', '');
+      Options.ImportCSVOpenAfterCreating := ini.ReadBool('ImportCSVForm', 'OpenAfterCreating', false);
+
       Options.AddTablesWindow.ReadFromIni(ini, 'AddTablesForm');
       Options.AddAliasWindow.ReadFromIni(ini, 'AddAliasForm');
       Options.SubtractTablesWindow.ReadFromIni(ini, 'SubtractTablesForm');
@@ -620,6 +658,18 @@ begin
     ini.WriteString('ExportSQLScriptForm', 'DateTimeFormat', Options.ExportSQLScriptDateTimeFormat);
     ini.WriteString('EXportSQLScriptForm', 'DateSeparator', Options.ExportSQLScriptDateSeparator);
     ini.WriteString('EXportSQLScriptForm', 'TimeSeparator', Options.ExportSQLScriptTimeSeparator);
+
+    Options.ImportCSVWindow.WriteToIni(ini, 'ImportCSVForm');
+    ini.WriteString('ImportCSVForm', 'FieldDelimiter', Options.ImportCSVFieldSeparator);
+    ini.WriteString('ImportCSVForm', 'DateFormat', Options.ImportCSVDateFormat);
+    ini.WriteString('ImportCSVFormat', 'TimeFormat', Options.ImportCSVTimeFormat);
+    ini.WriteString('ImportCSVForm', 'DateTimeFormat', Options.ImportCSVDateTimeFormat);
+    ini.WriteString('ImportCSVForm', 'DateSeparator', Options.ImportCSVDateSeparator);
+    ini.WriteString('ImportCSVForm', 'TimeSeparator', Options.ImportCSVTimeSeparator);
+    ini.WriteString('ImportCSVForm', 'DecimalSeparator', Options.ImportCSVDecimalSeparator);
+    ini.WriteBool('ImportCSVForm', 'UseFirstLine', Options.ImportCSVUseFirstLine);
+    ini.WriteString('ImportCSVForm', 'TableLevel', Options.ImportCSVTableLevel);
+    ini.WriteBool('ImportCSVForm', 'OpenAfterCreating', Options.ImportCSVOpenAfterCreating );
 
     Options.AddTablesWindow.WriteToIni(ini, 'AddTablesForm');
     Options.AddAliasWindow.WriteToIni(ini, 'AddAliasForm');

@@ -121,7 +121,6 @@ object IdxTable: TIdxTable
     Width = 145
     BorderSpacing.Top = 6
     Caption = 'Selected Field or Expression'
-    ParentColor = False
   end
   object lblIndexName: TLabel
     AnchorSideLeft.Control = IdxList
@@ -134,7 +133,6 @@ object IdxTable: TIdxTable
     Width = 64
     BorderSpacing.Top = 12
     Caption = 'Index Name'
-    ParentColor = False
   end
   object IdxName: TEdit
     AnchorSideLeft.Control = IdxList

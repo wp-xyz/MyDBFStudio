@@ -30,13 +30,16 @@ function FieldTypeAsString(AFieldType: TFieldType; Nice: Boolean): String;
 procedure FieldTypePickList(ATableLevel: Integer; const AList: TStrings);
 function GetAliasDir: String;
 function GetVersionStr: String;
+function IndexOfTableLevel(ATabelLevelStr: String; AList: TStrings): Integer;
 function MaxValueI(const AData: array of Integer): Integer;
 function TableFormat(ATableLevel: Integer): String;
+function TryScanDateTime(AMask, ADateStr: String; out ADate: TDateTime;
+  const AFmtSettings: TFormatSettings): Boolean;
 
 implementation
 
 uses
-  TypInfo, FileInfo;
+  TypInfo, DateUtils, FileInfo;
 
 {$IF LCL_FullVersion < 2010000}
 { Fixes a compilation problem in the DBGrid of Lazarus before v2.2 }
@@ -110,6 +113,19 @@ begin
     if value > Result then Result := value;
 end;
 
+function IndexOfTableLevel(ATabelLevelStr: String; AList: TStrings): Integer;
+var
+  i: Integer;
+begin
+  for i := 0 to AList.Count-1 do
+    if ATabelLevelStr = AList[i] then
+    begin
+      Result := i;
+      exit;
+  end;
+  Result := -1;
+end;
+
 { Returns the database type of a given table level }
 function TableFormat(ATableLevel: Integer): String;
 begin
@@ -120,6 +136,20 @@ begin
     25: Result := 'FoxPro';
     30: Result := 'Visual FoxPro';
     else Result := '(unsupported)';
+  end;
+end;
+
+function TryScanDateTime(AMask, ADateStr: String; out ADate: TDateTime;
+  const AFmtSettings: TFormatSettings): Boolean;
+begin
+  try
+    ADate := ScanDateTime(AMask, ADateStr, AFmtSettings);
+    Result := true;
+  except
+    on E:Exception do begin
+    Result := false;
+    ADate := 0;
+    end;
   end;
 end;
 
