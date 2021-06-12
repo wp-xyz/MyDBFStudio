@@ -25,4 +25,5 @@ I decided to put them onto my github and to refactor some places. Later Enzo pub
 * Layout of the controls is determined by anchoring and autosizing and thus should work out in all operating systems supported. Form positions are stored in the ini file.
 * Support drag and drop of dbf files from the operating system.
 * Optionally, auto-fill the column of the DBGrid displaying the dbf file.
+* Import from CSV files
 * Sample files for "playing" (DeadlyMushrooms.dbf, country_codes.dbf).
