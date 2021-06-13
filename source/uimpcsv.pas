@@ -468,7 +468,7 @@ begin
     for i := L.Count-1 downto 0 do
     begin
       fieldtype := TFieldType(GetEnumValue(TypeInfo(TFieldType), 'ft'+L[i]));
-      if not (fieldType in [ftInteger, ftFloat, ftString, ftDate, ftDateTime]) then
+      if not (fieldType in [ftInteger, ftSmallInt, ftWord, ftFloat, ftString, ftDate, ftDateTime]) then
         L.Delete(i);
     end;
 
@@ -601,6 +601,8 @@ var
   fs: TFormatSettings;
   field: TField;
   dt: TDateTime;
+  n: Integer;
+  x: Double;
 begin
   fs := FormatSettings;
   fs.DecimalSeparator := GetSeparator(cbDecSep);
@@ -616,9 +618,11 @@ begin
       s := ImportGrid.Cells[col, row];
       case field.DataType of
         ftInteger:
-          field.AsInteger := StrToInt(s);
+          if TryStrToInt(s, n) then
+            field.AsInteger := n;
         ftFloat:
-          field.AsFloat := StrToFloat(s, fs);
+          if TryStrToFloat(s, x, fs) then
+            field.AsFloat := x;
         ftDate, ftDateTime:
           if TryScanDateTime(cbDateFormat.Text, s, dt, fs) or
              TryScanDateTime(cbTimeFormat.Text, s, dt, fs) or
@@ -626,7 +630,7 @@ begin
           begin
             field.AsDateTime := dt;
           end;
-        else
+        otherwise
           field.AsString := s;
       end;
     end;
