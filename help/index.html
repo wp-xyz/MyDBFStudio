@@ -142,6 +142,11 @@
           <li style="list-style:circle;"><a href="#Exporting_to_XML">To XML file</a></li>
           <li style="list-style:circle;"><a href="#Exporting_to_SQL_script">To SQL script</a></li>
         </ul> 
+        <li><a href="#Importing_a_table_from_other_formats">Importing a table from other formats</a></li>
+          <ul style="padding-left:1.5em">                           
+            <li style="list-style:circle;"><a href="#Importing_from_CSV">From CSV file</a></li>
+          </ul>
+        </li>
         <li><a href="#Adding_two_tables">Adding two tables</a></li>
         <li><a href="#Subtracting_two_tables">Subtracting two tables</a></li>
         <li><a href="#Emptying_one_or_more_tables">Emptying one or more tables</a></li>
@@ -170,7 +175,9 @@
       <img title="New table form" style="border: 2px solid; alt="newtableexample" src="img/newtable.png">
       <p>
         In the window that appears you can directly insert the field name, 
-        field type and length (if requested) in the grid. 
+        field type and length in the grid. The length is required
+        for string and float fields; in case of float fields, the value denotes
+        the count of valid digits to be used.
         When you press the &darr; key in the last grid row an empty
         row is added in which you can set up a new field.
       </p>
@@ -327,7 +334,7 @@
         exported.
       </p>
             
-      <h3><a name="Exporting_to_CSV">Exporting table to Comma Separated Value file (.csv)</a></h3>
+      <h4><a name="Exporting_to_CSV">Exporting table to Comma Separated Value file (.csv)</a></h4>
       <p>
         With an active table selected, click on <i>Tools</i> &gt; <i>Export</i> &gt; <i>To CSV File</i>,
         the following window will appear on the screen:
@@ -346,7 +353,7 @@
         Click on the <i>OK</i> button, and you can choose the location where to save the file.
       </p>
 
-      <h3><a name="Exporting_to_HTML">Exporting table to HTML file</a></h3>
+      <h4><a name="Exporting_to_HTML">Exporting table to HTML file</a></h4>
       <p>
         With an active table selected, click on <i>Tools</i> &gt; <i>Export</i> &gt; <i>To HTML File</i>,
         the window will appear on the screen:
@@ -364,7 +371,7 @@
         to save the file
       </p>
           
-      <h3><a name="Exporting_to_XLS">Exporting table to XLS file</a></h3>
+      <h4><a name="Exporting_to_XLS">Exporting table to XLS file</a></h4>
       <p>
         With an active table selected, click on <i>Tools</i> &gt; <i>Export </i> &gt; <i>To XLS File</i>,
         and the following window will appear on the screen:
@@ -388,7 +395,7 @@
         <i>OK</i> button, you must choose the location where to save the file.
       </p>
                
-      <h3><a name="Exporting_to_DBF">Exporting table to DBF file</a></h3>
+      <h4><a name="Exporting_to_DBF">Exporting table to DBF file</a></h4>
       <p>
         With an active table selected, click on <i>Tools</i> &gt; <i>Export</i> &gt; <i>To DBF File</i>,
         and the following window will appear on the screen:
@@ -407,7 +414,7 @@
         where to save the file.
       </p>
           
-      <h3><a name="Exporting_to_XML">Exporting table to XML file</a></h3>
+      <h4><a name="Exporting_to_XML">Exporting table to XML file</a></h4>
       <p>
         With an active table selected, click on <i>Tools</i> &gt; </i>Export</i> &gt; <i>To XML File</i>.
         The following window will appear on the screen:
@@ -423,7 +430,7 @@
         where to save the file.
       </p>
         
-      <h3><a name="Exporting_to_SQL_script">Exporting table to SQL script</a></h3>
+      <h4><a name="Exporting_to_SQL_script">Exporting table to SQL script</a></h4>
       <p>
         With an active table selected, click on <i>Tools</i> &gt; <i>Export</i> &gt; <i>To SQL Script</i>.
         The following window will appear on the screen:
@@ -439,6 +446,43 @@
       <p>
         Click on the OK button and you can choose the location 
         where to save the file.
+      </p>
+
+      <h3><a name="Importing_a_table_from_other_formats">Importing a table from other formats</a></h3>
+      <p>
+        <i>MyDbf Studio</i> allows you to import data from other file formats.
+        Currently only the CSV (Comma Separated Values) format is supported.
+      </p>
+            
+      <h4><a name="Importing_from_CSV">Importing a table from Comma Separated Value file (.csv)</a></h4>
+      <p>
+        When you click on <i>Tools</i> &gt; <i>Import</i> &gt; <i>From CSV File</i>,
+        you must first select the name of the csv file to be imported. Then the 
+        following window will appear on the screen:
+      </p>
+      <img alt="impcsv" src="img/impcsv.png">
+      <p>
+        In the top part of the form you can see the contents of the csv file. If
+        the separation of the individual fields in a row is not successful you
+        must adjust the setting for the <t>Field delimiter</i> in the right, and
+        press the button <i>Test parameters</i>.
+      </p>
+      <p>
+        In the lower part the list of extracted fields is displayed: the 
+        field name taken from the first data line if <i>Use first line as field
+        names</i> is checked, or a generic name otherwise, the field type and
+        the field size. When the field type is not detected correctly you may
+        have to adjust the settings in the <i>CSV parameters</i> block.
+        Do not forget to press <i>Test parameters</i> to repeat the field
+        extraction.
+      </p>
+      <p>
+        You can prepare indexes from the detected fields, and you can select
+        the table type for the export.
+      </p>
+      <p>
+        Finally click <i>Create table</i> to start with the conversion after 
+        specifying a file name for the new dbf table.
       </p>
 
       <h3><a name="Adding_two_tables">Adding two tables</a></h3>
