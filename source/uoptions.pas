@@ -553,7 +553,7 @@ begin
       Options.ImportCSVWindow.ReadFromIni(ini, 'ImportCSVForm');
       Options.ImportCSVFieldSeparator := ini.ReadString('ImportCSVForm', 'FieldDelimiter', Options.ImportCSVFieldSeparator);
       Options.ImportCSVDateFormat := ini.ReadString('ImportCSVForm', 'DateFormat', '');
-      Options.ImportCSVTimeFormat := ini.ReadString('ImportCSVFormat', 'TimeFormat', '');
+      Options.ImportCSVTimeFormat := ini.ReadString('ImportCSVForm', 'TimeFormat', '');
       Options.ImportCSVDateTimeFormat := ini.ReadString('ImportCSVForm', 'DateTimeFormat', '');
       Options.ImportCSVDateSeparator := ini.ReadString('ImportCSVForm', 'DateSeparator', '');
       Options.ImportCSVTimeSeparator := ini.ReadString('ImportCSVForm', 'TimeSeparator', '');
@@ -662,7 +662,7 @@ begin
     Options.ImportCSVWindow.WriteToIni(ini, 'ImportCSVForm');
     ini.WriteString('ImportCSVForm', 'FieldDelimiter', Options.ImportCSVFieldSeparator);
     ini.WriteString('ImportCSVForm', 'DateFormat', Options.ImportCSVDateFormat);
-    ini.WriteString('ImportCSVFormat', 'TimeFormat', Options.ImportCSVTimeFormat);
+    ini.WriteString('ImportCSVForm', 'TimeFormat', Options.ImportCSVTimeFormat);
     ini.WriteString('ImportCSVForm', 'DateTimeFormat', Options.ImportCSVDateTimeFormat);
     ini.WriteString('ImportCSVForm', 'DateSeparator', Options.ImportCSVDateSeparator);
     ini.WriteString('ImportCSVForm', 'TimeSeparator', Options.ImportCSVTimeSeparator);

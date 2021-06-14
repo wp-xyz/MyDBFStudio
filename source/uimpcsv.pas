@@ -20,36 +20,42 @@ type
   { TImportCSVForm }
 
   TImportCSVForm = class(TForm)
-    TestButton: TButton;
-    cbDateTimeFormat: TComboBox;
-    cbTimeSep: TComboBox;
-    cbTimeFormat: TComboBox;
-    cbDateSep: TComboBox;
-    cbDecSep: TComboBox;
-    cbFirstLine: TCheckBox;
-    CloseBtn: TBitBtn;
     cbDateFormat: TComboBox;
+    cbDateSep: TComboBox;
+    cbDateTimeFormat: TComboBox;
+    cbDecSep: TComboBox;
+    cbFieldSep: TComboBox;
+    cbUseFirstLine: TCheckBox;
+    cbTimeFormat: TComboBox;
+    cbTimeSep: TComboBox;
+    CSVParams: TGroupBox;
+    Label1: TLabel;
+    CloseBtn: TBitBtn;
     CreateTableBtn: TBitBtn;
     DeleteIndexBtn: TBitBtn;
     DefineIndexBtn: TBitBtn;
     cbOpenTbl: TCheckBox;
-    cbFieldSep: TComboBox;
     FieldList: TStringGrid;
-    GroupBox1: TGroupBox;
+    ButtonPanel: TPanel;
+    TableOptionsGroup: TGroupBox;
     IndexList: TListBox;
+    Label2: TLabel;
     lblDateFormat: TLabel;
-    lblTimeFormat: TLabel;
+    lblDateSep: TLabel;
+    lblDateTimeFormat1: TLabel;
+    lblDecSep: TLabel;
     lblFieldSep: TLabel;
     lblIndexList: TLabel;
     lblTableType: TLabel;
-    CSVParamsPanel: TPanel;
-    lblDateSep: TLabel;
-    lblDateTimeFormat1: TLabel;
+    lblTimeFormat: TLabel;
     lblTimeSep: TLabel;
-    lblDecimalSep: TLabel;
-    Splitter1: TSplitter;
-    Splitter2: TSplitter;
+    BottomPanel: TPanel;
+    TopPanelLeft: TPanel;
+    TopPanelRight: TPanel;
+    VertSplitter: TSplitter;
+    HorSplitter: TSplitter;
     ImportGrid: TStringGrid;
+    TestButton: TButton;
     TopPanel: TPanel;
     SaveTableDlg: TSaveDialog;
     cbTableLevel: TComboBox;
@@ -102,7 +108,7 @@ var
 implementation
 
 uses
-  Math, TypInfo, Dateutils,
+  Math, TypInfo, DateUtils, LCLIntf, LCLType,
   uUtils, uOptions, uIdxTable;
 
 {$R *.lfm}
@@ -331,6 +337,25 @@ begin
     TPickListCellEditor(Editor).AutoComplete := true;
 end;
 
+procedure TImportCSVForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  if CanClose then
+  begin
+    Options.ImportCSVWindow.ExtractFromForm(Self);
+    Options.ImportCSVFieldSeparator := cbFieldSep.Text;
+    Options.ImportCSVDateFormat := cbDateFormat.Text;
+    Options.ImportCSVTimeFormat := cbTimeFormat.Text;
+    Options.ImportCSVDateTimeFormat := cbDateTimeFormat.Text;
+    Options.ImportCSVDateSeparator := cbDateSep.Text;
+    Options.ImportCSVTimeSeparator := cbTimeSep.Text;
+    Options.ImportCSVDecimalSeparator := cbDecSep.Text;
+    Options.ImportCSVUseFirstLine := cbUseFirstLine.Checked;
+    if cbTableLevel.ItemIndex > -1 then
+      Options.ImportCSVTableLevel := cbTableLevel.Items[cbTableLevel.ItemIndex];
+    Options.ImportCSVOpenAfterCreating := cbOpenTbl.Checked;
+  end;
+end;
+
 procedure TImportCSVForm.FormCreate(Sender: TObject);
 begin
   FDBTable := TDbf.Create(self);
@@ -352,6 +377,8 @@ begin
 end;
 
 procedure TImportCSVForm.FormShow(Sender: TObject);
+var
+  i, w: Integer;
 begin
   DefineIndexBtn.Constraints.MinWidth := Max(DefineIndexBtn.Width, DeleteIndexBtn.Width);
   DeleteIndexBtn.Constraints.MinWidth := DefineIndexBtn.Constraints.MinWidth;
@@ -359,10 +386,20 @@ begin
   CreateTableBtn.Constraints.MinWidth := Max(CreateTableBtn.Width, CloseBtn.Width);
   CloseBtn.Constraints.MinWidth := CreateTableBtn.Constraints.MinWidth;
 
-  CSVParamsPanel.Constraints.MinWidth := cbFirstLine.Left + cbFirstLine.Width +
-    TestButton.BorderSpacing.Left + TestButton.Width;
-  TopPanel.Constraints.MinHeight := CSVParamsPanel.Height;
-  CSVParamsPanel.AutoSize := false;
+  w := 0;
+  for i := 0 to cbDateTimeFormat.Items.Count-1 do
+    w := Max(w, cbDateTimeFormat.Canvas.TextWidth(cbDateTimeFormat.Items[i]));
+  TopPanelRight.Constraints.MinWidth := Max(
+    lblDecSep.BorderSpacing.Left + lblDecSep.Width + cbDecSep.BorderSpacing.Left + w + 16,
+    cbUseFirstLine.Left + cbUseFirstLine.Width
+  );
+  TopPanel.Constraints.MinHeight := CSVParams.Height;
+  TopPanel.Height := TopPanel.Constraints.MinHeight;
+  CSVParams.AutoSize := false;
+  ClientHeight := TopPanel.BorderSpacing.Top + TopPanel.Constraints.MinHeight +
+    TopPanel.BorderSpacing.Bottom + HorSplitter.Height +
+    BottomPanel.BorderSpacing.Top + TableOptionsGroup.Height +
+    ButtonPanel.Height;
 
   if Options.RememberWindowSizePosContent then
   begin
@@ -378,7 +415,7 @@ begin
     cbDateSep.Text := Options.ImportCSVDateSeparator;
     cbTimeSep.Text := Options.ImportCSVTimeSeparator;
     cbDecSep.Text := Options.ImportCSVDecimalSeparator;
-    cbFirstLine.Checked := Options.ImportCSVUseFirstLine;
+    cbUseFirstLine.Checked := Options.ImportCSVUseFirstLine;
     cbTableLevel.ItemIndex := IndexOfTableLevel(Options.ImportCSVTableLevel, cbTableLevel.Items);
     cbOpenTbl.Checked := Options.ImportCSVOpenAfterCreating;
   end;
@@ -557,9 +594,9 @@ begin
   Result := false;
   if FCSVFileName = '' then
     exit;
-  ImportGrid.LoadFromCSVFile(FCSVFileName, GetSeparator(cbFieldSep), cbFirstLine.Checked);
+  ImportGrid.LoadFromCSVFile(FCSVFileName, GetSeparator(cbFieldSep), cbUseFirstLine.Checked);
   ImportGrid.FixedCols := 0;
-  if not cbFirstLine.Checked then
+  if not cbUseFirstLine.Checked then
     for i := 0 to ImportGrid.ColCount-1 do
       ImportGrid.Cells[i, 0] := 'Col' + IntToStr(i+1);
 
@@ -682,25 +719,6 @@ end;
 procedure TImportCSVForm.TestButtonClick(Sender: TObject);
 begin
   ExtractSchema;
-end;
-
-procedure TImportCSVForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-begin
-  if CanClose then
-  begin
-    Options.ExportCSVWindow.ExtractFromForm(Self);
-    Options.ImportCSVFieldSeparator := cbFieldSep.Text;
-    Options.ImportCSVDateFormat := cbDateFormat.Text;
-    Options.ImportCSVTimeFormat := cbTimeFormat.Text;
-    Options.ImportCSVDateTimeFormat := cbDateTimeFormat.Text;
-    Options.ImportCSVDateSeparator := cbDateSep.Text;
-    Options.ImportCSVTimeSeparator := cbTimeSep.Text;
-    Options.ImportCSVDecimalSeparator := cbDecSep.Text;
-    Options.ImportCSVUseFirstLine := cbFirstLine.Checked;
-    if cbTableLevel.ItemIndex > -1 then
-      Options.ImportCSVTableLevel := cbTableLevel.Items[cbTableLevel.ItemIndex];
-    Options.ImportCSVOpenAfterCreating := cbOpenTbl.Checked;
-  end;
 end;
 
 function TImportCSVForm.TestIndexName(Val: String): Boolean;

@@ -99,7 +99,6 @@ object NewTable: TNewTable
       BorderSpacing.Left = 8
       BorderSpacing.Top = 4
       Caption = 'Index List'
-      ParentColor = False
     end
     object IndexList: TListBox
       AnchorSideLeft.Control = GroupBox1
@@ -136,7 +135,6 @@ object NewTable: TNewTable
       BorderSpacing.Left = 8
       BorderSpacing.Bottom = 2
       Caption = 'Table Type'
-      ParentColor = False
     end
     object TableType: TComboBox
       AnchorSideLeft.Control = GroupBox1
