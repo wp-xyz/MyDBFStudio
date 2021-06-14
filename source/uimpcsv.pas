@@ -194,7 +194,9 @@ begin
 
   for i := 1 to FieldList.RowCount - 1 do
   begin
-    if Trim(FieldList.Cells[1, i]) = '' then
+    if Trim(FieldList.Cells[1, i]) = '' then    // Rows with empty field name are skipped
+      continue;
+    {
     begin
       MessageDlg('Row ' + IntToStr(i) + ': Missing field name', mtError, [mbOK], 0);
       FieldList.Row := i;
@@ -202,6 +204,7 @@ begin
       ModalResult := mrNone;
       exit;
     end;
+    }
 
     if FieldList.Cells[2, i] = '' then
     begin
@@ -260,6 +263,12 @@ begin
         FFileName := '';
 
     except
+      on E:Exception do
+      begin
+        FDBTable.Close;
+        MessageDlg(E.Message, mtError, [mbOK], 0);
+        ModalResult := mrNone;
+      end;
     end;
   end;
 end;
@@ -555,6 +564,8 @@ begin
 
   for row := 1 to FieldList.RowCount - 1 do
   begin
+    if (FieldList.Cells[0, row] = '') or (FieldList.Cells[1, row] = '') then
+      continue;
     fieldDef := Result.AddFieldDef;
     fieldDef.FieldName := FieldList.Cells[1, row];
     fieldDef.FieldType := StrToFieldType(FieldList.Cells[2, row]);
@@ -590,29 +601,44 @@ var
   fieldname: String;
   fieldtype: TFieldType;
   fieldsize: Integer;
+  crs: TCursor;
 begin
   Result := false;
   if FCSVFileName = '' then
     exit;
-  ImportGrid.LoadFromCSVFile(FCSVFileName, GetSeparator(cbFieldSep), cbUseFirstLine.Checked);
-  ImportGrid.FixedCols := 0;
-  if not cbUseFirstLine.Checked then
-    for i := 0 to ImportGrid.ColCount-1 do
-      ImportGrid.Cells[i, 0] := 'Col' + IntToStr(i+1);
 
-  j := 1;
-  FieldList.RowCount := ImportGrid.ColCount + 1;
-  for i := 0 to ImportGrid.ColCount-1 do
-  begin
-    AnalyzeColumn(i, fieldName, fieldType, fieldSize);
-    FieldList.Cells[0, j] := IntToStr(j);
-    FieldList.Cells[1, j] := fieldName;
-    FieldList.cells[2, j] := SelectFieldType(fieldType);
-    if (fieldType in [ftString]) then
-      FieldList.Cells[3, j] := IntToStr(fieldSize)
-    else
-      FieldList.cells[3, j] := '';
-    inc(j);
+  crs := Screen.Cursor;
+  Screen.Cursor := crHourglass;
+  Application.ProcessMessages;
+  try
+    ImportGrid.BeginUpdate;
+    try
+      ImportGrid.LoadFromCSVFile(FCSVFileName, GetSeparator(cbFieldSep), cbUseFirstLine.Checked);
+      ImportGrid.FixedCols := 0;
+      if not cbUseFirstLine.Checked then
+        for i := 0 to ImportGrid.ColCount-1 do
+          ImportGrid.Cells[i, 0] := 'Col' + IntToStr(i+1);
+    finally
+      ImportGrid.EndUpdate;
+    end;
+
+    j := 1;
+    FieldList.RowCount := ImportGrid.ColCount + 1;
+    for i := 0 to ImportGrid.ColCount-1 do
+    begin
+      AnalyzeColumn(i, fieldName, fieldType, fieldSize);
+      FieldList.Cells[0, j] := IntToStr(j);
+      FieldList.Cells[1, j] := fieldName;
+      FieldList.cells[2, j] := SelectFieldType(fieldType);
+      if (fieldType in [ftString]) then
+        FieldList.Cells[3, j] := IntToStr(fieldSize)
+      else
+        FieldList.cells[3, j] := '';
+      inc(j);
+    end;
+
+  finally
+    Screen.Cursor := crs;
   end;
 
   Result := true;
@@ -651,6 +677,8 @@ begin
     DBTable.Append;
     for col := 0 to ImportGrid.ColCount-1 do
     begin
+      if (FieldList.Cells[0, col+1] = '') or (FieldList.Cells[1, col+1] = '') then
+        continue;
       field := DBTable.Fields[col];
       s := ImportGrid.Cells[col, row];
       case field.DataType of
