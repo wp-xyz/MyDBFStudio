@@ -55,11 +55,10 @@ var
 
 implementation
 
-uses
-  uUtils, uDataModule, uMain, uAddAlias, uOptions;
-
 {$R *.lfm}
 
+uses
+  uUtils, {%H-}uDataModule, uMain, uAddAlias, uOptions;
 
 { TOpenBA }
 
@@ -124,6 +123,7 @@ begin
     FileListView.ViewStyle := vsReport
   else
     exit;
+  // Enforce updating the imagelist
   FileListView.Width := FileListView.Width + 1;
   FileListview.Width := FileListview.Width - 1;
 end;

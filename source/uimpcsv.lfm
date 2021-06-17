@@ -11,6 +11,7 @@ object ImportCSVForm: TImportCSVForm
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
+  Position = poMainFormCenter
   LCLVersion = '2.1.0.0'
   object HorSplitter: TSplitter
     Cursor = crVSplit
@@ -32,7 +33,7 @@ object ImportCSVForm: TImportCSVForm
     BevelOuter = bvNone
     ClientHeight = 37
     ClientWidth = 666
-    TabOrder = 1
+    TabOrder = 3
     object CreateTableBtn: TBitBtn
       AnchorSideRight.Control = CloseBtn
       AnchorSideBottom.Control = ButtonPanel
@@ -50,7 +51,7 @@ object ImportCSVForm: TImportCSVForm
       Images = CommonData.Images
       ImageIndex = 7
       OnClick = CreateTableBtnClick
-      TabOrder = 0
+      TabOrder = 1
     end
     object CloseBtn: TBitBtn
       AnchorSideRight.Control = ButtonPanel
@@ -70,7 +71,7 @@ object ImportCSVForm: TImportCSVForm
       Images = CommonData.Images
       ImageIndex = 8
       OnClick = CloseBtnClick
-      TabOrder = 1
+      TabOrder = 2
     end
     object TestButton: TButton
       AnchorSideLeft.Control = ButtonPanel
@@ -81,15 +82,15 @@ object ImportCSVForm: TImportCSVForm
       Left = 6
       Height = 25
       Top = 6
-      Width = 109
+      Width = 133
       Anchors = [akLeft, akBottom]
       AutoSize = True
       BorderSpacing.Left = 6
       BorderSpacing.Top = 6
       BorderSpacing.Bottom = 6
-      Caption = 'Test parameters'
+      Caption = 'Test CSV parameters'
       OnClick = TestButtonClick
-      TabOrder = 2
+      TabOrder = 0
     end
   end
   object TopGroupBox: TGroupBox
@@ -106,7 +107,7 @@ object ImportCSVForm: TImportCSVForm
     Caption = 'CSV File'
     ClientHeight = 278
     ClientWidth = 650
-    TabOrder = 2
+    TabOrder = 0
     object VertSplitter: TSplitter
       Left = 439
       Height = 246
@@ -126,7 +127,7 @@ object ImportCSVForm: TImportCSVForm
       BevelOuter = bvNone
       ClientHeight = 246
       ClientWidth = 203
-      TabOrder = 2
+      TabOrder = 3
       object CSVParams: TGroupBox
         AnchorSideLeft.Control = TopPanelRight
         AnchorSideTop.Control = TopPanelRight
@@ -428,7 +429,7 @@ object ImportCSVForm: TImportCSVForm
       BevelOuter = bvNone
       ClientHeight = 240
       ClientWidth = 427
-      TabOrder = 0
+      TabOrder = 1
       object ImportGrid: TStringGrid
         AnchorSideLeft.Control = TopPanelLeft
         AnchorSideTop.Control = Label1
@@ -470,7 +471,7 @@ object ImportCSVForm: TImportCSVForm
       BevelOuter = bvNone
       ClientHeight = 26
       ClientWidth = 650
-      TabOrder = 3
+      TabOrder = 0
       object Label3: TLabel
         AnchorSideLeft.Control = CSVFileNamePanel
         AnchorSideTop.Control = edCSVFileName
@@ -528,7 +529,7 @@ object ImportCSVForm: TImportCSVForm
     Caption = 'DBF File'
     ClientHeight = 250
     ClientWidth = 650
-    TabOrder = 3
+    TabOrder = 2
     object Label2: TLabel
       AnchorSideLeft.Control = BottomGroupBox
       AnchorSideTop.Control = BottomGroupBox

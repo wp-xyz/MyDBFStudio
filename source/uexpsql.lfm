@@ -1,12 +1,12 @@
 object ExpSQL: TExpSQL
-  Left = 410
-  Height = 444
-  Top = 241
+  Left = 479
+  Height = 389
+  Top = 233
   Width = 501
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'Export Table To SQL Script'
-  ClientHeight = 444
+  ClientHeight = 389
   ClientWidth = 501
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
@@ -21,7 +21,7 @@ object ExpSQL: TExpSQL
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
     Left = 6
-    Height = 415
+    Height = 360
     Top = 23
     Width = 322
     Anchors = [akTop, akLeft, akRight, akBottom]
@@ -48,7 +48,6 @@ object ExpSQL: TExpSQL
     BorderSpacing.Left = 6
     BorderSpacing.Top = 6
     Caption = 'Export Fields'
-    ParentColor = False
   end
   object cbCreateTable: TCheckBox
     AnchorSideLeft.Control = ClbField
@@ -89,7 +88,6 @@ object ExpSQL: TExpSQL
     Width = 45
     BorderSpacing.Top = 24
     Caption = 'Progress'
-    ParentColor = False
   end
   object pBar: TProgressBar
     AnchorSideLeft.Control = ClbField
@@ -116,7 +114,7 @@ object ExpSQL: TExpSQL
     AnchorSideBottom.Side = asrBottom
     Left = 334
     Height = 26
-    Top = 412
+    Top = 357
     Width = 80
     Anchors = [akRight, akBottom]
     AutoSize = True
@@ -138,7 +136,7 @@ object ExpSQL: TExpSQL
     AnchorSideBottom.Side = asrBottom
     Left = 420
     Height = 26
-    Top = 412
+    Top = 357
     Width = 75
     Anchors = [akRight, akBottom]
     AutoSize = True
@@ -162,7 +160,6 @@ object ExpSQL: TExpSQL
     Width = 65
     BorderSpacing.Top = 24
     Caption = 'Date Format'
-    ParentColor = False
   end
   object cbDateFmt: TComboBox
     AnchorSideLeft.Control = ClbField
@@ -199,7 +196,6 @@ object ExpSQL: TExpSQL
     Width = 67
     BorderSpacing.Top = 8
     Caption = 'Time Format'
-    ParentColor = False
   end
   object cbTimeFmt: TComboBox
     AnchorSideLeft.Control = ClbField
@@ -234,7 +230,6 @@ object ExpSQL: TExpSQL
     Width = 96
     BorderSpacing.Top = 8
     Caption = 'Date/Time Format'
-    ParentColor = False
   end
   object cbDateTimeFmt: TComboBox
     AnchorSideLeft.Control = ClbField
@@ -272,7 +267,6 @@ object ExpSQL: TExpSQL
     Width = 77
     BorderSpacing.Top = 8
     Caption = 'Date Separator'
-    ParentColor = False
   end
   object cbDateSep: TComboBox
     AnchorSideLeft.Control = ClbField
@@ -305,7 +299,6 @@ object ExpSQL: TExpSQL
     Top = 235
     Width = 79
     Caption = 'Time Separator'
-    ParentColor = False
   end
   object cbTimeSep: TComboBox
     AnchorSideLeft.Control = Bevel1
