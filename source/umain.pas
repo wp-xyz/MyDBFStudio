@@ -366,20 +366,12 @@ procedure TMain.miImpCSVClick(Sender: TObject);
 var
   F: TImportCSVForm;
 begin
-  ImportDialog.Filter := 'CSV files (*.csv; *.txt; *.dat)|*.csv;*.txt;*.cat';
-  ImportDialog.InitialDir := ExtractFileDir(ImportDialog.FileName);
-  ImportDialog.FileName := '';
-  if ImportDialog.Execute then
-  begin
-    F := TImportCSVForm.Create(nil);
-    try
-      F.CSVFileName := ImportDialog.FileName;
-      F.OnClose := @NewTableCloseHandler;
-      if F.ShowModal <> mrOK then
-        exit;
-    finally
-      F.Free;
-    end;
+  F := TImportCSVForm.Create(nil);
+  try
+    F.OnClose := @NewTableCloseHandler;
+    F.ShowModal;
+  finally
+    F.Free;
   end;
 end;
 

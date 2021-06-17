@@ -97,6 +97,8 @@ type
     GridLineColor                 : TColor;
     MaxHistoryRecords             : Integer;
     ShowSplashScreen              : Boolean;
+    // Not saved in ini
+    PrevImportFile                : String;
   end;
 
 var
@@ -177,7 +179,10 @@ var
     ShowGridLines: true;
     GridLineColor: clBtnFace;
     MaxHistoryRecords: 10;
-    ShowSplashScreen: true
+    ShowSplashScreen: true;
+
+    // Not saved
+    PrevImportFile: ''
   );
 
 type

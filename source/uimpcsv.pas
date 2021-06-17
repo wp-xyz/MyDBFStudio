@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Grids,
-  StdCtrls, Buttons, ExtCtrls, DB, dbf, DBF_Fields;
+  StdCtrls, Buttons, ExtCtrls, ComCtrls, DB, dbf, DBF_Fields;
 
 type
 
@@ -20,26 +20,32 @@ type
   { TImportCSVForm }
 
   TImportCSVForm = class(TForm)
+    BottomGroupBox: TGroupBox;
+    BrowseCSVBtn: TButton;
     cbDateFormat: TComboBox;
     cbDateSep: TComboBox;
     cbDateTimeFormat: TComboBox;
     cbDecSep: TComboBox;
     cbFieldSep: TComboBox;
-    cbUseFirstLine: TCheckBox;
+    cbOpenTbl: TCheckBox;
+    cbTableLevel: TComboBox;
     cbTimeFormat: TComboBox;
     cbTimeSep: TComboBox;
-    CSVParams: TGroupBox;
-    Label1: TLabel;
+    cbUseFirstLine: TCheckBox;
     CloseBtn: TBitBtn;
     CreateTableBtn: TBitBtn;
-    DeleteIndexBtn: TBitBtn;
+    CSVFileNamePanel: TPanel;
+    CSVParams: TGroupBox;
     DefineIndexBtn: TBitBtn;
-    cbOpenTbl: TCheckBox;
-    FieldList: TStringGrid;
+    DeleteIndexBtn: TBitBtn;
+    edCSVFileName: TEdit;
     ButtonPanel: TPanel;
-    TableOptionsGroup: TGroupBox;
+    FieldList: TStringGrid;
+    ImportGrid: TStringGrid;
     IndexList: TListBox;
+    Label1: TLabel;
     Label2: TLabel;
+    Label3: TLabel;
     lblDateFormat: TLabel;
     lblDateSep: TLabel;
     lblDateTimeFormat1: TLabel;
@@ -49,21 +55,22 @@ type
     lblTableType: TLabel;
     lblTimeFormat: TLabel;
     lblTimeSep: TLabel;
-    BottomPanel: TPanel;
+    OpenDialog: TOpenDialog;
+    HorSplitter: TSplitter;
+    TableOptionsGroup: TGroupBox;
+    TestButton: TButton;
+    SaveTableDlg: TSaveDialog;
+    TopGroupBox: TGroupBox;
     TopPanelLeft: TPanel;
     TopPanelRight: TPanel;
     VertSplitter: TSplitter;
-    HorSplitter: TSplitter;
-    ImportGrid: TStringGrid;
-    TestButton: TButton;
-    TopPanel: TPanel;
-    SaveTableDlg: TSaveDialog;
-    cbTableLevel: TComboBox;
+    procedure BrowseCSVBtnClick(Sender: TObject);
     procedure cbTableLevelChange(Sender: TObject);
     procedure CloseBtnClick(Sender: TObject);
     procedure CreateTableBtnClick(Sender: TObject);
     procedure DefineIndexBtnClick(Sender: TObject);
     procedure DeleteIndexBtnClick(Sender: TObject);
+    procedure edCSVFileNameEditingDone(Sender: TObject);
     procedure FieldListSelectEditor(Sender: TObject; aCol, {%H-}aRow: Integer;
       var Editor: TWinControl);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -74,7 +81,6 @@ type
     procedure TestButtonClick(Sender: TObject);
   private
     { private declarations }
-    FCSVFileName: String;
     FDBTable: TDbf;
     FFileName: String;
     MyIndexList: array of MyIndex;
@@ -86,6 +92,7 @@ type
     Function CreateNewFieldDefs : TDbfFieldDefs;
     Procedure CreateMyIndex;
     function ExtractSchema: Boolean;
+    function GetCSVFileName: String;
     function GetSeparator(ACombo: TCombobox): Char;
     procedure ImportToTable;
     function RemoveIllegalChars(const ATitle: String): String;
@@ -97,7 +104,7 @@ type
     { public declarations }
     function TestIndexName(Val : String) : Boolean;
     procedure UpdateOptions;
-    property CSVFileName: String read FCSVFileName write SetCSVFileName;
+    property CSVFileName: String read GetCSVFileName write SetCSVFileName;
     property DBTable: TDbf read FDBTable;
     property FileName: String read FFileName;
   end;
@@ -196,15 +203,6 @@ begin
   begin
     if Trim(FieldList.Cells[1, i]) = '' then    // Rows with empty field name are skipped
       continue;
-    {
-    begin
-      MessageDlg('Row ' + IntToStr(i) + ': Missing field name', mtError, [mbOK], 0);
-      FieldList.Row := i;
-      FieldList.Col := 1;
-      ModalResult := mrNone;
-      exit;
-    end;
-    }
 
     if FieldList.Cells[2, i] = '' then
     begin
@@ -245,6 +243,8 @@ begin
 }
   end;
 
+  SaveTableDlg.InitialDir := ExtractFileDir(CSVFileName);
+  SaveTableDlg.FileName := ChangeFileExt(ExtractFileName(CSVFileName), '.dbf');
   if SaveTableDlg.Execute then
   begin
     try
@@ -339,6 +339,11 @@ begin
   ShowIndexList();
 end;
 
+procedure TImportCSVForm.edCSVFileNameEditingDone(Sender: TObject);
+begin
+  ExtractSchema;
+end;
+
 procedure TImportCSVForm.FieldListSelectEditor(Sender: TObject; aCol, aRow: Integer;
   var Editor: TWinControl);
 begin
@@ -362,6 +367,7 @@ begin
     if cbTableLevel.ItemIndex > -1 then
       Options.ImportCSVTableLevel := cbTableLevel.Items[cbTableLevel.ItemIndex];
     Options.ImportCSVOpenAfterCreating := cbOpenTbl.Checked;
+    Options.PrevImportFile := edCSVFileName.Text;
   end;
 end;
 
@@ -402,12 +408,20 @@ begin
     lblDecSep.BorderSpacing.Left + lblDecSep.Width + cbDecSep.BorderSpacing.Left + w + 16,
     cbUseFirstLine.Left + cbUseFirstLine.Width
   );
-  TopPanel.Constraints.MinHeight := CSVParams.Height;
-  TopPanel.Height := TopPanel.Constraints.MinHeight;
+  TopGroupBox.Constraints.MinHeight := CSVFileNamePanel.Height + CSVFileNamePanel.BorderSpacing.Bottom +
+    CSVParams.Height + CSVParams.BorderSpacing.Bottom +
+    TopGroupBox.Height - TopGroupBox.ClientHeight;
+  TopGroupBox.ClientHeight := TopGroupBox.Constraints.MinHeight;
+  TopGroupBox.AutoSize := false;
   CSVParams.AutoSize := false;
-  ClientHeight := TopPanel.BorderSpacing.Top + TopPanel.Constraints.MinHeight +
-    TopPanel.BorderSpacing.Bottom + HorSplitter.Height +
-    BottomPanel.BorderSpacing.Top + TableOptionsGroup.Height +
+//  BottomGroupBox.Constraints.MinHeight := TableOptionsGroup.Height + TableOptionsGroup.BorderSpacing.Bottom;
+
+  ClientHeight :=
+    TopGroupBox.BorderSpacing.Top + TopGroupBox.Constraints.MinHeight +
+    TopGroupBox.BorderSpacing.Bottom +
+    HorSplitter.Height +
+    BottomGroupBox.BorderSpacing.Top + TableOptionsGroup.Height + TableOptionsGroup.BorderSpacing.Bottom +
+    BottomGroupBox.Height - BottomGroupBox.ClientHeight +
     ButtonPanel.Height;
 
   if Options.RememberWindowSizePosContent then
@@ -427,6 +441,7 @@ begin
     cbUseFirstLine.Checked := Options.ImportCSVUseFirstLine;
     cbTableLevel.ItemIndex := IndexOfTableLevel(Options.ImportCSVTableLevel, cbTableLevel.Items);
     cbOpenTbl.Checked := Options.ImportCSVOpenAfterCreating;
+    edCSVFileName.Text := Options.PrevImportFile;
   end;
 
   ExtractSchema;
@@ -524,6 +539,18 @@ begin
   end;
 end;
 
+procedure TImportCSVForm.BrowseCSVBtnClick(Sender: TObject);
+begin
+  with OpenDialog do begin
+    FileName := edCSVFileName.Text;
+    if Execute then
+    begin
+      edCSVFileName.Text := FileName;
+      ExtractSchema;
+    end;
+  end;
+end;
+
 function TImportCSVForm.RemoveIllegalChars(const ATitle: String): String;
 const
   ILLEGAL_CHARS = #9#10#13' ,;.:''~"?';
@@ -604,23 +631,18 @@ var
   crs: TCursor;
 begin
   Result := false;
-  if FCSVFileName = '' then
+  if CSVFileName = '' then
     exit;
 
   crs := Screen.Cursor;
   Screen.Cursor := crHourglass;
   Application.ProcessMessages;
   try
-    ImportGrid.BeginUpdate;
-    try
-      ImportGrid.LoadFromCSVFile(FCSVFileName, GetSeparator(cbFieldSep), cbUseFirstLine.Checked);
-      ImportGrid.FixedCols := 0;
-      if not cbUseFirstLine.Checked then
-        for i := 0 to ImportGrid.ColCount-1 do
-          ImportGrid.Cells[i, 0] := 'Col' + IntToStr(i+1);
-    finally
-      ImportGrid.EndUpdate;
-    end;
+    ImportGrid.LoadFromCSVFile(CSVFileName, GetSeparator(cbFieldSep), cbUseFirstLine.Checked);
+    ImportGrid.FixedCols := 0;
+    if not cbUseFirstLine.Checked then
+      for i := 0 to ImportGrid.ColCount-1 do
+        ImportGrid.Cells[i, 0] := 'Col' + IntToStr(i+1);
 
     j := 1;
     FieldList.RowCount := ImportGrid.ColCount + 1;
@@ -633,7 +655,7 @@ begin
       if (fieldType in [ftString]) then
         FieldList.Cells[3, j] := IntToStr(fieldSize)
       else
-        FieldList.cells[3, j] := '';
+        FieldList.Cells[3, j] := '';
       inc(j);
     end;
 
@@ -642,6 +664,11 @@ begin
   end;
 
   Result := true;
+end;
+
+function TImportCSVForm.GetCSVFileName: String;
+begin
+  Result := edCSVFileName.Text;
 end;
 
 function TImportCSVForm.GetSeparator(ACombo: TCombobox): Char;
@@ -722,9 +749,15 @@ end;
 
 procedure TImportCSVForm.SetCSVFileName(const AValue: String);
 begin
-  if AValue = FCSVFileName then exit;
-  FCSVFileName := AValue;
-  Caption := Format('Importing CSV file "%s"...', [FCSVFileName]);
+  if AValue = GetCSVFileName then exit;
+  edCSVFileName.Text := AValue;
+  if AValue = '' then
+    MessageDlg('No CSV filename specified.', mtError, [mbOK], 0)
+  else
+  begin
+    Options.PrevImportFile := AValue;
+    Caption := Format('Importing CSV file "%s"...', [AValue]);
+  end;
 end;
 
 procedure TImportCSVForm.ShowIndexList;
@@ -790,6 +823,13 @@ end;
 function TImportCSVForm.Validate(out AMsg: String; out AControl: TWinControl): Boolean;
 begin
   Result := false;
+
+  if edCSVFileName.Text = '' then
+  begin
+    AMsg := 'CSV file name not specified.';
+    AControl := edCSVFileName;
+    exit;
+  end;
 
   if cbFieldSep.Text = '' then
   begin
