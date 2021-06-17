@@ -492,7 +492,7 @@ object ImportCSVForm: TImportCSVForm
         Left = 75
         Height = 23
         Top = 2
-        Width = 534
+        Width = 528
         Anchors = [akTop, akLeft, akRight]
         BorderSpacing.Left = 12
         BorderSpacing.Right = 6
@@ -504,12 +504,13 @@ object ImportCSVForm: TImportCSVForm
         AnchorSideTop.Side = asrCenter
         AnchorSideRight.Control = CSVFileNamePanel
         AnchorSideRight.Side = asrBottom
-        Left = 615
+        Left = 609
         Height = 25
         Top = 1
         Width = 35
         Anchors = [akTop, akRight]
         AutoSize = True
+        BorderSpacing.Right = 6
         Caption = '...'
         OnClick = BrowseCSVBtnClick
         TabOrder = 1
