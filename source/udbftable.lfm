@@ -1,7 +1,7 @@
 object DbfTable: TDbfTable
-  Left = 470
+  Left = 672
   Height = 494
-  Top = 276
+  Top = 291
   Width = 709
   Caption = 'DbfTable'
   ClientHeight = 494
@@ -33,7 +33,6 @@ object DbfTable: TDbfTable
       BorderSpacing.Left = 6
       BorderSpacing.Top = 2
       Caption = 'Filter'
-      ParentColor = False
     end
     object leFilter: TEdit
       AnchorSideLeft.Control = TopPanel
@@ -96,7 +95,6 @@ object DbfTable: TDbfTable
       Top = 26
       Width = 40
       Caption = 'Indexes'
-      ParentColor = False
     end
     object ToolBar1: TToolBar
       Left = 0
@@ -247,7 +245,6 @@ object DbfTable: TDbfTable
           Top = 5
           Width = 69
           Caption = 'Record 1 of 5'
-          ParentColor = False
         end
       end
     end
