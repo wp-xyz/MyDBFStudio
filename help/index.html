@@ -7,126 +7,45 @@
     <meta charset="utf-8">       
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <!--- layout taken from https://www.w3schools.com/html/tryit.asp?filename=tryhtml_layout_float --->
     <style>
-      * {
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: Arial, Helvetica, sans-serif;
-      }
-
-      #navigation {
-        float: left;
-        width: 30%;
-        background: #ccc;
-        padding: 20px;
-        height: 100%;
-      }
-      
-      #main {
-        float: left;
-        padding: 20px;
-        width: 70%;
-        background-color: #f1f1f1;
-      }      
-
-         Style the header */
-      header {
-        background-color: #666;
-        padding: 30px;
-        text-align: center;
-        font-size: 35px;
-        color: white;
-      }
-
-      /* Create two columns/boxes that floats next to each other */
-      nav {
-        float: left;
-        width: 20%;
-        padding: 5px;
-      }
-
-      /* Style the list inside the menu */
-      nav ul {
-        font-size: small;
-        list-style-type: square;
-        padding-left: 15px;
-        
-      }
-      
-      nav h3 {
-        color: white;
-        background-color: rgb(54, 64, 103);
-        text-align: center;
-      }
-
-      article {
-        float: left;
-        padding: 20px;
-        width: 80%;
-        background-color: #f1f1f1;
-      }
-      
-      article h3 {
-        margin-top: 32px;
-        margin-bottom: 0px;
-      }
-
-      /* Clear floats after the columns */
-      section::after {
-        content: "";
-        display: table;
-        clear: both;
-      }
-
-      /* Style the footer */
-      footer {
-        font-size: small;
-        background-color: white;
-        padding: 10px;
-        text-align: left;
-        color: black;
-      }
-
-      /* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
-      @media (max-width: 600px) {
-        nav, article {
-          width: 100%;
-          height: auto;
-        }
-      }
+      param {navbar: visible;}
     </style>
   </head>
   
-  <body>
+  <body style="font-family: Arial, Helvetica, sans-serif;">
   
-  <header>
-    <table style="text-align: left; width: 100%; background-color: rgb(54, 64, 103); height: 115px;" border="0" cellpadding="0" cellspacing="0">
+  <header style="background-color: rgb(54, 64, 103); padding: 6px; text-align: center; color: white;">
+    <table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
       <tbody>
-        <tr>
-          <td style="vertical-align: middle; width: 70%;">
-            <span style="color: white; font-family: Helvetica,Arial,sans-serif; font-weight: bold;">&nbsp;MyDbf Studio</span>
+        <tr style="background-color: rgb(54, 64, 103)";>
+          <td style="vertical-align: middle;">
+            <span style="color: white; font-family: Helvetica,Arial,sans-serif; font-size: 32pt; font-weight: bold;">
+              &nbsp;MyDbf Studio
+            </span>
             <br>
             <span style="font-family: Helvetica,Arial,sans-serif; color: white;"><br></span>
             <div style="margin-left: 40px;">
-              <span style="font-family: Helvetica,Arial,sans-serif; color: white; font-weight: bold; font-style: italic;">Manage your tables anywhere...</span>
+              <span style="font-family: Helvetica,Arial,sans-serif; color: white; font-size:24pt; font-weight: bold; font-style: italic;">
+                Manage your tables anywhere...
+              </span>
               <br>
             </div>
           </td>
-          <td style="vertical-align: top; width: 30%; text-align: right;">
-            <img style="width: 128px; height: 128px;" alt="MyDbf Studio Icon" src="img/mdsicon.png"><br>
+          <td style="vertical-align: middle; width: 128px; text-align: right;">
+            <img alt="MyDbf Studio Icon" src="img/mdsicon.png"><br>
           </td>
         </tr>
       </tbody>
     </table>
   </header>
 
-  <section>
-    <nav>
-      <h3>Menu User Guide</h3>
-      <ul>
+  <table>
+  <tr style="vertical-align:top">
+    <td style="width:20%; background-color: #f0f0f0; padding: 8px">
+      <h3 style="color: white; background-color: rgb(54, 64, 103); text-align: center;">
+        Menu User Guide
+      </h3>
+      <ul style="font-size:small; padding-left:16px;">
         <li><a href="index.html">Home<a></li>
         <li><a href="#Introduction">Introduction</a></li>
         <li><a href="#Creating_a_new_table">Creating a new table</a></li>
@@ -137,7 +56,7 @@
         <li><a href="#Closing_all_open_tables">Closing all open tables</a></li>
         <li><a href="#Working_with_a_table">Working with a table</a></li>
         <li><a href="#Exporting_a_table_to_other_formats">Exporting a table to other formats</a></li>
-        <ul style="padding-left:1.5em">                     
+        <ul style="padding-left:1.2em">                     
           <li style="list-style:circle;"><a href="#Exporting_to_CSV">To CSV file</a></li>
           <li style="list-style:circle;"><a href="#Exporting_to_HTML">To HTML file</a></li>
           <li style="list-style:circle;"><a href="#Exporting_to_XLS">To XLS file</a></li>
@@ -155,9 +74,9 @@
         <li><a href="#Emptying_one_or_more_tables">Emptying one or more tables</a></li>
         <li><a href="#Sorting_a_table_on_fields">Sorting a table on fields</a></li>
       </ul>
-    </nav>
+    </td>
       
-    <article>
+    <td style="padding:8px; background-color: #f0f0f0">
       <h2>MyDbf Studio User Guide</h2>
 
       <h3><a name="Introduction">Introduction</a></h3>
@@ -542,10 +461,11 @@
       <p>
         ATTENTION: This function is very slow on tables with many records.
       </p>
-    </article>
-  </section>
+    </td>
+  </tr>
+  </table>
   
-  <footer>
+  <footer style="font-size: small; background-color: white; padding: 10px; text-align: left; color: black;>
     <p>
     © 2010-2017 by Calogiuri Enzo Antonio, extended by W. Pamler<br>
     Most of the icons are provided by <a href="https:/icons8.com">https:/icons8.com</a> (Windows Metro icon set)
