@@ -23,9 +23,11 @@ type
 
   TRestructure = class(TForm)
     CloseBtn: TBitBtn;
+    lblCodePageLocale: TLabel;
+    lblLocale: TLabel;
     lblTableLevel: TLabel;
     lblFieldList: TLabel;
-    lblLanguage: TLabel;
+    lblLanguageID: TLabel;
     lblCodePage: TLabel;
     RestructureBtn: TBitBtn;
     DefineBtn: TBitBtn;
@@ -74,6 +76,7 @@ implementation
 
 uses
   LCLType, TypInfo, Math,
+  dbf_lang,
   uUtils, uIdxTable, uOptions;
 
 {$R *.lfm}
@@ -500,13 +503,22 @@ begin
 end;
 
 procedure TRestructure.ShowInfo(ATable: TDbf);
+var
+  localeStr: Cardinal = 0;
+  locale: DWord;
+  cp: DWord;
 begin
   lblTableLevel.Caption := Format('Table level: %d (%s)', [ATable.TableLevel, TableFormat(ATable.TableLevel)]);
   lblCodepage.Caption := Format('Code page: %d', [ATable.CodePage]);
-  if ATable.LanguageStr <> '' then
-    lblLanguage.Caption := Format('Language: %s', [ATable.LanguageStr])
-  else
-    lblLanguage.Caption := '';
+  lblLanguageID.Caption := Format('Language ID: %d', [ATable.LanguageID]);
+  locale := LangID_to_Locale[ATable.LanguageID];
+  localeStr := LangID_to_LocaleStr[ATable.LanguageID];
+  cp := LangID_to_CodePage[ATable.LanguageID];
+  if locale <> DbfLocale_NotFound then
+  begin
+    lblLocale.Caption := Format('Locale (from Language ID): $%x (%s)', [locale, PChar(@localeStr)]);
+    lblCodePageLocale.Caption := Format('Code page (from Language ID): %d', [LangID_to_Codepage[ATable.LanguageID]]);
+  end;
 end;
 
 function TRestructure.TestIndexName(Val: String): Boolean;

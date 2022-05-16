@@ -1,19 +1,19 @@
 object Restructure: TRestructure
   Left = 435
-  Height = 400
+  Height = 435
   Top = 316
-  Width = 673
+  Width = 658
   AutoSize = True
   Caption = 'Table Restructure'
-  ClientHeight = 400
-  ClientWidth = 673
+  ClientHeight = 435
+  ClientWidth = 658
   KeyPreview = True
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poMainFormCenter
-  LCLVersion = '2.1.0.0'
+  LCLVersion = '2.3.0.0'
   object FieldList: TStringGrid
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = lblFieldList
@@ -22,7 +22,7 @@ object Restructure: TRestructure
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
     Left = 6
-    Height = 371
+    Height = 406
     Top = 23
     Width = 450
     AlternateColor = clMoneyGreen
@@ -85,9 +85,9 @@ object Restructure: TRestructure
   object RestructureBtn: TBitBtn
     AnchorSideTop.Control = CloseBtn
     AnchorSideRight.Control = CloseBtn
-    Left = 451
+    Left = 436
     Height = 26
-    Top = 368
+    Top = 403
     Width = 135
     Anchors = [akTop, akRight]
     AutoSize = True
@@ -103,9 +103,9 @@ object Restructure: TRestructure
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 592
+    Left = 577
     Height = 26
-    Top = 368
+    Top = 403
     Width = 75
     Anchors = [akRight, akBottom]
     AutoSize = True
@@ -123,8 +123,8 @@ object Restructure: TRestructure
     AnchorSideTop.Control = Owner
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 442
-    Height = 335
+    Left = 427
+    Height = 373
     Top = 6
     Width = 225
     Anchors = [akTop, akRight]
@@ -132,7 +132,7 @@ object Restructure: TRestructure
     BorderSpacing.Top = 6
     BorderSpacing.Right = 6
     BevelOuter = bvNone
-    ClientHeight = 335
+    ClientHeight = 373
     ClientWidth = 225
     TabOrder = 1
     object lblIndexList: TLabel
@@ -143,6 +143,7 @@ object Restructure: TRestructure
       Top = 0
       Width = 50
       Caption = 'Index List'
+      Color = clDefault
       ParentColor = False
     end
     object IndexList: TListBox
@@ -220,7 +221,7 @@ object Restructure: TRestructure
       Left = 0
       Height = 19
       Top = 251
-      Width = 76
+      Width = 74
       BorderSpacing.Top = 12
       Caption = 'Pack Table'
       TabOrder = 4
@@ -236,18 +237,20 @@ object Restructure: TRestructure
       BorderSpacing.Top = 4
       BorderSpacing.Right = 6
       Caption = 'Code page:'
+      Color = clDefault
       ParentColor = False
     end
-    object lblLanguage: TLabel
+    object lblLanguageID: TLabel
       AnchorSideLeft.Control = Panel1
       AnchorSideTop.Control = lblCodePage
       AnchorSideTop.Side = asrBottom
       Left = 0
       Height = 15
       Top = 320
-      Width = 55
+      Width = 69
       BorderSpacing.Top = 4
-      Caption = 'Language:'
+      Caption = 'Language ID:'
+      Color = clDefault
       ParentColor = False
     end
     object lblTableLevel: TLabel
@@ -260,7 +263,30 @@ object Restructure: TRestructure
       Width = 57
       BorderSpacing.Top = 12
       Caption = 'Table level:'
+      Color = clDefault
       ParentColor = False
+    end
+    object lblLocale: TLabel
+      AnchorSideLeft.Control = Panel1
+      AnchorSideTop.Control = lblLanguageID
+      AnchorSideTop.Side = asrBottom
+      Left = 0
+      Height = 15
+      Top = 339
+      Width = 135
+      BorderSpacing.Top = 4
+      Caption = 'Locale from Language ID:'
+    end
+    object lblCodePageLocale: TLabel
+      AnchorSideLeft.Control = Panel1
+      AnchorSideTop.Control = lblLocale
+      AnchorSideTop.Side = asrBottom
+      Left = 0
+      Height = 15
+      Top = 358
+      Width = 155
+      BorderSpacing.Top = 4
+      Caption = 'Code page from Language ID'
     end
   end
   object lblFieldList: TLabel
@@ -273,6 +299,7 @@ object Restructure: TRestructure
     BorderSpacing.Left = 6
     BorderSpacing.Top = 6
     Caption = 'Field List'
+    Color = clDefault
     ParentColor = False
   end
 end
