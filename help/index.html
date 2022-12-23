@@ -8,469 +8,511 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <style>
-      param {navbar: visible;}
+      body {
+        overflow: hidden;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .container {
+        height: 100vh;
+        width: 100vw;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 136px 1fr;
+      }
+
+      .header {
+        overflow: hidden;
+        background-color: rgb(54, 64, 103);
+      }
+
+      .sidebar {
+        background-color: #F0F0F0;
+        overflow-y: scroll;
+      }
+
+      .footer {
+        border-top: 1px solid lightgrey;
+        font-size: 9pt;
+      }
+
+      .body {
+        display: grid;
+        grid-template-columns: 20% 79%;
+        overflow-y: scroll;
+      }
+
+      .content {
+        overflow-y: scroll;
+        padding: 20px;
+      }
+      
+      li {
+        margin-top: 0.2em;
+        margin-bottom: 0.2em;
+      }
     </style>
   </head>
-  
-  <body style="font-family: Arial, Helvetica, sans-serif;">
-  
-  <header style="background-color: rgb(54, 64, 103); padding: 6px; text-align: center; color: white;">
-    <table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
-      <tbody>
-        <tr style="background-color: rgb(54, 64, 103)";>
-          <td style="vertical-align: middle;">
-            <span style="color: white; font-family: Helvetica,Arial,sans-serif; font-size: 32pt; font-weight: bold;">
-              &nbsp;MyDbf Studio
-            </span>
-            <br>
-            <span style="font-family: Helvetica,Arial,sans-serif; color: white;"><br></span>
-            <div style="margin-left: 40px;">
-              <span style="font-family: Helvetica,Arial,sans-serif; color: white; font-size:24pt; font-weight: bold; font-style: italic;">
-                Manage your tables anywhere...
-              </span>
-              <br>
-            </div>
-          </td>
-          <td style="vertical-align: middle; width: 128px; text-align: right;">
-            <img alt="MyDbf Studio Icon" src="img/mdsicon.png"><br>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </header>
 
-  <table>
-  <tr style="vertical-align:top">
-    <td style="width:20%; background-color: #f0f0f0; padding: 8px">
-      <h3 style="color: white; background-color: rgb(54, 64, 103); text-align: center;">
-        Menu User Guide
-      </h3>
-      <ul style="font-size:small; padding-left:16px;">
-        <li><a href="index.html">Home<a></li>
-        <li><a href="#Introduction">Introduction</a></li>
-        <li><a href="#Creating_a_new_table">Creating a new table</a></li>
-        <li><a href="#Opening_an_existing_table">Opening an existing table</a></li>
-        <li><a href="#Opening_an_existing_table_by_alias">Opening an existing table by alias</a></li>
-        <li><a href="#Renaming_a_table">Renaming a table</a></li>
-        <li><a href="#Closing_a_table">Closing a table</a></li>
-        <li><a href="#Closing_all_open_tables">Closing all open tables</a></li>
-        <li><a href="#Working_with_a_table">Working with a table</a></li>
-        <li><a href="#Exporting_a_table_to_other_formats">Exporting a table to other formats</a></li>
-        <ul style="padding-left:1.2em">                     
-          <li style="list-style:circle;"><a href="#Exporting_to_CSV">To CSV file</a></li>
-          <li style="list-style:circle;"><a href="#Exporting_to_HTML">To HTML file</a></li>
-          <li style="list-style:circle;"><a href="#Exporting_to_XLS">To XLS file</a></li>
-          <li style="list-style:circle;"><a href="#Exporting_to_DBF">To DBF file</a></li>
-          <li style="list-style:circle;"><a href="#Exporting_to_XML">To XML file</a></li>
-          <li style="list-style:circle;"><a href="#Exporting_to_SQL_script">To SQL script</a></li>
-        </ul> 
-        <li><a href="#Importing_a_table_from_other_formats">Importing a table from other formats</a></li>
-          <ul style="padding-left:1.5em">                           
-            <li style="list-style:circle;"><a href="#Importing_from_CSV">From CSV file</a></li>
+  <div class="container">
+    <div class="header">
+      <table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+        <tbody>
+          <tr style="background-color: rgb(54, 64, 103)";>
+            <td style="vertical-align: middle;">
+              <p style="margin-left:12px; margin-top:0; margin-bottom:0;">
+                <span style="color: white; font-family: Helvetica,Arial,sans-serif; font-size: 32pt; font-weight: bold;">
+                  MyDBF Studio
+                </span>
+              </p>
+              <p style="margin-left: 36px; margin-top:0; margin-bottom:0;">
+                <span><br></span>
+                <span style="font-family: Helvetica,Arial,sans-serif; color: white; font-size:24pt; font-weight: bold; font-style: italic;">
+                  Manage your tables anywhere...
+                </span>
+              </p>
+              </p>
+            </td>
+            <td style="vertical-align: middle; width: 136px padding:4px">
+              <img alt="MyDbf Studio Icon" src="img/mdsicon.png" align="right" style="margin-right: 16px; margin-top: 4px; margin-bottom: 4px"><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+        
+    <div class="body">
+      <div class="sidebar">
+        <h3 style="color: white; background-color: rgb(54, 64, 103); text-align: center; margin-top: 16px; ">
+          Menu User Guide
+        </h3>
+        <ul style="font-size:small; padding-left:16px;">
+          <li><a href="index.html">Home<a></li>
+          <li><a href="#Introduction">Introduction</a></li>
+          <li><a href="#Creating_a_new_table">Creating a new table</a></li>
+          <li><a href="#Opening_an_existing_table">Opening an existing table</a></li>
+          <li><a href="#Opening_an_existing_table_by_alias">Opening an existing table by alias</a></li>
+          <li><a href="#Renaming_a_table">Renaming a table</a></li>
+          <li><a href="#Closing_a_table">Closing a table</a></li>
+          <li><a href="#Closing_all_open_tables">Closing all open tables</a></li>
+          <li><a href="#Working_with_a_table">Working with a table</a></li>
+          <li><a href="#Exporting_a_table_to_other_formats">Exporting a table to other formats</a></li>
+          <ul style="padding-left:1.2em">
+            <li style="list-style:circle;"><a href="#Exporting_to_CSV">To CSV file</a></li>
+            <li style="list-style:circle;"><a href="#Exporting_to_HTML">To HTML file</a></li>
+            <li style="list-style:circle;"><a href="#Exporting_to_XLS">To XLS file</a></li>
+            <li style="list-style:circle;"><a href="#Exporting_to_DBF">To DBF file</a></li>
+            <li style="list-style:circle;"><a href="#Exporting_to_XML">To XML file</a></li>
+            <li style="list-style:circle;"><a href="#Exporting_to_SQL_script">To SQL script</a></li>
           </ul>
-        </li>
-        <li><a href="#Adding_two_tables">Adding two tables</a></li>
-        <li><a href="#Subtracting_two_tables">Subtracting two tables</a></li>
-        <li><a href="#Emptying_one_or_more_tables">Emptying one or more tables</a></li>
-        <li><a href="#Sorting_a_table_on_fields">Sorting a table on fields</a></li>
-      </ul>
-    </td>
+          <li><a href="#Importing_a_table_from_other_formats">Importing a table from other formats</a></li>
+            <ul style="padding-left:1.5em">
+              <li style="list-style:circle;"><a href="#Importing_from_CSV">From CSV file</a></li>
+            </ul>
+          </li>
+          <li><a href="#Adding_two_tables">Adding two tables</a></li>
+          <li><a href="#Subtracting_two_tables">Subtracting two tables</a></li>
+          <li><a href="#Emptying_one_or_more_tables">Emptying one or more tables</a></li>
+          <li><a href="#Sorting_a_table_on_fields">Sorting a table on fields</a></li>
+        </ul>
+      </div>
       
-    <td style="padding:8px; background-color: #f0f0f0">
-      <h2>MyDbf Studio User Guide</h2>
+      <div class="content">
+        <h2 style="margin-top: 0px;">MyDBF Studio User Guide</h2>
 
-      <h3><a name="Introduction">Introduction</a></h3>
-      <p>
-        After starting the program you can see the main window with the menu bar 
-        and the toolbar. In the menu bar you can view the items used to manage 
-        your tables, while in the toolbar there are four buttons for basic 
-        operations (<i>Open table</i>, <i>New table</i>, <i>Empty tables</i>, 
-        <i>Add two tables</i> and <i>Subtract two tables</i>).
-      </p>
-        
-      <h3><a name="Creating_a_new_table">Creating a new table</a></h3>
-      <p>
-        On the toolbar click the <i>New</i> button&nbsp;
-        <img style="width: 16px; height: 16px;" alt="newbutton" src="img/icons8_new_copy_16px.png" />&nbsp;
-        or go to <i>File</i> &gt; <i>New...</i> in the menu. 
-      </p>
-      <img title="New table form" style="border: 2px solid; alt="newtableexample" src="img/newtable.png">
-      <p>
-        In the window that appears you can directly insert the field name, 
-        field type and length in the grid. The length is required
-        for string and float fields; in case of float fields, the value denotes
-        the count of valid digits to be used.
-        When you press the &darr; key in the last grid row an empty
-        row is added in which you can set up a new field.
-      </p>
-      <p>
-        You can also choose the type of the table. The table types supported are:
-      </p>
-      <ul style="font-weight: normal; text-align: justify;">
-        <li style="margin-bottom:3pt">dBase III+</li>
-        <li style="margin-bottom:3pt">dBase IV (default)</li>
-        <li style="margin-bottom:3pt">Visual dBase VII</li>
-        <li style="margin-bottom:3pt">FoxPro</li>
-        <li style="margin-bottom:3pt">Visual FoxPro</li>
-      </ul>
-      <p>
-        Furthermore you can define indexes for the table by clicking the
-        button <i>Add Index</i>. In the new window you can select the field 
-        or insert an expression between fields (like <tt>Field1 + Field2</tt>)
-        and you can also set the options for the index (primary, unique,
-        descending or case-insensitive). Finally you should enter
-        a name for the index and confirm by clicking the <i>OK</i> button. 
-      </p>
-      <p>
-        To save the new table, just click on the <i>Create table</i> button and
-        select the path and the name of the file.
-      </p>
-          
-      <h3><a name="Opening_an_existing_table">Opening an existing table</a></h3>
-      <p>
-        On the toolbar click the <i>Open</i> button&nbsp;
-        <img style="width: 16px; height: 16px;" alt="openbutton" src="img/icons8_opened_folder_16px.png">&nbsp;
-        or go to <i>File</i> &gt; <i>Open...</i> in the menu. Browse the file system 
-        until you find the file you want to open and select it. 
-        You can also select multiple files to open by pressing the
-        CTRL key while clicking.
-        Alternatively you can also drag dbf files from the operating system 
-        onto the <i>MyDbf Studio</i> window. Or you can specify the file name(s)
-        as parameter(s) on the command line:
-      </p>
-      <p>
-        <pre style="margin-top:12px">mydfstudio file1.dbf file2.dbf</pre>
-      </p>
-          
-      <h3><a name="Opening_an_existing_table_by_alias">Opening an existing table by alias</a></h3>
-      <p>
-        On the toolbar, click the <i>Open by alias</i> button&nbsp;
-        <img style="width: 16px; height: 16px;" alt="open alias" src="img/icons8_theatre_mask_16px.png">&nbsp;
-        or go to <i>File</i> &gt; <i>Open by Alias</i> in the menu.
-        You can use an internal alias to open the file in any location on your
-        hard disk. This function speeds up the search of a table in your
-        archives. To define a new alias just click on the <i>Add Alias</i> button
-        and insert a name for the alias and the path where the tables are - these
-        data will be displayed in the upper grid (<i>MyDbf Studio Alias</i>). 
-        When you click on one of these entries the names of the associated files 
-        will appear in the lower view (<i>Files</i>). 
-        Here you can select one or more tables to open.
-      </p>
-      <img style="alt="Open table by alias" src="img/openbyalias.png">
+        <h3><a name="Introduction">Introduction</a></h3>
+        <p>
+          After starting the program you can see the main window with the menu bar
+          and the toolbar. In the menu bar you can view the items used to manage
+          your tables, while in the toolbar there are four buttons for basic
+          operations (<i>Open table</i>, <i>New table</i>, <i>Empty tables</i>,
+          <i>Add two tables</i> and <i>Subtract two tables</i>).
+        </p>
 
-      <h3><a name="Renaming_a_table">Renaming a table</a></h3>
-      <p>
-        If after opening a table you need to save it under a different name, 
-        you can use the <i>Save As</i> command in item <i>File</i> of the menu bar. 
-        This command will also export index files.
-      </p>
-           
-      <h3><a name="Closing_a_table">Closing a table</a></h3>
-      <p>
-        To close a table simply click on the button <i>x</i> of the window
-        or go to <i>File</i> &gt; <i>Close</i> in the menu.
-      </p>
-          
-      <h3><a name="Closing_all_open_tables">Closing all open tables</a></h3>
-      <p>
-        To close all open tables simply go to <i>File</i> &gt; <i>Close All</i>.
-      </p>
-          
-      <h3><a name="Working_with_a_table">Working with a table</a></h3>
-      <p>
-        After you have successfully opened a table, you encounter this:
-      </p>
-      <p>
-        <a href="img/table.png"><img title="Click to enlarge" style="border: 2px solid;"
-           alt="tableexample" src="img/table.png">
-        </a>
-      </p>
-      <p>
-        As you can see, everything you need to manipulate your table is in this 
-        window.
-      </p>
-      <p>
-      <p>
-        Next to the record indicator at the very left, there is a first group 
-        of buttons which is used to navigate between records, 
-        to insert, delete, edit...
-      </p>
-        The second group of buttons invokes special functions like: 
-        <ul>
-          <li style="margin-bottom:6pt">
-            <img style="width: 16px; height: 16px;" alt="restructurebutton" src="img/icons8_tree_structure_16px.png"> 
-            <i>Restructure</i> allows you to change the table structure or indexes.
-          </li>
-          <li style="margin-bottom:6pt">
-            <img style="width: 16px; height: 16px;" alt="setfieldbutton" src="img/icons8_edit_column_16px.png" /> 
-            <i>Set field value</i> allows you to set a value for all table records for a specific field.
-            Can either be a fixed value or the result of a 
-            mathematical operation between two fields (<tt>+, -, *, /</tt>).
-          </li>
-          <li style="margin-bottom:6pt">
-            <img style="width: 16px; height: 16px;" alt="cutbutton" src="img/icons8_delete_row_16px.png">
-            Deletes only visible (non-filtered) records.
-          </li>
-          <li style="margin-bottom:6pt">
-            <img style="width: 16px; height: 16px;" alt="emptybutton" src="img/icons8_delete_database_16px.png"> 
-            <i>Empty table</i> deletes all records in the table.
-          </li>
-          <li style="margin-bottom:6pt">
-            <img style="width: 16px; height: 16px; font-weight: normal;" alt="packtable" src="img/icons8_compress_16px.png">
-            <i>Pack table</i> compacts the table, <i>i.e.</i> physically removes the deleted records.
-          </li>
-          <li style="margin-bottom:6pt">
-            <img style="width: 16px; height: 16px;" alt="autofillcolumnsbutton" src="img/icons8_resize_horizontal_16px.png" />
-            <i>Auto-fill columns</i>: If pressed, the width of the grid is
-            evenly distributed to all columns so that all of them are visible
-            without scrolling.
-            If released, the widths are reverted to the values setup in the dbf file.
-          </li>
+        <h3><a name="Creating_a_new_table">Creating a new table</a></h3>
+        <p>
+          On the toolbar click the <i>New</i> button&nbsp;
+          <img style="width: 16px; height: 16px;" alt="newbutton" src="img/icons8_new_copy_16px.png" />&nbsp;
+          or go to <i>File</i> &gt; <i>New...</i> in the menu.
+        </p>
+        <img title="New table form" style="border: 2px solid; alt="newtableexample" src="img/newtable.png">
+        <p>
+          In the window that appears you can directly insert the field name,
+          field type and length in the grid. The length is required
+          for string and float fields; in case of float fields, the value denotes
+          the count of valid digits to be used.
+          When you press the &darr; key in the last grid row an empty
+          row is added in which you can set up a new field.
+        </p>
+        <p>
+          You can also choose the type of the table. The table types supported are:
+        </p>
+        <ul style="font-weight: normal; text-align: justify;">
+          <li style="margin-bottom:3pt">dBase III+</li>
+          <li style="margin-bottom:3pt">dBase IV (default)</li>
+          <li style="margin-bottom:3pt">Visual dBase VII</li>
+          <li style="margin-bottom:3pt">FoxPro</li>
+          <li style="margin-bottom:3pt">Visual FoxPro</li>
         </ul>
-      </p>
-      <p>
-        Moreover, in the <i>Filter</i> field you can enter a command 
-        to filter the table records, <i>e.g.</i>: <tt>Field1="Test"</tt>
-        or <tt>DateField &gt; "2017/02/03"</tt>
-      </p>
-      <p>
-        The combobox contains the list of indexes on the table, you 
-        just click on it to select one. This sorts the grid by the
-        index specified.
-      </p>
-      <p>
-        By checking <i>Show deleted records</i> you can activate 
-        the visualization of deleted records.
-      </p>
-          
-      <h3><a name="Exporting_a_table_to_other_formats">Exporting a table to other formats</a></h3>
-      <p>
-        <i>MyDbf Studio</i> allows you to export data to various file formats.
-        The following formats are currently supported:
-        <ul>
-          <li style="margin-bottom:3pt">Comma Separated Values (<tt>.csv</tt>)</li>
-          <li style="margin-bottom:3pt">HTML file (<tt>.html</tt>)</li>
-          <li style="margin-bottom:3pt">Microsoft Excel© sheet (<tt>.xls</tt>)</li>
-          <li style="margin-bottom:3pt">DBF Table (<tt>.dbf</tt>)</li>
-          <li style="margin-bottom:3pt">XML File (<tt>.xml</tt>)</li>
-        </ul>
-      </p>
-      <p>
-        In all cases, you can choose which fields of the active table will be 
-        exported.
-      </p>
-            
-      <h4><a name="Exporting_to_CSV">Exporting table to Comma Separated Value file (.csv)</a></h4>
-      <p>
-        With an active table selected, click on <i>Tools</i> &gt; <i>Export</i> &gt; <i>To CSV File</i>,
-        the following window will appear on the screen:
-      </p>
-      <img alt="expcsv" src="img/expcsv.png">
-      <p>
-        As you can see, you can check which fields to export.
-        Also you can specify the separator between the data fields, the date
-        format, the field delimiter and possible strings to be
-        ignored. The values set as shown in the image generate a file type like this:
-      </p>
-      <p>
-        <pre>"FIELD1","FIELD2"...</pre>
-       </p>
-      <p>
-        Click on the <i>OK</i> button, and you can choose the location where to save the file.
-      </p>
+        <p>
+          Furthermore you can define indexes for the table by clicking the
+          button <i>Add Index</i>. In the new window you can select the field
+          or insert an expression between fields (like <tt>Field1 + Field2</tt>)
+          and you can also set the options for the index (primary, unique,
+          descending or case-insensitive). Finally you should enter
+          a name for the index and confirm by clicking the <i>OK</i> button.
+        </p>
+        <p>
+          To save the new table, just click on the <i>Create table</i> button and
+          select the path and the name of the file.
+        </p>
 
-      <h4><a name="Exporting_to_HTML">Exporting table to HTML file</a></h4>
-      <p>
-        With an active table selected, click on <i>Tools</i> &gt; <i>Export</i> &gt; <i>To HTML File</i>,
-        the window will appear on the screen:
-      </p>
-      <img alt="exphtml" src="img/exphtml.png">
-      <p>
-        In this window you can set the look of the table that will be
-        generated in HTML format.
-      </p>
-      <p>
-        In the <i>Page Title</i> you can specify the title of the html page,
-        the default is the dbase file name.
-        Also in this form, you can select the fields to export.
-        Click on the <i>OK</i> button and you can choose the location where 
-        to save the file
-      </p>
-          
-      <h4><a name="Exporting_to_XLS">Exporting table to XLS file</a></h4>
-      <p>
-        With an active table selected, click on <i>Tools</i> &gt; <i>Export </i> &gt; <i>To XLS File</i>,
-        and the following window will appear on the screen:
-      </p>
-      <img alt="expxls" src="img/expxls.png">
-      <p>
-        In this window you can set the parameters necessary to create
-        the .xls file for Excel©: 
-        <ul>
-          <li style="margin-bottom:3pt"><i>Format Number</i> shows how integer values will be displayed.</li>
-          <li style="margin-bottom:3pt"><i>Format Number Width Decimals</i> indicates the number of decimals 
-              of a floating point number and the decimal separator.</li>
-          <li style="margin-bottom:3pt">The <i>Mask</i> field shows how the numbers are grouped to
-              indicate tens, hundreds, thousands, etc.</li>
-          <li style="margin-bottom:3pt">In the <i>Date Format</i> it is possible to define
-              the date format that you prefer.</li>
-        </ul>
-      </p>
-      <p>
-        Also in this export, can select the fields to export. After clicking on the 
-        <i>OK</i> button, you must choose the location where to save the file.
-      </p>
-               
-      <h4><a name="Exporting_to_DBF">Exporting table to DBF file</a></h4>
-      <p>
-        With an active table selected, click on <i>Tools</i> &gt; <i>Export</i> &gt; <i>To DBF File</i>,
-        and the following window will appear on the screen:
-      </p>
-      <img alt="expdbf" src="img/expdbf.png">
-      <p>
-        This feature allows you to export a table to another dbf table
-        but you can choose which fields you need in the new file
-        You can also specify a different type of table.
-      </p>
-      <p>
-        Warning: The indexes are not exported.
-      </p>
-      <p>
-        Click on the <i>OK</i> button, and you can choose the location 
-        where to save the file.
-      </p>
-          
-      <h4><a name="Exporting_to_XML">Exporting table to XML file</a></h4>
-      <p>
-        With an active table selected, click on <i>Tools</i> &gt; </i>Export</i> &gt; <i>To XML File</i>.
-        The following window will appear on the screen:
-      </p>
-      <img alt="expxml" src="img/expxml.png">
-      <p>
-        This function creates a file in XML format that represents the 
-        records displayed on screen. The file can be viewed with any web browser
-        and can be used to send data between remote computers.
-      </p>
-      <p>
-        Click on the <i>OK</i> button and you can choose the location 
-        where to save the file.
-      </p>
-        
-      <h4><a name="Exporting_to_SQL_script">Exporting table to SQL script</a></h4>
-      <p>
-        With an active table selected, click on <i>Tools</i> &gt; <i>Export</i> &gt; <i>To SQL Script</i>.
-        The following window will appear on the screen:
-      </p>
-      <img alt="ExpSQL" src="img/expsql.png">
-      <p>
-        This function creates a script file in SQL language that allows
-        you to create the table in an SQL database and to insert the records
-        displayed on screen. You can chose to generate only the
-        <tt>CREATE TABLE</tt> script or the script with the <tt>INSERT INTO</tt> commands,
-        or both files.
-      </p>
-      <p>
-        Click on the OK button and you can choose the location 
-        where to save the file.
-      </p>
+        <h3><a name="Opening_an_existing_table">Opening an existing table</a></h3>
+        <p>
+          On the toolbar click the <i>Open</i> button&nbsp;
+          <img style="width: 16px; height: 16px;" alt="openbutton" src="img/icons8_opened_folder_16px.png">&nbsp;
+          or go to <i>File</i> &gt; <i>Open...</i> in the menu. Browse the file system
+          until you find the file you want to open and select it.
+          You can also select multiple files to open by pressing the
+          CTRL key while clicking.
+          Alternatively you can also drag dbf files from the operating system
+          onto the <i>MyDbf Studio</i> window. Or you can specify the file name(s)
+          as parameter(s) on the command line:
+        </p>
+        <p>
+          <pre style="margin-top:12px">mydfstudio file1.dbf file2.dbf</pre>
+        </p>
 
-      <h3><a name="Importing_a_table_from_other_formats">Importing a table from other formats</a></h3>
-      <p>
-        <i>MyDbf Studio</i> allows you to import data from other file formats.
-        Currently only the CSV (Comma Separated Values) format is supported.
-      </p>
-            
-      <h4><a name="Importing_from_CSV">Importing a table from Comma Separated Value file (.csv)</a></h4>
-      <p>
-        When you click on <i>Tools</i> &gt; <i>Import</i> &gt; <i>From CSV File</i>,
-        you must first select the name of the csv file to be imported. Then the 
-        following window will appear on the screen:
-      </p>
-      <img alt="impcsv" src="img/impcsv.png">
-      <p>
-        In the top part of the form you can see the contents of the csv file. If
-        the separation of the individual fields in a row is not successful you
-        must adjust the setting for the <t>Field delimiter</i> in the right, and
-        press the button <i>Test parameters</i>.
-      </p>
-      <p>
-        In the lower part the list of extracted fields is displayed: the 
-        field name taken from the first data line if <i>Use first line as field
-        names</i> is checked, or a generic name otherwise, the field type and
-        the field size. When the field type is not detected correctly you may
-        have to adjust the settings in the <i>CSV parameters</i> block.
-        Do not forget to press <i>Test parameters</i> to repeat the field
-        extraction.
-      </p>
-      <p>
-        You can prepare indexes from the detected fields, and you can select
-        the table type for the export.
-      </p>
-      <p>
-        Finally click <i>Create table</i> to start with the conversion after 
-        specifying a file name for the new dbf table.
-      </p>
+        <h3><a name="Opening_an_existing_table_by_alias">Opening an existing table by alias</a></h3>
+        <p>
+          On the toolbar, click the <i>Open by alias</i> button&nbsp;
+          <img style="width: 16px; height: 16px;" alt="open alias" src="img/icons8_theatre_mask_16px.png">&nbsp;
+          or go to <i>File</i> &gt; <i>Open by Alias</i> in the menu.
+          You can use an internal alias to open the file in any location on your
+          hard disk. This function speeds up the search of a table in your
+          archives. To define a new alias just click on the <i>Add Alias</i> button
+          and insert a name for the alias and the path where the tables are - these
+          data will be displayed in the upper grid (<i>MyDbf Studio Alias</i>).
+          When you click on one of these entries the names of the associated files
+          will appear in the lower view (<i>Files</i>).
+          Here you can select one or more tables to open.
+        </p>
+        <img style="alt="Open table by alias" src="img/openbyalias.png">
 
-      <h3><a name="Adding_two_tables">Adding two tables</a></h3>
-      <p>
-        This function works on two equal tables and allows you to add 
-        records from the first table to the second, or vice versa.
-        At first, you need to open the two tables, then go on to 
-        <i>Tools</i> &gt; <i>Add Two Tables</i>; then this window will appear:
-      </p>
-      <img alt="addtbl" src="img/addtbl.png">
-      <p>
-        Just select the first and the second table from tables used in 
-        the program and decide the priority of the operation.
-        Finally click on <i>OK</i> to start the operation.
-      </p>
-          
-      <h3><a name="Subtracting_two_tables">Subtracting two tables</a></h3>
-      <p>
-        This function always works on two equal tables and allows you to 
-        remove similar records from two tables. At first you need to open 
-        the two tables, then go on to <i>Tools</i> &gt; <i>Substract Two Tables</i>; 
-        then this window will appear:
-      </p>
-      <img alt="subtbl" src="img/subtbl.png">
-      <p>
-        Just select the first and the second table from tables used in the program and 
-        decide the priority of the operation. Finally click <i>OK</i> to 
-        start the operation.
-      </p>
-       
-      <h3><a name="Emptying_one_or_more_tables">Emptying one or more tables</a></h3>
-      <p>
-        If you want to delete all records in one or more tables without
-        opening files you can use the function located in <i>Tools</i> &gt; <i>Empty tables...</i>:
-        simply select the table(s) that you want to empty and click on <i>Open</i>.
-      </p>
-        
-      <h3><a name="Sorting_a_table_on_fields">Sorting a table on fields</a></h3>
-      <p>
-        This function sorta a table's records on fields defined by the user.
-        With an active table selected, click on <i>Tools</i> &gt; <i>Sort Table</i>,
-        and the following window will appear on the screen:
-      </p>
-      <img alt="SortTable" src="img/sorttable.png"><br>
-      <p>
-        Just select the sort order (ascending or descending) and the 
-        field(s) that you want to use for sorting records and click 
-        on the <i>OK</i> button. 
-      </p>
-      <p>
-        ATTENTION: This function is very slow on tables with many records.
-      </p>
-    </td>
-  </tr>
-  </table>
-  
-  <footer style="font-size: small; background-color: white; padding: 10px; text-align: left; color: black;>
-    <p>
-    © 2010-2017 by Calogiuri Enzo Antonio, extended by W. Pamler<br>
-    Most of the icons are provided by <a href="https:/icons8.com">https:/icons8.com</a> (Windows Metro icon set)
-    </p>
-  </footer>  
+        <h3><a name="Renaming_a_table">Renaming a table</a></h3>
+        <p>
+          If after opening a table you need to save it under a different name,
+          you can use the <i>Save As</i> command in item <i>File</i> of the menu bar.
+          This command will also export index files.
+        </p>
+
+        <h3><a name="Closing_a_table">Closing a table</a></h3>
+        <p>
+          To close a table simply click on the button <i>x</i> of the window
+          or go to <i>File</i> &gt; <i>Close</i> in the menu.
+        </p>
+
+        <h3><a name="Closing_all_open_tables">Closing all open tables</a></h3>
+        <p>
+          To close all open tables simply go to <i>File</i> &gt; <i>Close All</i>.
+        </p>
+
+        <h3><a name="Working_with_a_table">Working with a table</a></h3>
+        <p>
+          After you have successfully opened a table, you encounter this:
+        </p>
+        <p>
+          <a href="img/table.png"><img title="Click to enlarge" style="border: 2px solid;"
+             alt="tableexample" src="img/table.png">
+          </a>
+        </p>
+        <p>
+          As you can see, everything you need to manipulate your table is in this
+          window.
+        </p>
+        <p>
+        <p>
+          Next to the record indicator at the very left, there is a first group
+          of buttons which is used to navigate between records,
+          to insert, delete, edit...
+        </p>
+          The second group of buttons invokes special functions like:
+          <ul>
+            <li style="margin-bottom:6pt">
+              <img style="width: 16px; height: 16px;" alt="restructurebutton" src="img/icons8_tree_structure_16px.png">
+              <i>Restructure</i> allows you to change the table structure or indexes.
+            </li>
+            <li style="margin-bottom:6pt">
+              <img style="width: 16px; height: 16px;" alt="setfieldbutton" src="img/icons8_edit_column_16px.png" />
+              <i>Set field value</i> allows you to set a value for all table records for a specific field.
+              Can either be a fixed value or the result of a
+              mathematical operation between two fields (<tt>+, -, *, /</tt>).
+            </li>
+            <li style="margin-bottom:6pt">
+              <img style="width: 16px; height: 16px;" alt="cutbutton" src="img/icons8_delete_row_16px.png">
+              Deletes only visible (non-filtered) records.
+            </li>
+            <li style="margin-bottom:6pt">
+              <img style="width: 16px; height: 16px;" alt="emptybutton" src="img/icons8_delete_database_16px.png">
+              <i>Empty table</i> deletes all records in the table.
+            </li>
+            <li style="margin-bottom:6pt">
+              <img style="width: 16px; height: 16px; font-weight: normal;" alt="packtable" src="img/icons8_compress_16px.png">
+              <i>Pack table</i> compacts the table, <i>i.e.</i> physically removes the deleted records.
+            </li>
+            <li style="margin-bottom:6pt">
+              <img style="width: 16px; height: 16px;" alt="autofillcolumnsbutton" src="img/icons8_resize_horizontal_16px.png" />
+              <i>Auto-fill columns</i>: If pressed, the width of the grid is
+              evenly distributed to all columns so that all of them are visible
+              without scrolling.
+              If released, the widths are reverted to the values setup in the dbf file.
+            </li>
+          </ul>
+        </p>
+        <p>
+          Moreover, in the <i>Filter</i> field you can enter a command
+          to filter the table records, <i>e.g.</i>: <tt>Field1="Test"</tt>
+          or <tt>DateField &gt; "2017/02/03"</tt>
+        </p>
+        <p>
+          The combobox contains the list of indexes on the table, you
+          just click on it to select one. This sorts the grid by the
+          index specified.
+        </p>
+        <p>
+          By checking <i>Show deleted records</i> you can activate
+          the visualization of deleted records.
+        </p>
+
+        <h3><a name="Exporting_a_table_to_other_formats">Exporting a table to other formats</a></h3>
+        <p>
+          <i>MyDbf Studio</i> allows you to export data to various file formats.
+          The following formats are currently supported:
+          <ul>
+            <li style="margin-bottom:3pt">Comma Separated Values (<tt>.csv</tt>)</li>
+            <li style="margin-bottom:3pt">HTML file (<tt>.html</tt>)</li>
+            <li style="margin-bottom:3pt">Microsoft Excel© sheet (<tt>.xls</tt>)</li>
+            <li style="margin-bottom:3pt">DBF Table (<tt>.dbf</tt>)</li>
+            <li style="margin-bottom:3pt">XML File (<tt>.xml</tt>)</li>
+          </ul>
+        </p>
+        <p>
+          In all cases, you can choose which fields of the active table will be
+          exported.
+        </p>
+
+        <h4><a name="Exporting_to_CSV">Exporting table to Comma Separated Value file (.csv)</a></h4>
+        <p>
+          With an active table selected, click on <i>Tools</i> &gt; <i>Export</i> &gt; <i>To CSV File</i>,
+          the following window will appear on the screen:
+        </p>
+        <img alt="expcsv" src="img/expcsv.png">
+        <p>
+          As you can see, you can check which fields to export.
+          Also you can specify the separator between the data fields, the date
+          format, the field delimiter and possible strings to be
+          ignored. The values set as shown in the image generate a file type like this:
+        </p>
+        <p>
+          <pre>"FIELD1","FIELD2"...</pre>
+         </p>
+        <p>
+          Click on the <i>OK</i> button, and you can choose the location where to save the file.
+        </p>
+
+        <h4><a name="Exporting_to_HTML">Exporting table to HTML file</a></h4>
+        <p>
+          With an active table selected, click on <i>Tools</i> &gt; <i>Export</i> &gt; <i>To HTML File</i>,
+          the window will appear on the screen:
+        </p>
+        <img alt="exphtml" src="img/exphtml.png">
+        <p>
+          In this window you can set the look of the table that will be
+          generated in HTML format.
+        </p>
+        <p>
+          In the <i>Page Title</i> you can specify the title of the html page,
+          the default is the dbase file name.
+          Also in this form, you can select the fields to export.
+          Click on the <i>OK</i> button and you can choose the location where
+          to save the file
+        </p>
+
+        <h4><a name="Exporting_to_XLS">Exporting table to XLS file</a></h4>
+        <p>
+          With an active table selected, click on <i>Tools</i> &gt; <i>Export </i> &gt; <i>To XLS File</i>,
+          and the following window will appear on the screen:
+        </p>
+        <img alt="expxls" src="img/expxls.png">
+        <p>
+          In this window you can set the parameters necessary to create
+          the .xls file for Excel©:
+          <ul>
+            <li style="margin-bottom:3pt"><i>Format Number</i> shows how integer values will be displayed.</li>
+            <li style="margin-bottom:3pt"><i>Format Number Width Decimals</i> indicates the number of decimals
+                of a floating point number and the decimal separator.</li>
+            <li style="margin-bottom:3pt">The <i>Mask</i> field shows how the numbers are grouped to
+                indicate tens, hundreds, thousands, etc.</li>
+            <li style="margin-bottom:3pt">In the <i>Date Format</i> it is possible to define
+                the date format that you prefer.</li>
+          </ul>
+        </p>
+        <p>
+          Also in this export, can select the fields to export. After clicking on the
+          <i>OK</i> button, you must choose the location where to save the file.
+        </p>
+
+        <h4><a name="Exporting_to_DBF">Exporting table to DBF file</a></h4>
+        <p>
+          With an active table selected, click on <i>Tools</i> &gt; <i>Export</i> &gt; <i>To DBF File</i>,
+          and the following window will appear on the screen:
+        </p>
+        <img alt="expdbf" src="img/expdbf.png">
+        <p>
+          This feature allows you to export a table to another dbf table
+          but you can choose which fields you need in the new file
+          You can also specify a different type of table.
+        </p>
+        <p>
+          Warning: The indexes are not exported.
+        </p>
+        <p>
+          Click on the <i>OK</i> button, and you can choose the location
+          where to save the file.
+        </p>
+
+        <h4><a name="Exporting_to_XML">Exporting table to XML file</a></h4>
+        <p>
+          With an active table selected, click on <i>Tools</i> &gt; </i>Export</i> &gt; <i>To XML File</i>.
+          The following window will appear on the screen:
+        </p>
+        <img alt="expxml" src="img/expxml.png">
+        <p>
+          This function creates a file in XML format that represents the
+          records displayed on screen. The file can be viewed with any web browser
+          and can be used to send data between remote computers.
+        </p>
+        <p>
+          Click on the <i>OK</i> button and you can choose the location
+          where to save the file.
+        </p>
+
+        <h4><a name="Exporting_to_SQL_script">Exporting table to SQL script</a></h4>
+        <p>
+          With an active table selected, click on <i>Tools</i> &gt; <i>Export</i> &gt; <i>To SQL Script</i>.
+          The following window will appear on the screen:
+        </p>
+        <img alt="ExpSQL" src="img/expsql.png">
+        <p>
+          This function creates a script file in SQL language that allows
+          you to create the table in an SQL database and to insert the records
+          displayed on screen. You can chose to generate only the
+          <tt>CREATE TABLE</tt> script or the script with the <tt>INSERT INTO</tt> commands,
+          or both files.
+        </p>
+        <p>
+          Click on the OK button and you can choose the location
+          where to save the file.
+        </p>
+
+        <h3><a name="Importing_a_table_from_other_formats">Importing a table from other formats</a></h3>
+        <p>
+          <i>MyDbf Studio</i> allows you to import data from other file formats.
+          Currently only the CSV (Comma Separated Values) format is supported.
+        </p>
+
+        <h4><a name="Importing_from_CSV">Importing a table from Comma Separated Value file (.csv)</a></h4>
+        <p>
+          When you click on <i>Tools</i> &gt; <i>Import</i> &gt; <i>From CSV File</i>,
+          you must first select the name of the csv file to be imported. Then the
+          following window will appear on the screen:
+        </p>
+        <img alt="impcsv" src="img/impcsv.png">
+        <p>
+          In the top part of the form you can see the contents of the csv file. If
+          the separation of the individual fields in a row is not successful you
+          must adjust the setting for the <t>Field delimiter</i> in the right, and
+          press the button <i>Test parameters</i>.
+        </p>
+        <p>
+          In the lower part the list of extracted fields is displayed: the
+          field name taken from the first data line if <i>Use first line as field
+          names</i> is checked, or a generic name otherwise, the field type and
+          the field size. When the field type is not detected correctly you may
+          have to adjust the settings in the <i>CSV parameters</i> block.
+          Do not forget to press <i>Test parameters</i> to repeat the field
+          extraction.
+        </p>
+        <p>
+          You can prepare indexes from the detected fields, and you can select
+          the table type for the export.
+        </p>
+        <p>
+          Finally click <i>Create table</i> to start with the conversion after
+          specifying a file name for the new dbf table.
+        </p>
+
+        <h3><a name="Adding_two_tables">Adding two tables</a></h3>
+        <p>
+          This function works on two equal tables and allows you to add
+          records from the first table to the second, or vice versa.
+          At first, you need to open the two tables, then go on to
+          <i>Tools</i> &gt; <i>Add Two Tables</i>; then this window will appear:
+        </p>
+        <img alt="addtbl" src="img/addtbl.png">
+        <p>
+          Just select the first and the second table from tables used in
+          the program and decide the priority of the operation.
+          Finally click on <i>OK</i> to start the operation.
+        </p>
+
+        <h3><a name="Subtracting_two_tables">Subtracting two tables</a></h3>
+        <p>
+          This function always works on two equal tables and allows you to
+          remove similar records from two tables. At first you need to open
+          the two tables, then go on to <i>Tools</i> &gt; <i>Substract Two Tables</i>;
+          then this window will appear:
+        </p>
+        <img alt="subtbl" src="img/subtbl.png">
+        <p>
+          Just select the first and the second table from tables used in the program and
+          decide the priority of the operation. Finally click <i>OK</i> to
+          start the operation.
+        </p>
+
+        <h3><a name="Emptying_one_or_more_tables">Emptying one or more tables</a></h3>
+        <p>
+          If you want to delete all records in one or more tables without
+          opening files you can use the function located in <i>Tools</i> &gt; <i>Empty tables...</i>:
+          simply select the table(s) that you want to empty and click on <i>Open</i>.
+        </p>
+
+        <h3><a name="Sorting_a_table_on_fields">Sorting a table on fields</a></h3>
+        <p>
+          This function sorta a table's records on fields defined by the user.
+          With an active table selected, click on <i>Tools</i> &gt; <i>Sort Table</i>,
+          and the following window will appear on the screen:
+        </p>
+        <img alt="SortTable" src="img/sorttable.png"><br>
+        <p>
+          Just select the sort order (ascending or descending) and the
+          field(s) that you want to use for sorting records and click
+          on the <i>OK</i> button.
+        </p>
+        <p>
+          ATTENTION: This function is very slow on tables with many records.
+        </p>
+
+        <div class="footer">
+          <p>
+            © 2010-2017 by Calogiuri Enzo Antonio, extended by W. Pamler.<br/>
+            Most of the icons are provided by <a href="https:/icons8.com">https:/icons8.com</a> (Windows Metro icon set)
+          </p>
+        </div>
+      </div>
+    
+    </div>
+  </div>
  </body>
  
  </html>
