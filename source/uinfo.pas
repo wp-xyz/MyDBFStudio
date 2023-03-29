@@ -17,13 +17,15 @@ type
     CloseBtn: TBitBtn;
     Img: TImage;
     Label1: TLabel;
-    Label2: TLabel;
+    lblIcons8: TLabel;
+    lblSourceForge: TLabel;
+    Label4: TLabel;
     Version: TLabel;
     procedure CloseBtnClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure Label2Click(Sender: TObject);
-    procedure Label2MouseEnter(Sender: TObject);
-    procedure Label2MouseLeave(Sender: TObject);
+    procedure URLLabelClick(Sender: TObject);
+    procedure URLLabelMouseEnter(Sender: TObject);
+    procedure URLLabelMouseLeave(Sender: TObject);
   private
     { private declarations }
   public
@@ -38,7 +40,7 @@ implementation
 {$R *.lfm}
 
 uses
-  LCLIntf, LCLType, uUtils;
+  InterfaceBase, LCLPlatformDef, LCLIntf, LCLType, uUtils;
 
 { TInfo }
 
@@ -48,23 +50,27 @@ begin
 end;
 
 procedure TInfo.FormCreate(Sender: TObject);
+var
+  OS, WS: String;
 begin
-  Version.Caption := 'Version: ' + GetVersionStr;
+  OS := {$I %FPCTARGETOS%};
+  WS := LCLPlatformDisplayNames[WidgetSet.LCLPlatform];
+  Version.Caption := Format('Version: %s (%s, widgetset: %s)', [GetVersionStr, OS, WS]);
   Img.Picture.LoadFromResourceName(HINSTANCE, 'SPLASH', TPortableNetworkGraphic);
   Img.AutoSize := true;
 end;
 
-procedure TInfo.Label2Click(Sender: TObject);
+procedure TInfo.URLLabelClick(Sender: TObject);
 begin
   OpenURL((Sender as TLabel).Caption);
 end;
 
-procedure TInfo.Label2MouseEnter(Sender: TObject);
+procedure TInfo.URLLabelMouseEnter(Sender: TObject);
 begin
   (Sender as TControl).Font.Style := [fsUnderline];
 end;
 
-procedure TInfo.Label2MouseLeave(Sender: TObject);
+procedure TInfo.URLLabelMouseLeave(Sender: TObject);
 begin
   (Sender as TControl).Font.Style := [];
 end;

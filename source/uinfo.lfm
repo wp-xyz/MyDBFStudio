@@ -1,14 +1,14 @@
 object Info: TInfo
   Left = 419
-  Height = 536
+  Height = 567
   Top = 147
-  Width = 458
+  Width = 468
   AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Info'
-  ClientHeight = 536
-  ClientWidth = 458
+  ClientHeight = 567
+  ClientWidth = 468
   OnCreate = FormCreate
   Position = poMainFormCenter
   LCLVersion = '2.3.0.0'
@@ -20,7 +20,7 @@ object Info: TInfo
     Left = 6
     Height = 300
     Top = 6
-    Width = 446
+    Width = 456
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Around = 6
     Stretch = True
@@ -44,9 +44,9 @@ object Info: TInfo
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 377
+    Left = 387
     Height = 26
-    Top = 534
+    Top = 504
     Width = 75
     Anchors = [akTop, akRight]
     AutoSize = True
@@ -61,14 +61,14 @@ object Info: TInfo
   end
   object Bevel1: TBevel
     AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = Label2
+    AnchorSideTop.Control = lblIcons8
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 6
     Height = 6
-    Top = 528
-    Width = 446
+    Top = 498
+    Width = 456
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 6
     BorderSpacing.Right = 6
@@ -81,34 +81,68 @@ object Info: TInfo
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 6
-    Height = 195
+    Height = 90
     Top = 312
-    Width = 446
+    Width = 456
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 6
     BorderSpacing.Top = 6
     BorderSpacing.Right = 6
-    Caption = 'MyDbfStudio is an administrative tool to create and manage dBase tables. It runs on Windows, Linux and other platforms supported by the Lazarus IDE.'#13#10' '#13#10'More developers needed!!!'#13#10' '#13#10'Autor: Calogiuri Enzo Antonio Aka Fog76'#13#10'Modifications in current port by W. Pamler'#13#10'Based on tDBF component by mdv and nashev (https://sourceforge.net/projects/tdbf/)'#13#10' '#13#10'License: GPL/LGPL'#13#10' '#13#10'Icons provided by icons8.com, style: Windows Metro,'
+    Caption = 'MyDbfStudio is an administrative tool to create and manage dBase tables. It runs on Windows, Linux and other platforms supported by the Lazarus IDE.'#13#10' '#13#10'Autor: Calogiuri Enzo Antonio Aka Fog76'#13#10'Modifications in current port by W. Pamler'#13#10'Based on tDBF component by mdv and nashev:'
     ParentColor = False
     WordWrap = True
   end
-  object Label2: TLabel
-    AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = Label1
+  object lblIcons8: TLabel
+    AnchorSideLeft.Control = Label1
+    AnchorSideTop.Control = Label4
     AnchorSideTop.Side = asrBottom
     Cursor = crHandPoint
-    Left = 6
+    Left = 22
     Height = 15
-    Top = 507
+    Top = 477
     Width = 171
-    BorderSpacing.Left = 6
+    BorderSpacing.Left = 16
     BorderSpacing.Bottom = 6
     Caption = 'https://icons8.com/icons/metro'
     Font.Color = clBlue
     ParentColor = False
     ParentFont = False
-    OnClick = Label2Click
-    OnMouseEnter = Label2MouseEnter
-    OnMouseLeave = Label2MouseLeave
+    OnClick = URLLabelClick
+    OnMouseEnter = URLLabelMouseEnter
+    OnMouseLeave = URLLabelMouseLeave
+  end
+  object lblSourceForge: TLabel
+    AnchorSideLeft.Control = Label1
+    AnchorSideTop.Control = Label1
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Label1
+    AnchorSideRight.Side = asrBottom
+    Cursor = crHandPoint
+    Left = 22
+    Height = 15
+    Top = 402
+    Width = 440
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Left = 16
+    Caption = 'https://sourceforge.net/projects/tdbf/'
+    Font.Color = clBlue
+    ParentColor = False
+    ParentFont = False
+    OnClick = URLLabelClick
+    OnMouseEnter = URLLabelMouseEnter
+    OnMouseLeave = URLLabelMouseLeave
+  end
+  object Label4: TLabel
+    AnchorSideLeft.Control = Label1
+    AnchorSideTop.Control = lblSourceForge
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Label1
+    AnchorSideRight.Side = asrBottom
+    Left = 6
+    Height = 60
+    Top = 417
+    Width = 456
+    Anchors = [akTop, akLeft, akRight]
+    Caption = ' '#13#10'License: GPL/LGPL'#13#10' '#13#10'Icons provided by icons8.com, style: Windows Metro,'
   end
 end
