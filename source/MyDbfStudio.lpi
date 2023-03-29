@@ -26,6 +26,7 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <MinorVersionNr Value="6"/>
+      <RevisionNr Value="1"/>
       <StringTable FileDescription="Administrative tool for DBF tables." LegalCopyright="Calogiuri Enzo Antonio" ProductName="MyDbfStudio"/>
     </VersionInfo>
     <BuildModes Count="4">
@@ -38,6 +39,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
+            <OtherUnitFiles Value="third-party/tdbf_svn"/>
             <UnitOutputDirectory Value="../ppu/$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -155,17 +157,14 @@
     <RunParams>
       <FormatVersion Value="2"/>
     </RunParams>
-    <RequiredPackages Count="3">
+    <RequiredPackages Count="2">
       <Item1>
-        <PackageName Value="DBFLaz"/>
-      </Item1>
-      <Item2>
         <PackageName Value="FCL"/>
         <MinVersion Major="1" Valid="True"/>
-      </Item2>
-      <Item3>
+      </Item1>
+      <Item2>
         <PackageName Value="LCL"/>
-      </Item3>
+      </Item2>
     </RequiredPackages>
     <Units Count="30">
       <Unit0>

@@ -158,6 +158,48 @@ Uses
 const
   HELP_KEYWORD_PREFIX = 'help';
 
+procedure FuncFloatToStr(Param: PExpressionRec);
+var
+  width, numDigits, resWidth: Integer;
+  extVal: Extended;
+begin
+  with Param^ do
+  begin
+    // get params;
+    numDigits := 0;
+    if Args[1] <> nil then
+      width := PInteger(Args[1])^
+    else
+      width := 18;
+    if Args[2] <> nil then
+      numDigits := PInteger(Args[2])^;
+    // convert to string
+    Res.AssureSpace(width);
+    extVal := PDouble(Args[0])^;
+    resWidth := FloatToText(Res.MemoryPos^, extVal, {$ifndef FPC_VERSION}fvExtended,{$endif} ffFixed, 18, numDigits);
+    // always use dot as decimal separator
+    if numDigits > 0 then
+      Res.MemoryPos^[resWidth-numDigits-1] := '.';
+    // result width smaller than requested width? -> add space to compensate
+    if (Args[1] <> nil) and (resWidth < width) then
+    begin
+      // move string so that it's right-aligned
+      Move(Res.MemoryPos^^, (Res.MemoryPos^)[width-resWidth], resWidth);
+      // fill gap with spaces
+      FillChar(Res.MemoryPos^^, width-resWidth, ' ');
+      // resWidth has been padded, update
+      resWidth := width;
+    end else if resWidth > width then begin
+      // result width more than requested width, cut
+      resWidth := width;
+    end;
+    // advance pointer
+    Inc(Res.MemoryPos^, resWidth);
+    // null-terminate
+    Res.MemoryPos^^ := #0;
+  end;
+end;
+
 Procedure FuncStrD_StrEq(Param: PExpressionRec);
 Begin
  With Param^ Do

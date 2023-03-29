@@ -5,7 +5,7 @@ object Main: TMain
   Width = 750
   AllowDropFiles = True
   Caption = 'MyDBF Studio'
-  ClientHeight = 530
+  ClientHeight = 550
   ClientWidth = 750
   Menu = MainMenu
   OnClose = FormClose
@@ -15,7 +15,7 @@ object Main: TMain
   OnDropFiles = FormDropFiles
   OnShow = FormShow
   Position = poDesktopCenter
-  LCLVersion = '2.1.0.0'
+  LCLVersion = '2.3.0.0'
   object ToolBar: TToolBar
     Left = 0
     Top = 0
@@ -162,13 +162,13 @@ object Main: TMain
   object StatusBar: TStatusBar
     Left = 0
     Height = 23
-    Top = 507
+    Top = 527
     Width = 750
     Panels = <>
   end
   object WorkSite: TPageControl
     Left = 0
-    Height = 475
+    Height = 495
     Top = 32
     Width = 750
     Align = alClient

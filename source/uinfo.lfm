@@ -11,7 +11,7 @@ object Info: TInfo
   ClientWidth = 458
   OnCreate = FormCreate
   Position = poMainFormCenter
-  LCLVersion = '2.1.0.0'
+  LCLVersion = '2.3.0.0'
   object Img: TImage
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Owner
@@ -46,7 +46,7 @@ object Info: TInfo
     AnchorSideBottom.Side = asrBottom
     Left = 377
     Height = 26
-    Top = 504
+    Top = 534
     Width = 75
     Anchors = [akTop, akRight]
     AutoSize = True
@@ -67,7 +67,7 @@ object Info: TInfo
     AnchorSideRight.Side = asrBottom
     Left = 6
     Height = 6
-    Top = 498
+    Top = 528
     Width = 446
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 6
@@ -81,14 +81,14 @@ object Info: TInfo
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 6
-    Height = 165
+    Height = 195
     Top = 312
     Width = 446
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 6
     BorderSpacing.Top = 6
     BorderSpacing.Right = 6
-    Caption = 'MyDbfStudio is an administrative tool to create and manage dBase tables. It runs on Windows, Linux and other platforms supported by the Lazarus IDE.'#13#10' '#13#10'More developers needed!!!'#13#10' '#13#10'Autor: Calogiuri Enzo Antonio Aka Fog76'#13#10'Modifications in current port by W. Pamler'#13#10' '#13#10'License: GPL/LGPL'#13#10' '#13#10'Icons provided by icons8.com, style: Windows Metro,'
+    Caption = 'MyDbfStudio is an administrative tool to create and manage dBase tables. It runs on Windows, Linux and other platforms supported by the Lazarus IDE.'#13#10' '#13#10'More developers needed!!!'#13#10' '#13#10'Autor: Calogiuri Enzo Antonio Aka Fog76'#13#10'Modifications in current port by W. Pamler'#13#10'Based on tDBF component by mdv and nashev (https://sourceforge.net/projects/tdbf/)'#13#10' '#13#10'License: GPL/LGPL'#13#10' '#13#10'Icons provided by icons8.com, style: Windows Metro,'
     ParentColor = False
     WordWrap = True
   end
@@ -99,7 +99,7 @@ object Info: TInfo
     Cursor = crHandPoint
     Left = 6
     Height = 15
-    Top = 477
+    Top = 507
     Width = 171
     BorderSpacing.Left = 6
     BorderSpacing.Bottom = 6
