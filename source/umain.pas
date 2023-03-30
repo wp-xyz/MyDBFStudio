@@ -844,7 +844,7 @@ end;
 
 procedure TMain.NewTableCloseHandler(Sender: TObject; var CloseAction: TCloseAction);
 var
-  fn: String;
+  fn: String = '';
 begin
   Assert((Sender is TNewTable) or (Sender is TImportCSVForm),
     'NewTableCloseHandler can be used by a TNewTable or TImportCSVForm class only.');
