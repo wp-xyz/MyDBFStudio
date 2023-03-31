@@ -35,7 +35,7 @@
         <CompilerOptions>
           <Version Value="11"/>
           <Target>
-            <Filename Value="../mydbfstudio"/>
+            <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/mydbfstudio"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
@@ -78,10 +78,11 @@
         <CompilerOptions>
           <Version Value="11"/>
           <Target>
-            <Filename Value="../mydbfstudio"/>
+            <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/mydbfstudio"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
+            <OtherUnitFiles Value="third-party/tdbf_svn"/>
             <UnitOutputDirectory Value="../ppu/$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -125,6 +126,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
+            <OtherUnitFiles Value="third-party/tdbf_svn"/>
             <UnitOutputDirectory Value="../ppu/$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <CodeGeneration>
@@ -391,10 +393,11 @@
   <CompilerOptions>
     <Version Value="11"/>
     <Target>
-      <Filename Value="../mydbfstudio"/>
+      <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/mydbfstudio"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
+      <OtherUnitFiles Value="third-party/tdbf_svn"/>
       <UnitOutputDirectory Value="../ppu/$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <CodeGeneration>

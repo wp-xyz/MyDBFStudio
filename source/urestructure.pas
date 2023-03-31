@@ -239,6 +239,7 @@ end;
 procedure TRestructure.RestructureBtnClick(Sender: TObject);
 var
   row: Integer;
+  fd: TDbfFieldDefs;
 begin
   for row := 1 To FieldList.RowCount - 1 do
   begin
@@ -287,7 +288,13 @@ begin
    end;
 
   FDbf.Close;
-  FDbf.RestructureTable(CreateNewFieldDefs(), cbPack.Checked);
+  fd := CreateNewFieldDefs();
+  try
+    FDbf.RestructureTable(fd, cbPack.Checked);
+  finally
+    fd.Free;
+  end;
+//  FDbf.RestructureTable(CreateNewFieldDefs(), cbPack.Checked);
   FDbf.Open;
  //Temp.RegenerateIndexes;
   RecreateMyIndex();
