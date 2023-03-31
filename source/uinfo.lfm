@@ -12,45 +12,18 @@ object Info: TInfo
   OnCreate = FormCreate
   Position = poMainFormCenter
   LCLVersion = '2.3.0.0'
-  object Img: TImage
-    AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = Owner
-    AnchorSideRight.Control = Owner
-    AnchorSideRight.Side = asrBottom
-    Left = 6
-    Height = 300
-    Top = 6
-    Width = 456
-    Anchors = [akTop, akLeft, akRight]
-    BorderSpacing.Around = 6
-    Stretch = True
-  end
-  object Version: TLabel
-    AnchorSideLeft.Control = Img
-    AnchorSideBottom.Control = Img
-    AnchorSideBottom.Side = asrBottom
-    Left = 6
-    Height = 15
-    Top = 291
-    Width = 41
-    Anchors = [akLeft, akBottom]
-    Caption = 'Version'
-    Font.Style = [fsBold]
-    ParentColor = False
-    ParentFont = False
-  end
   object CloseBtn: TBitBtn
     AnchorSideTop.Control = Bevel1
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 387
+    Left = 385
     Height = 26
-    Top = 504
+    Top = 491
     Width = 75
     Anchors = [akTop, akRight]
     AutoSize = True
-    BorderSpacing.Around = 6
+    BorderSpacing.Around = 8
     Cancel = True
     Caption = '&Close'
     Default = True
@@ -67,7 +40,7 @@ object Info: TInfo
     AnchorSideRight.Side = asrBottom
     Left = 6
     Height = 6
-    Top = 498
+    Top = 483
     Width = 456
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 6
@@ -75,34 +48,27 @@ object Info: TInfo
     Shape = bsTopLine
   end
   object Label1: TLabel
-    AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = Img
-    AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = Owner
-    AnchorSideRight.Side = asrBottom
-    Left = 6
+    Left = 8
     Height = 90
-    Top = 312
-    Width = 456
-    Anchors = [akTop, akLeft, akRight]
-    BorderSpacing.Left = 6
-    BorderSpacing.Top = 6
-    BorderSpacing.Right = 6
+    Top = 294
+    Width = 452
+    Align = alTop
+    BorderSpacing.Left = 8
+    BorderSpacing.Top = 8
+    BorderSpacing.Right = 8
     Caption = 'MyDbfStudio is an administrative tool to create and manage dBase tables. It runs on Windows, Linux and other platforms supported by the Lazarus IDE.'#13#10' '#13#10'Autor: Calogiuri Enzo Antonio Aka Fog76'#13#10'Modifications in current port by W. Pamler'#13#10'Based on tDBF component by mdv and nashev:'
     ParentColor = False
     WordWrap = True
   end
   object lblIcons8: TLabel
-    AnchorSideLeft.Control = Label1
-    AnchorSideTop.Control = Label4
-    AnchorSideTop.Side = asrBottom
     Cursor = crHandPoint
-    Left = 22
+    Left = 24
     Height = 15
-    Top = 477
-    Width = 171
-    BorderSpacing.Left = 16
-    BorderSpacing.Bottom = 6
+    Top = 460
+    Width = 444
+    Align = alTop
+    BorderSpacing.Left = 24
+    BorderSpacing.Bottom = 8
     Caption = 'https://icons8.com/icons/metro'
     Font.Color = clBlue
     ParentColor = False
@@ -112,17 +78,12 @@ object Info: TInfo
     OnMouseLeave = URLLabelMouseLeave
   end
   object lblSourceForge: TLabel
-    AnchorSideLeft.Control = Label1
-    AnchorSideTop.Control = Label1
-    AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = Label1
-    AnchorSideRight.Side = asrBottom
     Cursor = crHandPoint
-    Left = 22
+    Left = 16
     Height = 15
-    Top = 402
-    Width = 440
-    Anchors = [akTop, akLeft, akRight]
+    Top = 384
+    Width = 452
+    Align = alTop
     BorderSpacing.Left = 16
     Caption = 'https://sourceforge.net/projects/tdbf/'
     Font.Color = clBlue
@@ -133,16 +94,53 @@ object Info: TInfo
     OnMouseLeave = URLLabelMouseLeave
   end
   object Label4: TLabel
-    AnchorSideLeft.Control = Label1
-    AnchorSideTop.Control = lblSourceForge
-    AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = Label1
-    AnchorSideRight.Side = asrBottom
-    Left = 6
-    Height = 60
-    Top = 417
-    Width = 456
-    Anchors = [akTop, akLeft, akRight]
-    Caption = ' '#13#10'License: GPL/LGPL'#13#10' '#13#10'Icons provided by icons8.com, style: Windows Metro,'
+    Left = 8
+    Height = 45
+    Top = 415
+    Width = 452
+    Align = alTop
+    BorderSpacing.Left = 8
+    BorderSpacing.Top = 16
+    BorderSpacing.Right = 8
+    Caption = 'License: GPL/LGPL'#13#10' '#13#10'Icons provided by icons8.com, style: Windows Metro,'
+  end
+  object ImgPanel: TPanel
+    Left = 8
+    Height = 278
+    Top = 8
+    Width = 452
+    Align = alTop
+    BorderSpacing.Around = 8
+    BevelOuter = bvNone
+    ClientHeight = 278
+    ClientWidth = 452
+    Color = clWindow
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 1
+    object Img: TImage
+      Left = 0
+      Height = 263
+      Top = 0
+      Width = 452
+      Align = alClient
+      Anchors = [akTop, akLeft, akRight]
+      AutoSize = True
+      Stretch = True
+    end
+    object Version: TLabel
+      AnchorSideTop.Side = asrBottom
+      Left = 6
+      Height = 15
+      Top = 263
+      Width = 446
+      Align = alBottom
+      Anchors = [akLeft, akBottom]
+      BorderSpacing.Left = 6
+      Caption = 'Version12'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
   end
 end

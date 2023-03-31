@@ -20,6 +20,7 @@ type
     lblIcons8: TLabel;
     lblSourceForge: TLabel;
     Label4: TLabel;
+    ImgPanel: TPanel;
     Version: TLabel;
     procedure CloseBtnClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);

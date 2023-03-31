@@ -435,6 +435,8 @@ end;
 
 procedure TMain.miAdd2TblsClick(Sender: TObject);
 begin
+  if WorkSite.PageCount = 0 then
+    exit;
   AddTables := TAddTables.Create(nil);
   try
     AddTables.ShowModal;
@@ -444,23 +446,24 @@ begin
 end;
 
 procedure TMain.miCloseAllClick(Sender: TObject);
- Var Ind : Integer;
+Var
+  Ind: Integer;
 begin
- WorkSite.BeginUpdateBounds;
+  WorkSite.BeginUpdateBounds;
 
- If WorkSite.PageCount > 0 Then
-  If MessageDlg('Close all tabs?', mtWarning, [mbOk, mbCancel],0) = mrOk Then
-   For Ind := WorkSite.PageCount - 1 DownTo 0 Do
-    WorkSiteCloseTabClicked(WorkSite.Pages[Ind]);
+  If WorkSite.PageCount > 0 Then
+   If MessageDlg('Close all tabs?', mtWarning, [mbOk, mbCancel],0) = mrOk Then
+     For Ind := WorkSite.PageCount - 1 DownTo 0 Do
+      WorkSiteCloseTabClicked(WorkSite.Pages[Ind]);
 
- WorkSite.EndUpdateBounds;
+  WorkSite.EndUpdateBounds;
 end;
 
 procedure TMain.miCloseClick(Sender: TObject);
 begin
- If WorkSite.PageCount > 0 Then
-  If WorkSite.ActivePage <> Nil Then
-   WorkSiteCloseTabClicked(WorkSite.ActivePage);
+  If WorkSite.PageCount > 0 Then
+    If WorkSite.ActivePage <> Nil Then
+      WorkSiteCloseTabClicked(WorkSite.ActivePage);
 end;
 
 procedure TMain.miEmptyTablesClick(Sender: TObject);
@@ -726,6 +729,8 @@ end;
 
 procedure TMain.miSubTablesClick(Sender: TObject);
 begin
+  if WorkSite.PageCount = 0 then
+    exit;
   SubTables := TSubTables.Create(nil);
   try
     SubTables.ShowModal;
