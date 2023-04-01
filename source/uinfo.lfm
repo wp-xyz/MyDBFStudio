@@ -70,7 +70,7 @@ object Info: TInfo
     BorderSpacing.Left = 24
     BorderSpacing.Bottom = 8
     Caption = 'https://icons8.com/icons/metro'
-    Font.Color = clBlue
+    Font.Color = clHighlight
     ParentColor = False
     ParentFont = False
     OnClick = URLLabelClick
@@ -86,7 +86,7 @@ object Info: TInfo
     Align = alTop
     BorderSpacing.Left = 16
     Caption = 'https://sourceforge.net/projects/tdbf/'
-    Font.Color = clBlue
+    Font.Color = clHighlight
     ParentColor = False
     ParentFont = False
     OnClick = URLLabelClick
