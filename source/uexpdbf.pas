@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, dbf, FileUtil, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, CheckLst, ComCtrls, Buttons, dbf_fields, db;
+  StdCtrls, CheckLst, ComCtrls, Buttons, Menus, dbf_fields, db;
 
 type
 
@@ -15,10 +15,13 @@ type
   TExpDBF = class(TForm)
     CloseBtn: TBitBtn;
     ExportBtn: TBitBtn;
-    ClbField: TCheckListBox;
+    clbFields: TCheckListBox;
+    FieldsPopup: TPopupMenu;
     lblExportField: TLabel;
     lblTableType: TLabel;
     lblProgress: TLabel;
+    mnuSelectAll: TMenuItem;
+    mnuSelectNone: TMenuItem;
     pBar: TProgressBar;
     SaveExp: TSaveDialog;
     TableType: TComboBox;
@@ -26,6 +29,8 @@ type
     procedure ExportBtnClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormShow(Sender: TObject);
+    procedure mnuSelectAllClick(Sender: TObject);
+    procedure mnuSelectNoneClick(Sender: TObject);
   private
     { private declarations }
     FDbfTable: TDbf;
@@ -58,7 +63,23 @@ begin
 end;
 
 procedure TExpDBF.ExportBtnClick(Sender: TObject);
+var
+  i: Integer;
+  noneSelected: Boolean = true;
 begin
+  for i := 0 to clbFields.Items.Count-1 do
+    if clbFields.Checked[i] then
+    begin
+      noneSelected := false;
+      break;
+    end;
+  if noneSelected then
+  begin
+    clbFields.SetFocus;
+    MessageDlg('No field selected for export.', mtError, [mbOK], 0);
+    exit;
+  end;
+
   if TableType.ItemIndex = -1 then
   begin
     TableType.SetFocus;
@@ -129,6 +150,22 @@ begin
   end;
 end;
 
+procedure TExpDBF.mnuSelectAllClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  for i := 0 to clbFields.Items.Count-1 do
+    clbFields.Checked[i] := true;
+end;
+
+procedure TExpDBF.mnuSelectNoneClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  for i := 0 to clbFields.Items.Count-1 do
+    clbFields.Checked[i] := false;
+end;
+
 function TExpDBF.ReturnTableLevel: Word;
 const
   TABLE_LEVELS: array[0..4] of Integer = (3, 4, 7, 25, 30);
@@ -147,8 +184,8 @@ var
 begin
   App := TDbfFieldDefs.Create(Self);
 
-  for Ind := 0 To ClbField.Items.Count - 1 do
-    if ClbField.Checked[Ind] then
+  for Ind := 0 To clbFields.Items.Count - 1 do
+    if clbFields.Checked[Ind] then
     begin
       TmpF := App.AddFieldDef;
       TmpF.AssignDb(DbfTable.FieldDefs[Ind]);
@@ -191,11 +228,11 @@ begin
     while not DbfTable.EOF do
     begin
       ExpTable.Insert;
-      for i := 0 to ClbField.Items.Count - 1 do
-        if ClbField.Checked[i] then
+      for i := 0 to clbFields.Items.Count - 1 do
+        if clbFields.Checked[i] then
         begin
-          srcField := DbfTable.FieldByName(ClbField.Items[i]);
-          expField := ExpTable.FieldByName(ClbField.Items[i]);
+          srcField := DbfTable.FieldByName(clbFields.Items[i]);
+          expField := ExpTable.FieldByName(clbFields.Items[i]);
           if (srcField is TStringField) or (srcField is TMemoField) then
           begin
             s := srcField.AsString;
@@ -228,11 +265,11 @@ begin
 
   FDbfTable := AValue;
 
-  ClbField.Clear;
+  clbFields.Clear;
   for i := 0 to DbfTable.FieldDefs.Count - 1 do
   begin
-    ClbField.Items.Add(DbfTable.FieldDefs.Items[i].Name);
-    ClbField.Checked[i] := True;
+    clbFields.Items.Add(DbfTable.FieldDefs.Items[i].Name);
+    clbFields.Checked[i] := True;
   end;
 end;
 

@@ -12,7 +12,7 @@ object ExpXML: TExpXML
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poMainFormCenter
-  LCLVersion = '2.1.0.0'
+  LCLVersion = '2.3.0.0'
   object lblExportFields: TLabel
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Owner
@@ -25,7 +25,7 @@ object ExpXML: TExpXML
     Caption = 'Export Fields'
     ParentColor = False
   end
-  object ClbField: TCheckListBox
+  object clbFields: TCheckListBox
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = lblExportFields
     AnchorSideTop.Side = asrBottom
@@ -45,13 +45,14 @@ object ExpXML: TExpXML
       ''
     )
     ItemHeight = 17
+    PopupMenu = FieldsPopup
     TabOrder = 0
     Data = {
       0100000000
     }
   end
   object lblProgress: TLabel
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = Owner
     Left = 272
@@ -63,7 +64,7 @@ object ExpXML: TExpXML
     ParentColor = False
   end
   object pBar: TProgressBar
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = lblProgress
     AnchorSideTop.Side = asrBottom
@@ -129,5 +130,17 @@ object ExpXML: TExpXML
     Options = [ofOverwritePrompt, ofPathMustExist, ofEnableSizing, ofViewDetail]
     Left = 112
     Top = 120
+  end
+  object FieldsPopup: TPopupMenu
+    Left = 112
+    Top = 64
+    object mnuSelectAll: TMenuItem
+      Caption = 'Select all'
+      OnClick = mnuSelectAllClick
+    end
+    object mnuSelectNone: TMenuItem
+      Caption = 'Select none'
+      OnClick = mnuSelectNoneClick
+    end
   end
 end

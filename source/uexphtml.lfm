@@ -13,7 +13,7 @@ object ExpHTML: TExpHTML
   OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poMainFormCenter
-  LCLVersion = '2.1.0.0'
+  LCLVersion = '2.3.0.0'
   object lblExportField: TLabel
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Owner
@@ -26,7 +26,7 @@ object ExpHTML: TExpHTML
     Caption = 'Export Field'
     ParentColor = False
   end
-  object ClbField: TCheckListBox
+  object clbFields: TCheckListBox
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = lblExportField
     AnchorSideTop.Side = asrBottom
@@ -46,7 +46,8 @@ object ExpHTML: TExpHTML
       ''
     )
     ItemHeight = 17
-    OnItemClick = ClbFieldItemClick
+    OnItemClick = clbFieldsItemClick
+    PopupMenu = FieldsPopup
     TabOrder = 0
     Data = {
       0100000000
@@ -75,7 +76,7 @@ object ExpHTML: TExpHTML
     ParentColor = False
   end
   object PageFC: TColorBox
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = lblPageFontColor
     AnchorSideTop.Side = asrBottom
@@ -92,7 +93,7 @@ object ExpHTML: TExpHTML
     TabOrder = 3
   end
   object PageBC: TColorBox
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = lblPageBackColor
     AnchorSideTop.Side = asrBottom
@@ -172,7 +173,7 @@ object ExpHTML: TExpHTML
     ParentColor = False
   end
   object lblPageFontSize: TLabel
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = PageFC
     AnchorSideTop.Side = asrBottom
@@ -228,7 +229,7 @@ object ExpHTML: TExpHTML
     Text = 'Normal'
   end
   object PageFS: TComboBox
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = lblPageFontSize
     AnchorSideTop.Side = asrBottom
@@ -354,7 +355,7 @@ object ExpHTML: TExpHTML
     ParentColor = False
   end
   object pBar: TProgressBar
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = lblProgress
     AnchorSideTop.Side = asrBottom
@@ -435,7 +436,7 @@ object ExpHTML: TExpHTML
     ParentColor = False
   end
   object TableW: TEdit
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = lblTableWidth
     AnchorSideTop.Side = asrBottom
@@ -463,7 +464,7 @@ object ExpHTML: TExpHTML
     ParentColor = False
   end
   object CellP: TEdit
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = lblCellPadding
     AnchorSideTop.Side = asrBottom
@@ -519,7 +520,7 @@ object ExpHTML: TExpHTML
     ParentColor = False
   end
   object PageTLT: TEdit
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = lblCellTitle
     AnchorSideTop.Side = asrBottom
@@ -543,7 +544,7 @@ object ExpHTML: TExpHTML
     Shape = bsSpacer
   end
   object PageFT: TCheckComboBox
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = lblPageFontStyle
     AnchorSideTop.Side = asrBottom
@@ -615,5 +616,17 @@ object ExpHTML: TExpHTML
     Options = [ofOverwritePrompt, ofPathMustExist, ofEnableSizing, ofViewDetail]
     Left = 124
     Top = 228
+  end
+  object FieldsPopup: TPopupMenu
+    Left = 123
+    Top = 120
+    object mnuSelectAll: TMenuItem
+      Caption = 'Select all'
+      OnClick = mnuSelectAllClick
+    end
+    object mnuSelectNone: TMenuItem
+      Caption = 'Select none'
+      OnClick = mnuSelectNoneClick
+    end
   end
 end

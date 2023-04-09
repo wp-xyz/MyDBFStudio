@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  CheckLst, ExtCtrls, ComCtrls, Buttons, DsXls, dbf, DB;
+  CheckLst, ExtCtrls, ComCtrls, Buttons, Menus, DsXls, dbf, DB;
 
 type
 
@@ -16,7 +16,8 @@ type
     CloseBtn: TBitBtn;
     ExportBtn: TBitBtn;
     cbDateF: TComboBox;
-    ClbField: TCheckListBox;
+    clbFields: TCheckListBox;
+    FieldsPopup: TPopupMenu;
     lblDateFormat: TLabel;
     lblMaskNumberWithDecimals: TLabel;
     lblMaskNumber: TLabel;
@@ -24,18 +25,22 @@ type
     lblFormatNumber: TLabel;
     lblExportField: TLabel;
     lblProgress: TLabel;
+    mnuSelectAll: TMenuItem;
+    mnuSelectNone: TMenuItem;
     pBar: TProgressBar;
     SaveExp: TSaveDialog;
     StrFN: TEdit;
     StrFND: TEdit;
     StrMFN: TEdit;
     StrMFND: TEdit;
-    procedure ClbFieldClickCheck(Sender: TObject);
+    procedure clbFieldsClickCheck(Sender: TObject);
     procedure CloseBtnClick(Sender: TObject);
     procedure ExportBtnClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure mnuSelectAllClick(Sender: TObject);
+    procedure mnuSelectNoneClick(Sender: TObject);
   private
     { private declarations }
     ExpObj : TDsXlsFile;
@@ -113,26 +118,42 @@ begin
   end;
 
   // Populate the field list
-  ClbField.Clear;
+  clbFields.Clear;
   for ind := 0 to DbfTable.FieldDefs.Count - 1 do
     with DbfTable.FieldDefs.Items[Ind] do
     begin
-      ClbField.Items.Add(Name);
+      clbFields.Items.Add(Name);
       // Do not allow exporting graphic fields to Excel
       if (DataType = ftBlob) and (DataType <> ftMemo) then
-        ClbField.Checked[ind] := false
+        clbFields.Checked[ind] := false
       else
-        ClbField.Checked[ind] := True;
+        clbFields.Checked[ind] := True;
     end;
+end;
+
+procedure TExpXLS.mnuSelectAllClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  for i := 0 to clbFields.Items.Count-1 do
+    clbFields.Checked[i] := true;
+end;
+
+procedure TExpXLS.mnuSelectNoneClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  for i := 0 to clbFields.Items.Count-1 do
+    clbFields.Checked[i] := false;
 end;
 
 procedure TExpXLS.CreateFieldTitle;
 var
   Ind: Word;
 begin
-  for Ind := 0 to ClbField.Items.Count - 1 do
-    if ClbField.Checked[Ind] then
-      ExpObj.PutStr(1, Ind + 1, ClbField.Items[Ind]);
+  for Ind := 0 to clbFields.Items.Count - 1 do
+    if clbFields.Checked[Ind] then
+      ExpObj.PutStr(1, Ind + 1, clbFields.Items[Ind]);
 end;
 
 procedure TExpXLS.WriteRecordValue(T: TDbf; ARow: Word);
@@ -141,10 +162,10 @@ var
   field: TField;
   s: String;
 begin
-  for i := 0 to ClbField.Items.Count - 1 do
-    if ClbField.Checked[i] then
+  for i := 0 to clbFields.Items.Count - 1 do
+    if clbFields.Checked[i] then
     begin
-      field := T.FieldByName(ClbField.Items[i]);
+      field := T.FieldByName(clbFields.Items[i]);
       case field.DataType of
         ftString,
         ftFixedChar,
@@ -208,14 +229,14 @@ begin
 end;
 
 // Do not allow to export a picture to Excel, this will damage the file.
-procedure TExpXLS.ClbFieldClickCheck(Sender: TObject);
+procedure TExpXLS.clbFieldsClickCheck(Sender: TObject);
 var
   fd: TFieldDef;
 begin
-  fd := DbfTable.FieldDefs.Items[ClbField.ItemIndex];
+  fd := DbfTable.FieldDefs.Items[clbFields.ItemIndex];
   if (fd.DataType = ftBlob) and (fd.DataType <> ftMemo) then
   begin
-    ClbField.Checked[ClbField.ItemIndex] := false;
+    clbFields.Checked[clbFields.ItemIndex] := false;
     MessageDlg('Exporting a BLOB field to Excel is not possible.', mtError, [mbOK], 0);
   end;
 end;
@@ -228,7 +249,21 @@ var
   xlsRow: Integer;
   savedAfterScroll: TDatasetNotifyEvent;
   bm: TBookmark;
+  NoneChecked: Boolean = true;
 begin
+  for i := 0 to clbFields.Items.Count-1 do
+    if clbFields.Checked[i] then
+    begin
+      NoneChecked := false;
+      break;
+    end;
+  if NoneChecked then
+  begin
+    clbFields.Setfocus;
+    MessageDlg('No field selected for export.', mtError, [mbOK], 0);
+    exit;
+  end;
+
   if not SaveExp.Execute then
     exit;
 

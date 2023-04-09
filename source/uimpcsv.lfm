@@ -12,7 +12,7 @@ object ImportCSVForm: TImportCSVForm
   OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poMainFormCenter
-  LCLVersion = '2.1.0.0'
+  LCLVersion = '2.3.0.0'
   object HorSplitter: TSplitter
     Cursor = crVSplit
     Left = 0
@@ -292,13 +292,13 @@ object ImportCSVForm: TImportCSVForm
           ItemHeight = 15
           ItemIndex = 3
           Items.Strings = (
-            '/ (slash)'
-            '- (hyphen)'
-            '. (dot)'
-            ': (colon)'
+            '/ (Slash)'
+            '- (Hyphen)'
+            '. (Dot)'
+            ': (Colon)'
           )
           TabOrder = 5
-          Text = ': (colon)'
+          Text = ': (Colon)'
         end
         object lblDecSep: TLabel
           AnchorSideLeft.Control = CSVParams
@@ -330,12 +330,12 @@ object ImportCSVForm: TImportCSVForm
           ItemHeight = 15
           ItemIndex = 0
           Items.Strings = (
-            '. (dot)'
-            ', (comma)'
+            '. (Dot)'
+            ', (Comma)'
             ''
           )
           TabOrder = 6
-          Text = '. (dot)'
+          Text = '. (Dot)'
         end
         object cbFieldSep: TComboBox
           AnchorSideLeft.Control = cbDecSep
@@ -353,14 +353,18 @@ object ImportCSVForm: TImportCSVForm
           ItemHeight = 15
           ItemIndex = 0
           Items.Strings = (
-            ', (comma)'
-            '; (semi-colon)'
-            ': (colon)'
+            ', (Comma)'
+            '; (Semi-colon)'
+            ': (Colon)'
             'tab'
+            '| (Bar)'
+            '/ (Slash)'
+            '\ (Back-slash)'
+            '- (Hyphen)'
           )
           MaxLength = 1
           TabOrder = 0
-          Text = ', (comma)'
+          Text = ', (Comma)'
         end
         object cbUseFirstLine: TCheckBox
           AnchorSideLeft.Control = CSVParams
@@ -369,7 +373,7 @@ object ImportCSVForm: TImportCSVForm
           Left = 6
           Height = 19
           Top = 195
-          Width = 162
+          Width = 160
           BorderSpacing.Left = 6
           BorderSpacing.Top = 8
           BorderSpacing.Bottom = 6
@@ -640,7 +644,7 @@ object ImportCSVForm: TImportCSVForm
         Left = 8
         Height = 19
         Top = 199
-        Width = 184
+        Width = 182
         Anchors = [akLeft, akBottom]
         BorderSpacing.Left = 8
         BorderSpacing.Bottom = 8

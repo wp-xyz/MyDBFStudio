@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, dbf, FileUtil, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, CheckLst, ComCtrls, Buttons;
+  StdCtrls, CheckLst, ComCtrls, Buttons, Menus;
 
 type
 
@@ -15,9 +15,12 @@ type
   TExpXML = class(TForm)
     CloseBtn: TBitBtn;
     ExportBtn: TBitBtn;
-    ClbField: TCheckListBox;
+    clbFields: TCheckListBox;
+    FieldsPopup: TPopupMenu;
     lblExportFields: TLabel;
     lblProgress: TLabel;
+    mnuSelectAll: TMenuItem;
+    mnuSelectNone: TMenuItem;
     pBar: TProgressBar;
     SaveExp: TSaveDialog;
     procedure CloseBtnClick(Sender: TObject);
@@ -25,6 +28,8 @@ type
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure mnuSelectAllClick(Sender: TObject);
+    procedure mnuSelectNoneClick(Sender: TObject);
   private
     { private declarations }
     FDbfTable: TDbf;
@@ -55,14 +60,28 @@ procedure TExpXML.ExportBtnClick(Sender: TObject);
 var
   F: TextFile;
   i: Integer;
+  counter, n: Integer;
   field: TField;
   stream: TStream;
   rs: RawByteString = '';
   savedAfterScroll: TDatasetNotifyEvent;
   bm: TBookmark;
   percent: Integer;
-  counter, n: Integer;
+  NoneChecked: Boolean = true;
 begin
+  for i := 0 to clbFields.Items.Count-1 do
+    if clbFields.Checked[i] then
+    begin
+      NoneChecked := false;
+      break;
+    end;
+  if NoneChecked then
+  begin
+    clbFields.SetFocus;
+    MessageDlg('No field selected for export.', mtError, [mbOK], 0);
+    exit;
+  end;
+
   if not SaveExp.Execute then
     exit;
 
@@ -89,15 +108,15 @@ begin
       begin
         Writeln(F, '  <record>');
 
-        for i := 0 To ClbField.Items.Count - 1 Do
-          if ClbField.Checked[i] then
+        for i := 0 To clbFields.Items.Count - 1 Do
+          if clbFields.Checked[i] then
           begin
-            field := DbfTable.FieldByName(ClbField.Items[i]);
+            field := DbfTable.FieldByName(clbFields.Items[i]);
             if field.IsNull then
-              WriteLn(F, Format('    <%0:s> </%0:s>', [ClbField.Items[i]]))
+              WriteLn(F, Format('    <%0:s> </%0:s>', [clbFields.Items[i]]))
             else
             if (field is TMemoField) then
-              WriteLn(F, Format('    <%0:s>%1:s</%0:s>', [ClbField.Items[i], field.AsString]))
+              WriteLn(F, Format('    <%0:s>%1:s</%0:s>', [clbFields.Items[i], field.AsString]))
             else
             if (field is TBlobField) then
             begin
@@ -109,12 +128,12 @@ begin
                 stream.Position := 0;
                 stream.Write(rs[1], Length(rs));
                 rs := EncodeStringBase64(rs);
-                WriteLn(F, Format('    <%0:s>%1:s</%0:s>', [ClbField.Items[i], rs]));
+                WriteLn(F, Format('    <%0:s>%1:s</%0:s>', [clbFields.Items[i], rs]));
               finally
                 stream.Free;
               end;
             end else
-              WriteLn(F, Format('    <%0:s>%1:s</%0:s>', [ClbField.Items[i], field.AsString]));
+              WriteLn(F, Format('    <%0:s>%1:s</%0:s>', [clbFields.Items[i], field.AsString]));
           end;
 
         Writeln(F, '  </record>');
@@ -176,12 +195,28 @@ begin
     end;
   end;
 
-  ClbField.Clear;
+  clbFields.Clear;
   for Ind := 0 to DbfTable.FieldDefs.Count - 1 do
   begin
-    ClbField.Items.Add(Dbftable.FieldDefs.Items[ind].Name);
-    ClbField.Checked[ind] := True;
+    clbFields.Items.Add(Dbftable.FieldDefs.Items[ind].Name);
+    clbFields.Checked[ind] := True;
   end;
+end;
+
+procedure TExpXML.mnuSelectAllClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  for i := 0 to clbFields.Items.Count-1 do
+    clbFields.Checked[i] := true;
+end;
+
+procedure TExpXML.mnuSelectNoneClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  for i := 0 to clbFields.Items.Count-1 do
+    clbFields.Checked[i] := false;
 end;
 
 function TExpXML.CheckSpecialChar(Val: String): String;

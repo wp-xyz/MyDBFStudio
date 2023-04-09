@@ -33,7 +33,8 @@ type
     DBFTableSplitter              : Integer;
     OpenByAliasSplitter           : Integer;
     ExportCSVWindow               : TWindowOptions;
-    ExportCSVSeparator            : string;
+    ExportCSVFieldSeparator       : Char;
+    ExportCSVDecimalSeparator     : Char;
     ExportCSVDateFormat           : string;
     ExportCSVFieldDelimiter       : string;
     ExportCSVStringToIgnore       : string;
@@ -114,7 +115,8 @@ var
     OpenByAliasSplitter: -1;
 
     ExportCSVWindow: (Left:-1; Top:-1; Width:-1; Height:-1);
-    ExportCSVSeparator: ',';
+    ExportCSVFieldSeparator: ',';
+    ExportCSVDecimalSeparator: '.';
     ExportCSVDateFormat: 'mm"/"dd"/"yyyy';
     ExportCSVFieldDelimiter: '"';
     ExportCSVStringToIgnore: '';
@@ -501,9 +503,16 @@ begin
       Options.OpenByAliasSplitter := ini.ReadInteger('OpenByAlias', 'Splitter', Options.OpenByAliasSplitter);
 
       Options.ExportCSVWindow.ReadFromIni(ini, 'ExportCSVForm');
-      Options.ExportCSVSeparator := ini.ReadString('ExportCSVForm', 'CSVSeparator', Options.ExportCSVSeparator);
+      s := ini.ReadString('ExportCSVForm', 'CSVDecimalSeparator', Options.ExportCSVDecimalSeparator);
+      if s <> '' then Options.ExportCSVDecimalSeparator := s[1];
+      s := ini.ReadString('ExportCSVForm', 'CSVFieldSeparator', Options.ExportCSVFieldSeparator);
+      if s <> '' then
+      begin
+        if s = 'tab' then Options.ExportCSVFieldSeparator := #9 else Options.ExportCSVFieldSeparator := s[1];
+      end;
       Options.ExportCSVDateFormat := ini.ReadString('ExportCSVForm', 'DateFormat', Options.ExportCSVDateFormat);
-      Options.ExportCSVFieldDelimiter := ini.ReadString('ExportCSVForm', 'FieldDelimiter', Options.ExportCSVFieldDelimiter);
+      s := ini.ReadString('ExportCSVForm', 'FieldDelimiter', Options.ExportCSVFieldDelimiter);
+      if s <> '' then Options.ExportCSVFieldDelimiter := s[1];
       Options.ExportCSVStringToIgnore := ini.ReadString('ExportCSVForm', 'StringToIgnore', Options.ExportCSVStringToIgnore);
       Options.ExportCSVSaveFieldsHeader := ini.ReadBool('ExportCSVForm', 'SaveFieldHeader', Options.ExportCSVSaveFieldsHeader);
 
@@ -596,6 +605,7 @@ end;
 procedure SaveOptions;
 var
   ini: TCustomIniFile;
+  s: String;
 begin
   ini := TIniFile.Create(IniFileName);
   try
@@ -624,7 +634,9 @@ begin
     ini.WriteInteger('OpenByAlias', 'Splitter', Options.OpenByAliasSplitter);
 
     Options.ExportCSVWindow.WriteToIni(ini, 'ExportCSVForm');
-    ini.WriteString('ExportCSVForm', 'CSVSeparator', Options.ExportCSVSeparator);
+    ini.WriteString('ExportCSVForm', 'CSVDecimalSeparator', Options.ExportCSVDecimalSeparator);
+    if Options.ExportCSVFieldSeparator = #9 then s := 'tab' else s := Options.ExportCSVFieldSeparator;
+    ini.WriteString('ExportCSVForm', 'CSVFieldSeparator', s);
     ini.WriteString('ExportCSVForm', 'DateFormat', Options.ExportCSVDateFormat);
     ini.WriteString('ExportCSVForm', 'FieldDelimiter', Options.ExportCSVFieldDelimiter);
     ini.WriteString('ExportCSVForm', 'StringToIgnore', Options.ExportCSVStringToIgnore);

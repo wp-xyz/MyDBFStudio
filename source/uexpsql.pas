@@ -8,7 +8,7 @@ interface
 
 uses
   Classes, SysUtils, dbf, FileUtil, Forms, Controls, Graphics, Dialogs,
-  CheckLst, StdCtrls, ComCtrls, Buttons, ExtCtrls, DB;
+  CheckLst, StdCtrls, ComCtrls, Buttons, ExtCtrls, Menus, DB;
 
 type
 
@@ -23,9 +23,10 @@ type
     cbDateTimeFmt: TComboBox;
     CloseBtn: TBitBtn;
     ExportBtn: TBitBtn;
-    ClbField: TCheckListBox;
+    clbFields: TCheckListBox;
     cbCreateTable: TCheckBox;
     cbExportRec: TCheckBox;
+    FieldsPopup: TPopupMenu;
     lblDateFmt: TLabel;
     lblTimeFmt: TLabel;
     lblDateTimeFmt: TLabel;
@@ -33,6 +34,8 @@ type
     lblTimeSep: TLabel;
     lblExportFields: TLabel;
     lblProgress: TLabel;
+    mnuSelectAll: TMenuItem;
+    mnuSelectNone: TMenuItem;
     pBar: TProgressBar;
     SaveExp: TSaveDialog;
     procedure cbExportRecChange(Sender: TObject);
@@ -41,6 +44,8 @@ type
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure mnuSelectAllClick(Sender: TObject);
+    procedure mnuSelectNoneClick(Sender: TObject);
   private
     { private declarations }
     FDbfTable: TDbf;
@@ -117,12 +122,28 @@ begin
     cbTimeSep.Text := Options.ExportSQLScriptTimeSeparator;
   end;
 
-  ClbField.Clear;
+  clbFields.Clear;
   for ind := 0 to DbfTable.FieldDefs.Count - 1 do
   begin
-    ClbField.Items.Add(DbfTable.FieldDefs.Items[ind].Name);
-    ClbField.Checked[ind] := True;
+    clbFields.Items.Add(DbfTable.FieldDefs.Items[ind].Name);
+    clbFields.Checked[ind] := True;
   end;
+end;
+
+procedure TExpSQL.mnuSelectAllClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  for i := 0 to clbFields.Items.Count-1 do
+    clbFields.Checked[i] := true;
+end;
+
+procedure TExpSQL.mnuSelectNoneClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  for i := 0 to clbFields.Items.Count-1 do
+    clbFields.Checked[i] := false;
 end;
 
 procedure TExpSQL.GenCreateTableScript;
@@ -142,44 +163,44 @@ begin
 
   Str := TStringList.Create;
   try
-    for Ind := 0 To ClbField.Items.Count - 1 do
-      if ClbField.Checked[Ind] then
+    for Ind := 0 To clbFields.Items.Count - 1 do
+      if clbFields.Checked[Ind] then
       begin
-        field := DbfTable.FieldByName(ClbField.Items[Ind]);
+        field := DbfTable.FieldByName(clbFields.Items[Ind]);
         case field.DataType Of
           ftString,
           ftFixedChar,
           ftWideString,
           ftFixedWideChar:
             Str.Add(Format('      %s VARCHAR(%d) CHARACTER SET WIN1252',
-              [ClbField.Items[Ind], field.DataSize]));
+              [clbFields.Items[Ind], field.DataSize]));
 
           ftSmallint,
           ftInteger,
           ftWord,
           ftBytes,
           ftVarBytes:
-            Str.Add(Format('      %s INTEGER', [ClbField.Items[Ind]]));
+            Str.Add(Format('      %s INTEGER', [clbFields.Items[Ind]]));
 
           ftAutoInc,
           ftLargeint:
-            Str.Add(Format('      %s DOUBLE PRECISION', [ClbField.ITems[ind]]));
+            Str.Add(Format('      %s DOUBLE PRECISION', [clbFields.ITems[ind]]));
 
           ftFloat,
           ftCurrency,
           ftBCD:
             Str.Add(Format('      %s NUMERIC (%d,%d)',
-              [ClbField.Items[Ind], field.DataSize, Field.DataSize]));
+              [clbFields.Items[Ind], field.DataSize, Field.DataSize]));
 
           ftBoolean:
-            Str.Add(Format('      %s CHAR(1) CHARACTER SET WIN1252', [ClbField.Items[ind]]));
+            Str.Add(Format('      %s CHAR(1) CHARACTER SET WIN1252', [clbFields.Items[ind]]));
 
           ftDate,
           ftDateTime:
-            Str.Add(Format('      %s DATE', [ClbField.Items[ind]]));
+            Str.Add(Format('      %s DATE', [clbFields.Items[ind]]));
 
           ftTime:
-            Str.Add(Format('      %s TIME', [ClbField.Items[ind]]));
+            Str.Add(Format('      %s TIME', [clbFields.Items[ind]]));
         end;
       end;
 
@@ -261,10 +282,10 @@ begin
     begin
       Str.Clear;
 
-      for i := 0 To ClbField.Items.Count - 1 do
-        if ClbField.Checked[i] then
+      for i := 0 To clbFields.Items.Count - 1 do
+        if clbFields.Checked[i] then
         begin
-          field := DbfTable.FieldByName(ClbField.Items[i]);
+          field := DbfTable.FieldByName(clbFields.Items[i]);
           case field.DataType of
             ftString,
             ftFixedChar,
@@ -408,8 +429,23 @@ end;
 function TExpSQL.Validate(out AMsg: String; out AControl: TWinControl): Boolean;
 var
   f: TField;
+  i: Integer;
+  noneSelected: Boolean = true;
 begin
   Result := false;
+
+  for i := 0 to clbFields.Items.Count-1 do
+    if clbFields.Checked[i] then
+    begin
+      noneSelected := false;
+      break;
+    end;
+  if noneSelected then
+  begin
+    AControl := clbFields;
+    AMsg := 'No field selected for export.';
+    exit;
+  end;
 
   if not (cbCreateTable.Checked or cbExportRec.Checked) then
   begin

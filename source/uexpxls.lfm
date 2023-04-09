@@ -12,7 +12,7 @@ object ExpXLS: TExpXLS
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poMainFormCenter
-  LCLVersion = '2.1.0.0'
+  LCLVersion = '2.3.0.0'
   object lblExportField: TLabel
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Owner
@@ -25,7 +25,7 @@ object ExpXLS: TExpXLS
     Caption = 'Export Field'
     ParentColor = False
   end
-  object ClbField: TCheckListBox
+  object clbFields: TCheckListBox
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = lblExportField
     AnchorSideTop.Side = asrBottom
@@ -45,14 +45,15 @@ object ExpXLS: TExpXLS
       ''
     )
     ItemHeight = 17
-    OnClickCheck = ClbFieldClickCheck
+    OnClickCheck = clbFieldsClickCheck
+    PopupMenu = FieldsPopup
     TabOrder = 0
     Data = {
       0100000000
     }
   end
   object cbDateF: TComboBox
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = lblDateFormat
     AnchorSideTop.Side = asrBottom
@@ -81,7 +82,7 @@ object ExpXLS: TExpXLS
     Text = 'dd/mm/yyyy'
   end
   object pBar: TProgressBar
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = lblProgress
     AnchorSideTop.Side = asrBottom
@@ -97,7 +98,7 @@ object ExpXLS: TExpXLS
     TabOrder = 6
   end
   object lblProgress: TLabel
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = cbDateF
     AnchorSideTop.Side = asrBottom
@@ -152,7 +153,7 @@ object ExpXLS: TExpXLS
     TabOrder = 8
   end
   object lblFormatNumber: TLabel
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = Owner
     Left = 286
@@ -164,7 +165,7 @@ object ExpXLS: TExpXLS
     ParentColor = False
   end
   object StrFN: TEdit
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = lblFormatNumber
     AnchorSideTop.Side = asrBottom
@@ -181,7 +182,7 @@ object ExpXLS: TExpXLS
     Text = '0'
   end
   object lblFormatNumberWithDecimals: TLabel
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = StrFN
     AnchorSideTop.Side = asrBottom
@@ -196,7 +197,7 @@ object ExpXLS: TExpXLS
     ParentColor = False
   end
   object StrFND: TEdit
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = lblFormatNumberWithDecimals
     AnchorSideTop.Side = asrBottom
@@ -213,7 +214,7 @@ object ExpXLS: TExpXLS
     Text = '0.00'
   end
   object lblMaskNumber: TLabel
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = StrFND
     AnchorSideTop.Side = asrBottom
@@ -228,7 +229,7 @@ object ExpXLS: TExpXLS
     ParentColor = False
   end
   object StrMFN: TEdit
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = lblMaskNumber
     AnchorSideTop.Side = asrBottom
@@ -245,7 +246,7 @@ object ExpXLS: TExpXLS
     Text = '# ### ##0'
   end
   object lblMaskNumberWithDecimals: TLabel
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = StrMFN
     AnchorSideTop.Side = asrBottom
@@ -259,7 +260,7 @@ object ExpXLS: TExpXLS
     ParentColor = False
   end
   object StrMFND: TEdit
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = lblMaskNumberWithDecimals
     AnchorSideTop.Side = asrBottom
@@ -276,7 +277,7 @@ object ExpXLS: TExpXLS
     Text = '# ### ##0.00'
   end
   object lblDateFormat: TLabel
-    AnchorSideLeft.Control = ClbField
+    AnchorSideLeft.Control = clbFields
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = StrMFND
     AnchorSideTop.Side = asrBottom
@@ -295,5 +296,17 @@ object ExpXLS: TExpXLS
     Options = [ofOverwritePrompt, ofPathMustExist, ofEnableSizing, ofViewDetail]
     Left = 144
     Top = 144
+  end
+  object FieldsPopup: TPopupMenu
+    Left = 144
+    Top = 72
+    object mnuSelectAll: TMenuItem
+      Caption = 'Select all'
+      OnClick = mnuSelectAllClick
+    end
+    object mnuSelectNone: TMenuItem
+      Caption = 'Select none'
+      OnClick = mnuSelectNoneClick
+    end
   end
 end

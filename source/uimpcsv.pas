@@ -696,7 +696,7 @@ var
 begin
   fs := FormatSettings;
   fs.DecimalSeparator := GetSeparator(cbDecSep);
-  fs.DateSeparator := GetSeparator(cbDecSep);
+  fs.DateSeparator := GetSeparator(cbDateSep);
   fs.TimeSeparator := GetSeparator(cbTimeSep);
 
   for row := 1 to ImportGrid.RowCount-1 do

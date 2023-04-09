@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, dbf, FileUtil, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, CheckLst, ExtCtrls, ComCtrls, Buttons, DsCsv;
+  StdCtrls, CheckLst, ExtCtrls, ComCtrls, Buttons, Menus, DsCsv;
 
 type
 
@@ -14,33 +14,42 @@ type
 
   TExpCSV = class(TForm)
     CloseBtn: TBitBtn;
+    cbFieldSeparator: TComboBox;
     ExportBtn: TBitBtn;
     cbDateF: TComboBox;
     cbSaveHeader: TCheckBox;
-    ClbField: TCheckListBox;
-    fDel: TEdit;
+    clbFields: TCheckListBox;
+    edFieldDelimiter: TEdit;
     Ignore: TEdit;
+    lblDecimalSeparator: TLabel;
     lblStringToIgnore: TLabel;
     lblFieldDelimiter: TLabel;
     lblFieldSeparator: TLabel;
     lblExportFields: TLabel;
     lblDateFormat: TLabel;
     lblProgress: TLabel;
+    mnuSelectAll: TMenuItem;
+    mnuSelectNone: TMenuItem;
     pBar: TProgressBar;
+    FieldsPopup: TPopupMenu;
     SaveExp: TSaveDialog;
-    Separator: TEdit;
-    procedure ClbFieldItemClick(Sender: TObject; Index: integer);
+    cbDecimalSeparator: TComboBox;
+    procedure clbFieldsItemClick(Sender: TObject; Index: integer);
     procedure CloseBtnClick(Sender: TObject);
     procedure ExportBtnClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure mnuSelectAllClick(Sender: TObject);
+    procedure mnuSelectNoneClick(Sender: TObject);
   private
     { private declarations }
     ExpDs : TDsCSV;
     FDbfTable: TDbf;
-    Function CreateCSVFieldMap : String;
-    Procedure StepIt(Sender : TObject; AProgress: LongInt; out StopIt: Boolean);
+    function CreateCSVFieldMap: String;
+    function GetDecimalSeparator: Char;
+    function GetFieldSeparator: Char;
+    procedure StepIt(Sender : TObject; AProgress: LongInt; out StopIt: Boolean);
   public
     { public declarations }
     property DbfTable: TDbf read FDbfTable write FDbfTable;
@@ -61,12 +70,15 @@ uses
 procedure TExpCSV.FormShow(Sender: TObject);
 var
   Ind: Integer;
+  sep: Char;
 begin
   CloseBtn.Constraints.MinWidth := Max(ExportBtn.Width, CloseBtn.Width);
   ExportBtn.Constraints.MinWidth := CloseBtn.Constraints.MinWidth;
 
-  Constraints.MinWidth :=
-    (Width - Separator.Left) * 3 div 2;
+  Constraints.MinWidth := (ExportBtn.Width + CloseBtn.Width + 4*CloseBtn.BorderSpacing.Right) * 2;
+
+//  Constraints.MinWidth :=
+//    (Width - cbFieldSeparator.Left) * 3 div 2;
   Constraints.MinHeight :=
     pBar.Top + pBar.Height +
     CloseBtn.BorderSpacing.Top + CloseBtn.Height + CloseBtn.BorderSpacing.Bottom;
@@ -78,62 +90,93 @@ begin
       AutoSize := false;
       Options.ExportCSVWindow.ApplyToForm(Self);
     end;
-    Separator.Text := Options.ExportCSVSeparator;
+    case Options.ExportCSVDecimalSeparator of
+      '.': cbDecimalSeparator.ItemIndex := 0;
+      ',': cbDecimalSeparator.ItemIndex := 1;
+    end;
+    for ind := 0 to cbFieldSeparator.Items.Count-1 do
+    begin
+      sep := cbFieldSeparator.Items[ind][1];
+      if sep = 't' then sep := #9;
+      if sep = Options.ExportCSVFieldSeparator then
+      begin
+        cbFieldSeparator.ItemIndex := ind;
+        break;
+      end;
+    end;
     cbDateF.Text := Options.ExportCSVDateFormat;
-    fDel.Text := Options.ExportCSVFieldDelimiter;
+    edFieldDelimiter.Text := Options.ExportCSVFieldDelimiter;
     Ignore.Text := Options.ExportCSVStringToIgnore;
     cbSaveHeader.Checked := Options.ExportCSVSaveFieldsHeader;
   end;
 
-  Separator.Height := cbDateF.Height;
-  fDel.Height := Separator.Height;
-  Ignore.Height := Separator.Height;
+  cbFieldSeparator.Height := cbDateF.Height;
+  edFieldDelimiter.Height := cbFieldSeparator.Height;
+  Ignore.Height := cbFieldSeparator.Height;
 
-  ClbField.Clear;
+  clbFields.Clear;
   for Ind := 0 To DbfTable.FieldDefs.Count - 1 do
     with DbfTable.FieldDefs.Items[Ind] do
     begin
-      ClbField.Items.Add(Name);
+      clbFields.Items.Add(Name);
       // Do not allow exporting graphic fields to csv
       if (DataType = ftBlob) and (DataType <> ftMemo) then
-        ClbField.Checked[ind] := false
+        clbFields.Checked[ind] := false
       else
-        ClbField.Checked[ind] := True;
+        clbFields.Checked[ind] := True;
     end;
 end;
 
-function TExpCSV.CreateCSVFieldMap: String;
- Var Ind : Integer;
+procedure TExpCSV.mnuSelectAllClick(Sender: TObject);
+var
+  i: Integer;
 begin
- Result := '';
+  for i := 0 to clbFields.Items.Count-1 do
+    clbFields.Checked[i] := true;
+end;
 
- For Ind := 0 To ClbField.Items.Count - 1 Do
-  If ClbField.Checked[Ind] Then
-   Result := Result + '$' + ClbField.Items[Ind] + Separator.Text[1];
+procedure TExpCSV.mnuSelectNoneClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  for i := 0 to clbFields.Items.Count-1 do
+    clbFields.Checked[i] := false;
+end;
+
+function TExpCSV.CreateCSVFieldMap: String;
+var
+  Ind: Integer;
+  sep: Char;
+begin
+  Result := '';
+  sep := GetFieldSeparator;
+  for Ind := 0 To clbFields.Items.Count - 1 do
+    if clbFields.Checked[Ind] then
+      Result := Result + '$' + clbFields.Items[Ind] + sep;
 end;
 
 procedure TExpCSV.StepIt(Sender: TObject; AProgress: LongInt;
   out StopIt: Boolean);
 begin
- StopIt := false;
- pBar.Position := AProgress;
- Application.ProcessMessages;
+  StopIt := false;
+  pBar.Position := AProgress;
+  Application.ProcessMessages;
 end;
 
 procedure TExpCSV.CloseBtnClick(Sender: TObject);
 begin
- Close;
+  Close;
 end;
 
 // Do not allow to check a BLOB item: cannot export to csv format.
-procedure TExpCSV.ClbFieldItemClick(Sender: TObject; Index: integer);
+procedure TExpCSV.clbFieldsItemClick(Sender: TObject; Index: integer);
 var
   fieldDef: TFieldDef;
 begin
   fieldDef := DbfTable.FieldDefs.Items[Index];
   if (fieldDef.DataType = ftBlob) and (fieldDef.DataType <> ftMemo) then
   begin
-    ClbField.Checked[Index] := false;
+    clbFields.Checked[Index] := false;
     MessageDlg('Exporting a BLOB field to CSV is not supported.', mtError, [mbOK], 0);
   end;
 end;
@@ -141,12 +184,48 @@ end;
 procedure TExpCSV.ExportBtnClick(Sender: TObject);
 var
   savedAfterScroll: TDatasetNotifyEvent;
+  i: Integer;
+  NoneChecked: Boolean = true;
 begin
-  if Trim(Separator.Text) = '' then
+  for i := 0 to clbFields.Items.Count-1 do
+    if clbFields.Checked[i] then
+    begin
+      NoneChecked := false;
+      break;
+    end;
+  if NoneChecked then
   begin
-    MessageDlg('You MUST insert a record separator...', mtError, [mbOK], 0);
-    Separator.SetFocus;
+    clbFields.Setfocus;
+    MessageDlg('No field selected for export.', mtError, [mbOK], 0);
+    exit;
+  end;
+
+  if cbFieldSeparator.ItemIndex = -1 then
+  begin
+    cbFieldSeparator.SetFocus;
+    MessageDlg('You MUST insert a field separator...', mtError, [mbOK], 0);
     Exit;
+  end;
+
+  if GetFieldSeparator = GetDecimalSeparator then
+  begin
+    cbDecimalSeparator.SetFocus;
+    MessageDlg('Field separator and decimal separator must not be equal.', mtError, [mbOK], 0);
+    exit;
+  end;
+
+  if GetFieldSeparator = Trim(edFieldDelimiter.Text) then
+  begin
+    cbFieldSeparator.SetFocus;
+    MessageDlg('Field separator and delimiter must not be equal.', mtError, [mbOK], 0);
+    exit;
+  end;
+
+  if Trim(edFieldDelimiter.Text) = GetDecimalSeparator then
+  begin
+    cbDecimalSeparator.SetFocus;
+    MessageDlg('Field delimiter and decimal separator must not be equal.', mtError, [mbOK], 0);
+    exit;
   end;
 
   if not SaveExp.Execute then
@@ -170,10 +249,11 @@ begin
       ExpDs.EmptyTable := True;
       ExpDs.AutoOpen := False;
       ExpDs.IgnoreString := Ignore.Text;
-      ExpDs.Delimiter := fDel.Text;
+      ExpDs.FieldDelimiter := edFieldDelimiter.Text;
       ExpDs.ExportHeader := cbSaveHeader.Checked;
       ExpDs.CSVMap := CreateCSVFieldMap;
-      ExpDs.Separator := Separator.Text[1];
+      ExpDs.FieldSeparator := GetFieldSeparator;
+      ExpDs.DecimalSeparator := GetDecimalSeparator;
       ExpDs.DateFormat := cbDateF.Text;
       ExpDs.ImportProgress := @StepIt;
       ExpDs.DatasetToCSV();
@@ -195,9 +275,10 @@ begin
   if CanClose then
   begin
     Options.ExportCSVWindow.ExtractFromForm(Self);
-    Options.ExportCSVSeparator := Separator.Text;
+    Options.ExportCSVFieldSeparator := GetFieldSeparator;
+    Options.ExportCSVDecimalSeparator := GetDecimalSeparator;
     Options.ExportCSVDateFormat := cbDateF.Text;
-    Options.ExportCSVFieldDelimiter := fDel.Text;
+    Options.ExportCSVFieldDelimiter := edFieldDelimiter.Text;
     Options.ExportCSVStringToIgnore := Ignore.Text;
     Options.ExportCSVSaveFieldsHeader := cbSaveHeader.Checked;
   end;
@@ -206,6 +287,23 @@ end;
 procedure TExpCSV.FormCreate(Sender: TObject);
 begin
   FDbfTable := TDbf.Create(self);
+end;
+
+function TExpCSV.GetDecimalSeparator: Char;
+var
+  decSepStr: String;
+begin
+  decSepStr := cbDecimalSeparator.Items[cbDecimalSeparator.ItemIndex];
+  Result := decSepStr[1];
+end;
+
+function TExpCSV.GetFieldSeparator: Char;
+var
+  fs: String;
+begin
+  fs := cbFieldSeparator.Items[cbFieldSeparator.ItemIndex];
+  Result := fs[1];
+  if Result = 't' then Result := #9;
 end;
 
 end.

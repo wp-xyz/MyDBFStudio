@@ -11,7 +11,7 @@ object ExpDBF: TExpDBF
   OnCloseQuery = FormCloseQuery
   OnShow = FormShow
   Position = poMainFormCenter
-  LCLVersion = '2.1.0.0'
+  LCLVersion = '2.3.0.0'
   object lblExportField: TLabel
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Owner
@@ -24,7 +24,7 @@ object ExpDBF: TExpDBF
     Caption = 'Export Field'
     ParentColor = False
   end
-  object ClbField: TCheckListBox
+  object clbFields: TCheckListBox
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = lblExportField
     AnchorSideTop.Side = asrBottom
@@ -44,6 +44,7 @@ object ExpDBF: TExpDBF
       ''
     )
     ItemHeight = 17
+    PopupMenu = FieldsPopup
     TabOrder = 0
     Data = {
       0100000000
@@ -160,5 +161,17 @@ object ExpDBF: TExpDBF
     Options = [ofOverwritePrompt, ofPathMustExist, ofEnableSizing, ofViewDetail]
     Left = 60
     Top = 268
+  end
+  object FieldsPopup: TPopupMenu
+    Left = 123
+    Top = 120
+    object mnuSelectAll: TMenuItem
+      Caption = 'Select all'
+      OnClick = mnuSelectAllClick
+    end
+    object mnuSelectNone: TMenuItem
+      Caption = 'Select none'
+      OnClick = mnuSelectNoneClick
+    end
   end
 end

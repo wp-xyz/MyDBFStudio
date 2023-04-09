@@ -8,7 +8,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  CheckLst, ColorBox, ExtCtrls, ComCtrls, Buttons, ComboEx, DsHtml, dbf;
+  CheckLst, ColorBox, ExtCtrls, ComCtrls, Buttons, ComboEx, Menus, DsHtml, dbf;
 
 type
 
@@ -20,7 +20,8 @@ type
     CellS: TEdit;
     CloseBtn: TBitBtn;
     ExportBtn: TBitBtn;
-    ClbField: TCheckListBox;
+    clbFields: TCheckListBox;
+    FieldsPopup: TPopupMenu;
     HeaderBC: TColorBox;
     HeaderFC: TColorBox;
     HeaderFS: TComboBox;
@@ -40,6 +41,8 @@ type
     lblHeaderFontSize: TLabel;
     lblPageFontStyle: TLabel;
     lblHeaderFontStyle: TLabel;
+    mnuSelectAll: TMenuItem;
+    mnuSelectNone: TMenuItem;
     PageBC: TColorBox;
     PageFC: TColorBox;
     PageFS: TComboBox;
@@ -52,13 +55,15 @@ type
     UpDown1: TUpDown;
     UpDown2: TUpDown;
     UpDown3: TUpDown;
-    procedure ClbFieldItemClick(Sender: TObject; Index: integer);
+    procedure clbFieldsItemClick(Sender: TObject; Index: integer);
     procedure CloseBtnClick(Sender: TObject);
     procedure ExportBtnClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure mnuSelectAllClick(Sender: TObject);
+    procedure mnuSelectNoneClick(Sender: TObject);
   private
     { private declarations }
     ExpObj : TDsDataToHTML;
@@ -96,20 +101,36 @@ begin
 end;
 
 // Do not allow check a BLOB item: cannot export a picture to html this way.
-procedure TExpHTML.ClbFieldItemClick(Sender: TObject; Index: integer);
+procedure TExpHTML.clbFieldsItemClick(Sender: TObject; Index: integer);
 var
   fieldDef: TFieldDef;
 begin
   fieldDef := FDbfTable.FieldDefs.Items[Index];
   if (fieldDef.DataType = ftBlob) and (fieldDef.DataType <> ftMemo) then
   begin
-    ClbField.Checked[Index] := false;
+    clbFields.Checked[Index] := false;
     MessageDlg('Exporting a BLOB field to HTML is not supported.', mtError, [mbOK], 0);
   end;
 end;
 
 procedure TExpHTML.ExportBtnClick(Sender: TObject);
+var
+  i: Integer;
+  NoneChecked: Boolean = true;
 begin
+  for i := 0 to clbFields.Items.Count-1 do
+    if clbFields.Checked[i] then
+    begin
+      NoneChecked := false;
+      break;
+    end;
+  if NoneChecked then
+  begin
+    clbFields.Setfocus;
+    MessageDlg('No field selected for export.', mtError, [mbOK], 0);
+    exit;
+  end;
+
   if not SaveExp.Execute then
     exit;
 
@@ -227,19 +248,35 @@ begin
   end;
 
   // Prepare field list
-  ClbField.Clear;
+  clbFields.Clear;
   for ind := 0 to DbfTable.FieldDefs.Count - 1 do
     with FDbftable.FieldDefs.Items[Ind] do
     begin
-      ClbField.Items.Add(Name);
+      clbFields.Items.Add(Name);
       // Do not allow exporting graphic fields, it will be embedded in the html which is not valid
       if (DataType = ftBlob) and (DataType <> ftMemo) then
-        ClbField.Checked[ind] := false
+        clbFields.Checked[ind] := false
       else
-        ClbField.Checked[ind] := True;
+        clbFields.Checked[ind] := True;
     end;
 
   PageTLT.Text := DbfTable.TableName;
+end;
+
+procedure TExpHTML.mnuSelectAllClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  for i := 0 to clbFields.Items.Count-1 do
+    clbFields.Checked[i] := true;
+end;
+
+procedure TExpHTML.mnuSelectNoneClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  for i := 0 to clbFields.Items.Count-1 do
+    clbFields.Checked[i] := false;
 end;
 
 procedure TExpHTML.IncrementPBar(Sender: TObject);
@@ -286,8 +323,8 @@ var
   Ind: Integer;
 begin
   ExpObj.GetFields.Clear;
-  for Ind := 0 To ClbField.Items.Count - 1 do
-    if ClbField.Checked[Ind] then
+  for Ind := 0 To clbFields.Items.Count - 1 do
+    if clbFields.Checked[Ind] then
       ExpObj.Fields.Add().Assign(DbfTable.Fields[Ind]);
 end;
 

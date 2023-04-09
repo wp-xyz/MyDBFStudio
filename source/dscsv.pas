@@ -22,8 +22,6 @@ Type
       FCSVFile,
       FDateFormat,
       FIgnoreStr                 : String;
-      FSeprator,
-      FDelimiter,
       FFieldIndicator            : String;
       FAutoOpen,
       FExpHeader,
@@ -50,6 +48,9 @@ Type
       FDefaultInt                : Integer;
       FBufferSize                : LongInt;
       FFieldCache                : TList;
+      FDecimalSeparator: Char;
+      FFieldDelimiter: String;
+      FFieldSeparator: String;
 
      Protected
       FFile                      : TextFile;
@@ -59,7 +60,7 @@ Type
       Function GetCSVRecordItem(ItemIndex : Integer; CSVRecord : String) : String;
       Function BuildMap() : String;
       Function ExtractWord(Item: Integer;S, WordDelim: String): String;
-      Function WordCount(const S ,WordDelim: String): Integer;
+      Function WordCount(const S, WordDelim: String): Integer;
       Function WordPosition(Item: Integer; const S, SubStr: string): Integer;
 
      Public
@@ -69,11 +70,12 @@ Type
       Property Dataset : TDataset Read FDataset Write FDataset;
       Property CSVMap : String Read FCSVMap Write FCSVMap;
       Property CSVFile : String Read FCSVFile Write FCSVFile;
-      Property Separator : String Read FSeprator Write FSeprator;
+      property DecimalSeparator: Char read FDecimalSeparator write FDecimalSeparator;
+      Property FieldSeparator: String Read FFieldSeparator Write FFieldSeparator;
+      Property FieldDelimiter: String Read FFieldDelimiter Write FFieldDelimiter;
       Property FieldIndicator : String Read FFieldIndicator Write FFieldIndicator;
       Property AutoOpen : Boolean Read FAutoOpen Write FAutoOpen;
       Property IgnoreString : String Read FIgnoreStr Write FIgnoreStr;
-      Property Delimiter : String Read FDelimiter Write FDelimiter;
       Property EmptyTable : Boolean Read FEmptyTable Write FEmptyTable;
       Property UseDelimiter : Boolean Read FUseDelimiter Write FUseDelimiter;
       Property SilentExport : Boolean Read FSilentExport Write FSilentExport;
@@ -109,7 +111,7 @@ implementation
 function TDsCSV.CountMapItems(): Integer;
 begin
  If FMapItems = 0 Then
-  FMapItems:=WordCount(FCSVMap,FSeprator);
+  FMapItems:=WordCount(FCSVMap, FFieldSeparator);
 
  Result:=FMapItems;
 end;
@@ -118,9 +120,9 @@ function TDsCSV.GetMapItem(ItemIndex: Integer; out AField: Boolean): String;
  Var S : String;
      P : ^ShortString;
 begin
- If FFieldCache.Count < ItemIndex Then
+  If FFieldCache.Count < ItemIndex Then
   Begin
-   S:=ExtractWord(ItemIndex,FCSVMap,FSeprator);
+   S:=ExtractWord(ItemIndex, FCSVMap, FFieldSeparator);
 
    New(P);
 
@@ -128,8 +130,8 @@ begin
 
    FFieldCache.Add(P);
   End
- Else
-  S:=ShortString(FFieldCache.Items[ItemIndex - 1]^);
+  Else
+    S:=ShortString(FFieldCache.Items[ItemIndex - 1]^);
 
  AField:=True;
 
@@ -146,36 +148,34 @@ end;
 function TDsCSV.GetCSVRecordItem(ItemIndex: Integer; CSVRecord: String): String;
  Var S : String;
 begin
- If FUseDelimiter Then
-  S:=ExtractWord(ItemIndex,CSVRecord,FDelimiter + FSeprator + FDelimiter)
- Else
-  S:=ExtractWord(ItemIndex,CSVRecord,FSeprator);
+  If FUseDelimiter Then
+    S:=ExtractWord(ItemIndex,CSVRecord,FFieldDelimiter + FFieldSeparator + FFieldDelimiter)
+  Else
+    S:=ExtractWord(ItemIndex,CSVRecord,FFieldSeparator);
 
- If FUseDelimiter Then
+  If FUseDelimiter Then
   Begin
-   If (ItemIndex = 1) And (S[1] = FDelimiter) Then
-    Delete(S,1,1);
+    If (ItemIndex = 1) And (S[1] = FFieldDelimiter) Then
+      Delete(S,1,1);
 
-   If (ItemIndex = WordCount(CSVRecord,FDelimiter + FSeprator + FDelimiter)) And
-      (S[Length(S)] = FDelimiter) Then
+    If (ItemIndex = WordCount(CSVRecord, FFieldDelimiter + FFieldSeparator + FFieldDelimiter)) And
+      (S[Length(S)] = FFieldDelimiter) Then
     Delete(S,Length(S),1);
   End;
 
- Result:=S;
+  Result:=S;
 end;
 
 function TDsCSV.BuildMap(): String;
- Var I : Integer;
-     S : String;
+var
+  I: Integer;
+  S: String;
 begin
- S:='';
-
- For I:=0 To FDataset.FieldCount - 1 Do
-  S:=S + FFieldIndicator + FDataset.Fields[i].FieldName + FSeprator;
-
- Delete(S,Length(S),1);
-
- Result:=S;
+  S := '';
+  for I:=0 To FDataset.FieldCount - 1 do
+    S := S + FFieldIndicator + FDataset.Fields[i].FieldName + FFieldSeparator;
+  Delete(S, Length(S), 1);
+  Result := S;
 end;
 
 function TDsCSV.ExtractWord(Item: Integer; S, WordDelim: String): String;
@@ -232,15 +232,16 @@ constructor TDsCSV.Create(AOwner: TComponent);
 begin
  Inherited Create(AOwner);
 
- FDelimiter:='"';
+ FFieldDelimiter:='"';
  FIgnoreStr:='(ignore)';
  FAutoOpen:=True;
  FUseDelimiter:=True;
  FSilentExport:=False;
  FEmptyTable:=False;
- FSeprator:=',';
+ FFieldSeparator:=',';
  FFieldIndicator:='$';
  FDateFormat:='MM/DD/YY';
+ FDecimalSeparator := '.';
  FBufferSize:=1024;
  FStop:=False;
 
@@ -259,246 +260,221 @@ begin
 end;
 
 procedure TDsCSV.CSVToDataset();
- Var RecordString,Temp : String;
-     I : Integer;
-     C : LongInt;
-     D : Boolean;
-     F : Real;
-     ErrorResponse : TDsCSVErrorResponse;
-     Buffer : Pointer;
+var
+  RecordString, SavedDateFmt: String;
+  SavedDecSep: Char;
+  I: Integer;
+  C: LongInt;
+  D: Boolean;
+  F: Double;
+  ErrorResponse: TDsCSVErrorResponse;
+  Buffer: Pointer;
 begin
- FFieldCache:=TList.Create;
- FMapItems:=0;
+  SavedDateFmt := FormatSettings.ShortDateFormat;
+  SavedDecSep := FormatSettings.DecimalSeparator;
+  FFieldCache := TList.Create;
+  FMapItems := 0;
+  GetMem(Buffer,FBufferSize);
+  AssignFile(FFile, FCSVFile);
+  try
+    SetTextBuf(FFile,Buffer^,FBufferSize);
+    Reset(FFile);
 
- GetMem(Buffer,FBufferSize);
+    if FAutoOpen then
+    begin
+      if Assigned(FBeforeOpenTable) then
+        FBeforeOpenTable(Self);
+      FDataset.Open;
+      if Assigned(FAfterOpenTable) then
+        FAfterOpenTable(Self);
+    end;
 
- AssignFile(FFile,FCSVFile);
+    if Assigned(FBeforeExport) then
+      FBeforeExport(Self);
 
- SetTextBuf(FFile,Buffer^,FBufferSize);
+    C := 0;
 
- Reset(FFile);
+    FormatSettings.ShortDateformat := FDateFormat;
+    FormatSettings.DecimalSeparator := FDecimalSeparator;
 
- If FAutoOpen Then
-  Begin
-   If Assigned(FBeforeOpenTable) Then
-    FBeforeOpenTable(Self);
+    FDataset.DisableControls;
+    try
+      while (not Eof(FFile)) and (not FStop) do
+      begin
+        Readln(FFile, RecordString);
+        try
+          FDataset.Append;
+          for I := 1 To CountMapItems() do
+            if Uppercase(GetMapItem(I,D)) <> Uppercase(FIgnoreStr) then
+              case FDataset.FieldByName(GetMapItem(I,D)).DataType of
+                ftInteger:
+                  FDataset.FieldByName(GetMapItem(I,D)).AsInteger := StrToIntDef(Trim(GetCSVRecordItem(I,RecordString)), FDefaultInt);
+                ftFloat:
+                  FDataset.FieldByName(GetMapItem(I,D)).AsFloat := StrToFloatDef(Trim(GetCSVRecordItem(I,RecordString)), FDefaultInt);
+                else
+                  if FTrimData then
+                    FDataset.FieldByName(GetMapItem(I,D)).AsString := Trim(GetCSVRecordItem(i,RecordString))
+                  else
+                    FDataset.FieldByName(GetMapItem(I,D)).AsString := GetCSVRecordItem(i,RecordString);
+              end;
+          FDataset.Post;
+        except
+          on E:Exception do
+            if not FSilentExport then
+              raise
+            else
+            if Assigned(FExportError) then
+            begin
+              FExportError(Self, E.Message, C, ErrorResponse);
+              if ErrorResponse = dscsvAbort then
+                Break;
+            end;
+        end;
 
-   FDataset.Open;
+        if Assigned(FOnAddRecord) then
+          FOnAddRecord(Self);
 
-   If Assigned(FAfterOpenTable) Then
-    FAfterOpenTable(Self);
-  End;
+        if Assigned(FExportProgress) then
+          FExportProgress(Self, C, FStop);
 
- If Assigned(FBeforeExport) Then
-  FBeforeExport(Self);
+        inc(C);
+      end;
+    finally
+      FDataset.EnableControls;
+    end;
 
- C:=0;
+    if Assigned(FAfterExport) then
+      FAfterExport(Self);
 
- Temp := FormatSettings.ShortDateFormat;
- FormatSettings.ShortDateFormat := FDateFormat;
-
- FDataset.DisableControls;
-
- While (Not Eof(FFile)) And (Not FStop) Do
-  Begin
-   Readln(FFile,RecordString);
-
-   Try
-     FDataset.Append;
-
-     For I:=1 To CountMapItems() Do
-      If Uppercase(GetMapItem(I,D)) <> Uppercase(FIgnoreStr) Then
-       Case FDataset.FieldByName(GetMapItem(I,D)).DataType Of
-            ftInteger          : FDataset.FieldByName(GetMapItem(I,D)).AsInteger:=StrToIntDef(Trim(GetCSVRecordItem(I,RecordString)),FDefaultInt);
-            ftFloat            : Begin
-                                  Try
-                                    F:=StrToFloat(Trim(GetCSVRecordItem(I,RecordString)));
-                                  Except
-                                    F:=FDefaultInt;
-                                  End;
-
-                                  FDataset.FieldByName(GetMapItem(I,D)).AsFloat:=F;
-                                 End;
-            Else                 If FTrimData Then
-                                  FDataset.FieldByName(GetMapItem(I,D)).AsString:=Trim(GetCSVRecordItem(i,RecordString))
-                                 Else
-                                  FDataset.FieldByName(GetMapItem(I,D)).AsString:=GetCSVRecordItem(i,RecordString);
-       End;
-
-     FDataset.Post;
-   Except
-     On E:Exception Do
-      If Not FSilentExport Then
-       Raise
-      Else
-       If Assigned(FExportError) Then
-        Begin
-         FExportError(Self,E.Message,C,ErrorResponse);
-
-         If ErrorResponse = dscsvAbort Then
-          Break;
-        End;
-   End;
-
-   If Assigned(FOnAddRecord) Then
-    FOnAddRecord(Self);
-
-   If Assigned(FExportProgress) Then
-    FExportProgress(Self,C,FStop);
-
-   Inc(C);
-  End;
-
- FDataset.EnableControls;
-
- If Assigned(FAfterExport) Then
-  FAfterExport(Self);
-
- If FAutoOpen Then
-  Begin
-   If Assigned(FBeforeCloseTable) Then
-    FBeforeCloseTable(Self);
-
-   FDataset.Close;
-
-   If Assigned(FAfterCloseTable) Then
-    FAfterCloseTable(Self);
-  End;
-
- CloseFile(FFile);
-
- FreeMem(Buffer);
-
- FormatSettings.ShortDateFormat := Temp;
-
- FFieldCache.Free;
+    if FAutoOpen then
+    begin
+      if Assigned(FBeforeCloseTable) then
+        FBeforeCloseTable(Self);
+      FDataset.Close;
+      if Assigned(FAfterCloseTable) then
+        FAfterCloseTable(Self);
+    end;
+  finally
+    CloseFile(FFile);
+    FreeMem(Buffer);
+    FormatSettings.ShortDateFormat := SavedDateFmt;
+    FormatSettings.DecimalSeparator := SavedDecSep;
+    FFieldCache.Free;
+  end;
 end;
 
 procedure TDsCSV.DatasetToCSV();
- Var S,D,T : String;
-     I : Integer;
-     C : LongInt;
-     B : Boolean;
-     Buffer : Pointer = nil;
+var
+  S, D, T: String;
+  I: Integer;
+  C: LongInt;
+  B: Boolean;
+  Buffer: Pointer = nil;
+  SavedDecSep: char;
+  SavedDateFmt: String;
 begin
- FFieldCache:=TList.Create;
+  FFieldCache := TList.Create;
+  GetMem(Buffer,FBufferSize);
+  SavedDecSep := FormatSettings.DecimalSeparator;
+  SavedDateFmt := FormatSettings.ShortDateFormat;
+  try
+    FormatSettings.DecimalSeparator := FDecimalSeparator;
+    FormatSettings.ShortDateFormat := FDateFormat;
+    FMapItems:=0;
+    AssignFile(FFile,FCSVFile);
+    SetTextBuf(FFile,Buffer^,FBufferSize);
 
- FMapItems:=0;
+    if FEmptyTable then
+    begin
+      if Assigned(FBeforeEmptyTable) then
+        FBeforeEmptyTable(Self);
+      Rewrite(FFile);
+      if Assigned(FAfterEmptyTable) then
+        FAfterEmptyTable(Self);
+    end else
+      Append(FFile);
 
- GetMem(Buffer,FBufferSize);
-
- AssignFile(FFile,FCSVFile);
-
- SetTextBuf(FFile,Buffer^,FBufferSize);
-
- If FEmptyTable Then
-  Begin
-   If Assigned(FBeforeEmptyTable) Then
-    FBeforeEmptyTable(Self);
-
-   Rewrite(FFile);
-
-   If Assigned(FAfterEmptyTable) Then
-    FAfterEmptyTable(Self);
-  End
- Else
-  Append(FFile);
-
- If FAutoOpen Then
-  Begin
-   If Assigned(FBeforeOpenTable) Then
-    FBeforeOpenTable(Self);
-
-   FDataset.Open;
-
-   If Assigned(FAfterOpenTable) Then
-    FAfterOpenTable(Self);
-  End;
-
- If Assigned(FBeforeImport) Then
-  FBeforeImport(Self);
-
- C:=0;
-
- FDataset.First;
-
- If Trim(FCSVMap) = '' Then
-  FCSVMap:=BuildMap();
-
- FDataset.DisableControls;
-
- If FExpHeader Then
-  Begin
-   S := '';
-
-   For I := 1 To CountMapItems() Do
-    Begin
-     D := GetMapItem(I, B);
-
-     If B Then
-      S := S + D + FSeprator;
+    if FAutoOpen then
+    begin
+      if Assigned(FBeforeOpenTable) then
+        FBeforeOpenTable(Self);
+      FDataset.Open;
+      if Assigned(FAfterOpenTable) then
+        FAfterOpenTable(Self);
     end;
 
-   Delete(S, Length(S), 1);
+    if Assigned(FBeforeImport) then
+      FBeforeImport(Self);
 
-   Writeln(FFile, S);
+    C:=0;
+    FDataset.First;
+    if Trim(FCSVMap) = '' then
+      FCSVMap := BuildMap();
+    FDataset.DisableControls;
+    try
+      if FExpHeader then
+      begin
+        S := '';
+        for I := 1 To CountMapItems() do
+        begin
+          D := GetMapItem(I, B);
+          if B then
+            S := S + D + FFieldSeparator;
+        end;
+        Delete(S, Length(S), 1);
+        Writeln(FFile, S);
+      end;
+
+      while (not FDataset.Eof) and (not FStop) do
+      begin
+        S := '';
+        for I := 1 to CountMapItems do
+        begin
+          D := GetMapItem(I,B);
+          if B then
+          begin
+            if FTrimData then
+              T := Trim(FDataset.FieldByName(D).AsString)
+            else
+              T := FDataset.FieldByName(D).AsString;
+
+            if FUseDelimiter then
+              T := FFieldDelimiter + T + FFieldDelimiter;
+            S := S + T + FFieldSeparator;
+          end;
+        end;
+        Delete(S, Length(S), 1);
+        Writeln(FFile,S);
+
+        FDataset.Next;
+        if Assigned(FImportProgress) then
+          FImportProgress(Self, C, FStop);
+
+        inc(C);
+      end;
+    finally
+      FDataset.EnableControls;
+    end;
+
+    if Assigned(FAfterImport) then
+      FAfterImport(Self);
+
+    if FAutoOpen then
+    begin
+      if Assigned(FBeforeCloseTable) then
+        FBeforeCloseTable(Self);
+      FDataset.Close;
+      if Assigned(FAfterCloseTable) then
+        FAfterCloseTable(Self);
+    end;
+
+  finally
+    CloseFile(FFile);
+    FreeMem(Buffer);
+    FFieldCache.Free;
+    FormatSettings.DecimalSeparator := SavedDecSep;
+    FormatSettings.ShortDateFormat := SavedDateFmt;
   end;
-
- While (Not FDataset.Eof) And (Not FStop) Do
-  Begin
-   S:='';
-
-   For I := 1 To CountMapItems Do
-    Begin
-     D := GetMapItem(I,B);
-
-     If B Then
-      Begin
-       If FTrimData Then
-        T:=Trim(FDataset.FieldByName(D).AsString)
-       Else
-        T:=FDataset.FieldByName(D).AsString;
-
-       If FUseDelimiter Then
-        T:=FDelimiter + T + FDelimiter;
-
-       S:=S + T + FSeprator;
-      End;
-    End;
-
-   Delete(S,Length(S),1);
-
-   Writeln(FFile,S);
-
-   FDataset.Next;
-
-   If Assigned(FImportProgress) Then
-    FImportProgress(Self,C,FStop);
-
-   Inc(C);
-  End;
-
- FDataset.EnableControls;
-
- If Assigned(FAfterImport) Then
-  FAfterImport(Self);
-
- If FAutoOpen Then
-  Begin
-   If Assigned(FBeforeCloseTable) Then
-    FBeforeCloseTable(Self);
-
-   FDataset.Close;
-
-   If Assigned(FAfterCloseTable) Then
-    FAfterCloseTable(Self);
-  End;
-
- CloseFile(FFile);
-
- FreeMem(Buffer);
-
- FFieldCache.Free;
 end;
 
 end.

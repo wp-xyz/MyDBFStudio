@@ -432,6 +432,12 @@ var
 var
   plen: integer;
 begin
+  if (Pattern = '') or (s = '') then
+  begin
+    Result := false;
+    exit;
+  end;
+
   isError := false;
   activeQuote := #0;
   yy:=0;
