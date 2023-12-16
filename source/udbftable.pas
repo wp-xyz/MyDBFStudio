@@ -490,15 +490,13 @@ begin
 end;
 
 procedure TDbfTable.Load_Table_Indexes;
- Var Ind : Word;
+var
+  ind: Integer;
 begin
- Indexes.Clear;
-
- Indexes.Items.Add('');
-
- If DBTable.Indexes.Count > 0 Then
-  For Ind := 0 To DBTable.Indexes.Count - 1 Do
-   Indexes.Items.Add(DBTable.Indexes.Items[Ind].Name);
+  Indexes.Clear;
+  Indexes.Items.Add('');
+  for ind := 0 to DBTable.Indexes.Count - 1 do
+    Indexes.Items.Add(DBTable.Indexes.Items[ind].Name);
 end;
 
 procedure TDbfTable.ShowTableInfo(DataSet: TDataSet);

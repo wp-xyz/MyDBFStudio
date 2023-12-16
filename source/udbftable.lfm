@@ -7,10 +7,10 @@ object DbfTable: TDbfTable
   ClientHeight = 494
   ClientWidth = 709
   KeyPreview = True
+  LCLVersion = '3.99.0.0'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  LCLVersion = '2.1.0.0'
   object TopPanel: TPanel
     Left = 0
     Height = 72
@@ -42,14 +42,14 @@ object DbfTable: TDbfTable
       Left = 6
       Height = 23
       Top = 43
-      Width = 356
+      Width = 358
       Anchors = [akTop, akLeft, akRight]
       BorderSpacing.Left = 6
       BorderSpacing.Top = 2
       BorderSpacing.Right = 6
       BorderSpacing.Bottom = 6
-      OnKeyDown = leFilterKeyDown
       TabOrder = 0
+      OnKeyDown = leFilterKeyDown
     end
     object cbShowDel: TCheckBox
       AnchorSideTop.Control = leFilter
@@ -57,40 +57,40 @@ object DbfTable: TDbfTable
       AnchorSideRight.Control = TopPanel
       AnchorSideRight.Side = asrBottom
       AnchorSideBottom.Side = asrBottom
-      Left = 570
+      Left = 572
       Height = 19
       Top = 45
-      Width = 133
+      Width = 131
       Anchors = [akTop, akRight]
       BorderSpacing.Left = 6
       BorderSpacing.Top = 2
       BorderSpacing.Right = 6
       BorderSpacing.Bottom = 2
       Caption = 'Show deleted records'
-      OnChange = cbShowDelChange
       TabOrder = 1
+      OnChange = cbShowDelChange
     end
     object Indexes: TComboBox
       AnchorSideTop.Control = leFilter
       AnchorSideTop.Side = asrCenter
       AnchorSideRight.Control = cbShowDel
-      Left = 368
+      Left = 370
       Height = 23
       Top = 43
       Width = 196
       Anchors = [akTop, akRight]
       DropDownCount = 24
       ItemHeight = 15
-      OnChange = IndexesChange
       ParentShowHint = False
       ShowHint = True
       Style = csDropDownList
       TabOrder = 2
+      OnChange = IndexesChange
     end
     object Label2: TLabel
       AnchorSideLeft.Control = Indexes
       AnchorSideTop.Control = Label1
-      Left = 368
+      Left = 370
       Height = 15
       Top = 26
       Width = 40
@@ -139,10 +139,10 @@ object DbfTable: TDbfTable
         Top = 0
         Caption = 'tbPack'
         ImageIndex = 36
-        OnClick = tbPackClick
         ParentShowHint = False
         ShowHint = True
         Wrap = True
+        OnClick = tbPackClick
       end
       object tbEmpty: TToolButton
         Left = 434
@@ -150,9 +150,9 @@ object DbfTable: TDbfTable
         Top = 0
         Caption = 'tbEmpty'
         ImageIndex = 35
-        OnClick = tbEmptyClick
         ParentShowHint = False
         ShowHint = True
+        OnClick = tbEmptyClick
       end
       object tbViewDel: TToolButton
         Left = 406
@@ -160,9 +160,9 @@ object DbfTable: TDbfTable
         Top = 0
         Caption = 'tbViewDel'
         ImageIndex = 34
-        OnClick = tbViewDelClick
         ParentShowHint = False
         ShowHint = True
+        OnClick = tbViewDelClick
       end
       object tbRestruct: TToolButton
         Left = 350
@@ -170,10 +170,10 @@ object DbfTable: TDbfTable
         Top = 0
         Caption = 'tbRestruct'
         ImageIndex = 32
-        OnClick = tbRestructClick
         ParentShowHint = False
         ShowCaption = False
         ShowHint = True
+        OnClick = tbRestructClick
       end
       object tbSetField: TToolButton
         Left = 378
@@ -181,9 +181,9 @@ object DbfTable: TDbfTable
         Top = 0
         Caption = 'tbSetField'
         ImageIndex = 33
-        OnClick = tbSetFieldClick
         ParentShowHint = False
         ShowHint = True
+        OnClick = tbSetFieldClick
       end
       object CloseTabBtn: TToolButton
         Left = 523
@@ -191,9 +191,9 @@ object DbfTable: TDbfTable
         Top = 0
         Caption = 'X'
         ImageIndex = 15
-        OnClick = CloseTabBtnClick
         ParentShowHint = False
         ShowHint = True
+        OnClick = CloseTabBtnClick
       end
       object ToolButton2: TToolButton
         Left = 518
@@ -215,10 +215,10 @@ object DbfTable: TDbfTable
         Top = 0
         Caption = 'tbAutoFillColumns'
         ImageIndex = 42
-        OnClick = tbAutoFillColumnsClick
         ParentShowHint = False
         ShowHint = True
         Style = tbsCheck
+        OnClick = tbAutoFillColumnsClick
       end
       object ToolButton1: TToolButton
         Left = 77
@@ -277,10 +277,10 @@ object DbfTable: TDbfTable
     Top = 368
     Width = 709
     Align = alBottom
-    OnMoved = SplitterMoved
     ResizeAnchor = akBottom
     ResizeStyle = rsPattern
     Visible = False
+    OnMoved = SplitterMoved
   end
   object BottomPanel: TPanel
     Left = 0
@@ -318,8 +318,8 @@ object DbfTable: TDbfTable
         Anchors = [akLeft, akRight, akBottom]
         AutoSize = True
         Caption = 'Load...'
-        OnClick = LoadBlobBtnClick
         TabOrder = 0
+        OnClick = LoadBlobBtnClick
       end
       object SaveBlobBtn: TButton
         AnchorSideLeft.Control = ButtonPanel
@@ -334,8 +334,8 @@ object DbfTable: TDbfTable
         AutoSize = True
         BorderSpacing.Top = 2
         Caption = 'Save...'
-        OnClick = SaveBlobBtnClick
         TabOrder = 1
+        OnClick = SaveBlobBtnClick
       end
       object CopyBlobBtn: TButton
         AnchorSideLeft.Control = ButtonPanel
@@ -350,8 +350,8 @@ object DbfTable: TDbfTable
         AutoSize = True
         BorderSpacing.Top = 2
         Caption = 'Copy'
-        OnClick = CopyBlobBtnClick
         TabOrder = 2
+        OnClick = CopyBlobBtnClick
       end
       object PasteBlobBtn: TButton
         AnchorSideLeft.Control = ButtonPanel
@@ -367,8 +367,8 @@ object DbfTable: TDbfTable
         AutoSize = True
         BorderSpacing.Top = 2
         Caption = 'Paste'
-        OnClick = PasteBlobBtnClick
         TabOrder = 3
+        OnClick = PasteBlobBtnClick
       end
     end
     object TabControl: TTabControl
