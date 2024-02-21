@@ -8,14 +8,14 @@ object Main: TMain
   ClientHeight = 550
   ClientWidth = 750
   Menu = MainMenu
+  Position = poDesktopCenter
+  LCLVersion = '3.99.0.0'
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnDropFiles = FormDropFiles
   OnShow = FormShow
-  Position = poDesktopCenter
-  LCLVersion = '2.3.0.0'
   object ToolBar: TToolBar
     Left = 0
     Top = 0
@@ -37,9 +37,9 @@ object Main: TMain
       Top = 0
       Caption = 'ToolButton1'
       ImageIndex = 10
-      OnClick = miNewClick
       ParentShowHint = False
       ShowHint = True
+      OnClick = miNewClick
     end
     object tbFileOpen: TToolButton
       Left = 35
@@ -48,11 +48,11 @@ object Main: TMain
       Caption = 'tbFileOpen'
       DropdownMenu = HistoryPopup
       ImageIndex = 11
-      OnClick = miOpenClick
-      OnMouseDown = tbFileOpenMouseDown
       ParentShowHint = False
       ShowHint = True
       Style = tbsDropDown
+      OnClick = miOpenClick
+      OnMouseDown = tbFileOpenMouseDown
     end
     object ToolButton3: TToolButton
       Left = 115
@@ -60,9 +60,9 @@ object Main: TMain
       Top = 0
       Caption = 'ToolButton3'
       ImageIndex = 13
-      OnClick = miSaveAsClick
       ParentShowHint = False
       ShowHint = True
+      OnClick = miSaveAsClick
     end
     object ToolButton5: TToolButton
       Left = 81
@@ -70,9 +70,9 @@ object Main: TMain
       Top = 0
       Caption = 'ToolButton5'
       ImageIndex = 29
-      OnClick = miOpenAliasClick
       ParentShowHint = False
       ShowHint = True
+      OnClick = miOpenAliasClick
     end
     object ToolButton6: TToolButton
       Left = 154
@@ -80,9 +80,9 @@ object Main: TMain
       Top = 0
       Caption = 'ToolButton6'
       ImageIndex = 26
-      OnClick = miEmptyTablesClick
       ParentShowHint = False
       ShowHint = True
+      OnClick = miEmptyTablesClick
     end
     object ToolButton7: TToolButton
       Left = 188
@@ -90,9 +90,9 @@ object Main: TMain
       Top = 0
       Caption = 'ToolButton7'
       ImageIndex = 27
-      OnClick = miSortTableClick
       ParentShowHint = False
       ShowHint = True
+      OnClick = miSortTableClick
     end
     object ToolButton8: TToolButton
       Left = 222
@@ -100,9 +100,9 @@ object Main: TMain
       Top = 0
       Caption = 'ToolButton8'
       ImageIndex = 28
-      OnClick = miTabsListClick
       ParentShowHint = False
       ShowHint = True
+      OnClick = miTabsListClick
     end
     object ToolButton10: TToolButton
       Left = 261
@@ -110,9 +110,9 @@ object Main: TMain
       Top = 0
       Caption = 'ToolButton10'
       ImageIndex = 14
-      OnClick = miCloseAllClick
       ParentShowHint = False
       ShowHint = True
+      OnClick = miCloseAllClick
     end
     object tbQuit: TToolButton
       Left = 339

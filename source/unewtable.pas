@@ -104,7 +104,7 @@ begin
     end;
 
     if (FieldList.Cells[2,Ind] = Fieldtypenames[ftString]) or
-      (FieldList.Cells[2,Ind] = Fieldtypenames[ftFloat]) or
+       (FieldList.Cells[2,Ind] = Fieldtypenames[ftFloat]) or
        (FieldList.Cells[2,Ind] = Fieldtypenames[ftFixedChar]) or
        (FieldList.Cells[2,Ind] = Fieldtypenames[ftWideString]) or
        (FieldList.Cells[2,Ind] = Fieldtypenames[ftBCD]) or
