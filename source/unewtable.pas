@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Grids,
-  StdCtrls, Buttons, DB, dbf, DBF_Fields;
+  StdCtrls, Buttons, DB, dbf, DBF_Fields, DBF_Common;
 
 type
 
@@ -73,6 +73,24 @@ uses
   Math, TypInfo, uUtils, uOptions, uIdxTable;
 
 {$R *.lfm}
+
+const
+  TDBF_TABLELEVEL_FOXPRO = 25;
+ // TDBF_TABLELEVEL_VISUALFOXPRO = 30; {Source: http://www.codebase.com/support/kb/?article=C01059}
+
+function TableLevelToDbfVersion(TableLevel: integer): TXBaseVersion;
+begin
+  case TableLevel of
+    3:                            Result := xBaseIII;
+    7:                            Result := xBaseVII;
+    TDBF_TABLELEVEL_FOXPRO:       Result := xFoxPro;
+    {$IF DEFINED(TDBF_TABLELEVEL_VISUALFOXPRO)}
+    TDBF_TABLELEVEL_VISUALFOXPRO: Result := xVisualFoxPro;
+    {$ENDIF}
+  else
+    {4:} Result := xBaseIV;
+  end;
+end;
 
 { TNewTable }
 
@@ -417,6 +435,7 @@ var
   n: Integer;
 begin
   Result := TDbfFieldDefs.Create(Self);
+  Result.DbfVersion := TableLevelToDbfVersion(DBTable.TableLevel);
 
   for row := 1 to FieldList.RowCount - 1 do
   begin
