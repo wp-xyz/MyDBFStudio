@@ -462,6 +462,7 @@ var
   n: Integer;
 begin
   Result := TDbfFieldDefs.Create(self);
+  Result.DbfVersion := TableLevelToDbfVersion(Dbf.TableLevel);
 
   for row := 1 to FieldList.RowCount - 1 do
   begin

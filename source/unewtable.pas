@@ -74,24 +74,6 @@ uses
 
 {$R *.lfm}
 
-const
-  TDBF_TABLELEVEL_FOXPRO = 25;
- // TDBF_TABLELEVEL_VISUALFOXPRO = 30; {Source: http://www.codebase.com/support/kb/?article=C01059}
-
-function TableLevelToDbfVersion(TableLevel: integer): TXBaseVersion;
-begin
-  case TableLevel of
-    3:                            Result := xBaseIII;
-    7:                            Result := xBaseVII;
-    TDBF_TABLELEVEL_FOXPRO:       Result := xFoxPro;
-    {$IF DEFINED(TDBF_TABLELEVEL_VISUALFOXPRO)}
-    TDBF_TABLELEVEL_VISUALFOXPRO: Result := xVisualFoxPro;
-    {$ENDIF}
-  else
-    {4:} Result := xBaseIV;
-  end;
-end;
-
 { TNewTable }
 
 procedure TNewTable.CloseBtnClick(Sender: TObject);

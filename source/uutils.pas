@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, LCLVersion,
-  DB, DBGrids;
+  DB, DBGrids, dbf_common;
 
 {$IF LCL_FullVersion < 2010000}
 type
@@ -37,6 +37,8 @@ function TableFormat(ATableLevel: Integer): String;
 //  const AFmtSettings: TFormatSettings): Boolean;
 function TryScanDateTime(const Pattern: String; const s: String; out ADate: TDateTime;
   const fmt: TFormatSettings): Boolean;
+
+function TableLevelToDbfVersion(TableLevel: integer): TXBaseVersion;
 
 implementation
 
@@ -474,6 +476,24 @@ begin
   end;
 end;
 *)
+
+const
+  TDBF_TABLELEVEL_FOXPRO = 25;
+ // TDBF_TABLELEVEL_VISUALFOXPRO = 30; {Source: http://www.codebase.com/support/kb/?article=C01059}
+
+function TableLevelToDbfVersion(TableLevel: integer): TXBaseVersion;
+begin
+  case TableLevel of
+    3:                            Result := xBaseIII;
+    7:                            Result := xBaseVII;
+    TDBF_TABLELEVEL_FOXPRO:       Result := xFoxPro;
+    {$IF DEFINED(TDBF_TABLELEVEL_VISUALFOXPRO)}
+    TDBF_TABLELEVEL_VISUALFOXPRO: Result := xVisualFoxPro;
+    {$ENDIF}
+  else
+    {4:} Result := xBaseIV;
+  end;
+end;
 
 end.
 
