@@ -50,6 +50,7 @@ type
     FFileName: String;
     MyIndexList: array of MyIndex;
     Function ReturnTableLevel : Word;
+    procedure SelectTableLevel(ATableLevel: Integer);
     Procedure ShowIndexList;
     Function Check_Value(Val : String) : Boolean;
     Function RetFieldType(AValue: String) : TFieldType;
@@ -73,6 +74,9 @@ uses
   Math, TypInfo, uUtils, uOptions, uIdxTable;
 
 {$R *.lfm}
+
+const
+  TABLE_LEVELS: array[-1..4] of Integer = (3, 3, 4, 7, 25, 30);
 
 { TNewTable }
 
@@ -232,7 +236,7 @@ begin
   FDBTable := TDbf.Create(self);
   FDBTable.Exclusive := true;
 
-  TableTypeChange(Sender);
+  SelectTableLevel(Options.NewDbfTableLevel);
 
   FieldList.RowCount := 2;
   FieldList.Cells[0,FieldList.RowCount - 1] := IntToStr(FieldList.RowCount - 1);
@@ -375,13 +379,25 @@ end;
 procedure TNewTable.TableTypeChange(Sender: TObject);
 begin
   FieldTypePickList(ReturnTableLevel, FieldList.Columns[2].PickList);
+  Options.NewDbfTableLevel := ReturnTableLevel;
 end;
 
 function TNewTable.ReturnTableLevel: Word;
-const
-  TABLE_LEVELS: array[-1..4] of Integer = (3, 3, 4, 7, 25, 30);
 begin
   Result := TABLE_LEVELS[TableType.ItemIndex];
+end;
+
+procedure TNewTable.SelectTableLevel(ATableLevel: Integer);
+var
+  i: Integer;
+begin
+  for i := 0 to High(TABLE_LEVELS) do
+    if TABLE_LEVELS[i] = ATableLevel then
+    begin
+      TableType.ItemIndex := i;
+      FieldTypePickList(ATableLevel, FieldList.Columns[2].PickList);
+      exit;
+    end;
 end;
 
 procedure TNewTable.ShowIndexList;

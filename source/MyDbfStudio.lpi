@@ -29,9 +29,9 @@
       <RevisionNr Value="3"/>
       <StringTable FileDescription="Administrative tool for DBF tables." LegalCopyright="Calogiuri Enzo Antonio" ProductName="MyDbfStudio"/>
     </VersionInfo>
-    <BuildModes Count="4">
+    <BuildModes Count="6">
       <Item1 Name="default" Default="True"/>
-      <Item2 Name="Debug">
+      <Item2 Name="Release">
         <CompilerOptions>
           <Version Value="11"/>
           <Target>
@@ -39,7 +39,42 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="third-party/tdbf_svn"/>
+            <OtherUnitFiles Value="third-party/tdbf_fpc_322"/>
+            <UnitOutputDirectory Value="../ppu/$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+              <VariablesInRegisters Value="True"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <RunWithoutDebug Value="True"/>
+              <DebugInfoType Value="dsDwarf2Set"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+        </CompilerOptions>
+      </Item2>
+      <Item3 Name="Debug">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <Target>
+            <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/mydbfstudio"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <OtherUnitFiles Value="third-party/tdbf_fpc_322"/>
             <UnitOutputDirectory Value="../ppu/$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -73,8 +108,8 @@
             </Options>
           </Linking>
         </CompilerOptions>
-      </Item2>
-      <Item3 Name="Debug with HeapTrc">
+      </Item3>
+      <Item4 Name="Debug with HeapTrc">
         <CompilerOptions>
           <Version Value="11"/>
           <Target>
@@ -82,7 +117,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="third-party/tdbf_svn"/>
+            <OtherUnitFiles Value="third-party/tdbf_fpc_322"/>
             <UnitOutputDirectory Value="../ppu/$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -117,8 +152,8 @@
             </Options>
           </Linking>
         </CompilerOptions>
-      </Item3>
-      <Item4 Name="Release">
+      </Item4>
+      <Item5 Name="Release (based on TDbf from sourceforge)">
         <CompilerOptions>
           <Version Value="11"/>
           <Target>
@@ -152,7 +187,50 @@
             </Options>
           </Linking>
         </CompilerOptions>
-      </Item4>
+      </Item5>
+      <Item6 Name="Debug (based on TDbf from sourceforge)">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <Target>
+            <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/mydbfstudio"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <OtherUnitFiles Value="third-party/tdbf_svn"/>
+            <UnitOutputDirectory Value="../ppu/$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <IncludeAssertionCode Value="True"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <Checks>
+              <IOChecks Value="True"/>
+              <RangeChecks Value="True"/>
+              <OverflowChecks Value="True"/>
+              <StackChecks Value="True"/>
+            </Checks>
+            <VerifyObjMethodCallValidity Value="True"/>
+            <Optimizations>
+              <VariablesInRegisters Value="True"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <DebugInfoType Value="dsDwarf2Set"/>
+              <TrashVariables Value="True"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+        </CompilerOptions>
+      </Item6>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
@@ -397,7 +475,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="third-party/tdbf_svn"/>
+      <OtherUnitFiles Value="third-party/tdbf_fpc_322"/>
       <UnitOutputDirectory Value="../ppu/$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <CodeGeneration>

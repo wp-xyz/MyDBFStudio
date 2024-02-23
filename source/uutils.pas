@@ -66,7 +66,7 @@ var
   ft: TFieldType;
 begin
   AList.Clear;
-  for ft in SupportedFieldTypes - [ftCurrency, ftBCD, ftBytes, ftAutoInc] do
+  for ft in SupportedFieldTypes - [ftCurrency, ftBCD, ftBytes, ftAutoInc, ftDateTime] do
     AList.Add(FieldTypeNames[ft]);
 
   // These are supported by Visual dBase
@@ -80,6 +80,12 @@ begin
   // ftAutoInc is supported by Visual dBase, FoxPro and Visual FoxPro
   if ATableLevel in [7, 25, 30] then
     AList.Add(FieldTypeNames[ftAutoInc]);
+
+  // ftDateTime is supported by Visual dBase and Visual FoxPro
+  if ATableLevel in [7, 30] then
+    AList.Add(FieldTypeNames[ftDateTime]);
+
+  if AList is TStringList then TStringList(AList).Sort;
 end;
 
 { Converts a enumerated TFieldType value to a string. When Nice=true, the leading
@@ -486,9 +492,9 @@ begin
   case TableLevel of
     3:                            Result := xBaseIII;
     7:                            Result := xBaseVII;
-    TDBF_TABLELEVEL_FOXPRO:       Result := xFoxPro;
-    {$IF DEFINED(TDBF_TABLELEVEL_VISUALFOXPRO)}
-    TDBF_TABLELEVEL_VISUALFOXPRO: Result := xVisualFoxPro;
+    25:                           Result := xFoxPro;
+    {$IF DEFINED(xVisualFoxPro)}
+    30:                           Result := xVisualFoxPro;
     {$ENDIF}
   else
     {4:} Result := xBaseIV;

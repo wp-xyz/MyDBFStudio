@@ -98,6 +98,7 @@ type
     GridLineColor                 : TColor;
     MaxHistoryRecords             : Integer;
     ShowSplashScreen              : Boolean;
+    NewDbfTableLevel              : Integer;
     // Not saved in ini
     PrevImportFile                : String;
   end;
@@ -182,6 +183,7 @@ var
     GridLineColor: clBtnFace;
     MaxHistoryRecords: 10;
     ShowSplashScreen: true;
+    NewDbfTableLevel: 4;
 
     // Not saved
     PrevImportFile: ''
@@ -597,6 +599,7 @@ begin
     Options.GridLineColor := TColor(ini.ReadInteger('Options', 'GridLineColor', Options.GridLineColor));
     Options.MaxHistoryRecords := ini.ReadInteger('Options', 'MaxHistoryRecords', Options.MaxHistoryRecords);
     Options.ShowSplashScreen := ini.ReadBool('Options', 'ShowSplashScreen', Options.ShowSplashScreen);
+    Options.NewDbfTableLevel:= ini.ReadInteger('Options', 'NewDbfTableLevel', Options.NewDbfTableLevel);;
   finally
     ini.Free;
   end;
@@ -620,6 +623,7 @@ begin
     ini.WriteInteger('Options', 'GridLineColor', Options.GridLineColor);
     ini.WriteInteger('Options', 'MaxHistoryRecords', Options.MaxHistoryRecords);
     ini.WriteBool('Options', 'ShowSplashScreen', Options.ShowSplashScreen);
+    ini.WriteInteger('Options', 'NewDbfTableLevel', Options.NewDbfTableLevel);;
 
     ini.WriteInteger('MainForm', 'WindowState', ord(Options.MainWindowState));
     if Options.MainWindowState = wsNormal then
